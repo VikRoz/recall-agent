@@ -108,4 +108,3 @@ All web sources checked on 6 November 2026.
 - [S4 — Walrus Sessions event listing](https://thewalrussessions.wal.app/).
 - [S5 — Earlier joint Tatum/Walrus event, historical only](https://tatum.io/tatum-x-walrus-hackathon).
 - Local: README.md, PROJECT_STATE.md, ROADMAP.md, docs/SUBMISSION.md, docs/AGENT_LIVE_TRIAL_2026-11-06.md, evidence/agent-live-trial-2026-11-06/run.json, inherited activity-mainnet-2026-11-05 and activity-model-2026-11-05 artifacts.
-

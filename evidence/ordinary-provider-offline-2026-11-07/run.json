@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date": "2026-11-06T21:12:58.288Z",
+  "date": "2026-11-06T21:18:35.559Z",
   "status": "ORDINARY_PROVIDER_PROTOCOL_OFFLINE_COMPLETED",
   "sourceHashes": {
     "start.command": "11a5bc55b13069d9777b4e38bb170bde063e23626b8d63f20f9f3fd3411aa9bf",
@@ -17,7 +17,7 @@
     "app/activity-memory.ts": "c9efe04694900cf47bd8f35872e44fdf46e8da5b1c6b40ca1bdb43c4d0612e68",
     "src/memory.ts": "7a259dfdbd216ee102a8e6b330885dfb948ca929200569b21d742f3bad844b07"
   },
-  "sourceCommit": null,
+  "sourceCommit": "ef3c1f915e34f0df997f7bbcf21e0c6562e11903",
   "execution": "offline-intercepted",
   "modelCalls": 0,
   "externalProviderCalls": 0,
@@ -28,8 +28,8 @@
     "records": 4
   },
   "processIds": [
-    38575,
-    38581
+    39840,
+    39845
   ],
   "tools": [
     "export_report",
@@ -42,9 +42,9 @@
   "reports": [
     {
       "mode": "offline-ordinary-provider-fixture",
-      "reportId": "report:99df39d9-1a21-471d-a444-ca902a097b00",
+      "reportId": "report:453c7190-be1f-4ff6-81a5-5bcf5a4d34d4",
       "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
-      "asOf": "2026-11-06T21:12:57.612Z",
+      "asOf": "2026-11-06T21:18:34.724Z",
       "digests": [
         "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8"
       ],
@@ -144,7 +144,7 @@
       "memory": [],
       "experience": [
         {
-          "id": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs",
+          "id": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
             "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -156,12 +156,12 @@
             "sponsored": false,
             "supersedes": null,
             "verdict": "fail",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs"
+          "blobId": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0"
         },
         {
-          "id": "gpT_g0c0MFtA7eDqYiwNaksHWiDHHuoXw9MsKXwQFuU",
+          "id": "tGCUms9Hmc0kZn6KRuAlQq0A9WmA8WR6d_o77b6yYZk",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
             "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -171,14 +171,14 @@
             "schema": "recall-experience/1",
             "source": "fixture",
             "sponsored": false,
-            "supersedes": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs",
+            "supersedes": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0",
             "verdict": "resolved",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "gpT_g0c0MFtA7eDqYiwNaksHWiDHHuoXw9MsKXwQFuU"
+          "blobId": "tGCUms9Hmc0kZn6KRuAlQq0A9WmA8WR6d_o77b6yYZk"
         },
         {
-          "id": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM",
+          "id": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
             "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
@@ -190,12 +190,12 @@
             "sponsored": false,
             "supersedes": null,
             "verdict": "fail",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM"
+          "blobId": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I"
         },
         {
-          "id": "4AIhbv3FgosfnHcreYMnhXmNs1PTl2KZ6VQI7uu3v7I",
+          "id": "4f0aBzx7OsfVoECjiXOB1n1cPSCXmtlG9YkN9PIZSQk",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
             "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
@@ -205,11 +205,11 @@
             "schema": "recall-experience/1",
             "source": "fixture",
             "sponsored": false,
-            "supersedes": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM",
+            "supersedes": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I",
             "verdict": "resolved",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "4AIhbv3FgosfnHcreYMnhXmNs1PTl2KZ6VQI7uu3v7I"
+          "blobId": "4f0aBzx7OsfVoECjiXOB1n1cPSCXmtlG9YkN9PIZSQk"
         }
       ],
       "experienceStorage": "walrus-fixture",
@@ -222,9 +222,9 @@
     },
     {
       "mode": "offline-ordinary-provider-fixture",
-      "reportId": "report:c5acdc06-c9d7-4690-aaff-eff8ee341274",
+      "reportId": "report:3f69d4d0-b8d1-4bc3-8b3d-ecc0788f3630",
       "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
-      "asOf": "2026-11-06T21:12:58.135Z",
+      "asOf": "2026-11-06T21:18:35.240Z",
       "digests": [
         "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8"
       ],
@@ -324,7 +324,7 @@
       "memory": [],
       "experience": [
         {
-          "id": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs",
+          "id": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
             "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -336,12 +336,12 @@
             "sponsored": false,
             "supersedes": null,
             "verdict": "fail",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs"
+          "blobId": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0"
         },
         {
-          "id": "gpT_g0c0MFtA7eDqYiwNaksHWiDHHuoXw9MsKXwQFuU",
+          "id": "tGCUms9Hmc0kZn6KRuAlQq0A9WmA8WR6d_o77b6yYZk",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
             "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -351,14 +351,14 @@
             "schema": "recall-experience/1",
             "source": "fixture",
             "sponsored": false,
-            "supersedes": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs",
+            "supersedes": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0",
             "verdict": "resolved",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "gpT_g0c0MFtA7eDqYiwNaksHWiDHHuoXw9MsKXwQFuU"
+          "blobId": "tGCUms9Hmc0kZn6KRuAlQq0A9WmA8WR6d_o77b6yYZk"
         },
         {
-          "id": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM",
+          "id": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
             "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
@@ -370,12 +370,12 @@
             "sponsored": false,
             "supersedes": null,
             "verdict": "fail",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM"
+          "blobId": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I"
         },
         {
-          "id": "4AIhbv3FgosfnHcreYMnhXmNs1PTl2KZ6VQI7uu3v7I",
+          "id": "4f0aBzx7OsfVoECjiXOB1n1cPSCXmtlG9YkN9PIZSQk",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
             "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
@@ -385,14 +385,14 @@
             "schema": "recall-experience/1",
             "source": "fixture",
             "sponsored": false,
-            "supersedes": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM",
+            "supersedes": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I",
             "verdict": "resolved",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "4AIhbv3FgosfnHcreYMnhXmNs1PTl2KZ6VQI7uu3v7I"
+          "blobId": "4f0aBzx7OsfVoECjiXOB1n1cPSCXmtlG9YkN9PIZSQk"
         },
         {
-          "id": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8",
+          "id": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI",
           "record": {
             "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
             "digest": "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8",
@@ -404,9 +404,9 @@
             "sponsored": false,
             "supersedes": null,
             "verdict": "fail",
-            "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+            "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
           },
-          "blobId": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8"
+          "blobId": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI"
         }
       ],
       "experienceStorage": "walrus-fixture",
@@ -429,8 +429,8 @@
     },
     "memory": {
       "storage": "walrus-fixture",
-      "id": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8",
-      "blobId": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8"
+      "id": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI",
+      "blobId": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI"
     }
   },
   "resolution": {
@@ -444,13 +444,13 @@
     },
     "memory": {
       "storage": "walrus-fixture",
-      "id": "f7vUzWmEoMToUWz3HvccZVE8hBsu4v-eOwTWclrlzlw",
-      "blobId": "f7vUzWmEoMToUWz3HvccZVE8hBsu4v-eOwTWclrlzlw"
+      "id": "Zag4FaAN4E6hVY4X3nI0_TemfI5VKAhj0unlHfYBZ5U",
+      "blobId": "Zag4FaAN4E6hVY4X3nI0_TemfI5VKAhj0unlHfYBZ5U"
     }
   },
   "records": [
     {
-      "id": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs",
+      "id": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
         "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -462,12 +462,12 @@
         "sponsored": false,
         "supersedes": null,
         "verdict": "fail",
-        "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+        "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
       },
-      "blobId": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs"
+      "blobId": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0"
     },
     {
-      "id": "gpT_g0c0MFtA7eDqYiwNaksHWiDHHuoXw9MsKXwQFuU",
+      "id": "tGCUms9Hmc0kZn6KRuAlQq0A9WmA8WR6d_o77b6yYZk",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
         "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -477,14 +477,14 @@
         "schema": "recall-experience/1",
         "source": "fixture",
         "sponsored": false,
-        "supersedes": "s01_i8gp60frpylYOyniWGrbtoJQdfuG1FUcF1GjkJs",
+        "supersedes": "kqHXgEVwp8IosJeU66r751xEElQiWi1uYxj0vV2Kwh0",
         "verdict": "resolved",
-        "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+        "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
       },
-      "blobId": "gpT_g0c0MFtA7eDqYiwNaksHWiDHHuoXw9MsKXwQFuU"
+      "blobId": "tGCUms9Hmc0kZn6KRuAlQq0A9WmA8WR6d_o77b6yYZk"
     },
     {
-      "id": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM",
+      "id": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
         "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
@@ -496,12 +496,12 @@
         "sponsored": false,
         "supersedes": null,
         "verdict": "fail",
-        "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+        "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
       },
-      "blobId": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM"
+      "blobId": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I"
     },
     {
-      "id": "4AIhbv3FgosfnHcreYMnhXmNs1PTl2KZ6VQI7uu3v7I",
+      "id": "4f0aBzx7OsfVoECjiXOB1n1cPSCXmtlG9YkN9PIZSQk",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
         "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
@@ -511,14 +511,14 @@
         "schema": "recall-experience/1",
         "source": "fixture",
         "sponsored": false,
-        "supersedes": "bzI26RshNJ5dIx5Q74d4pGR3T6uwqqsstAtR1kEp4mM",
+        "supersedes": "MGNHBsbVPL_2HJXrRAAm1d4FSWomwjFURyQ5pg8Nq0I",
         "verdict": "resolved",
-        "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+        "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
       },
-      "blobId": "4AIhbv3FgosfnHcreYMnhXmNs1PTl2KZ6VQI7uu3v7I"
+      "blobId": "4f0aBzx7OsfVoECjiXOB1n1cPSCXmtlG9YkN9PIZSQk"
     },
     {
-      "id": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8",
+      "id": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
         "digest": "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8",
@@ -530,12 +530,12 @@
         "sponsored": false,
         "supersedes": null,
         "verdict": "fail",
-        "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+        "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
       },
-      "blobId": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8"
+      "blobId": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI"
     },
     {
-      "id": "f7vUzWmEoMToUWz3HvccZVE8hBsu4v-eOwTWclrlzlw",
+      "id": "Zag4FaAN4E6hVY4X3nI0_TemfI5VKAhj0unlHfYBZ5U",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
         "digest": "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8",
@@ -545,41 +545,41 @@
         "schema": "recall-experience/1",
         "source": "fixture",
         "sponsored": false,
-        "supersedes": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8",
+        "supersedes": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI",
         "verdict": "resolved",
-        "workspace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7"
+        "workspace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e"
       },
-      "blobId": "f7vUzWmEoMToUWz3HvccZVE8hBsu4v-eOwTWclrlzlw"
+      "blobId": "Zag4FaAN4E6hVY4X3nI0_TemfI5VKAhj0unlHfYBZ5U"
     }
   ],
   "ledger": {
     "intents": [
       {
-        "key": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8",
-        "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-experience",
-        "sha256": "240f9433c1af0d30b9da8820872a38547fa96e221d5aa8ad4f8a5c4dd916bd7f",
+        "key": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI",
+        "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-experience",
+        "sha256": "7e7293a3701554bcff8424a9d9c173265f6f86f0d23034e83ecf6040a3112862",
         "state": "done"
       },
       {
-        "key": "f7vUzWmEoMToUWz3HvccZVE8hBsu4v-eOwTWclrlzlw",
-        "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-experience",
-        "sha256": "7fbbd4cd6984a0c4e8516cf71ef71c65513c841b2ee2ff9e3b04d6725ae5ce5c",
+        "key": "Zag4FaAN4E6hVY4X3nI0_TemfI5VKAhj0unlHfYBZ5U",
+        "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-experience",
+        "sha256": "65a83815a00de04ea1558e17de7234fd37a67c8e55280863d2e9e51df6016795",
         "state": "done"
       }
     ],
     "jobs": {
-      "fixture-45594227-b959-4395-b5aa-a6ad563617fd": {
-        "key": "f7vUzWmEoMToUWz3HvccZVE8hBsu4v-eOwTWclrlzlw",
-        "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-experience",
+      "fixture-1cc05b51-ce24-4fc0-b174-2f7a6ec2cff9": {
+        "key": "fnKTo3AVVLz_hCSp2cFzJl9vhvDSMDToPs9gQKMRKGI",
+        "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-experience",
         "polls": 1
       },
-      "fixture-af636a23-08fe-4715-92d0-31f1d59f793c": {
-        "key": "JA-UM8GvDTC52ogghyo4VH-pbiIdWqitT4pcTdkWvX8",
-        "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-experience",
+      "fixture-6550bb6d-a305-41ff-87ce-e5bf0561feb9": {
+        "key": "Zag4FaAN4E6hVY4X3nI0_TemfI5VKAhj0unlHfYBZ5U",
+        "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-experience",
         "polls": 1
       }
     },
-    "manifestHash": "6cc68f11647ead3b3052ec46325e6e52e1795223238a9ec1a49152ddf0c9de0b",
+    "manifestHash": "e839cc691425b0fe84825fe7dbc58035814f3537f8fe54b3fbc3de85c6426fd6",
     "reads": 2,
     "requests": 36,
     "schema": 1,
@@ -639,7 +639,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/health",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": false
     },
@@ -647,15 +647,15 @@
       "method": "GET",
       "namespace": null,
       "path": "/version",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": false
     },
     {
       "method": "POST",
-      "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-rules",
+      "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-rules",
       "path": "/api/stats",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -663,7 +663,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -671,7 +671,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/config",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": false
     },
@@ -679,15 +679,15 @@
       "method": "POST",
       "namespace": null,
       "path": "/sui.rpc.v2.LedgerService/BatchGetObjects",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": false
     },
     {
       "method": "POST",
-      "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-experience",
+      "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-experience",
       "path": "/api/recall",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": true,
       "signed": true
     },
@@ -695,7 +695,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -703,7 +703,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -711,7 +711,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -719,7 +719,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -727,7 +727,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -735,7 +735,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -743,7 +743,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -751,7 +751,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -759,23 +759,23 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
     {
       "method": "POST",
-      "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-experience",
+      "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-experience",
       "path": "/api/remember",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": true,
       "signed": true
     },
     {
       "method": "GET",
       "namespace": null,
-      "path": "/api/remember/fixture-af636a23-08fe-4715-92d0-31f1d59f793c",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "path": "/api/remember/fixture-1cc05b51-ce24-4fc0-b174-2f7a6ec2cff9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -783,7 +783,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/health",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": false
     },
@@ -791,15 +791,15 @@
       "method": "GET",
       "namespace": null,
       "path": "/version",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": false
     },
     {
       "method": "POST",
-      "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-rules",
+      "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-rules",
       "path": "/api/stats",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -807,7 +807,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -815,7 +815,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/config",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": false
     },
@@ -823,15 +823,15 @@
       "method": "POST",
       "namespace": null,
       "path": "/sui.rpc.v2.LedgerService/BatchGetObjects",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": false
     },
     {
       "method": "POST",
-      "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-experience",
+      "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-experience",
       "path": "/api/recall",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": true,
       "signed": true
     },
@@ -839,7 +839,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -847,7 +847,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -855,7 +855,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -863,7 +863,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -871,7 +871,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -879,7 +879,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -887,7 +887,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -895,7 +895,7 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
@@ -903,23 +903,23 @@
       "method": "GET",
       "namespace": null,
       "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     },
     {
       "method": "POST",
-      "namespace": "agent-9165225c-34c0-44ac-85f9-5e02b4d0e9a7-experience",
+      "namespace": "agent-ae40f213-b536-4fb3-b476-5686e72dc14e-experience",
       "path": "/api/remember",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": true,
       "signed": true
     },
     {
       "method": "GET",
       "namespace": null,
-      "path": "/api/remember/fixture-45594227-b959-4395-b5aa-a6ad563617fd",
-      "runId": "ca3484e0-168f-4674-bf11-d92448be54a9",
+      "path": "/api/remember/fixture-6550bb6d-a305-41ff-87ce-e5bf0561feb9",
+      "runId": "25e85c25-3453-48ed-b201-f90bab7addd3",
       "seal": false,
       "signed": true
     }
