@@ -23,7 +23,8 @@ export async function readRules(store: RuleStore, binding: Binding, expectedBlob
   return validateRules(hits.map(hit => ({ blobId: hit.blobId, record: JSON.parse(hit.text) })), binding);
 }
 
-export class WalrusRuleStore implements RuleStore {
+export class WalrusRecordStore<T> {
+  validateRecord: (record: T, binding: Binding) => void;
   sdk: any;
   binding: Binding;
   latestSignature: string | undefined;
@@ -36,7 +37,8 @@ export class WalrusRuleStore implements RuleStore {
     assertSettled?(locked?: boolean): void;
     proofs?(): { blobId: string; sha256: string }[];
   };
-  constructor(sdk: any, binding: Binding, journal: WalrusRuleStore['journal'], wait = sleep) {
+  constructor(sdk: any, binding: Binding, journal: WalrusRecordStore<T>['journal'], validateRecord: (record: T, binding: Binding) => void, wait = sleep) {
+    this.validateRecord = validateRecord;
     this.sdk = sdk;
     this.binding = { owner: address(binding.owner), project: binding.project };
     this.journal = journal;
@@ -91,14 +93,14 @@ export class WalrusRuleStore implements RuleStore {
     if (this.latestSignature) this.cached = { signature: this.latestSignature, query, limit, hits };
     return structuredClone(hits);
   }
-  async write(record: Rule, operationKey: string): Promise<RuleReceipt> {
+  async write(record: T, operationKey: string): Promise<RuleReceipt> {
     const release = this.journal.lock();
     try { return await this.writeLocked(record, operationKey); }
     finally { this.cached = undefined; this.latestSignature = undefined; release(); }
   }
-  async writeLocked(record: Rule, operationKey: string): Promise<RuleReceipt> {
+  async writeLocked(record: T, operationKey: string): Promise<RuleReceipt> {
     assert(/^[a-zA-Z0-9_-]{43}$/.test(operationKey), 'OPERATION_KEY');
-    rule(record, this.binding);
+    this.validateRecord(record, this.binding);
     const text = canonical(record);
     const hash = sha(text);
     const previous = await this.journal.load(operationKey);
@@ -127,6 +129,13 @@ export class WalrusRuleStore implements RuleStore {
       assert(['pending', 'running', 'uploaded'].includes(stored.status), 'WRITE_OUTCOME_UNCERTAIN');
     }
     throw Error('WRITE_STATUS_LIMIT');
+  }
+}
+
+// Compatibility facade: address-rule validation and existing callers are unchanged.
+export class WalrusRuleStore extends WalrusRecordStore<Rule> implements RuleStore {
+  constructor(sdk: any, binding: Binding, journal: WalrusRecordStore<Rule>['journal'], wait = sleep) {
+    super(sdk, binding, journal, rule, wait);
   }
 }
 

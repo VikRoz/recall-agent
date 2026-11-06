@@ -1,11 +1,11 @@
-# Roadmap
+# Recall Agent roadmap
 
-1. Real transaction facts and exact report — complete.
-2. Scoped Walrus context and linked corrections — complete.
-3. Codex live flow across fresh conversations — complete with approved recovery.
-4. Clean source, judge package, site and article — release snapshot prepared; verify public endpoints.
-5. Ten current-scenario Mainnet memories — four verified; six remain a separate bounded step.
-6. New author-recorded video — pending.
-7. Final links, applicant fields and submission — pending.
+1. Free-task tool contract and persistent workspace — offline implemented.
+2. Verified gas-payer experience capture and correction — offline implemented.
+3. New-task model evaluation without scripted prompts — pending.
+4. Live account admission and unified durable 2/2/2 budget — pending.
+5. Independent-client Mainnet experience trial — pending.
+6. Clean installation and judge package — pending.
+7. Evidence, article and submission decision — pending.
 
-Future: richer transaction decoding with evidence, easier onboarding, supported browser model integration, explicit per-user budgets and authorized shared context. These are not current features.
+Fallback remains VikRoz/recall-lab v1.0.0. Development stages are not a user route. A task can end without an error, write, correction or export.

@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { latestStartupCode } from './activity-diagnostic.mjs';
-export function codexArgs(node, root, run, servers, mode = '--live') {
+export function codexArgs(node, root, run, servers, mode = '--live', serverFile = 'activity-mcp.mjs', serverOptions = []) {
   assert(Array.isArray(servers) && servers.every(s => typeof s.name === 'string' && /^[A-Za-z0-9_-]+$/.test(s.name)), 'MCP_INVENTORY');
   const args = ['-C', join(run, 'client'), '-s', 'read-only', '-a', 'on-request',
     '-c', 'model_provider="openai"', '-c', 'web_search="disabled"',
@@ -18,7 +18,7 @@ export function codexArgs(node, root, run, servers, mode = '--live') {
   }
   const q = JSON.stringify;
   args.push('-c', 'mcp_servers.recall_lab={command=' + q(node) + ',args=' + q([
-    '--disable-warning=ExperimentalWarning', join(root, 'app/activity-mcp.mjs'), mode, run]) +
+    '--disable-warning=ExperimentalWarning', join(root, 'app', serverFile), mode, run, ...serverOptions]) +
     ',enabled=true,required=true,default_tools_approval_mode="prompt",startup_timeout_sec=45,tool_timeout_sec=360}');
   return args;
 }
