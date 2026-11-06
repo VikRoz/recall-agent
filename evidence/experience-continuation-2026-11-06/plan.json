@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "dataMode": "saved",
+  "model": "gpt-5.6-luna",
+  "initialState": {
+    "activity-memory.json": "9b279e62f5f4572fe765154e98c1271f6e4d6f98b23c427c29385e06e74e0240",
+    "agent-workspace.json": "3802fe9288d6e2b58bcb2943a8f5e7a7673f4c24694b1c8e5b8a96e349cb26e2",
+    "experience.json": "3b5ad4ae4d66911c99900d21f86752ed93021485fc8fd0574007191fbd1edc90"
+  },
+  "tasks": [
+    {
+      "id": "direct-captured-experience",
+      "chat": "fresh",
+      "text": "Give me an overview of activity on Sui Mainnet for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on 5 November 2026 UTC. What operations can you identify, how did its balance change, and who paid the gas?"
+    }
+  ]
+}

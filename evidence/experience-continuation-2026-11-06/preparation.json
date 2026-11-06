@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "sourceRunSha256": "b41762ead0fc87cac779cfec25237461bb960107e468b818969b6c1858941f54",
+  "sourceCondition": "no-memory",
+  "origin": "actual-native-error-automatically-captured-in-control",
+  "recordId": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+  "recordsCopied": 1,
+  "initialState": {
+    "activity-memory.json": "9b279e62f5f4572fe765154e98c1271f6e4d6f98b23c427c29385e06e74e0240",
+    "agent-workspace.json": "3802fe9288d6e2b58bcb2943a8f5e7a7673f4c24694b1c8e5b8a96e349cb26e2",
+    "experience.json": "3b5ad4ae4d66911c99900d21f86752ed93021485fc8fd0574007191fbd1edc90"
+  },
+  "bytesUnchanged": true,
+  "sdkErrorReenactments": 0,
+  "newModelTurns": 0,
+  "tatumCalls": 0,
+  "walrusCalls": 0,
+  "recordLimit": 2,
+  "proposedNewTurnLimit": 1,
+  "status": "OFFLINE_PREPARATION_ONLY",
+  "independentProcessReadback": {
+    "exactRecord": true,
+    "sameId": true,
+    "stateUnchanged": true,
+    "tool": "find_wallet_activity"
+  },
+  "planWorkspaceGuard": "PASSED"
+}
