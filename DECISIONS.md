@@ -41,3 +41,10 @@ Fix probe model-catalog admission and native failed-status detection offline. A 
 The user approved the bounded proposal. Implement a public MCP transport decorator rather than private SDK dispatch patches. Preserve SDK validation; store only supported non-secret numeric constraint evidence and a verified successful resolution in a separate schema variant. Use schema/source-qualified catalog data instead of a mandatory first task. Do not clamp input. Preserve the two-record cap and fail closed on uncertain writes.
 
 Return exact code-generated CSV as a bounded private content-addressed file with hash and resource link; retain inline output for compatibility. Client presentation and model behaviour still require native testing. Original failed evidence is immutable and no model-benefit claim is added. No provider or model operations in this increment.
+
+
+## 6 November 2026 — retain the bounded memory comparison
+
+The user approved a same-version/same-task comparison and CSV check. Restore experience only by replaying the already-recorded real native error and successful correction through the current SDK/observer, with a separate-process readback and hash-pinned initial state. This is historical local evidence, not fresh model error generation or Mainnet storage.
+
+One stopped control turn requested 100; the restored-memory turn requested 10 first and completed, followed by original-file CSV delivery with a correct hash. Keep the full three-turn record and the fixed-order/single-case caveat. No repeated attempts, tuned prompts or broader learning claim. Preserve earlier negative evidence unchanged. Next provider work requires shared budgets/admission and separate live gates.

@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "preparation": "historical-native-requests-replayed-through-current-sdk",
+  "sourceArtifactSha256": "fb4051eae11ac56dc1b545f0f2b5ed49fda5ece835a034ccdece323de1a771da",
+  "sourceTraceIndices": {
+    "failure": 2,
+    "recovery": 4
+  },
+  "requests": [
+    {
+      "network": "mainnet",
+      "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+      "from": "2026-11-05T00:00:00Z",
+      "to": "2026-11-06T00:00:00Z",
+      "limit": 100
+    },
+    {
+      "network": "mainnet",
+      "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+      "from": "2026-11-05T00:00:00Z",
+      "to": "2026-11-06T00:00:00Z",
+      "limit": 10
+    }
+  ],
+  "records": [
+    {
+      "id": "1uIU0UfsMqXEeNlusD5mH2VOnu0oQFzYVtQNM4Xfk3w",
+      "record": {
+        "attempted": 100,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "sdk-input-validation",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": null,
+        "tool": "find_wallet_activity",
+        "verdict": "fail",
+        "workspace": "agent-0e1530bd-7591-4e92-bc83-3ce4aeeee70f"
+      }
+    },
+    {
+      "id": "a5Jk12HZpXCqm1Ym84hYqamY5jptXGTZ-sbDUW0tll4",
+      "record": {
+        "attempted": 10,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "successful-tool-call",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": "1uIU0UfsMqXEeNlusD5mH2VOnu0oQFzYVtQNM4Xfk3w",
+        "tool": "find_wallet_activity",
+        "verdict": "resolved",
+        "workspace": "agent-0e1530bd-7591-4e92-bc83-3ce4aeeee70f"
+      }
+    }
+  ],
+  "independentCatalogReadback": [
+    {
+      "id": "1uIU0UfsMqXEeNlusD5mH2VOnu0oQFzYVtQNM4Xfk3w",
+      "record": {
+        "attempted": 100,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "sdk-input-validation",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": null,
+        "tool": "find_wallet_activity",
+        "verdict": "fail",
+        "workspace": "agent-0e1530bd-7591-4e92-bc83-3ce4aeeee70f"
+      }
+    },
+    {
+      "id": "a5Jk12HZpXCqm1Ym84hYqamY5jptXGTZ-sbDUW0tll4",
+      "record": {
+        "attempted": 10,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "successful-tool-call",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": "1uIU0UfsMqXEeNlusD5mH2VOnu0oQFzYVtQNM4Xfk3w",
+        "tool": "find_wallet_activity",
+        "verdict": "resolved",
+        "workspace": "agent-0e1530bd-7591-4e92-bc83-3ce4aeeee70f"
+      }
+    }
+  ],
+  "initialState": {
+    "activity-memory.json": "9b279e62f5f4572fe765154e98c1271f6e4d6f98b23c427c29385e06e74e0240",
+    "agent-workspace.json": "d6e4f3dd455360226107bff0aea43c16c0d259d4867b27e484f69beae4ef0bb5",
+    "experience.json": "afa81987c546dcc1d0ddbf2de1f07755926225d554a799f750a779c349022530"
+  },
+  "modelCalls": 0,
+  "tatumCalls": 0,
+  "walrusCalls": 0
+}

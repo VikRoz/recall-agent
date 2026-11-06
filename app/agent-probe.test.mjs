@@ -76,3 +76,18 @@ createInterface({input:process.stdin}).on('line',line=>{
   assert.equal(events.some(e=>e.direction==='one-request-approval'),false);
  }finally{rmSync(d,{recursive:true,force:true});}
 });
+
+test('restored experiment workspace requires exact private state hashes and rejects unplanned files or tampering',async()=>{
+ const {prepareProbeWorkspace}=await import('./agent-probe-workspace.mjs');
+ const {mkdtempSync,writeFileSync,rmSync}=await import('node:fs');const {tmpdir}=await import('node:os');const {join}=await import('node:path');const {createHash}=await import('node:crypto');
+ const d=mkdtempSync(join(tmpdir(),'recall-restored-probe-'));
+ const state={};try{
+  for(const name of ['activity-memory.json','agent-workspace.json','experience.json']){
+   writeFileSync(join(d,name),'{}',{mode:0o600});state[name]=createHash('sha256').update('{}').digest('hex');
+  }
+  prepareProbeWorkspace(d,state);
+  assert.throws(()=>prepareProbeWorkspace(d,state));
+  rmSync(join(d,'client'),{recursive:true});writeFileSync(join(d,'experience.json'),'changed');
+  assert.throws(()=>prepareProbeWorkspace(d,state),/PROBE_STATE_HASH/);
+ }finally{rmSync(d,{recursive:true,force:true});}
+});

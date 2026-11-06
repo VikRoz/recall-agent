@@ -6,7 +6,7 @@ Experimental copy of Recall Lab. The original release remains the fallback. This
 
 ## Results
 
-Latest offline suite: 80 tests pass, including eleven observer/artifact tests. The approved offline repair is implemented; see TOOL_ERROR_MEMORY_OFFLINE_2026-11-06.md. The prior 69-test suite included fail-closed model selection, failed-tool detection and CSV mismatch assessment. This does not mean the model probe passed. Wallet/period lookup and saved-data replay previously passed the complete 65-test suite. See WALLET_ACTIVITY_OFFLINE_2026-11-06.md for the new contract and seven additional tests. The 58-test result below records the preceding model-probe baseline.
+Latest offline suite: 82 tests pass, including eleven observer/artifact tests. The approved offline repair is implemented; see TOOL_ERROR_MEMORY_OFFLINE_2026-11-06.md. The prior 69-test suite included fail-closed model selection, failed-tool detection and CSV mismatch assessment. This does not mean the model probe passed. Wallet/period lookup and saved-data replay previously passed the complete 65-test suite. See WALLET_ACTIVITY_OFFLINE_2026-11-06.md for the new contract and seven additional tests. The 58-test result below records the preceding model-probe baseline.
 
 `bash start.command --check` passed: 58 tests (50 inherited regression tests, 7 agent tests and 1 probe-approval test), both inherited independent-process MCP checks, saved evidence recomputation and the updated development-source manifest.
 
@@ -28,4 +28,4 @@ A protocol test selecting a wrong address is not evidence that a real model made
 
 Additional spend: $0. Model/Tatum/Walrus calls in these offline checks: 0. No deployment or application submission.
 
-The subsequent wallet model probe FAILED acceptance; see WALLET_MODEL_PROBE_2026-11-06.md. Its negative evidence is now verified offline by evidence/verify-wallet-model-probe.mjs. Observer/experience-schema and export-artifact changes are now implemented and checked offline following approval; no native model re-test has changed the retained failed acceptance.
+The subsequent wallet model probe FAILED acceptance; see WALLET_MODEL_PROBE_2026-11-06.md. Its negative evidence is now verified offline by evidence/verify-wallet-model-probe.mjs. Observer/experience-schema and export-artifact changes are now implemented and checked offline following approval; the original failed acceptance remains retained. A later one-pair comparison is separately recorded in MEMORY_COMPARISON_2026-11-06.md, with narrow first-choice and original-file delivery evidence and explicit limits.

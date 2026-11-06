@@ -12,7 +12,7 @@ Memory belongs to a persistent private workspace; separate client processes reus
 
 ## Current acceptance gap
 
-The [wallet lookup model probe](docs/WALLET_MODEL_PROBE_2026-11-06.md) failed acceptance: the model repeated an invalid page size in a fresh chat, current gas-payer memory did not capture the schema error, and the model rewrote the exported CSV. Lookup itself found the saved records and correctly exposed partial coverage. No memory improvement or exact final CSV delivery is claimed. The approved [offline repair is implemented](docs/TOOL_ERROR_MEMORY_OFFLINE_2026-11-06.md): schema-bound technical capture and verifiable original CSV files. The revised candidate has not yet been re-tested with a real model; the failed baseline remains unchanged.
+The [wallet lookup model probe](docs/WALLET_MODEL_PROBE_2026-11-06.md) failed acceptance: the model repeated an invalid page size in a fresh chat, current gas-payer memory did not capture the schema error, and the model rewrote the exported CSV. Lookup itself found the saved records and correctly exposed partial coverage. That baseline demonstrates neither memory improvement nor exact final CSV delivery. The approved [offline repair is implemented](docs/TOOL_ERROR_MEMORY_OFFLINE_2026-11-06.md): schema-bound technical capture and verifiable original CSV files. A [subsequent native comparison](docs/MEMORY_COMPARISON_2026-11-06.md) observed a narrow positive result: the same model requested 100 without experience and 10 with restored experience, and delivered the original CSV with its hash. This is one fixed-order known-case pair using local historical memory; it does not establish general reasoning improvement or live Walrus portability. The failed baseline remains unchanged.
 
 ## Offline checks
 
@@ -64,7 +64,7 @@ Configure a stdio server with command `/bin/bash` and arguments `["ABSOLUTE_PROJ
 
 1. Independent tools, wallet/period lookup, replay provenance, verified claim capture and stable local memory — offline implementation and checks.
 2. Preliminary model smoke — recorded, including a failed harness attempt; genuinely new user-selected tasks and memory-benefit checks remain pending.
-3. Offline technical-error capture and exact export artifacts — implemented; model re-test pending.
+3. Offline technical-error capture and exact export artifacts — implemented; one narrow native-model comparison recorded, broader testing pending.
 4. Account-bound admission and durable shared 2/2/2 limits for live experience — pending; old exhausted budgets cannot be reused.
 5. Bounded real Sui/Walrus test and clean judge packaging — pending.
 
