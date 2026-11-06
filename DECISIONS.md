@@ -54,3 +54,9 @@ One stopped control turn requested 100; the restored-memory turn requested 10 fi
 The user explicitly approved one shared persistent ledger and separate typed memory namespaces with unchanged 2/2/2 caps. Reuse the existing SDK writer with optional namespace/admission hooks, namespace-scoped receipt journals and one outer writer lease covering parent checks. Guard all SDK fetches, including catalog reads and Seal package lookup. Keep the guard installed until outstanding SDK calls settle on close. Native metadata and synthetic receipts are marked separately from Mainnet facts.
 
 The new factory accepts injected offline-synthetic admission only; no live credentials or user-launcher provider mode was added. Tests exercise installed MemWal/Seal/Sui locally with fabricated replies. Real sponsorship, authorization and indexing remain a separate live gate. The old release and exhausted runs remain unchanged. See docs/AGENT_WALRUS_GATE_OFFLINE_2026-11-06.md.
+
+## 6 November 2026 — explicitly approved real Walrus/native continuation
+
+Use the existing delegate in place, official managed sponsorship and pinned deployment metadata with successful signed account authorization. Accept the verified unused JSON-RPC metadata without authorizing a JSON-RPC network route. Add a durable one-turn native permit and permit only the exact approved historical failure plus an automatically verified resolution in this live trial. Keep the default launcher offline and preserve the exhausted old run.
+
+The real trial completed with 1 native Luna turn, 2 done Walrus writes, 2 content recalls and zero Tatum. Preserve source b1072c8, actual receipts, native trace and the known-case/replay limitations. Do not spend a third read to improve evidence delivery. No deployment or publication is included; judge packaging and broader evaluation are later work.

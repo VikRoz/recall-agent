@@ -6,8 +6,8 @@
 3. Native wallet-query model probe — acceptance failed: repeated argument error not captured, CSV rewritten.
    Approved offline repair implemented: transport-boundary technical capture and exact export artifacts. One known-case native comparison observed a valid first lookup with restored experience versus an invalid control; original-file delivery passed. Generalization and Mainnet memory remain pending. No scripted first step or silent clamping.
    The observed local error → fresh-chat valid call → linked resolution sequence passed in one native continuation; broader evaluation is still pending.
-4. Shared durable 2/2/2 budget, guarded SDK assembly and namespace isolation — offline implemented and checked. Real account-specific admission remains pending.
-5. Independent-client Mainnet experience trial — pending.
+4. Shared durable 2/2/2 budget, guarded SDK assembly and namespace isolation — offline implemented and checked. An explicit managed-account live-admission path passed the bounded real trial.
+5. Independent-client Mainnet experience trial — one known-case native Luna continuation completed: 2 real writes / 2 content reads; Sui facts were saved replay. Broader cases and native Claude remain pending.
 6. Clean installation and judge package — pending.
 7. Evidence, article and submission decision — pending.
 

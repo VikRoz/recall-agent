@@ -1,6 +1,6 @@
 # Real Walrus and native model trial — prepared plan
 
-Date: 6 November 2026. Status: explicitly approved by the user within the exact one-turn/two-write/two-read limits. Live admission implementation passed 103 offline tests before execution; authenticated execution has not yet started in this snapshot.
+Date: 6 November 2026. Status: explicitly approved by the user within the exact one-turn/two-write/two-read limits. Live admission implementation passed 103 offline tests before execution; the real trial subsequently completed; see AGENT_LIVE_TRIAL_2026-11-06.md for results and limitations.
 
 ## Goal
 
@@ -53,4 +53,4 @@ A real account has to be distinguished from the synthetic fixture. Use an explic
 
 ## Decisions and open questions
 
-The user requested a live online test. The user explicitly approved this bounded live-admission implementation and execution. The approved payload/plan snapshots remain unchanged; the private run authorization records the approval and binds their hashes. Current account authorization, quota, indexing latency, returned receipts, the model's first choice and automatic resolution remain unverified. Approval of this plan does not authorize higher limits, payments, retries or a deployment.
+The user requested a live online test. The user explicitly approved this bounded live-admission implementation and execution. The approved payload/plan snapshots remain unchanged; the private run authorization records the approval and binds their hashes. The completed trial verified account authorization, current quota, both receipts, the model's valid first choice and automatic resolution for the approved case. No allowance remains for another live call. Approval of this plan does not authorize higher limits, payments, retries or a deployment.
