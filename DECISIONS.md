@@ -48,3 +48,9 @@ Return exact code-generated CSV as a bounded private content-addressed file with
 The user approved a same-version/same-task comparison and CSV check. Restore experience only by replaying the already-recorded real native error and successful correction through the current SDK/observer, with a separate-process readback and hash-pinned initial state. This is historical local evidence, not fresh model error generation or Mainnet storage.
 
 One stopped control turn requested 100; the restored-memory turn requested 10 first and completed, followed by original-file CSV delivery with a correct hash. Keep the full three-turn record and the fixed-order/single-case caveat. No repeated attempts, tuned prompts or broader learning claim. Preserve earlier negative evidence unchanged. Next provider work requires shared budgets/admission and separate live gates.
+
+## 6 November 2026 — approved shared SDK gate, offline only
+
+The user explicitly approved one shared persistent ledger and separate typed memory namespaces with unchanged 2/2/2 caps. Reuse the existing SDK writer with optional namespace/admission hooks, namespace-scoped receipt journals and one outer writer lease covering parent checks. Guard all SDK fetches, including catalog reads and Seal package lookup. Keep the guard installed until outstanding SDK calls settle on close. Native metadata and synthetic receipts are marked separately from Mainnet facts.
+
+The new factory accepts injected offline-synthetic admission only; no live credentials or user-launcher provider mode was added. Tests exercise installed MemWal/Seal/Sui locally with fabricated replies. Real sponsorship, authorization and indexing remain a separate live gate. The old release and exhausted runs remain unchanged. See docs/AGENT_WALRUS_GATE_OFFLINE_2026-11-06.md.

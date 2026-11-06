@@ -27,6 +27,8 @@ export class WalrusRecordStore<T> {
   validateRecord: (record: T, binding: Binding) => void;
   sdk: any;
   binding: Binding;
+  namespace: string;
+  hooks: { beforeSubmit?: (record: T, key: string) => Promise<void>; afterReceipt?: (key: string, receipt: RuleReceipt) => Promise<void> };
   latestSignature: string | undefined;
   cached: { signature: string; query: string; limit: number; hits: Hit[] } | undefined;
   wait: (milliseconds: number) => Promise<unknown>;
@@ -37,10 +39,14 @@ export class WalrusRecordStore<T> {
     assertSettled?(locked?: boolean): void;
     proofs?(): { blobId: string; sha256: string }[];
   };
-  constructor(sdk: any, binding: Binding, journal: WalrusRecordStore<T>['journal'], validateRecord: (record: T, binding: Binding) => void, wait = sleep) {
+  constructor(sdk: any, binding: Binding, journal: WalrusRecordStore<T>['journal'], validateRecord: (record: T, binding: Binding) => void, wait = sleep,
+    options: { namespace?: string; beforeSubmit?: (record: T, key: string) => Promise<void>; afterReceipt?: (key: string, receipt: RuleReceipt) => Promise<void> } = {}) {
     this.validateRecord = validateRecord;
     this.sdk = sdk;
     this.binding = { owner: address(binding.owner), project: binding.project };
+    this.namespace = options.namespace ?? binding.project;
+    assert(typeof this.namespace === 'string' && this.namespace.length > 0 && this.namespace.length <= 120, 'MEMORY_NAMESPACE');
+    this.hooks = options;
     this.journal = journal;
     this.wait = wait;
   }
@@ -50,13 +56,13 @@ export class WalrusRecordStore<T> {
     let snapshot: number | undefined;
     const cursors = new Set<string>();
     for (let pageNumber = 0; pageNumber < 10; pageNumber++) {
-      const page = await this.sdk.listMemories({ namespace: this.binding.project, limit: 100, cursor });
+      const page = await this.sdk.listMemories({ namespace: this.namespace, limit: 100, cursor });
       assert(Number.isSafeInteger(page.snapshot_version) && Array.isArray(page.memories)
         && typeof page.has_more === 'boolean' && page.must_resync === false, 'INVENTORY_RESPONSE');
       if (snapshot !== undefined) assert(snapshot === page.snapshot_version, 'INVENTORY_CHANGED');
       snapshot = page.snapshot_version;
       for (const row of page.memories) {
-        if (row.namespace_id !== this.binding.project) continue;
+        if (row.namespace_id !== this.namespace) continue;
         assert(typeof row.status === 'string' && row.status.length > 0 && typeof row.blob_id === 'string'
           && /^[a-zA-Z0-9_-]{43}$/.test(row.blob_id), 'MEMORY_NOT_ACTIVE');
         assert(!all.includes(row.blob_id), 'MEMORY_DUPLICATE_BLOB');
@@ -80,7 +86,7 @@ export class WalrusRecordStore<T> {
   async recall(query: string, limit: number): Promise<Hit[]> {
     if (this.cached && this.cached.signature === this.latestSignature
       && this.cached.query === query && this.cached.limit === limit) return structuredClone(this.cached.hits);
-    const result = await this.sdk.recall({ query, limit, namespace: this.binding.project });
+    const result = await this.sdk.recall({ query, limit, namespace: this.namespace });
     assert(Array.isArray(result.results), 'RECALL_RESPONSE');
     const hits = result.results.map((row: any) => {
       assert(typeof row.blob_id === 'string' && typeof row.text === 'string', 'RECALL_RESPONSE');
@@ -110,9 +116,10 @@ export class WalrusRecordStore<T> {
       return { jobId: previous.jobId, blobId: previous.blobId };
     }
     this.journal.assertSettled?.(true);
+    await this.hooks.beforeSubmit?.(record, operationKey);
     // An in-progress journal entry survives crashes and forbids resubmission.
     await this.journal.save(operationKey, { state: 'submitting', sha256: hash });
-    const accepted = await this.sdk.remember(text, this.binding.project, { idempotencyKey: operationKey });
+    const accepted = await this.sdk.remember(text, this.namespace, { idempotencyKey: operationKey });
     assert(typeof accepted.job_id === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(accepted.job_id), 'WRITE_ACK');
     await this.journal.save(operationKey, { state: 'accepted', sha256: hash, jobId: accepted.job_id });
     for (const delay of WRITE_POLL_DELAYS_MS) {
@@ -120,10 +127,11 @@ export class WalrusRecordStore<T> {
       const stored = await this.sdk.getRememberStatus(accepted.job_id);
       assert(stored.job_id === accepted.job_id, 'WRITE_JOB_MISMATCH');
       if (stored.status === 'done') {
-        assert(stored.owner === this.binding.owner && stored.namespace === this.binding.project
+        assert(stored.owner === this.binding.owner && stored.namespace === this.namespace
           && typeof stored.blob_id === 'string' && /^[a-zA-Z0-9_-]{43}$/.test(stored.blob_id), 'WRITE_BINDING');
         const receipt = { jobId: accepted.job_id, blobId: stored.blob_id };
         await this.journal.save(operationKey, { state: 'done', sha256: hash, ...receipt });
+        await this.hooks.afterReceipt?.(operationKey, receipt);
         return receipt;
       }
       assert(['pending', 'running', 'uploaded'].includes(stored.status), 'WRITE_OUTCOME_UNCERTAIN');

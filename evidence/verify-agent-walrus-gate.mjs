@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {validateAgentManifest,runHash} from '../app/agent-run.mjs';
+import {validateExperienceRows} from '../app/agent-experience.ts';
+import {PILOT_LIMITS} from '../app/activity-live.ts';
+const run=JSON.parse(readFileSync(new URL('./agent-walrus-gate-offline-2026-11-06/run.json',import.meta.url),'utf8'));
+assert.equal(run.status,'OFFLINE_SDK_CAPTURE_RECOVERY_VERIFIED');
+assert.equal(run.mode,'offline-sdk-fixture');validateAgentManifest(run.manifest);
+assert.deepEqual(run.limits,PILOT_LIMITS);
+for(const k of ['modelUserTurns','tatumCalls','walrusCalls','externalProviderCalls','additionalSpendUSD'])assert.equal(run[k],0);
+for(const k of ['realCredentialsRead','liveEntryPointEnabled'])assert.equal(run[k],false);
+assert.equal(run.independentProcesses,true);
+assert.match(run.capture,/Synthetic protocol inputs/);assert.match(run.limitation,/synthetic/);
+validateExperienceRows(run.records,run.manifest.workspace);
+assert.equal(run.records.length,2);const [failure,resolution]=run.records;
+assert.equal(failure.record.attempted,100);assert.equal(failure.record.verdict,'fail');
+assert.equal(resolution.record.attempted,10);assert.equal(resolution.record.verdict,'resolved');
+assert.equal(resolution.record.supersedes,failure.id);assert.equal(resolution.record.source,'replay');
+assert.ok(run.records.every(row=>row.blobId===row.id)); // Synthetic fixture IDs only.
+assert.equal(run.ledger.manifestHash,runHash(run.manifest));assert.equal(run.ledger.stopped,null);
+assert.equal(run.ledger.writes,2);assert.equal(run.ledger.reads,2);assert.equal(run.ledger.tatumBatches,0);
+assert.equal(run.ledger.requests,run.requestTrace.length);assert.ok(run.ledger.requests<=64);
+assert.equal(Object.keys(run.ledger.jobs).length,2);assert.ok(Object.values(run.ledger.jobs).every(j=>j.polls===1));
+assert.equal(run.ledger.intents.length,2);assert.ok(run.ledger.intents.every(i=>i.state==='done'));
+const remember=run.requestTrace.filter(r=>r.path==='/api/remember');assert.equal(remember.length,2);
+assert.ok(remember.every(r=>r.namespace===run.manifest.namespaces.experience&&r.signed&&r.seal));
+assert.equal(run.requestTrace.filter(r=>r.path==='/api/recall').length,2);
+assert.ok(run.requestTrace.some(r=>r.path.endsWith('/BatchGetObjects')));
+const [bad,good,report,exported]=run.trace;
+assert.equal(bad.result.isError,true);assert.equal(good.result.isError,undefined);
+assert.equal(bad.result._meta['recall/observation'].id,failure.id);
+assert.equal(good.result._meta['recall/observation'].id,resolution.id);
+const payload=JSON.parse(report.result.content[0].text);
+assert.equal(payload.mode,'offline-sdk-fixture-replay');assert.equal(payload.dataProvenance.freshProviderRead,false);
+assert.equal(payload.dataProvenance.walletHistoryComplete,false);assert.equal(payload.experienceStorage,'walrus-fixture');
+assert.equal(Buffer.byteLength(exported.csv),exported.artifactBytes);
+assert.equal(createHash('sha256').update(exported.csv).digest('hex'),exported.artifactSha256);
+assert.ok(exported.csv.includes('"replay"'));
+console.log(JSON.stringify({status:run.status,modelUserTurns:0,externalProviderCalls:0,
+ writes:2,contentReads:2,guardedSyntheticRequests:run.ledger.requests,
+ limitation:'Installed SDK/Seal and isolated MCP processes; synthetic service/chain replies and receipts, no live verification.'},null,2));

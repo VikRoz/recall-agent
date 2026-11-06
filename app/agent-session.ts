@@ -19,7 +19,7 @@ export class AgentSession extends ActivitySession {
   async export(reportId: string) {
     const value = await super.export(reportId);
     try { return {...value, artifact: this.artifacts.write(value.csv)}; }
-    catch (error) { this.stopped = true; throw error; }
+    catch (error) { this.stopped = true; this.onError?.(); throw error; }
   }
   async findActivity(query: ActivityQuery) {
     return this.action(async () => this.activityIndex.find(query));
@@ -30,7 +30,7 @@ export class AgentSession extends ActivitySession {
     this.busy = true;
     try { return await fn(); }
     catch (error: any) {
-      if (!recoverable.has(error?.code) || ++this.failures > 4) this.stopped = true;
+      if (!recoverable.has(error?.code) || ++this.failures > 4) { this.stopped = true; this.onError?.(); }
       throw error;
     } finally { this.busy = false; }
   }

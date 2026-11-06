@@ -1,6 +1,6 @@
 # Shared admission and budget for agent memory
 
-Date: 6 November 2026. Status: proposed, not implemented or authorized for live use.
+Date: 6 November 2026. Status: the user approved this offline implementation; implemented and checked in AGENT_WALRUS_GATE_OFFLINE_2026-11-06.md. No live use is authorized by this increment.
 
 ## Goal
 
@@ -51,7 +51,7 @@ The chosen change introduces a new admission contract and modest shared-store pl
 
 ## Decisions, limits and approval boundary
 
-This file records a proposed implementation, not an approved architecture or a live plan. The user's AGENTS.md requires approval when an architectural change affects data contracts or admission of external actions. Request approval for this exact offline scope before changing the runtime/store contracts. After approval, implement and validate all seven checks without further routine confirmation. New provider/model calls, real credentials, live sponsorship verification, Mainnet writes, deployment and higher limits remain excluded.
+This file retains the reviewed proposal. The user subsequently explicitly approved the offline implementation with unchanged 2/2/2 limits. Implementation and validation are recorded separately. New provider/model calls, real credentials, live sponsorship verification, Mainnet writes, deployment and higher limits remain excluded.
 
 ## Sources
 

@@ -28,7 +28,11 @@ export function offlineAgent(directory, capture, dataMode = 'fixture') {
   session.capture = capture;
   session.activityIndex = index;
   session.artifacts = new CsvArtifacts(directory);
-  const server = activityServer(session, dataMode === 'saved' ? 'offline-agent-replay' : 'offline-agent-fixture', {exportsArtifact:true});
+  return agentServer(session, {capture,dataMode,mode:dataMode === 'saved' ? 'offline-agent-replay' : 'offline-agent-fixture'});
+}
+// Shared independent tools; the provider assembly supplies stores, never a task route.
+export function agentServer(session, {capture,dataMode,mode}) {
+  const server = activityServer(session, mode, {exportsArtifact:true});
   server.registerTool('find_wallet_activity', {
     description: 'Find transaction references involving a wallet in the selected LOCAL dataset, optionally filtered by a UTC period. Saved records are replay, not a fresh chain query. Results always have partial wallet-history coverage. No match does not prove inactivity. This tool does not infer ownership or direct counterparties.',
     inputSchema: { network: z.enum(['mainnet','testnet']), wallet: z.string().max(66),
@@ -40,14 +44,14 @@ export function offlineAgent(directory, capture, dataMode = 'fixture') {
     catch (error) { return {isError: true, content: [{type: 'text', text: /^[A-Z0-9_]+$/.test(error?.code) ? error.code : 'AGENT_ERROR'}]}; }
   });
   server.registerTool('verify_gas_payer', {
-    description: 'Check a proposed gas-payer address against transaction evidence in an existing report. A verified mismatch and its verified resolution can be saved automatically when local capture is enabled. Returned local IDs are not Walrus receipts.',
+    description: 'Check a proposed gas-payer address against transaction evidence in an existing report. A verified mismatch and its verified resolution can be saved automatically when capture is enabled. Local or fixture IDs are not Mainnet Walrus receipts.',
     inputSchema: { reportId: z.string().max(120), transaction: z.string().max(200), claimedPayer: z.string().max(66) },
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   }, async args => {
     try { return { content: [{ type: 'text', text: JSON.stringify(await session.verifyGasPayer(args.reportId, args.transaction, args.claimedPayer)) }] }; }
     catch (error) { return { isError: true, content: [{ type: 'text', text: /^[A-Z0-9_]+$/.test(error?.code) ? error.code : 'AGENT_ERROR' }] }; }
   });
-  const observe = inner => new ObservedToolTransport(inner,{store:session.experience,workspace:binding.project,
+  const observe = inner => new ObservedToolTransport(inner,{store:session.experience,workspace:session.binding.project,
     source:dataMode === 'saved' ? 'replay' : 'fixture',capture,stop:()=>{session.stopped=true;}});
   return { session, server, observe };
 }

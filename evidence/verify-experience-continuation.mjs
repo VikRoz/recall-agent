@@ -5,6 +5,7 @@ import {validateExperienceRows} from '../app/agent-experience.ts';
 import {toolSchemaHash} from '../app/agent-tool-observer.mjs';
 import {assessFirstLookup} from '../app/agent-comparison-assess.mjs';
 import {loadOfflineActivity} from '../app/agent-activity-index.ts';
+import {verifyRecordedSource} from './recorded-source.mjs';
 
 const folder=new URL('./experience-continuation-2026-11-06/',import.meta.url);
 const bytes=name=>readFileSync(new URL(name,folder));
@@ -20,8 +21,7 @@ assert.equal(prep.sdkErrorReenactments,0);assert.equal(prep.bytesUnchanged,true)
 assert.equal(prep.independentProcessReadback.exactRecord,true);
 assert.deepEqual(plan.initialState,prep.initialState);
 assert.equal(freeze.planSha256,sha(bytes('plan.json')));assert.equal(freeze.maximumUserTurns,1);
-for(const [path,hash] of Object.entries(freeze.productAndHarnessSha256))
- assert.equal(sha(readFileSync(new URL('../'+path,import.meta.url))),hash,path);
+const recordedSource=verifyRecordedSource(freeze);
 assert.equal(run.frozenFilesUnchangedBeforeAndAfter,true);
 assert.equal(plan.tasks.length,1);assert.equal(run.summary.turnsStarted,1);
 assert.equal(run.summary.status,'COMPLETED');assert.equal(run.summary.model,plan.model);
@@ -65,4 +65,4 @@ assert.ok(run.limitations.length>=5);
 assert.equal(run.assessment,'OBSERVED_CAPTURE_TO_FRESH_CHAT_RESOLUTION');
 console.log(JSON.stringify({status:run.assessment,newUserTurns:1,firstLookupLimit:first.limit,
  records:2,linkedResolution:true,independentReadback:true,providerCalls:0,
- limitation:'One known-case local continuation; no general learning or statistical causality claim.'},null,2));
+ recordedSource,limitation:'One known-case local continuation; no general learning or statistical causality claim.'},null,2));

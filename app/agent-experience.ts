@@ -69,7 +69,7 @@ export function validateExperienceRows(rows: ExperienceRow[], workspace: string)
   }
 }
 export interface ExperienceStore {
-  storage: 'local-fixture' | 'walrus';
+  storage: 'local-fixture' | 'walrus' | 'walrus-fixture';
   read(): Promise<ExperienceRow[]>;
   write(record: Experience): Promise<ExperienceRow>;
 }
@@ -117,14 +117,15 @@ export class LocalExperienceStore implements ExperienceStore {
 // Real SDK transport seam, deliberately unavailable from the development launcher.
 // Caller supplies separate account-bound admission; no credentials are read here.
 export class WalrusExperienceStore implements ExperienceStore {
-  storage = 'walrus' as const;
+  storage: 'walrus' | 'walrus-fixture';
   port: WalrusRecordStore<Experience>;
   admit: () => Promise<void>;
   workspace: string;
-  constructor(port: WalrusRecordStore<Experience>, admit: () => Promise<void>) {
+  constructor(port: WalrusRecordStore<Experience>, admit: () => Promise<void>, storage: 'walrus' | 'walrus-fixture' = 'walrus') {
     this.port = port;
     this.admit = admit;
     this.workspace = port.binding.project;
+    this.storage = storage;
   }
   async read(): Promise<ExperienceRow[]> {
     const hits = await readCompleteMemory(this.port, [], 'Verified Sui technical observations and linked resolutions');

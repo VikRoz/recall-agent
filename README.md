@@ -8,7 +8,7 @@ The launcher supplies general operating rules and opens an empty Codex conversat
 
 Memory belongs to a persistent private workspace; separate client processes reuse it. Supported local-input errors can recover. Integrity failures and unknown failures stop the session. The verifier covers the structured claim submitted to it; arbitrary model prose is not automatically verified.
 
-**Today: offline transaction data and local memory only in the launcher.** Synthetic data is the default; `--saved` selects a partial replay of two previously recorded Mainnet transactions. A typed Walrus transport reuses the existing SDK writer and durable uncertain-write journal and is tested with intercepted SDK responses. Its live admission is not wired into this experimental launcher. A preliminary native-model smoke completed report/verification, CSV reuse and clarification, with recorded capability overreach; no improvement from memory is claimed. See [probe results](docs/AGENT_MODEL_PROBE_2026-11-06.md). Inherited website files, evidence and legacy entry points describe the fallback, not validation of this agent.
+**Today: offline transaction data and local memory only in the launcher.** Synthetic data is the default; `--saved` selects a partial replay of two previously recorded Mainnet transactions. A [separate injected SDK assembly](docs/AGENT_WALRUS_GATE_OFFLINE_2026-11-06.md) now exercises the installed Walrus SDK and Seal through fully intercepted synthetic replies, with shared persistent limits and two typed namespaces. Live admission is not wired into the user launcher. A preliminary native-model smoke completed report/verification, CSV reuse and clarification, with recorded capability overreach; that smoke alone did not demonstrate memory benefit. See [probe results](docs/AGENT_MODEL_PROBE_2026-11-06.md). Inherited website files, evidence and legacy entry points describe the fallback, not validation of this agent.
 
 ## Current acceptance gap
 
@@ -25,6 +25,8 @@ bash start.command --check
 ```
 
 This runs regression tests, independent MCP processes, SDK transport tests and evidence/source checks, without model, Tatum or Walrus calls. Synthetic mismatches in these tests verify plumbing; they are not observed model errors.
+
+The injected provider checks use a fixed public synthetic seed and fabricated relayer/chain responses. They exercise real SDK signing and Seal session creation locally, shared 2/2/2 ceilings, receipt reuse and uncertain-write stops. Their walrus-fixture IDs are not Mainnet receipts. No live profile or paid provider fallback is loaded.
 
 ## Try the development chat
 
@@ -67,7 +69,7 @@ Configure a stdio server with command `/bin/bash` and arguments `["ABSOLUTE_PROJ
 1. Independent tools, wallet/period lookup, replay provenance, verified claim capture and stable local memory — offline implementation and checks.
 2. Preliminary model smoke — recorded, including a failed harness attempt; genuinely new user-selected tasks and memory-benefit checks remain pending.
 3. Offline technical-error capture and exact export artifacts — implemented; one narrow native-model comparison recorded, broader testing pending.
-4. Account-bound admission and durable shared 2/2/2 limits for live experience — pending; old exhausted budgets cannot be reused.
+4. Shared durable 2/2/2 ledger, typed namespaces and guarded SDK assembly — offline implemented and tested; real account-specific admission remains pending. Old exhausted budgets cannot be reused.
 5. Bounded real Sui/Walrus test and clean judge packaging — pending.
 
 [Development state](PROJECT_STATE.md) · [Plan](docs/AGENT_PLAN.md). AI assistance was used. MIT license and dependency notices are preserved.

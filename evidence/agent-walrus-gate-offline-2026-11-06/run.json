@@ -1,0 +1,434 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "status": "OFFLINE_SDK_CAPTURE_RECOVERY_VERIFIED",
+  "mode": "offline-sdk-fixture",
+  "manifest": {
+    "schema": 1,
+    "mode": "offline-sdk-fixture",
+    "runId": "e45a0d3e-bfec-479d-83d9-14abcb9b7acc",
+    "owner": "0x000000000000000000000000000000000000000000000000000000000000000a",
+    "accountId": "0x0000000000000000000000000000000000000000000000000000000000000010",
+    "delegatePublicKeyHex": "8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "packageId": "0x0000000000000000000000000000000000000000000000000000000000000020",
+    "workspace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6",
+    "datasetId": "9d3126ce6084fe4167587b8431face5468dbb4b8d4ec286c60bdc2c0aeadbc7c",
+    "source": "replay",
+    "namespaces": {
+      "rules": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-rules",
+      "experience": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience"
+    },
+    "maxUSD": 0,
+    "expiresAt": "2026-11-06T19:10:07.976Z",
+    "admission": {
+      "kind": "offline-synthetic",
+      "accountId": "0x0000000000000000000000000000000000000000000000000000000000000010",
+      "delegatePublicKeyHex": "8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+      "checkedAt": "2026-11-06T18:10:07.976Z",
+      "maxUSD": 0
+    }
+  },
+  "limits": {
+    "tatumBatches": 2,
+    "writes": 2,
+    "reads": 2,
+    "requests": 64,
+    "pollsPerJob": 8
+  },
+  "independentProcesses": true,
+  "capture": "Synthetic protocol inputs through real SDK; not a model trial or Mainnet receipt",
+  "records": [
+    {
+      "id": "g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc",
+      "record": {
+        "attempted": 100,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "sdk-input-validation",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": null,
+        "tool": "find_wallet_activity",
+        "verdict": "fail",
+        "workspace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6"
+      },
+      "blobId": "g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc"
+    },
+    {
+      "id": "L_-IIeCsT7EK2CluE3Dv8YaCoB_cYSvVIqtn8Y1vPdQ",
+      "record": {
+        "attempted": 10,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "successful-tool-call",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": "g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc",
+        "tool": "find_wallet_activity",
+        "verdict": "resolved",
+        "workspace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6"
+      },
+      "blobId": "L_-IIeCsT7EK2CluE3Dv8YaCoB_cYSvVIqtn8Y1vPdQ"
+    }
+  ],
+  "trace": [
+    {
+      "tool": "find_wallet_activity",
+      "arguments": {
+        "network": "mainnet",
+        "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "limit": 100
+      },
+      "result": {
+        "_meta": {
+          "recall/observation": {
+            "id": "g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc",
+            "storage": "walrus-fixture",
+            "verdict": "fail",
+            "blobId": "g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "MCP error -32602: Input validation error: Invalid arguments for tool find_wallet_activity: Too big: expected number to be <=10 at limit"
+          },
+          {
+            "type": "text",
+            "text": "Verified technical memory: {\"id\":\"g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc\",\"storage\":\"walrus-fixture\",\"verdict\":\"fail\",\"blobId\":\"g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc\"}"
+          }
+        ],
+        "isError": true
+      }
+    },
+    {
+      "tool": "find_wallet_activity",
+      "arguments": {
+        "network": "mainnet",
+        "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "limit": 10
+      },
+      "result": {
+        "_meta": {
+          "recall/observation": {
+            "id": "L_-IIeCsT7EK2CluE3Dv8YaCoB_cYSvVIqtn8Y1vPdQ",
+            "storage": "walrus-fixture",
+            "verdict": "resolved",
+            "blobId": "L_-IIeCsT7EK2CluE3Dv8YaCoB_cYSvVIqtn8Y1vPdQ"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"sourceMode\":\"saved-mainnet-replay\",\"datasetId\":\"9d3126ce6084fe4167587b8431face5468dbb4b8d4ec286c60bdc2c0aeadbc7c\",\"query\":{\"network\":\"mainnet\",\"wallet\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"from\":null,\"to\":null,\"limit\":10},\"coverage\":{\"scope\":\"local-recorded-subset\",\"walletHistoryComplete\":false,\"freshProviderRead\":false,\"matchingRecordsInDataset\":2,\"returned\":2,\"hasMore\":false,\"interval\":\"[from, to)\",\"missingHistory\":\"unknown\"},\"transactions\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"observedRoles\":[\"sender\"]},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"observedRoles\":[\"sender\"]}],\"nextCursor\":null,\"note\":\"No match means no matching record in this local dataset. Wallet history completeness is unknown. Roles do not prove ownership or direct transfer counterparties.\"}"
+          },
+          {
+            "type": "text",
+            "text": "Verified technical memory: {\"id\":\"L_-IIeCsT7EK2CluE3Dv8YaCoB_cYSvVIqtn8Y1vPdQ\",\"storage\":\"walrus-fixture\",\"verdict\":\"resolved\",\"blobId\":\"L_-IIeCsT7EK2CluE3Dv8YaCoB_cYSvVIqtn8Y1vPdQ\"}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "prepare_report",
+      "arguments": {
+        "network": "mainnet",
+        "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "transactions": [
+          "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3"
+        ]
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mode\":\"offline-sdk-fixture-replay\",\"reportId\":\"report:81eab41c-5b97-4ca2-8206-8ab678be57b0\",\"wallet\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"asOf\":\"2026-11-06T18:10:08.882Z\",\"digests\":[\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\"],\"rows\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-104261\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-104194\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null}],\"totals\":[],\"declaredWalletTotals\":[],\"gas\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"42605600\",\"rebate\":\"42601339\",\"netCharge\":\"104261\"},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"41936800\",\"rebate\":\"41932606\",\"netCharge\":\"104194\"}],\"notes\":[\"Totals cover the supplied digests only.\",\"Net balance changes include their onchain effects.\",\"Gas information is displayed separately and is not subtracted again.\",\"Declared wallet totals use the address relations confirmed by the user.\",\"Address relations are user-confirmed context. They do not identify a direct transfer counterparty.\"],\"transactionEvidence\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"checkpoint\":\"341884811\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"sender\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"commands\":[\"makeMoveVector\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\"],\"interpretation\":\"unparsed-ptb\",\"status\":\"success\",\"source\":\"replay\",\"gas\":{\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"42605600\",\"rebate\":\"42601339\",\"netCharge\":\"104261\"},\"movements\":[{\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-104261\"}]},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"checkpoint\":\"341884811\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"sender\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"commands\":[\"makeMoveVector\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\"],\"interpretation\":\"unparsed-ptb\",\"status\":\"success\",\"source\":\"replay\",\"gas\":{\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"41936800\",\"rebate\":\"41932606\",\"netCharge\":\"104194\"},\"movements\":[{\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-104194\"}]}],\"memory\":[],\"experience\":[],\"experienceStorage\":\"walrus-fixture\",\"dataProvenance\":{\"sourceMode\":\"saved-mainnet-replay\",\"freshProviderRead\":false,\"walletHistoryComplete\":false,\"scope\":\"selected-transactions\"}}"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "export_report",
+      "arguments": {
+        "reportId": "report:81eab41c-5b97-4ca2-8206-8ab678be57b0"
+      },
+      "artifactSha256": "59968fc01f053914ab80b1dd432ac2e3ab1aa716acd93acb80c61dd5bd991cd4",
+      "artifactBytes": 683,
+      "csv": "digest,network,timestamp,status,source,address,coinType,netAmountBaseUnits,relation,label,ruleId,memoryBlobId\r\n\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"mainnet\",\"2026-11-05T10:34:12.732Z\",\"success\",\"replay\",\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"-104261\",\"unclassified\",\"\",\"\",\"\"\r\n\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"mainnet\",\"2026-11-05T10:34:12.732Z\",\"success\",\"replay\",\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"-104194\",\"unclassified\",\"\",\"\",\"\"\r\n"
+    }
+  ],
+  "ledger": {
+    "intents": [
+      {
+        "key": "g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc",
+        "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience",
+        "sha256": "8370ef974869b698fca8a808cd8df4c4bf1d1c38f464dbae353a3547d361aad7",
+        "state": "done"
+      },
+      {
+        "key": "L_-IIeCsT7EK2CluE3Dv8YaCoB_cYSvVIqtn8Y1vPdQ",
+        "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience",
+        "sha256": "2fff8821e0ac4fb10ad8296e1370eff18682a01fdc612bd522ab67f18d6f3dd4",
+        "state": "done"
+      }
+    ],
+    "jobs": {
+      "fixture-092114bd-0697-495f-89cd-166ab31a966a": {
+        "key": "g3Dvl0hptpj8qKgIzY30xL8dHDj0ZNuuNTo1R9Nhqtc",
+        "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience",
+        "polls": 1
+      },
+      "fixture-c2b5dea7-ecc8-4335-b891-9563a24ac6ec": {
+        "key": "L_-IIeCsT7EK2CluE3Dv8YaCoB_cYSvVIqtn8Y1vPdQ",
+        "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience",
+        "polls": 1
+      }
+    },
+    "manifestHash": "e655412cc2d1cb1e6ec2b37590d448e00b7c849a5571a6b4cd86e1a686d110f1",
+    "reads": 2,
+    "requests": 32,
+    "schema": 1,
+    "stopped": null,
+    "tatumBatches": 0,
+    "writes": 2
+  },
+  "requestTrace": [
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/health",
+      "seal": false,
+      "signed": false
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/version",
+      "seal": false,
+      "signed": false
+    },
+    {
+      "method": "POST",
+      "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-rules",
+      "path": "/api/stats",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/config",
+      "seal": false,
+      "signed": false
+    },
+    {
+      "method": "POST",
+      "namespace": null,
+      "path": "/sui.rpc.v2.LedgerService/BatchGetObjects",
+      "seal": false,
+      "signed": false
+    },
+    {
+      "method": "POST",
+      "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience",
+      "path": "/api/remember",
+      "seal": true,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/api/remember/fixture-092114bd-0697-495f-89cd-166ab31a966a",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "POST",
+      "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience",
+      "path": "/api/recall",
+      "seal": true,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "POST",
+      "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience",
+      "path": "/api/remember",
+      "seal": true,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/api/remember/fixture-c2b5dea7-ecc8-4335-b891-9563a24ac6ec",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/health",
+      "seal": false,
+      "signed": false
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/version",
+      "seal": false,
+      "signed": false
+    },
+    {
+      "method": "POST",
+      "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-rules",
+      "path": "/api/stats",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/config",
+      "seal": false,
+      "signed": false
+    },
+    {
+      "method": "POST",
+      "namespace": null,
+      "path": "/sui.rpc.v2.LedgerService/BatchGetObjects",
+      "seal": false,
+      "signed": false
+    },
+    {
+      "method": "POST",
+      "namespace": "agent-ce690277-f853-42ed-a2da-31d976c4abe6-experience",
+      "path": "/api/recall",
+      "seal": true,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    },
+    {
+      "method": "GET",
+      "namespace": null,
+      "path": "/v1/owners/0x000000000000000000000000000000000000000000000000000000000000000a/memories",
+      "seal": false,
+      "signed": true
+    }
+  ],
+  "modelUserTurns": 0,
+  "tatumCalls": 0,
+  "walrusCalls": 0,
+  "externalProviderCalls": 0,
+  "realCredentialsRead": false,
+  "liveEntryPointEnabled": false,
+  "additionalSpendUSD": 0,
+  "limitation": "All relayer replies, storage, chain object and blob IDs are synthetic. Installed SDK signing, Seal, protobuf parsing and independent MCP processes executed locally."
+}
