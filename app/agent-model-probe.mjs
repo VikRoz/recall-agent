@@ -10,17 +10,21 @@ import {nativeToolFailed} from './agent-probe-results.mjs';
 import {requireAvailableModel} from './agent-probe-model.mjs';
 import {probeApproval} from './agent-probe-approval.mjs';
 import {agentArgs,agentPolicy} from './agent-launch.mjs';
+import {codexArgs} from './activity-codex.mjs';
+import {prepareLiveModelProbe,reserveLiveNativeTurn} from './agent-live.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const [out,workspace,tasksFile]=process.argv.slice(2);
 assert(out&&workspace&&tasksFile,'EXPLICIT_PROBE_PATHS_REQUIRED');
 const {readFileSync}=await import('node:fs');
 const plan=JSON.parse(readFileSync(tasksFile,'utf8'));
-assert(plan.schema===1&&['fixture','saved'].includes(plan.dataMode??'fixture')&&plan.tasks.length<=4&&plan.tasks.every(t=>typeof t.text==='string'&&t.text.length<=1600),'PROBE_PLAN');
-mkdirSync(out,{mode:0o700});prepareProbeWorkspace(workspace,plan.initialState);
+const live=plan.dataMode==='live-walrus-replay';
+assert(plan.schema===1&&['fixture','saved','live-walrus-replay'].includes(plan.dataMode??'fixture')&&plan.tasks.length<=4&&plan.tasks.every(t=>typeof t.text==='string'&&t.text.length<=1600),'PROBE_PLAN');
+mkdirSync(out,{mode:0o700});if(live)prepareLiveModelProbe(workspace,plan);else prepareProbeWorkspace(workspace,plan.initialState);
 const env={...process.env};for(const key of Object.keys(env))if(/API_KEY|DELEGATE|MEMWAL|TATUM/.test(key))delete env[key];
 const inventory=spawnSync('codex',['mcp','list','--json'],{env,encoding:'utf8',timeout:15000,maxBuffer:1048576});
 assert(inventory.status===0,'MCP_INVENTORY');
-const args=agentArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout),true,plan.dataMode??'fixture');
+const args=live?codexArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout),'--live','agent-provider-live.mjs')
+ :agentArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout),true,plan.dataMode??'fixture');
 assert(plan.model===undefined||typeof plan.model==='string','PROBE_MODEL');
 const config=[];for(let i=0;i<args.length;i+=2)if(args[i]==='-c')config.push('-c',args[i+1]);
 config.push('-c','features.plugins=false','-c','features.browser_use=false','-c','features.computer_use=false',
@@ -56,6 +60,7 @@ try{
  const catalog=await call('model/list',{includeHidden:false});
  if(plan.model!==undefined)requireAvailableModel(catalog,plan.model);
  summary.requestedModel=plan.model??'profile';
+ if(live)reserveLiveNativeTurn(workspace,plan);
  const threads=new Map();
  for(const task of plan.tasks){
   assert(!critical,'PROBE_STOPPED');tools=0;

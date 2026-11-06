@@ -12,9 +12,9 @@ import {CsvArtifacts} from './agent-export.mjs';
 import {assert} from '../src/domain.ts';
 let active=false;
 
-export async function openInjectedAgent(directory,{createSdk,transport,capture=false,wait}){
+export async function openInjectedAgent(directory,{createSdk,transport,capture=false,wait,live=false}){
  assert(!active&&typeof createSdk==='function'&&typeof transport==='function','AGENT_INJECTED_PORTS_REQUIRED');
- const gate=new AgentRunGate(directory),m=gate.manifest;
+ const gate=new AgentRunGate(directory,{live}),m=gate.manifest;
  const index=loadOfflineActivity(m.source==='replay'?'saved':'fixture');
  assert(index.datasetId===m.datasetId,'AGENT_DATASET_CHANGED');
  const journals=Object.fromEntries(['rules','experience'].map(k=>[k,new FileWriteJournal(join(directory,'journal-'+k))]));
@@ -40,6 +40,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
   assert(await sdk.getPublicKeyHex()===m.delegatePublicKeyHex,'AGENT_DELEGATE_MISMATCH');
   await guarded(WALRUS_RELAY+'/health');
   await sdk.compatibility();
+  if(live)await guarded(WALRUS_RELAY+'/config');
   const binding={owner:m.owner,project:m.workspace},ports={};
   for(const kind of ['rules','experience']){
    const namespace=m.namespaces[kind];
@@ -54,8 +55,9 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
     validateRules([...rows,{record,blobId:key}],binding);
     return ports.rules.write(record,key);
    })};
-  const base=new WalrusExperienceStore(ports.experience,async()=>gate.admit(),'walrus-fixture');
-  const experience={storage:'walrus-fixture',read:async()=>{
+  const storage=live?'walrus':'walrus-fixture';
+  const base=new WalrusExperienceStore(ports.experience,async()=>gate.admit(),storage);
+  const experience={storage,read:async()=>{
    try{return await base.read();}catch(error){gate.stop('AGENT_MEMORY_READ_STOPPED');throw error;}
   },write:record=>
    gate.withWriter(m.namespaces.experience,async()=>{
@@ -67,7 +69,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
    assert(network==='mainnet'||network==='testnet','WRONG_NETWORK');return index.transactions(network,ids);
   }}),undefined,undefined,()=>gate.stop('AGENT_TOOL_STOPPED'));
   session.experience=experience;session.capture=capture;session.activityIndex=index;session.artifacts=new CsvArtifacts(directory);
-  const runtime=agentServer(session,{capture,dataMode:m.source==='replay'?'saved':'fixture',mode:'offline-sdk-fixture-'+m.source});
+  const runtime=agentServer(session,{capture,dataMode:m.source==='replay'?'saved':'fixture',mode:live?'live-walrus-sui-replay':'offline-sdk-fixture-'+m.source});
   return {...runtime,gate,ports,rules,experience,close};
  }catch(error){try{gate.stop('AGENT_OPEN_FAILED');}finally{close();}throw error;}
 }

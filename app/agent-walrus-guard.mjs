@@ -2,10 +2,14 @@ import {assert,canonical} from '../src/domain.ts';
 import {rule} from './activity.ts';
 import {validateExperience} from './agent-experience.ts';
 import {BatchGetObjectsRequest} from './node_modules/@mysten/sui/dist/grpc/proto/sui/rpc/v2/ledger_service.mjs';
+import {runHash} from './agent-run.mjs';
 
 export const WALRUS_RELAY='https://relayer.memory.walrus.xyz';
 export const SUI_SEAL_ORIGIN='https://mysten-rpc.mainnet.sui.io';
+export const deploymentHash=c=>runHash({network:c.network,packageId:c.packageId,suiTransport:c.suiTransport,
+ suiGrpcUrl:c.suiGrpcUrl,suiRpcUrl:c.suiRpcUrl??null});
 export function validateTypedRecord(manifest,namespace,record){
+ if(manifest.mode==='live-walrus-replay')assert(namespace===manifest.namespaces.experience,'AGENT_LIVE_WRITE_SCOPE');
  if(namespace===manifest.namespaces.rules)return rule(record,{owner:manifest.owner,project:manifest.workspace});
  assert(namespace===manifest.namespaces.experience,'AGENT_NAMESPACE_DENIED');
  validateExperience(record,manifest.workspace);assert(record.source===manifest.source,'AGENT_RECORD_SOURCE');return record;
@@ -78,7 +82,8 @@ export function agentWalrusFetch(gate,transport){
     if(url.pathname==='/config'){
      const value=await response.clone().json();
      assert(value.network==='mainnet'&&value.packageId===m.packageId&&value.suiTransport==='grpc'
-      &&value.suiGrpcUrl===SUI_SEAL_ORIGIN&&value.suiRpcUrl===undefined,'AGENT_CONFIG_SCOPE');
+      &&value.suiGrpcUrl===SUI_SEAL_ORIGIN&&(m.mode==='live-walrus-replay'
+        ?deploymentHash(value)===m.admission.deploymentHash:value.suiRpcUrl===undefined),'AGENT_CONFIG_SCOPE');
     }
    }
    return response;

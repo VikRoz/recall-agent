@@ -47,7 +47,7 @@ export function fixtureTransport(directory,options={}){
     response=new Response(Buffer.concat([frame(0,message),frame(128,new TextEncoder().encode('grpc-status: 0\r\n'))]),{headers:{'content-type':'application/grpc-web+proto'}});
    }else if(url.pathname==='/health')response=Response.json({status:'ok',writes:'ok',write_ready:true});
    else if(url.pathname==='/version')response=Response.json({apiVersion:'1.0.0',relayerVersion:'offline-synthetic',minSupportedSdk:{typescript:'0.0.4'}});
-   else if(url.pathname==='/config')response=Response.json({network:'mainnet',packageId:m.packageId,suiTransport:'grpc',suiGrpcUrl:SUI_SEAL_ORIGIN});
+   else if(url.pathname==='/config')response=Response.json(options.configReply??{network:'mainnet',packageId:m.packageId,suiTransport:'grpc',suiGrpcUrl:SUI_SEAL_ORIGIN});
    else if(url.pathname==='/api/stats')response=Response.json({owner:m.owner});
    else if(url.pathname.endsWith('/memories'))response=Response.json({snapshot_version:state.revision,must_resync:false,has_more:false,
     memories:state.records.map(r=>({namespace_id:r.namespace,blob_id:r.blob_id,status:'stored'}))});

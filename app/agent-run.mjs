@@ -1,4 +1,4 @@
-// Admission for the injected offline assembly only. No live credentials or initializer.
+// Shared durable ledger. Live admission is explicit and separate from the offline initializer.
 import {createHash} from 'node:crypto';
 import {constants,openSync,closeSync,fstatSync,readFileSync,writeFileSync,lstatSync,mkdirSync,
  readdirSync,renameSync,fsyncSync,rmSync,existsSync} from 'node:fs';
@@ -23,31 +23,33 @@ function durable(path,value,fresh=false){
  if(!fresh)renameSync(target,path);
  const directory=openSync(join(path,'..'),'r');try{fsyncSync(directory);}finally{closeSync(directory);}
 }
-export function validateAgentManifest(m){
+export function validateAgentManifest(m,{live=false}={}){
  exactKeys(m,['schema','mode','runId','owner','accountId','delegatePublicKeyHex','packageId','workspace','datasetId','source','namespaces','maxUSD','expiresAt','admission']);
- assert(m.schema===1&&m.mode==='offline-sdk-fixture'&&m.maxUSD===0,'AGENT_OFFLINE_ONLY');
+ assert(m.schema===1&&m.mode===(live?'live-walrus-replay':'offline-sdk-fixture')&&m.maxUSD===0,'AGENT_OFFLINE_ONLY');
  assert(/^[a-f0-9-]{36}$/.test(m.runId)&&/^agent-[a-f0-9-]{36}$/.test(m.workspace),'AGENT_RUN_ID');
  assert([m.owner,m.accountId,m.packageId].every(v=>address(v)===v)&&/^[a-f0-9]{64}$/.test(m.delegatePublicKeyHex),'AGENT_ACCOUNT');
  assert(/^[a-f0-9]{64}$/.test(m.datasetId)&&['fixture','replay'].includes(m.source),'AGENT_DATASET');
  exactKeys(m.namespaces,['rules','experience']);
  assert(m.namespaces.rules===m.workspace+'-rules'&&m.namespaces.experience===m.workspace+'-experience','AGENT_NAMESPACES');
- exactKeys(m.admission,['kind','accountId','delegatePublicKeyHex','checkedAt','maxUSD']);
- assert(m.admission.kind==='offline-synthetic'&&m.admission.accountId===m.accountId
+ exactKeys(m.admission,['kind','accountId','delegatePublicKeyHex','checkedAt','maxUSD',...(live?['planHash','payloadHash','failureId','profileHash','deploymentHash']:[])]);
+ assert(m.admission.kind===(live?'managed-production-approved':'offline-synthetic')&&m.admission.accountId===m.accountId
   &&m.admission.delegatePublicKeyHex===m.delegatePublicKeyHex&&m.admission.maxUSD===0,'AGENT_ADMISSION');
+ if(live)assert(m.source==='replay'&&['planHash','payloadHash','profileHash','deploymentHash'].every(k=>/^[a-f0-9]{64}$/.test(m.admission[k]))
+  &&/^[A-Za-z0-9_-]{43}$/.test(m.admission.failureId),'AGENT_LIVE_ADMISSION');
  time(m.expiresAt);time(m.admission.checkedAt);return m;
 }
-export function createAgentRun(directory,manifest){
+export function createAgentRun(directory,manifest,options={}){
  privateDirectory(directory);assert(readdirSync(directory).length===0,'AGENT_NEW_RUN_MUST_BE_EMPTY');
- validateAgentManifest(manifest);
+ validateAgentManifest(manifest,options);
  durable(join(directory,'agent-run.json'),manifest,true);
  for(const kind of ['rules','experience']){const p=join(directory,'journal-'+kind);mkdirSync(p,{mode:0o700});mkdirSync(join(p,'activity-jobs'),{mode:0o700});}
  durable(join(directory,'agent-ledger.json'),{schema:1,manifestHash:runHash(manifest),stopped:null,
   tatumBatches:0,writes:0,reads:0,requests:0,intents:[],jobs:{}},true);
 }
 export class AgentRunGate {
- constructor(directory){
+ constructor(directory,options={}){
   privateDirectory(directory);this.directory=directory;this.path=join(directory,'agent-ledger.json');
-  this.manifest=validateAgentManifest(privateRead(join(directory,'agent-run.json')));
+  this.manifest=validateAgentManifest(privateRead(join(directory,'agent-run.json')),options);
   this.hash=runHash(this.manifest);this.lease=undefined;this.pending=undefined;
   for(const kind of ['rules','experience']){privateDirectory(join(directory,'journal-'+kind));privateDirectory(join(directory,'journal-'+kind,'activity-jobs'));}
   assert(!existsSync(join(directory,'.agent-writer-lock'))&&!existsSync(this.path+'.next'),'AGENT_OUTCOME_UNCERTAIN');
@@ -116,6 +118,16 @@ export class AgentRunGate {
  }
  beforeSubmit(namespace,record,key){
   assert(this.lease===namespace&&!this.pending&&operationKey(record)===key,'AGENT_WRITE_LEASE');
+  if(this.manifest.mode==='live-walrus-replay'){
+   const proof=privateRead(join(this.directory,'agent-live-preflight.json'));
+   assert(proof.manifestHash===this.hash&&proof.emptyNamespaces===true&&proof.accountAuthorized===true
+    &&Date.now()-time(proof.checkedAt)>=0&&Date.now()-time(proof.checkedAt)<=300000,'AGENT_LIVE_PREFLIGHT_REQUIRED');
+   assert(namespace===this.manifest.namespaces.experience,'AGENT_LIVE_WRITE_SCOPE');
+   const state=this.state();
+   assert(state.writes===0?record.verdict==='fail'&&key===this.manifest.admission.failureId
+    :state.writes===1&&record.verdict==='resolved'&&record.supersedes===this.manifest.admission.failureId
+      &&privateRead(join(this.directory,'agent-native-turn.json')).manifestHash===this.hash,'AGENT_LIVE_WRITE_SCOPE');
+  }
   const intent={namespace,key,sha256:runHash(record),state:'reserved'};
   const s=this.update(s=>{
    assert(!s.intents.some(i=>i.namespace===namespace&&i.key===key),'AGENT_OPERATION_ALREADY_RESERVED');
