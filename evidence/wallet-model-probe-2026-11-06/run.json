@@ -1,0 +1,333 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "baselineCommit": "f98d47c",
+  "evaluationStatus": "FAILED",
+  "dataMode": "saved-mainnet-replay",
+  "additionalSpendUSD": 0,
+  "tatumCalls": 0,
+  "walrusCalls": 0,
+  "userTurnsStarted": 4,
+  "localExperienceRecords": 0,
+  "attempts": [
+    {
+      "name": "profile-model",
+      "summary": {
+        "schema": 1,
+        "turns": [],
+        "status": "STOPPED",
+        "preflight": {
+          "accountType": "chatgpt",
+          "usedPercent": 17,
+          "hasCredits": false,
+          "balance": "0"
+        },
+        "model": "gpt-6.1-sol",
+        "reason": "SERVER_ERROR"
+      },
+      "trace": [
+        {
+          "kind": "user",
+          "chat": "activity",
+          "text": "Give me an overview of activity on Sui Mainnet for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on 5 November 2026 UTC. What operations can you identify, how did its balance change, and who paid the gas?"
+        },
+        {
+          "kind": "server-error",
+          "error": {
+            "message": "{\"type\":\"error\",\"status\":400,\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The 'gpt-6.1-sol' model is not supported when using Codex with a ChatGPT account.\",\"code\":\"model_not_found\"}}",
+            "codexErrorInfo": "other",
+            "additionalDetails": null,
+            "misalignment": null
+          },
+          "willRetry": false
+        }
+      ],
+      "rawEventsSha256": "db28ed65a96584ecdca91ea5fca684b993c900b940b98e7b84408f94785af456"
+    },
+    {
+      "name": "user-selected-luna",
+      "summary": {
+        "schema": 1,
+        "turns": [
+          {
+            "task": "wallet-overview",
+            "chat": "activity",
+            "status": "completed",
+            "tools": 5
+          },
+          {
+            "task": "csv-followup",
+            "chat": "activity",
+            "status": "completed",
+            "tools": 1
+          },
+          {
+            "task": "empty-period",
+            "chat": "empty",
+            "status": "completed",
+            "tools": 2
+          }
+        ],
+        "status": "COMPLETED",
+        "preflight": {
+          "accountType": "chatgpt",
+          "usedPercent": 17,
+          "hasCredits": false,
+          "balance": "0"
+        },
+        "requestedModel": "gpt-5.6-luna",
+        "model": "gpt-5.6-luna",
+        "turnsStarted": 3
+      },
+      "trace": [
+        {
+          "kind": "user",
+          "chat": "activity",
+          "text": "Give me an overview of activity on Sui Mainnet for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on 5 November 2026 UTC. What operations can you identify, how did its balance change, and who paid the gas?"
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Проверю локальный датасет Recall для Sui Mainnet за указанный UTC-день, затем отдельно верифицирую газ-плательщика. Учту, что локальный lookup может покрывать не всю историю кошелька."
+        },
+        {
+          "kind": "tool",
+          "tool": "find_wallet_activity",
+          "status": "failed",
+          "arguments": {
+            "network": "mainnet",
+            "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "from": "2026-11-05T00:00:00Z",
+            "to": "2026-11-06T00:00:00Z",
+            "limit": 100
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "MCP error -32602: Input validation error: Invalid arguments for tool find_wallet_activity: Too big: expected number to be <=10 at limit"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Локальный инструмент отклонил размер страницы (допустимо максимум 10); повторяю с корректным лимитом и затем соберу полный список через пагинацию, если он потребуется."
+        },
+        {
+          "kind": "tool",
+          "tool": "find_wallet_activity",
+          "status": "completed",
+          "arguments": {
+            "network": "mainnet",
+            "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "from": "2026-11-05T00:00:00Z",
+            "to": "2026-11-06T00:00:00Z",
+            "limit": 10
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"sourceMode\":\"saved-mainnet-replay\",\"datasetId\":\"9d3126ce6084fe4167587b8431face5468dbb4b8d4ec286c60bdc2c0aeadbc7c\",\"query\":{\"network\":\"mainnet\",\"wallet\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"from\":\"2026-11-05T00:00:00Z\",\"to\":\"2026-11-06T00:00:00Z\",\"limit\":10},\"coverage\":{\"scope\":\"local-recorded-subset\",\"walletHistoryComplete\":false,\"freshProviderRead\":false,\"matchingRecordsInDataset\":2,\"returned\":2,\"hasMore\":false,\"interval\":\"[from, to)\",\"missingHistory\":\"unknown\"},\"transactions\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"observedRoles\":[\"sender\"]},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"observedRoles\":[\"sender\"]}],\"nextCursor\":null,\"note\":\"No match means no matching record in this local dataset. Wallet history completeness is unknown. Roles do not prove ownership or direct transfer counterparties.\"}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "tool",
+          "tool": "prepare_report",
+          "status": "completed",
+          "arguments": {
+            "network": "mainnet",
+            "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "transactions": [
+              "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+              "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3"
+            ]
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"mode\":\"offline-agent-replay\",\"reportId\":\"report:6b62508e-1b42-486c-8940-98493350e1ee\",\"wallet\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"asOf\":\"2026-11-06T15:16:24.765Z\",\"digests\":[\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\"],\"rows\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-104261\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-104194\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null}],\"totals\":[],\"declaredWalletTotals\":[],\"gas\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"42605600\",\"rebate\":\"42601339\",\"netCharge\":\"104261\"},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"41936800\",\"rebate\":\"41932606\",\"netCharge\":\"104194\"}],\"notes\":[\"Totals cover the supplied digests only.\",\"Net balance changes include their onchain effects.\",\"Gas information is displayed separately and is not subtracted again.\",\"Declared wallet totals use the address relations confirmed by the user.\",\"Address relations are user-confirmed context. They do not identify a direct transfer counterparty.\"],\"transactionEvidence\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"checkpoint\":\"341884811\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"sender\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"commands\":[\"makeMoveVector\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\"],\"interpretation\":\"unparsed-ptb\",\"status\":\"success\",\"source\":\"replay\",\"gas\":{\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"42605600\",\"rebate\":\"42601339\",\"netCharge\":\"104261\"},\"movements\":[{\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-104261\"}]},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"checkpoint\":\"341884811\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"sender\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"commands\":[\"makeMoveVector\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\"],\"interpretation\":\"unparsed-ptb\",\"status\":\"success\",\"source\":\"replay\",\"gas\":{\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"41936800\",\"rebate\":\"41932606\",\"netCharge\":\"104194\"},\"movements\":[{\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-104194\"}]}],\"memory\":[],\"experience\":[],\"experienceStorage\":\"local-fixture\",\"dataProvenance\":{\"sourceMode\":\"saved-mainnet-replay\",\"freshProviderRead\":false,\"walletHistoryComplete\":false,\"scope\":\"selected-transactions\"}}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Найдено 2 успешные записи, обе на одном checkpoint и с одинаковым временем. Их PTB-команды сохранены как `unparsed-ptb`, поэтому названия конкретных Move-функций локальный replay не раскрывает; сейчас проверю, что указанный gas payer подтверждается доказательствами по каждой транзакции."
+        },
+        {
+          "kind": "tool",
+          "tool": "verify_gas_payer",
+          "status": "completed",
+          "arguments": {
+            "claimedPayer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "reportId": "report:6b62508e-1b42-486c-8940-98493350e1ee",
+            "transaction": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3"
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"verdict\":\"pass\",\"claimed\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"observed\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"evidence\":{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"source\":\"replay\",\"field\":\"gas.payer\"},\"memory\":null}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "tool",
+          "tool": "verify_gas_payer",
+          "status": "completed",
+          "arguments": {
+            "claimedPayer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "reportId": "report:6b62508e-1b42-486c-8940-98493350e1ee",
+            "transaction": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"verdict\":\"pass\",\"claimed\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"observed\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"evidence\":{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"source\":\"replay\",\"field\":\"gas.payer\"},\"memory\":null}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "model",
+          "phase": "final_answer",
+          "text": "On Sui Mainnet, the local Recall dataset contains 2 successful transactions for the wallet on 5 November 2026 UTC:\n\n- `2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ`\n- `2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3`\n\nBoth occurred at `10:34:12.732 UTC` in checkpoint `341884811`.\n\nOperations identified:\n\n- Each transaction was a programmable transaction block.\n- Each contained `makeMoveVector` plus 8 `moveCall` commands.\n- The replay cannot decode the specific Move functions, so the operations remain unparsed.\n- Both transactions succeeded.\n\nBalance and gas:\n\n- The target wallet has no confirmed SUI balance-change row in the report.\n- Gas was paid by `0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69`.\n- Gas debits:\n  - `104,261 MIST` = `0.000104261 SUI`\n  - `104,194 MIST` = `0.000104194 SUI`\n  - Total: `208,455 MIST` = `0.000208455 SUI`\n\nThe gas-payer identity was verified against both transaction records. This is based on a saved local Mainnet replay; wallet-history coverage is incomplete, so absence of other records does not prove there was no additional activity."
+        },
+        {
+          "kind": "user",
+          "chat": "activity",
+          "text": "Give me a CSV for the operations you just identified. I do not need address labels or another blockchain request."
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Экспортирую CSV из уже подготовленного отчёта, без новых blockchain-запросов и без address labels."
+        },
+        {
+          "kind": "tool",
+          "tool": "export_report",
+          "status": "completed",
+          "arguments": {
+            "reportId": "report:6b62508e-1b42-486c-8940-98493350e1ee"
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"mode\":\"offline-agent-replay\",\"reportId\":\"report:6b62508e-1b42-486c-8940-98493350e1ee\",\"report\":{\"wallet\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"asOf\":\"2026-11-06T15:16:52.717Z\",\"digests\":[\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\"],\"rows\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-104261\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-104194\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null}],\"totals\":[],\"declaredWalletTotals\":[],\"gas\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"42605600\",\"rebate\":\"42601339\",\"netCharge\":\"104261\"},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"41936800\",\"rebate\":\"41932606\",\"netCharge\":\"104194\"}],\"notes\":[\"Totals cover the supplied digests only.\",\"Net balance changes include their onchain effects.\",\"Gas information is displayed separately and is not subtracted again.\",\"Declared wallet totals use the address relations confirmed by the user.\",\"Address relations are user-confirmed context. They do not identify a direct transfer counterparty.\"],\"transactionEvidence\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"checkpoint\":\"341884811\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"sender\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"commands\":[\"makeMoveVector\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\"],\"interpretation\":\"unparsed-ptb\",\"status\":\"success\",\"source\":\"replay\",\"gas\":{\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"42605600\",\"rebate\":\"42601339\",\"netCharge\":\"104261\"},\"movements\":[{\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-104261\"}]},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"checkpoint\":\"341884811\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"sender\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"commands\":[\"makeMoveVector\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\"],\"interpretation\":\"unparsed-ptb\",\"status\":\"success\",\"source\":\"replay\",\"gas\":{\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"41936800\",\"rebate\":\"41932606\",\"netCharge\":\"104194\"},\"movements\":[{\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-104194\"}]}],\"memory\":[],\"experience\":[],\"experienceStorage\":\"local-fixture\",\"dataProvenance\":{\"sourceMode\":\"saved-mainnet-replay\",\"freshProviderRead\":false,\"walletHistoryComplete\":false,\"scope\":\"selected-transactions\"}},\"mediaType\":\"text/csv\",\"csv\":\"digest,network,timestamp,status,source,address,coinType,netAmountBaseUnits,relation,label,ruleId,memoryBlobId\\r\\n\\\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\\\",\\\"mainnet\\\",\\\"2026-11-05T10:34:12.732Z\\\",\\\"success\\\",\\\"replay\\\",\\\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\\\",\\\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\\\",\\\"-104261\\\",\\\"unclassified\\\",\\\"\\\",\\\"\\\",\\\"\\\"\\r\\n\\\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\\\",\\\"mainnet\\\",\\\"2026-11-05T10:34:12.732Z\\\",\\\"success\\\",\\\"replay\\\",\\\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\\\",\\\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\\\",\\\"-104194\\\",\\\"unclassified\\\",\\\"\\\",\\\"\\\",\\\"\\\"\\r\\n\"}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "model",
+          "phase": "final_answer",
+          "text": "```csv\ndigest,timestamp,status,checkpoint,sender,operations,interpretation,gas_payer,gas_net_charge_mist\n2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ,2026-11-05T10:34:12.732Z,success,341884811,0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23,\"makeMoveVector; moveCall x8\",unparsed-ptb,0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69,104261\n2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3,2026-11-05T10:34:12.732Z,success,341884811,0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23,\"makeMoveVector; moveCall x8\",unparsed-ptb,0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69,104194\n```"
+        },
+        {
+          "kind": "user",
+          "chat": "empty",
+          "text": "Was there any Sui Mainnet activity for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on 1 January 2020 UTC?"
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Проверю локальный датасет Recall Agent по этому кошельку и периоду UTC; сначала учту его покрытие, потому что это не полный исторический запрос к Mainnet."
+        },
+        {
+          "kind": "tool",
+          "tool": "find_wallet_activity",
+          "status": "failed",
+          "arguments": {
+            "network": "mainnet",
+            "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "from": "2020-01-01T00:00:00Z",
+            "to": "2020-01-02T00:00:00Z",
+            "limit": 100
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "MCP error -32602: Input validation error: Invalid arguments for tool find_wallet_activity: Too big: expected number to be <=10 at limit"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Локальный инструмент отклонил только размер страницы результата (допустимо максимум 10 записей); повторяю с корректным лимитом."
+        },
+        {
+          "kind": "tool",
+          "tool": "find_wallet_activity",
+          "status": "completed",
+          "arguments": {
+            "network": "mainnet",
+            "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "from": "2020-01-01T00:00:00Z",
+            "to": "2020-01-02T00:00:00Z",
+            "limit": 10
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"sourceMode\":\"saved-mainnet-replay\",\"datasetId\":\"9d3126ce6084fe4167587b8431face5468dbb4b8d4ec286c60bdc2c0aeadbc7c\",\"query\":{\"network\":\"mainnet\",\"wallet\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"from\":\"2020-01-01T00:00:00Z\",\"to\":\"2020-01-02T00:00:00Z\",\"limit\":10},\"coverage\":{\"scope\":\"local-recorded-subset\",\"walletHistoryComplete\":false,\"freshProviderRead\":false,\"matchingRecordsInDataset\":0,\"returned\":0,\"hasMore\":false,\"interval\":\"[from, to)\",\"missingHistory\":\"unknown\"},\"transactions\":[],\"nextCursor\":null,\"note\":\"No match means no matching record in this local dataset. Wallet history completeness is unknown. Roles do not prove ownership or direct transfer counterparties.\"}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "model",
+          "phase": "final_answer",
+          "text": "No matching Sui Mainnet records were found for that wallet on 1 January 2020 UTC in the local Recall dataset.\n\nHowever, the dataset has incomplete wallet-history coverage, so this does not prove that no activity occurred."
+        }
+      ],
+      "rawEventsSha256": "a6ccb8de0e536c4ea10426a7d2c89fbf8624af31358088c258dbcea51704bdef"
+    }
+  ],
+  "findings": [
+    "Unavailable profile model was attempted before catalog validation",
+    "Two independent chats repeated page limit 100 above schema maximum 10",
+    "Current gas-payer experience capture did not observe schema validation failures",
+    "Probe did not stop on native tool status failed despite the no-retry plan",
+    "Model rewrote the code-generated CSV and removed replay provenance",
+    "Wallet lookup, gas facts and partial-coverage caveats otherwise worked",
+    "Unsupported-contract task was not run after model-access failure consumed one turn"
+  ]
+}

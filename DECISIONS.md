@@ -27,3 +27,10 @@ The user approved wallet activity as the next increment. Add an independent look
 Current adapters cover only a local dataset. Saved Mainnet records are hash-pinned and carry a distinct replay source through reporting, CSV and experience applicability; synthetic, replay and fresh Tatum evidence must not be mixed. Bind each workspace to its dataset. A zero-match result does not establish inactivity. A terminal cursor does not establish full history. Live provider discovery remains disabled until its contract and costs are checked.
 
 Rejected: calling the saved subset a full history; continuing to require preselected digests for every task; building relationships and contract-history analysis before this vertical slice works. See docs/WALLET_ACTIVITY_OFFLINE_2026-11-06.md.
+
+
+## 6 November 2026 — retain negative wallet-probe evidence
+
+Do not equate native completed turns or green unit tests with a passed model acceptance. The model repeated a schema violation in a new chat and rewrote the CSV. The current technical-memory coverage does not meet the observed requirement. Preserve both model-access and tool-level failures. The user explicitly chose gpt-5.6-luna for continuation; no global model preference was changed.
+
+Fix probe model-catalog admission and native failed-status detection offline. A new transport observer, experience variant and immutable export artifact are proposed in docs/TOOL_ERROR_MEMORY_PROPOSAL_2026-11-06.md; seek approval before those contract changes. Do not silently clamp inputs, inject a scripted first action, overwrite recorded results or claim memory improvement.

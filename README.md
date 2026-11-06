@@ -10,6 +10,10 @@ Memory belongs to a persistent private workspace; separate client processes reus
 
 **Today: offline transaction data and local memory only in the launcher.** Synthetic data is the default; `--saved` selects a partial replay of two previously recorded Mainnet transactions. A typed Walrus transport reuses the existing SDK writer and durable uncertain-write journal and is tested with intercepted SDK responses. Its live admission is not wired into this experimental launcher. A preliminary native-model smoke completed report/verification, CSV reuse and clarification, with recorded capability overreach; no improvement from memory is claimed. See [probe results](docs/AGENT_MODEL_PROBE_2026-11-06.md). Inherited website files, evidence and legacy entry points describe the fallback, not validation of this agent.
 
+## Current acceptance gap
+
+The [wallet lookup model probe](docs/WALLET_MODEL_PROBE_2026-11-06.md) failed acceptance: the model repeated an invalid page size in a fresh chat, current gas-payer memory did not capture the schema error, and the model rewrote the exported CSV. Lookup itself found the saved records and correctly exposed partial coverage. No memory improvement or exact final CSV delivery is claimed. A bounded offline repair is [proposed](docs/TOOL_ERROR_MEMORY_PROPOSAL_2026-11-06.md), not implemented.
+
 ## Offline checks
 
 Node.js 22.23.4 or newer is required. Dependencies may be installed from source using `npm ci --prefix app --ignore-scripts` and `npm ci --prefix mcp --ignore-scripts` (these installation commands contact npm). A development checkout may also use an existing local runtime and dependencies.

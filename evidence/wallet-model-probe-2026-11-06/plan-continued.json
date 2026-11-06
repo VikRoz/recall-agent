@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "dataMode": "saved",
+  "maximumUserTurns": 3,
+  "retry": false,
+  "tasks": [
+    {
+      "id": "wallet-overview",
+      "chat": "activity",
+      "text": "Give me an overview of activity on Sui Mainnet for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on 5 November 2026 UTC. What operations can you identify, how did its balance change, and who paid the gas?"
+    },
+    {
+      "id": "csv-followup",
+      "chat": "activity",
+      "text": "Give me a CSV for the operations you just identified. I do not need address labels or another blockchain request."
+    },
+    {
+      "id": "empty-period",
+      "chat": "empty",
+      "text": "Was there any Sui Mainnet activity for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on 1 January 2020 UTC?"
+    }
+  ],
+  "model": "gpt-5.6-luna",
+  "priorStartedUserTurns": 1,
+  "continuationReason": "User explicitly selected this available model after model_not_found. No global model settings changed."
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "baselineCommit": "f98d47c",
+  "planSha256": "852e0c8b8b095676d8e08da58788faef9ed113b479692298701c7d900da20234",
+  "sha256": {
+    "app/agent-launch.mjs": "4cdd19766a64c783c95566b15b1253279cf01532507e19d7186110774cd64630",
+    "app/agent-mcp.mjs": "2a74c40f7a0a4e98824187136785af0cc5ebff3574cc2ecb2eaff6cc0839411f",
+    "app/agent-session.ts": "bf5f4693805918326dfff022a2d9e3617c000b8c42140c61410b11078616a4d9",
+    "app/agent-activity-index.ts": "60faf0e9b1f2f97801295e584b8503aaf8b37f4e2c39e613c827d2e95eb0a05e",
+    "app/agent-experience.ts": "cf3394c4c4e013450c260e292f09a06322c0ed0ccc03212ccb8e2778fdb67057",
+    "app/activity-session.ts": "c4cc88ab757050fd9c0c5d1151147bb0c8e491eb7acb94a36f241625c1dd96ed",
+    "app/activity.ts": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+    "app/agent-model-probe.mjs": "d6686dfb0a20e621e2a6ddb5c9b193f346c72283f3f0131423f45de0e33e4fdf"
+  }
+}

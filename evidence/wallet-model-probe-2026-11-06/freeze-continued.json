@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "baselineCommit": "f98d47c",
+  "planSha256": "c37d5acc8140060163146fbf89ba8fca6bcee785cea991459a4876dc0184710a",
+  "sha256": {
+    "app/agent-launch.mjs": "4cdd19766a64c783c95566b15b1253279cf01532507e19d7186110774cd64630",
+    "app/agent-mcp.mjs": "2a74c40f7a0a4e98824187136785af0cc5ebff3574cc2ecb2eaff6cc0839411f",
+    "app/agent-session.ts": "bf5f4693805918326dfff022a2d9e3617c000b8c42140c61410b11078616a4d9",
+    "app/agent-activity-index.ts": "60faf0e9b1f2f97801295e584b8503aaf8b37f4e2c39e613c827d2e95eb0a05e",
+    "app/agent-experience.ts": "cf3394c4c4e013450c260e292f09a06322c0ed0ccc03212ccb8e2778fdb67057",
+    "app/activity-session.ts": "c4cc88ab757050fd9c0c5d1151147bb0c8e491eb7acb94a36f241625c1dd96ed",
+    "app/activity.ts": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+    "app/agent-model-probe.mjs": "0a51fcba85f5f7492604b58b97b71b99d31a809586b11de5b958b178d656e47d",
+    "app/agent-probe-model.mjs": "379307321b1b264764084718c0a9ac756831a5123863e862d3831d56e49a80bb"
+  },
+  "note": "Only probe transport/model-selection handling changed. Product policy and tools unchanged."
+}

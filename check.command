@@ -9,4 +9,5 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-activity.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-activity-model.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-agent-probe.mjs"
+"$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-wallet-model-probe.mjs"
 "$node" "$root/verify-source.mjs"

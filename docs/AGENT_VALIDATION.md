@@ -6,7 +6,7 @@ Experimental copy of Recall Lab. The original release remains the fallback. This
 
 ## Results
 
-Latest increment: wallet/period lookup and saved-data replay passed the complete 65-test suite. See WALLET_ACTIVITY_OFFLINE_2026-11-06.md for the new contract and seven additional tests. The 58-test result below records the preceding model-probe baseline.
+Latest offline suite: 69 tests pass, including fail-closed model selection, failed-tool detection and CSV mismatch assessment. This does not mean the model probe passed. Wallet/period lookup and saved-data replay previously passed the complete 65-test suite. See WALLET_ACTIVITY_OFFLINE_2026-11-06.md for the new contract and seven additional tests. The 58-test result below records the preceding model-probe baseline.
 
 `bash start.command --check` passed: 58 tests (50 inherited regression tests, 7 agent tests and 1 probe-approval test), both inherited independent-process MCP checks, saved evidence recomputation and the updated development-source manifest.
 
@@ -27,3 +27,5 @@ A protocol test selecting a wrong address is not evidence that a real model made
 `app/agent.test.mjs`, `check.command`, `app/agent-session.ts`, `app/agent-experience.ts`, inherited `app/activity-memory.ts`, and `docs/AGENT_PLAN.md`.
 
 Additional spend: $0. Model/Tatum/Walrus calls in these offline checks: 0. No deployment or application submission.
+
+The subsequent wallet model probe FAILED acceptance; see WALLET_MODEL_PROBE_2026-11-06.md. Its negative evidence is now verified offline by evidence/verify-wallet-model-probe.mjs. Observer/experience-schema and export-artifact changes remain proposals, not completed product fixes.

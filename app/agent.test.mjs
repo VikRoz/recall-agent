@@ -22,6 +22,7 @@ test('launcher supplies no positional task, model, digest or first-tool instruct
   assert.ok(args.some(a => a.includes('agent-mcp.mjs')));
   assert.equal(args.some(a => a.includes('--capture-local')), false);
   assert.ok(agentArgs('/node', '/root', '/workspace', [], true).some(a => a.includes('--capture-local')));
+  assert.ok(agentArgs('/node', '/root', '/workspace', [], false, 'saved').some(a => a.includes('--saved')));
   assert.equal(args.some(a => /After the first|second transaction|fresh second conversation/.test(a)), false);
 });
 
