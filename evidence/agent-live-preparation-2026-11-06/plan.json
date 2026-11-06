@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "status": "PREPARED_NOT_AUTHORIZED_FOR_EXECUTION",
+  "sourceCommit": "32405ec",
+  "network": "mainnet",
+  "dataSource": "saved-sui-replay",
+  "profilePath": "/private/tmp/recall-activity-live.PXpVajpV",
+  "profileUse": "read-in-place; no private-key copy or new delegate",
+  "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+  "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+  "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+  "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+  "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b",
+  "namespacePolicy": "dedicated rules and experience namespaces derived from this stable workspace; verify empty before first write",
+  "payloadSha256": "c1b47341a99cac2c0b57c46ed6803e2393c559c89dc882aa25e076fef8923772",
+  "limits": {
+    "newModelUserTurns": 1,
+    "model": "gpt-5.6-luna",
+    "toolsPerTurn": 12,
+    "modelTurnSeconds": 120,
+    "tatumCalls": 0,
+    "walrusWrites": 2,
+    "contentReads": 2,
+    "guardedSdkRequests": 64,
+    "pollsPerJob": 8,
+    "additionalSpendUSD": 0
+  },
+  "alreadyPerformedPublicReadOnlyRequests": 3,
+  "admissionBasis": "fresh official managed-relayer sponsorship documentation + pinned production deployment + matching account/delegate authorization; no user-funded or paid path",
+  "sequence": [
+    "verify current deployment and account/delegate with read-only requests; reject nonempty target namespaces",
+    "persist the exact verified historical native failure once through the shared writer",
+    "start a fresh native model conversation and independent MCP process; restore failure through real Walrus content read",
+    "ask the unchanged ordinary wallet question; leave tool choice and arguments to the model",
+    "allow at most one automatic verified resolution write; retain any failure or absence of resolution without retry"
+  ],
+  "success": "real confirmed failure receipt, actual fresh-client read, valid model choice and completed report; resolution receipt and lineage checked if created",
+  "stopOn": [
+    "quota/access/timeout/unknown outcome",
+    "SDK or deployment mismatch",
+    "paid or direct-signing path",
+    "counter exhaustion",
+    "unapproved model or nonzero extra credits"
+  ],
+  "noRetry": true,
+  "noPromptTuning": true,
+  "noGlobalModelChange": true,
+  "noTatumKey": true,
+  "noDeployment": true,
+  "doNotResetOldBudgets": true,
+  "limitation": "The initial failure is migrated from a real earlier native observation; this run does not claim a newly discovered unknown model error."
+}

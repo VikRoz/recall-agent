@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-06T18:50:42.217Z",
+  "publicReadOnlyRequests": 3,
+  "results": [
+    {
+      "path": "/health",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "version": "0.1.0",
+        "relayerVersion": "0.1.0",
+        "apiVersion": "1.0.0",
+        "minSupportedSdk": {
+          "typescript": "0.0.4",
+          "python": "0.1.0",
+          "mcp": "0.0.1"
+        },
+        "featureFlags": {
+          "auth.accountBoundNonce": true,
+          "auth.sealSessionHeader": true,
+          "config.publicDeploymentMetadata": true,
+          "remember.asyncJobs": true,
+          "remember.bulk": true,
+          "runtime.versionEndpoint": true
+        },
+        "deprecations": [
+          {
+            "surface": "header:x-delegate-key",
+            "deprecatedSince": "1.0.0",
+            "removalApiVersion": "2.0.0",
+            "guidance": "Use x-seal-session for relayer-managed SEAL decrypt flows; manual-mode requests should send no decrypt credential."
+          },
+          {
+            "surface": "env:SEAL_KEY_SERVERS",
+            "deprecatedSince": "1.0.0",
+            "removalApiVersion": "2.0.0",
+            "guidance": "Use SEAL_SERVER_CONFIGS so independent and committee key-server configs share one JSON schema."
+          }
+        ],
+        "build": {
+          "commit": "b01ff93fa720918054e68c0cecbd6ab3bb1b95c6"
+        },
+        "mode": "production",
+        "prompt_versions": {
+          "extract": "extract.v7",
+          "ask": "ask.v2"
+        },
+        "write_ready": true,
+        "writes": "ok"
+      }
+    },
+    {
+      "path": "/config",
+      "status": 200,
+      "body": {
+        "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+        "registryId": "0x8bf82c9e09e36b8d1c38298f68b7cb68e7b8762887e7592add9986d5e9cf199f",
+        "network": "mainnet",
+        "suiRpcUrl": "https://rpc-mainnet.suiscan.xyz",
+        "suiGrpcUrl": "https://mysten-rpc.mainnet.sui.io",
+        "suiTransport": "grpc",
+        "rateLimitDisabled": false,
+        "securityDeleteSuiRpcRequestsPerWindow": 2850,
+        "securityDeleteSuiRpcWindowSecs": 10,
+        "securityDeleteEnabled": true,
+        "securityDeleteReconcilerEnabled": true,
+        "securityDeleteObjectResolverEnabled": true,
+        "securityDeleteBatchMax": 900,
+        "securityDeleteMaxActiveBatchesPerOwner": 16,
+        "securityDeleteAuthRequestsPerMinute": 1000,
+        "securityDeletePrepareRequestsPerMinute": 1000,
+        "securityDeleteExecuteMaxInFlight": 1,
+        "securityDeleteCrashTestEnabled": false,
+        "securityDeleteClaimTtlSecs": 600,
+        "securityDeleteExecutionGraceSecs": 120,
+        "securityDeleteExpiryMarginEpochs": 1
+      }
+    },
+    {
+      "path": "/version",
+      "status": 200,
+      "body": {
+        "relayerVersion": "0.1.0",
+        "apiVersion": "1.0.0",
+        "minSupportedSdk": {
+          "typescript": "0.0.4",
+          "python": "0.1.0",
+          "mcp": "0.0.1"
+        },
+        "featureFlags": {
+          "auth.accountBoundNonce": true,
+          "auth.sealSessionHeader": true,
+          "config.publicDeploymentMetadata": true,
+          "remember.asyncJobs": true,
+          "remember.bulk": true,
+          "runtime.versionEndpoint": true
+        },
+        "deprecations": [
+          {
+            "surface": "header:x-delegate-key",
+            "deprecatedSince": "1.0.0",
+            "removalApiVersion": "2.0.0",
+            "guidance": "Use x-seal-session for relayer-managed SEAL decrypt flows; manual-mode requests should send no decrypt credential."
+          },
+          {
+            "surface": "env:SEAL_KEY_SERVERS",
+            "deprecatedSince": "1.0.0",
+            "removalApiVersion": "2.0.0",
+            "guidance": "Use SEAL_SERVER_CONFIGS so independent and committee key-server configs share one JSON schema."
+          }
+        ],
+        "build": {
+          "commit": "b01ff93fa720918054e68c0cecbd6ab3bb1b95c6"
+        }
+      }
+    }
+  ],
+  "browserAccountObserved": true,
+  "existingDelegateListed": true,
+  "credentialFileParsedForPublicIdentity": true,
+  "privateKeyCopiedOrPrinted": false,
+  "walrusWrites": 0,
+  "modelUserTurns": 0,
+  "authenticatedSdkRequests": 0,
+  "browserAccountReadPerformed": true
+}

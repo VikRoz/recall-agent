@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "origin": "actual-native-error-automatically-captured-and-retained",
+  "sourceRunSha256": "4d05d4848d73687d9bb205f4a9e568300b629dfd875babd8825e64850bcf6530",
+  "failure": {
+    "id": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+    "record": {
+      "attempted": 100,
+      "bound": 10,
+      "constraint": "maximum",
+      "evidence": "sdk-input-validation",
+      "field": "limit",
+      "schema": "recall-tool-experience/1",
+      "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+      "source": "replay",
+      "supersedes": null,
+      "tool": "find_wallet_activity",
+      "verdict": "fail",
+      "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+    }
+  },
+  "ordinaryTask": "Give me an overview of activity on Sui Mainnet for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on 5 November 2026 UTC. What operations can you identify, how did its balance change, and who paid the gas?",
+  "initialSuccessRecordInserted": false
+}
