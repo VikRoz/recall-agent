@@ -4,11 +4,11 @@ A Sui agent in your own model client, with verified experience memory. Developme
 
 ## Current implementation
 
-The launcher supplies general operating rules and opens an empty Codex conversation. There is no initial user task, prescribed first tool, first/second-chat sequence or mandatory failure/save/export. Independent tools provide transaction reports, address-context previews and CSV. The new gas-payer verifier checks a model-proposed claim against transaction evidence. With explicit local capture enabled, a mismatch is saved automatically and a subsequently verified correction links to it.
+The launcher supplies general operating rules and opens an empty Codex conversation. There is no initial user task, prescribed first tool, first/second-chat sequence or mandatory failure/save/export. Independent tools provide wallet/period lookup in the selected dataset, transaction reports, address-context previews and CSV. Wallet lookup does not require the user to supply transaction digests. It is optional; no tool must run first. The new gas-payer verifier checks a model-proposed claim against transaction evidence. With explicit local capture enabled, a mismatch is saved automatically and a subsequently verified correction links to it.
 
 Memory belongs to a persistent private workspace; separate client processes reuse it. Supported local-input errors can recover. Integrity failures and unknown failures stop the session. The verifier covers the structured claim submitted to it; arbitrary model prose is not automatically verified.
 
-**Today: synthetic transactions and local memory only in the launcher.** A typed Walrus transport reuses the existing SDK writer and durable uncertain-write journal and is tested with intercepted SDK responses. Its live admission is not wired into this experimental launcher. A preliminary native-model smoke completed report/verification, CSV reuse and clarification, with recorded capability overreach; no improvement from memory is claimed. See [probe results](docs/AGENT_MODEL_PROBE_2026-11-06.md). Inherited website files, evidence and legacy entry points describe the fallback, not validation of this agent.
+**Today: offline transaction data and local memory only in the launcher.** Synthetic data is the default; `--saved` selects a partial replay of two previously recorded Mainnet transactions. A typed Walrus transport reuses the existing SDK writer and durable uncertain-write journal and is tested with intercepted SDK responses. Its live admission is not wired into this experimental launcher. A preliminary native-model smoke completed report/verification, CSV reuse and clarification, with recorded capability overreach; no improvement from memory is claimed. See [probe results](docs/AGENT_MODEL_PROBE_2026-11-06.md). Inherited website files, evidence and legacy entry points describe the fallback, not validation of this agent.
 
 ## Offline checks
 
@@ -32,13 +32,29 @@ Add `--capture-local` to explicitly allow automatic saving of the supported tech
 
 `bash start.command --example` prints available synthetic transaction inputs. They are not silently inserted into the model conversation. Ask any supported question in your own words; there is no required prompt sequence.
 
+## Wallet activity from saved Mainnet records
+
+Use a different private workspace for each dataset. This opens an empty model chat with the saved dataset selected:
+
+```sh
+bash start.command --codex /private/tmp/my-recall-saved --saved
+```
+
+Add `--capture-local` to allow supported technical observations to be saved locally. This command uses your model account; it is not part of offline checks. To inspect available data without inference:
+
+```sh
+bash start.command --example --saved
+```
+
+Ask about a wallet and optionally a period in ordinary words. The model can find matching transaction references without you pasting their IDs. Lookup returns UTC start-inclusive/end-exclusive coverage, bounded pages and observed roles. A missing record means absent from this dataset, not an inactive wallet. The two saved transactions are not a complete wallet history. Reports and CSV label their source `replay`, never a fresh provider read. Contract changes and full wallet-history discovery remain unsupported.
+
 ## Other MCP clients
 
-Configure a stdio server with command `/bin/bash` and arguments `["ABSOLUTE_PROJECT_PATH/start.command", "--mcp", "/private/tmp/my-recall-agent"]`. Optionally append `--capture-local`. Use a new chat and select your own model. This standard MCP entry point is tested with independent protocol clients; the new free-task flow has not yet been verified live in Claude Desktop.
+Configure a stdio server with command `/bin/bash` and arguments `["ABSOLUTE_PROJECT_PATH/start.command", "--mcp", "/private/tmp/my-recall-agent"]`. Optionally append `--capture-local` and/or `--saved` (using a separate workspace for the saved dataset). Use a new chat and select your own model. This standard MCP entry point is tested with independent protocol clients; the new free-task flow has not yet been verified live in Claude Desktop.
 
 ## Development gates
 
-1. Independent tool actions, verified claim capture, stable local memory — offline implementation and checks.
+1. Independent tools, wallet/period lookup, replay provenance, verified claim capture and stable local memory — offline implementation and checks.
 2. Preliminary model smoke — recorded, including a failed harness attempt; genuinely new user-selected tasks and memory-benefit checks remain pending.
 3. Account-bound admission and durable shared 2/2/2 limits for live experience — pending; old exhausted budgets cannot be reused.
 4. Bounded real Sui/Walrus test and clean judge packaging — pending.

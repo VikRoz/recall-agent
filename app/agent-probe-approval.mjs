@@ -1,5 +1,5 @@
 // Evaluation-only, one request at a time. Never relaxes the native client policy.
-const allowed = new Set(['prepare_report','refresh_report','export_report','verify_gas_payer']);
+const allowed = new Set(['find_wallet_activity','prepare_report','refresh_report','export_report','verify_gas_payer']);
 export function probeApproval(message) {
   const p=message.params;
   if(message.id===undefined||message.method!=='mcpServer/elicitation/request'||p?.serverName!=='recall_lab'

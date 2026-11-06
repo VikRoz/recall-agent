@@ -9,7 +9,7 @@ import type { Network } from '../src/domain.ts';
 
 export type Experience = {
   schema: 'recall-experience/1'; workspace: string; network: Network;
-  operation: 'gas-payer'; source: 'fixture' | 'tatum'; digest: string; sponsored: boolean;
+  operation: 'gas-payer'; source: 'fixture' | 'tatum' | 'replay'; digest: string; sponsored: boolean;
   claimed: string; observed: string; verdict: 'fail' | 'resolved'; supersedes: string | null;
 };
 export type ExperienceRow = { id: string; record: Experience; blobId?: string };
@@ -17,7 +17,7 @@ const hash = (record: Experience) => createHash('sha256').update(canonical(recor
 export function validateExperience(record: Experience, workspace: string) {
   exactKeys(record, ['schema', 'workspace', 'network', 'operation', 'source', 'digest', 'sponsored', 'claimed', 'observed', 'verdict', 'supersedes']);
   assert(record.schema === 'recall-experience/1' && record.workspace === workspace
-    && record.operation === 'gas-payer' && ['fixture', 'tatum'].includes(record.source) && ['mainnet', 'testnet'].includes(record.network), 'EXPERIENCE_SCOPE');
+    && record.operation === 'gas-payer' && ['fixture', 'tatum', 'replay'].includes(record.source) && ['mainnet', 'testnet'].includes(record.network), 'EXPERIENCE_SCOPE');
   assert(transactionId(record.digest, record.network) === record.digest && typeof record.sponsored === 'boolean', 'EXPERIENCE_EVIDENCE');
   assert(address(record.claimed) === record.claimed && address(record.observed) === record.observed, 'EXPERIENCE_ADDRESS');
   assert(record.verdict === 'fail' ? record.claimed !== record.observed && record.supersedes === null

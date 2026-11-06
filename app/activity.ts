@@ -8,7 +8,7 @@ export const SUI = normalizeStructTag('0x2::sui::SUI');
 export type Movement = { address: string; coinType: string; amount: string };
 export type ActivityTransaction = {
   digest: string; network: Network; checkpoint: string; timestamp: string;
-  sender: string; commands: string[]; interpretation: 'unparsed-ptb' | 'transfer-commands'; status: 'success' | 'failed'; source: 'tatum' | 'fixture';
+  sender: string; commands: string[]; interpretation: 'unparsed-ptb' | 'transfer-commands'; status: 'success' | 'failed'; source: 'tatum' | 'fixture' | 'replay';
   gas: { payer: string; computation: string; storage: string; rebate: string; netCharge: string };
   movements: Movement[];
 };

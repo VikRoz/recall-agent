@@ -18,3 +18,12 @@ Create a separate private development copy at VikRoz/recall-agent from c884ad8. 
 Use existing model clients and domain tools with independent preconditions. Do not inject an initial task or require first/second-chat phases. Reuse the SDK writer through a typed validator facade rather than copying its receipt/retry logic. Start with gas-payer claim verification and opt-in technical capture; no general hallucination detection is claimed. The official memory plugin alone does not provide domain verification, while a new hosted chat would add authentication and cost without solving that problem.
 
 Live provider admission and the combined durable 2/2/2 budget are pending. The experimental default remains offline. See docs/AGENT_VALIDATION.md for checks and their limits.
+
+
+## 6 November 2026 — bounded offline wallet discovery
+
+The user approved wallet activity as the next increment. Add an independent lookup capability with network, wallet, UTC period, bounded pages and explicit partial coverage. Reuse the existing report pipeline rather than introducing a second calculation engine. The user need not supply transaction IDs for lookup. No prescribed first action is added.
+
+Current adapters cover only a local dataset. Saved Mainnet records are hash-pinned and carry a distinct replay source through reporting, CSV and experience applicability; synthetic, replay and fresh Tatum evidence must not be mixed. Bind each workspace to its dataset. A zero-match result does not establish inactivity. A terminal cursor does not establish full history. Live provider discovery remains disabled until its contract and costs are checked.
+
+Rejected: calling the saved subset a full history; continuing to require preselected digests for every task; building relationships and contract-history analysis before this vertical slice works. See docs/WALLET_ACTIVITY_OFFLINE_2026-11-06.md.

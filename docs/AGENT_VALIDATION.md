@@ -6,6 +6,8 @@ Experimental copy of Recall Lab. The original release remains the fallback. This
 
 ## Results
 
+Latest increment: wallet/period lookup and saved-data replay passed the complete 65-test suite. See WALLET_ACTIVITY_OFFLINE_2026-11-06.md for the new contract and seven additional tests. The 58-test result below records the preceding model-probe baseline.
+
 `bash start.command --check` passed: 58 tests (50 inherited regression tests, 7 agent tests and 1 probe-approval test), both inherited independent-process MCP checks, saved evidence recomputation and the updated development-source manifest.
 
 New checks cover: absence of an injected task in Codex arguments; export without saving; recoverable missing-report input; no capture without consent; automatic capture and linked correction for a structured gas-payer claim; duplicate suppression; no record for an already-correct claim; unrelated-network exclusion; integrity failure stopping the session; independent MCP processes reading the same experience on another transaction; typed SDK admission, confirmed receipt and uncertain write without resubmission.

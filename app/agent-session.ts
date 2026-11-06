@@ -1,17 +1,23 @@
 import { ActivitySession } from './activity-session.ts';
 import { assert } from '../src/domain.ts';
 import { address, transactionId } from './activity.ts';
+import type { ActivityQuery, OfflineActivityIndex } from './agent-activity-index.ts';
 import type { ExperienceStore, Experience } from './agent-experience.ts';
 
 // Only failures proved to precede external operations may recover automatically.
 const recoverable = new Set(['WRONG_NETWORK', 'INVALID_ADDRESS', 'TRANSACTION_LIST_LIMIT',
   'DUPLICATE_TRANSACTION', 'INVALID_TRANSACTION_DIGEST', 'UNSUPPORTED_EXPLORER_LINK', 'NETWORK_MISMATCH',
+  'OFFLINE_TRANSACTION_NOT_FOUND', 'ACTIVITY_QUERY_TIME', 'ACTIVITY_QUERY_NETWORK', 'ACTIVITY_QUERY_RANGE', 'ACTIVITY_QUERY_LIMIT', 'ACTIVITY_QUERY_CURSOR',
   'REPORT_NOT_FOUND', 'PROPOSAL_NOT_FOUND', 'REPORT_LIMIT', 'PROPOSAL_LIMIT', 'CLAIM_TRANSACTION_NOT_IN_REPORT']);
 export class AgentSession extends ActivitySession {
   stopped = false;
   failures = 0;
   experience!: ExperienceStore;
   capture = false;
+  activityIndex!: OfflineActivityIndex;
+  async findActivity(query: ActivityQuery) {
+    return this.action(async () => this.activityIndex.find(query));
+  }
   async action<T>(fn: () => Promise<T>): Promise<T> {
     assert(!this.stopped, 'AGENT_STOPPED');
     assert(!this.busy, 'ACTIVITY_BUSY');
@@ -27,7 +33,9 @@ export class AgentSession extends ActivitySession {
     const rows = await this.experience.read();
     const memory = rows.filter(row => state.transactions.some(tx => tx.network === row.record.network && tx.source === row.record.source
       && (tx.gas.payer !== tx.sender) === row.record.sponsored));
-    return { ...result, experience: memory, experienceStorage: this.experience.storage };
+    return { ...result, experience: memory, experienceStorage: this.experience.storage,
+      dataProvenance: {sourceMode: this.activityIndex?.mode === 'saved' ? 'saved-mainnet-replay' : 'synthetic-fixture',
+        freshProviderRead: false, walletHistoryComplete: false, scope: 'selected-transactions'} };
   }
   async verifyGasPayer(reportId: string, digestInput: string, claimedInput: string) {
     return this.action(async () => {

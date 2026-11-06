@@ -6,22 +6,36 @@ import { StdioServerTransport } from '../mcp/node_modules/@modelcontextprotocol/
 import { z } from '../mcp/node_modules/zod/index.js';
 import { activityServer } from './activity-mcp.mjs';
 import { FixtureRuleStore } from './activity-fixture-store.ts';
-import { FixtureActivityData, FIXTURE_WALLET } from './activity-fixtures.ts';
+import { FIXTURE_WALLET } from './activity-fixtures.ts';
 import { LocalExperienceStore } from './agent-experience.ts';
+import { loadOfflineActivity } from './agent-activity-index.ts';
 import { AgentSession } from './agent-session.ts';
 import { assert } from '../src/domain.ts';
 
-export function offlineAgent(directory, capture) {
+export function offlineAgent(directory, capture, dataMode = 'fixture') {
+  const index = loadOfflineActivity(dataMode);
   const file = join(directory, 'agent-workspace.json');
-  if (!existsSync(file)) writeFileSync(file, JSON.stringify({ schema: 1, project: 'agent-' + randomUUID() }), { flag: 'wx', mode: 0o600 });
+  if (!existsSync(file)) writeFileSync(file, JSON.stringify({ schema: 1, project: 'agent-' + randomUUID(), datasetId: index.datasetId }), { flag: 'wx', mode: 0o600 });
   assert(lstatSync(file).isFile() && !lstatSync(file).isSymbolicLink() && lstatSync(file).size < 1024, 'WORKSPACE_FILE');
   const config = JSON.parse(readFileSync(file, 'utf8'));
   assert(config.schema === 1 && /^agent-[a-f0-9-]{36}$/.test(config.project), 'WORKSPACE_BINDING');
+  assert(config.datasetId === index.datasetId || (config.datasetId === undefined && dataMode === 'fixture'), 'WORKSPACE_DATASET_MISMATCH');
   const binding = { owner: FIXTURE_WALLET, project: config.project };
-  const session = new AgentSession(binding, new FixtureRuleStore(directory, binding), n => new FixtureActivityData(n));
+  const session = new AgentSession(binding, new FixtureRuleStore(directory, binding), network => ({transactions: ids => index.transactions(network, ids)}));
   session.experience = new LocalExperienceStore(directory, config.project);
   session.capture = capture;
-  const server = activityServer(session, 'offline-agent-fixture');
+  session.activityIndex = index;
+  const server = activityServer(session, dataMode === 'saved' ? 'offline-agent-replay' : 'offline-agent-fixture');
+  server.registerTool('find_wallet_activity', {
+    description: 'Find transaction references involving a wallet in the selected LOCAL dataset, optionally filtered by a UTC period. Saved records are replay, not a fresh chain query. Results always have partial wallet-history coverage. No match does not prove inactivity. This tool does not infer ownership or direct counterparties.',
+    inputSchema: { network: z.enum(['mainnet','testnet']), wallet: z.string().max(66),
+      from: z.string().max(30).optional(), to: z.string().max(30).optional(),
+      limit: z.number().int().min(1).max(10).optional(), cursor: z.string().max(100).optional() },
+    annotations: {readOnlyHint: true, openWorldHint: false},
+  }, async args => {
+    try { return {content: [{type: 'text', text: JSON.stringify(await session.findActivity(args))}]}; }
+    catch (error) { return {isError: true, content: [{type: 'text', text: /^[A-Z0-9_]+$/.test(error?.code) ? error.code : 'AGENT_ERROR'}]}; }
+  });
   server.registerTool('verify_gas_payer', {
     description: 'Check a proposed gas-payer address against transaction evidence in an existing report. A verified mismatch and its verified resolution can be saved automatically when local capture is enabled. Returned local IDs are not Walrus receipts.',
     inputSchema: { reportId: z.string().max(120), transaction: z.string().max(200), claimedPayer: z.string().max(66) },
@@ -32,14 +46,22 @@ export function offlineAgent(directory, capture) {
   });
   return { session, server };
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+async function main() {
   try {
-    const [mode, path, consent] = process.argv.slice(2);
-    assert(mode === '--offline' && path && [undefined, '--capture-local'].includes(consent), 'OFFLINE_AGENT_ONLY');
+    const [mode, path, ...options] = process.argv.slice(2);
+    if (mode === '--example') {
+      assert([undefined, '--saved'].includes(path) && options.length === 0, 'OFFLINE_AGENT_ONLY');
+      console.log(JSON.stringify(loadOfflineActivity(path === '--saved' ? 'saved' : 'fixture').examples(), null, 2));
+      return;
+    }
+    assert(mode === '--offline' && path && new Set(options).size === options.length
+      && options.every(o => ['--capture-local','--saved'].includes(o)), 'OFFLINE_AGENT_ONLY');
     const directory = realpathSync(path);
     assert(lstatSync(directory).isDirectory() && (lstatSync(directory).mode & 0o077) === 0, 'PRIVATE_WORKSPACE_REQUIRED');
     // No provider transports exist in this entry point. Defense in depth for accidental fetches.
     globalThis.fetch = () => { throw Error('OFFLINE_NETWORK_DENIED'); };
-    await offlineAgent(directory, consent === '--capture-local').server.connect(new StdioServerTransport());
+    await offlineAgent(directory, options.includes('--capture-local'), options.includes('--saved') ? 'saved' : 'fixture').server.connect(new StdioServerTransport());
   } catch { console.error('AGENT_SETUP_STOPPED'); process.exitCode = 1; }
 }
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await main();

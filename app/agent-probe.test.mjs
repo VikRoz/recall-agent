@@ -13,4 +13,5 @@ test('probe handles native zero request ID and grants only one known local opera
   {requestedSchema:{type:'object',properties:{password:{type:'string'}}}},
  ])assert.equal(probeApproval({...request,params:{...request.params,...patch}}),null);
  assert.deepEqual(probeApproval({...request,id:'0'}).id,'0');
+ assert.equal(probeApproval({...request,params:{...request.params,message:'Allow the recall_lab MCP server to run tool "find_wallet_activity"?'}}).result.action,'accept');
 });
