@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-06",
+  "mode": "offline-injected-ports-only",
+  "actualProviderCalls": 0,
+  "legacyGuardExperienceWrite": {
+    "rejected": true,
+    "code": "INVALID_KEYS",
+    "transportCalls": 0
+  },
+  "experienceReadSeam": {
+    "admissionCallbackCalls": 0,
+    "injectedInventoryCalls": 2,
+    "injectedRecallCalls": 1
+  },
+  "interpretation": "Legacy guard is rule-specific; experience read requires an outer guarded transport. The seam is not exposed live."
+}
