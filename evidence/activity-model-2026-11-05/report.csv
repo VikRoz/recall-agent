@@ -1,0 +1,2 @@
+digest,network,timestamp,status,source,address,coinType,netAmountBaseUnits,relation,label,ruleId,memoryBlobId
+"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3","mainnet","2026-11-05T10:34:12.732Z","success","tatum","0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69","0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI","-104194","external","External gas sponsor (demo context)","rule:1148c52b-ac0f-4bb5-808c-631873014888","5opR5p9UyADYXUA-oVsuPs2UkyZVI9Zf0Thfq98DO4U"

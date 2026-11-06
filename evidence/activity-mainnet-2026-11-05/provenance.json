@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-05",
+  "sourceHashes": {
+    "app/activity-live.ts": "7d3418714a6f0a61d7fdef708dc9375e387d10125133631928c6f08d4db98f4a",
+    "app/activity-pilot.ts": "ad52024d03c9463f9cfc43ac4f86ce6989393d5725aff59b04d36a8376e85954",
+    "app/activity-memory.ts": "7690091a8086626469f8a4041cc0d23c1ebc18142f26be26b37ce4ba2cdae9d1",
+    "app/tatum.ts": "bbfc483bd5900e7977ea82efe2b738e5060ddac1601efbd41a6809518dd6a111"
+  },
+  "scope": "Actual Tatum/Walrus integration pilot. No model calls. Later MCP wiring and receipt-readback strengthening are verified offline separately.",
+  "accounting": "Two Tatum unary calls (four included credits), two sponsored writes, two content recalls, 37 guarded SDK fetch attempts. Free account and managed sponsorship checked; UI credit counter did not update immediately. No payment or paid fallback."
+}

@@ -1,0 +1,485 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "status": "VERIFIED_CODEX_ACTIVITY_FLOW_WITH_CONTINUATION",
+  "mode": "live-providers",
+  "conversations": [
+    {
+      "sessionIdSha256": "7ed2f05c81c26868daa6c4b8826afce0666a07446db63cea2fb0968de778062a",
+      "sourceTranscriptSha256": "ef1cf72e58626d1f7faa36279b4398e8d535cc017ea924c0fa6b7200e72207b5",
+      "client": "Codex CLI",
+      "clientVersion": "0.153.0",
+      "model": {
+        "name": "gpt-5.6-luna",
+        "reasoningEffort": "medium"
+      },
+      "confirmedWrite": {
+        "at": "2026-11-05T12:42:49.696Z",
+        "text": "I confirm this exact preview. Save it once to Walrus, show the blob ID and stop. Do not refresh or export."
+      },
+      "toolCalls": [
+        {
+          "method": "prepare_report",
+          "requestedAt": "2026-11-05T12:42:23.379Z"
+        },
+        {
+          "method": "propose_address_rule",
+          "requestedAt": "2026-11-05T12:42:31.715Z"
+        },
+        {
+          "method": "save_address_rule",
+          "requestedAt": "2026-11-05T12:42:52.228Z"
+        }
+      ]
+    },
+    {
+      "sessionIdSha256": "2c90e4dc31a3112984ed6112b67cb9739591e98c909aacb1793e293b005aaf6a",
+      "sourceTranscriptSha256": "c663ee2dedc7a55c2f7216f1fcc2a23cebf009483c0bd92f0b7dba3648f635fc",
+      "client": "Codex CLI",
+      "clientVersion": "0.153.0",
+      "model": {
+        "name": "gpt-5.6-luna",
+        "reasoningEffort": "medium"
+      },
+      "confirmedWrite": {
+        "at": "2026-11-05T13:06:11.985Z",
+        "text": "I confirm this exact correction preview. Save it once to Walrus, then export the current report as CSV. Show both blob IDs and the active rule. Do not fetch another transaction."
+      },
+      "toolCalls": [
+        {
+          "method": "prepare_report",
+          "requestedAt": "2026-11-05T13:05:43.129Z"
+        },
+        {
+          "method": "propose_address_rule",
+          "requestedAt": "2026-11-05T13:05:55.819Z"
+        },
+        {
+          "method": "save_address_rule",
+          "requestedAt": "2026-11-05T13:06:19.349Z"
+        },
+        {
+          "method": "export_report",
+          "requestedAt": "2026-11-05T13:06:19.349Z"
+        }
+      ]
+    }
+  ],
+  "first": {
+    "prepared": {
+      "mode": "live-providers",
+      "reportId": "report:66a52239-6428-43b5-a814-2f10b899a9c5",
+      "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+      "asOf": "2026-11-05T12:42:27.702Z",
+      "digests": [
+        "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
+      ],
+      "rows": [
+        {
+          "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "network": "mainnet",
+          "timestamp": "2026-11-05T10:34:12.732Z",
+          "status": "success",
+          "source": "tatum",
+          "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+          "netAmountBaseUnits": "-104261",
+          "relation": "unclassified",
+          "label": "",
+          "ruleId": null,
+          "memoryBlobId": null
+        }
+      ],
+      "totals": [],
+      "declaredWalletTotals": [],
+      "gas": [
+        {
+          "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "computation": "100000",
+          "storage": "42605600",
+          "rebate": "42601339",
+          "netCharge": "104261"
+        }
+      ],
+      "notes": [
+        "Totals cover the supplied digests only.",
+        "Net balance changes include their onchain effects.",
+        "Gas information is displayed separately and is not subtracted again.",
+        "Declared wallet totals use the address relations confirmed by the user.",
+        "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+      ],
+      "transactionEvidence": [
+        {
+          "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "network": "mainnet",
+          "checkpoint": "341884811",
+          "timestamp": "2026-11-05T10:34:12.732Z",
+          "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+          "commands": [
+            "makeMoveVector",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall"
+          ],
+          "interpretation": "unparsed-ptb",
+          "status": "success",
+          "source": "tatum",
+          "gas": {
+            "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "computation": "100000",
+            "storage": "42605600",
+            "rebate": "42601339",
+            "netCharge": "104261"
+          },
+          "movements": [
+            {
+              "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+              "amount": "-104261"
+            }
+          ]
+        }
+      ],
+      "memory": []
+    },
+    "proposal": {
+      "mode": "live-providers",
+      "proposalId": "proposal:f8b57763-a4dc-4ed8-b681-cd2b799635ef",
+      "preview": {
+        "schema": 1,
+        "kind": "address-rule",
+        "id": "rule:8c883a31-b3d6-473f-960f-0705fa13ff9c",
+        "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+        "project": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+        "network": "mainnet",
+        "subjectWallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+        "relation": "unknown",
+        "label": "Unreviewed gas payer",
+        "recordedAt": "2026-11-05T12:42:34.227Z",
+        "effectiveFrom": "2026-11-05T00:00:00.000Z",
+        "supersedes": null,
+        "source": "user-confirmed"
+      },
+      "confirmation": "Ask the user to review this exact preview before calling save_address_rule."
+    },
+    "receipt": {
+      "mode": "live-providers",
+      "jobId": "9810d7de-2f10-4159-8a95-d37b2e358110",
+      "blobId": "CJh1BJDaX5niPuHU_Y-NiDBOoEzazBdmRg09uMp_W-0"
+    }
+  },
+  "second": {
+    "prepared": {
+      "mode": "live-providers",
+      "reportId": "report:862d3979-ef7f-4b97-bda4-b5c77c67738a",
+      "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+      "asOf": "2026-11-05T13:05:50.537Z",
+      "digests": [
+        "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3"
+      ],
+      "rows": [
+        {
+          "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+          "network": "mainnet",
+          "timestamp": "2026-11-05T10:34:12.732Z",
+          "status": "success",
+          "source": "tatum",
+          "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+          "netAmountBaseUnits": "-104194",
+          "relation": "unknown",
+          "label": "Unreviewed gas payer",
+          "ruleId": "rule:8c883a31-b3d6-473f-960f-0705fa13ff9c",
+          "memoryBlobId": "CJh1BJDaX5niPuHU_Y-NiDBOoEzazBdmRg09uMp_W-0"
+        }
+      ],
+      "totals": [],
+      "declaredWalletTotals": [],
+      "gas": [
+        {
+          "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+          "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "computation": "100000",
+          "storage": "41936800",
+          "rebate": "41932606",
+          "netCharge": "104194"
+        }
+      ],
+      "notes": [
+        "Totals cover the supplied digests only.",
+        "Net balance changes include their onchain effects.",
+        "Gas information is displayed separately and is not subtracted again.",
+        "Declared wallet totals use the address relations confirmed by the user.",
+        "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+      ],
+      "transactionEvidence": [
+        {
+          "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+          "network": "mainnet",
+          "checkpoint": "341884811",
+          "timestamp": "2026-11-05T10:34:12.732Z",
+          "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+          "commands": [
+            "makeMoveVector",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall"
+          ],
+          "interpretation": "unparsed-ptb",
+          "status": "success",
+          "source": "tatum",
+          "gas": {
+            "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "computation": "100000",
+            "storage": "41936800",
+            "rebate": "41932606",
+            "netCharge": "104194"
+          },
+          "movements": [
+            {
+              "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+              "amount": "-104194"
+            }
+          ]
+        }
+      ],
+      "memory": [
+        {
+          "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "effectiveFrom": "2026-11-05T00:00:00.000Z",
+          "id": "rule:8c883a31-b3d6-473f-960f-0705fa13ff9c",
+          "kind": "address-rule",
+          "label": "Unreviewed gas payer",
+          "network": "mainnet",
+          "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+          "project": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+          "recordedAt": "2026-11-05T12:42:34.227Z",
+          "relation": "unknown",
+          "schema": 1,
+          "source": "user-confirmed",
+          "subjectWallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+          "supersedes": null,
+          "blobId": "CJh1BJDaX5niPuHU_Y-NiDBOoEzazBdmRg09uMp_W-0"
+        }
+      ]
+    },
+    "proposal": {
+      "mode": "live-providers",
+      "proposalId": "proposal:94a90a2e-e69b-4617-8704-1ad7737d4d00",
+      "preview": {
+        "schema": 1,
+        "kind": "address-rule",
+        "id": "rule:1148c52b-ac0f-4bb5-808c-631873014888",
+        "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+        "project": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+        "network": "mainnet",
+        "subjectWallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+        "relation": "external",
+        "label": "External gas sponsor (demo context)",
+        "recordedAt": "2026-11-05T13:05:58.533Z",
+        "effectiveFrom": "2026-11-05T00:00:00.000Z",
+        "supersedes": "rule:8c883a31-b3d6-473f-960f-0705fa13ff9c",
+        "source": "user-confirmed"
+      },
+      "confirmation": "Ask the user to review this exact preview before calling save_address_rule."
+    },
+    "receipt": {
+      "mode": "live-providers",
+      "jobId": "5d6b8055-4408-4c73-a3eb-f9d460893a0a",
+      "blobId": "5opR5p9UyADYXUA-oVsuPs2UkyZVI9Zf0Thfq98DO4U"
+    },
+    "exported": {
+      "mode": "live-providers",
+      "reportId": "report:862d3979-ef7f-4b97-bda4-b5c77c67738a",
+      "report": {
+        "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "asOf": "2026-11-05T13:06:56.535Z",
+        "digests": [
+          "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3"
+        ],
+        "rows": [
+          {
+            "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+            "network": "mainnet",
+            "timestamp": "2026-11-05T10:34:12.732Z",
+            "status": "success",
+            "source": "tatum",
+            "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-104194",
+            "relation": "external",
+            "label": "External gas sponsor (demo context)",
+            "ruleId": "rule:1148c52b-ac0f-4bb5-808c-631873014888",
+            "memoryBlobId": "5opR5p9UyADYXUA-oVsuPs2UkyZVI9Zf0Thfq98DO4U"
+          }
+        ],
+        "totals": [],
+        "declaredWalletTotals": [],
+        "gas": [
+          {
+            "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+            "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "computation": "100000",
+            "storage": "41936800",
+            "rebate": "41932606",
+            "netCharge": "104194"
+          }
+        ],
+        "notes": [
+          "Totals cover the supplied digests only.",
+          "Net balance changes include their onchain effects.",
+          "Gas information is displayed separately and is not subtracted again.",
+          "Declared wallet totals use the address relations confirmed by the user.",
+          "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+        ],
+        "transactionEvidence": [
+          {
+            "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+            "network": "mainnet",
+            "checkpoint": "341884811",
+            "timestamp": "2026-11-05T10:34:12.732Z",
+            "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "commands": [
+              "makeMoveVector",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall"
+            ],
+            "interpretation": "unparsed-ptb",
+            "status": "success",
+            "source": "tatum",
+            "gas": {
+              "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+              "computation": "100000",
+              "storage": "41936800",
+              "rebate": "41932606",
+              "netCharge": "104194"
+            },
+            "movements": [
+              {
+                "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+                "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                "amount": "-104194"
+              }
+            ]
+          }
+        ],
+        "memory": [
+          {
+            "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "effectiveFrom": "2026-11-05T00:00:00.000Z",
+            "id": "rule:8c883a31-b3d6-473f-960f-0705fa13ff9c",
+            "kind": "address-rule",
+            "label": "Unreviewed gas payer",
+            "network": "mainnet",
+            "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+            "project": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+            "recordedAt": "2026-11-05T12:42:34.227Z",
+            "relation": "unknown",
+            "schema": 1,
+            "source": "user-confirmed",
+            "subjectWallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "supersedes": null,
+            "blobId": "CJh1BJDaX5niPuHU_Y-NiDBOoEzazBdmRg09uMp_W-0"
+          },
+          {
+            "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "effectiveFrom": "2026-11-05T00:00:00.000Z",
+            "id": "rule:1148c52b-ac0f-4bb5-808c-631873014888",
+            "kind": "address-rule",
+            "label": "External gas sponsor (demo context)",
+            "network": "mainnet",
+            "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+            "project": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+            "recordedAt": "2026-11-05T13:05:58.533Z",
+            "relation": "external",
+            "schema": 1,
+            "source": "user-confirmed",
+            "subjectWallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "supersedes": "rule:8c883a31-b3d6-473f-960f-0705fa13ff9c",
+            "blobId": "5opR5p9UyADYXUA-oVsuPs2UkyZVI9Zf0Thfq98DO4U"
+          }
+        ]
+      },
+      "mediaType": "text/csv",
+      "csv": "digest,network,timestamp,status,source,address,coinType,netAmountBaseUnits,relation,label,ruleId,memoryBlobId\r\n\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"mainnet\",\"2026-11-05T10:34:12.732Z\",\"success\",\"tatum\",\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"-104194\",\"external\",\"External gas sponsor (demo context)\",\"rule:1148c52b-ac0f-4bb5-808c-631873014888\",\"5opR5p9UyADYXUA-oVsuPs2UkyZVI9Zf0Thfq98DO4U\"\r\n"
+    }
+  },
+  "counts": {
+    "jobs": {
+      "5d6b8055-4408-4c73-a3eb-f9d460893a0a": 4,
+      "9810d7de-2f10-4159-8a95-d37b2e358110": 4
+    },
+    "planHash": "219f915ac6024503f8841d6ec281e964681c37d7c9d6bf158ab41eb15cb81edb",
+    "reads": 2,
+    "requests": 38,
+    "stopped": null,
+    "tatumBatches": 2,
+    "writes": 2
+  },
+  "journalReceipts": [
+    {
+      "blobId": "5opR5p9UyADYXUA-oVsuPs2UkyZVI9Zf0Thfq98DO4U",
+      "jobId": "5d6b8055-4408-4c73-a3eb-f9d460893a0a",
+      "sha256": "d5bddefb40ddb6636f6f81f98ef5f354bb6a1f5ab32cedbee3845bd386853941",
+      "state": "done"
+    },
+    {
+      "blobId": "CJh1BJDaX5niPuHU_Y-NiDBOoEzazBdmRg09uMp_W-0",
+      "jobId": "9810d7de-2f10-4159-8a95-d37b2e358110",
+      "sha256": "8e7996a7d793a6290ec38e5a646ead2a8f44f73cba19cd77a3fc518e6bfe4371",
+      "state": "done"
+    }
+  ],
+  "continuation": {
+    "checkedAt": "2026-11-05T13:05:18.763Z",
+    "countersBefore": {
+      "jobs": {
+        "9810d7de-2f10-4159-8a95-d37b2e358110": 4
+      },
+      "planHash": "219f915ac6024503f8841d6ec281e964681c37d7c9d6bf158ab41eb15cb81edb",
+      "reads": 0,
+      "requests": 17,
+      "stopped": null,
+      "tatumBatches": 1,
+      "writes": 1
+    },
+    "expectedReceipts": [
+      {
+        "blobId": "CJh1BJDaX5niPuHU_Y-NiDBOoEzazBdmRg09uMp_W-0",
+        "sha256": "8e7996a7d793a6290ec38e5a646ead2a8f44f73cba19cd77a3fc518e6bfe4371"
+      }
+    ],
+    "maxUSD": 0,
+    "planHash": "219f915ac6024503f8841d6ec281e964681c37d7c9d6bf158ab41eb15cb81edb",
+    "previousCheckedAt": "2026-11-05T12:38:46.240Z",
+    "schema": 1
+  },
+  "additionalSpendUSD": 0,
+  "accounting": "Existing ChatGPT subscription usage, Tatum Free allowance (two unary calls / four included credits), two managed-relayer sponsored Walrus writes. Model request count is not inferred from prompts. No paid fallback.",
+  "limitations": [
+    "The initial second-chat startup failed and required an explicitly approved billing renewal with unchanged counters.",
+    "These public transactions are sponsored-gas complex PTBs; address labels are user-confirmed demo context. No ownership claim or improvement in model reasoning is established.",
+    "Evidence consists of saved MCP tool outputs and receipt-only local journals. Offline verification does not authenticate the provider state on the current network.",
+    "This new activity conversation was tested with Codex, not Claude Desktop."
+  ]
+}
