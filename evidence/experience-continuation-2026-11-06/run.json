@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "model": "gpt-5.6-luna",
+  "summary": {
+    "schema": 1,
+    "turns": [
+      {
+        "task": "direct-captured-experience",
+        "chat": "fresh",
+        "status": "completed",
+        "tools": 4
+      }
+    ],
+    "status": "COMPLETED",
+    "preflight": {
+      "accountType": "chatgpt",
+      "usedPercent": 18,
+      "hasCredits": false,
+      "balance": "0"
+    },
+    "requestedModel": "gpt-5.6-luna",
+    "model": "gpt-5.6-luna",
+    "turnsStarted": 1
+  },
+  "trace": [
+    {
+      "kind": "user",
+      "chat": "fresh",
+      "text": "Give me an overview of activity on Sui Mainnet for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on 5 November 2026 UTC. What operations can you identify, how did its balance change, and who paid the gas?"
+    },
+    {
+      "kind": "model",
+      "phase": "commentary",
+      "text": "Использую Recall Agent для локального поиска Sui Mainnet по кошельку и UTC-дате, затем отдельно проверю операции, баланс и газ-плательщика по найденным транзакциям. Локальная выборка может быть неполной историей кошелька."
+    },
+    {
+      "kind": "tool",
+      "tool": "find_wallet_activity",
+      "status": "completed",
+      "arguments": {
+        "network": "mainnet",
+        "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "from": "2026-11-05T00:00:00Z",
+        "to": "2026-11-06T00:00:00Z",
+        "limit": 10
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"sourceMode\":\"saved-mainnet-replay\",\"datasetId\":\"9d3126ce6084fe4167587b8431face5468dbb4b8d4ec286c60bdc2c0aeadbc7c\",\"query\":{\"network\":\"mainnet\",\"wallet\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"from\":\"2026-11-05T00:00:00Z\",\"to\":\"2026-11-06T00:00:00Z\",\"limit\":10},\"coverage\":{\"scope\":\"local-recorded-subset\",\"walletHistoryComplete\":false,\"freshProviderRead\":false,\"matchingRecordsInDataset\":2,\"returned\":2,\"hasMore\":false,\"interval\":\"[from, to)\",\"missingHistory\":\"unknown\"},\"transactions\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"observedRoles\":[\"sender\"]},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"observedRoles\":[\"sender\"]}],\"nextCursor\":null,\"note\":\"No match means no matching record in this local dataset. Wallet history completeness is unknown. Roles do not prove ownership or direct transfer counterparties.\"}"
+          },
+          {
+            "type": "text",
+            "text": "Verified technical memory: {\"id\":\"qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA\",\"storage\":\"local-fixture\",\"verdict\":\"resolved\"}"
+          }
+        ],
+        "structuredContent": null,
+        "_meta": {
+          "recall/observation": {
+            "id": "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA",
+            "storage": "local-fixture",
+            "verdict": "resolved"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "kind": "model",
+      "phase": "commentary",
+      "text": "Найдены 2 успешные записи в локальном replay-наборе за интервал `[2026-11-05T00:00Z, 2026-11-06T00:00Z)`. Сейчас разбираю их содержимое и точные изменения в базовых единицах; полнота истории не подтверждена."
+    },
+    {
+      "kind": "tool",
+      "tool": "prepare_report",
+      "status": "completed",
+      "arguments": {
+        "network": "mainnet",
+        "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "transactions": [
+          "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3"
+        ]
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mode\":\"offline-agent-replay\",\"reportId\":\"report:080728e4-f6ca-4c1b-9b1f-23f339b0956c\",\"wallet\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"asOf\":\"2026-11-06T16:56:43.052Z\",\"digests\":[\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\"],\"rows\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-104261\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"status\":\"success\",\"source\":\"replay\",\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-104194\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null}],\"totals\":[],\"declaredWalletTotals\":[],\"gas\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"42605600\",\"rebate\":\"42601339\",\"netCharge\":\"104261\"},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"41936800\",\"rebate\":\"41932606\",\"netCharge\":\"104194\"}],\"notes\":[\"Totals cover the supplied digests only.\",\"Net balance changes include their onchain effects.\",\"Gas information is displayed separately and is not subtracted again.\",\"Declared wallet totals use the address relations confirmed by the user.\",\"Address relations are user-confirmed context. They do not identify a direct transfer counterparty.\"],\"transactionEvidence\":[{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"network\":\"mainnet\",\"checkpoint\":\"341884811\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"sender\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"commands\":[\"makeMoveVector\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\"],\"interpretation\":\"unparsed-ptb\",\"status\":\"success\",\"source\":\"replay\",\"gas\":{\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"42605600\",\"rebate\":\"42601339\",\"netCharge\":\"104261\"},\"movements\":[{\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-104261\"}]},{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"network\":\"mainnet\",\"checkpoint\":\"341884811\",\"timestamp\":\"2026-11-05T10:34:12.732Z\",\"sender\":\"0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23\",\"commands\":[\"makeMoveVector\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\",\"moveCall\"],\"interpretation\":\"unparsed-ptb\",\"status\":\"success\",\"source\":\"replay\",\"gas\":{\"payer\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"computation\":\"100000\",\"storage\":\"41936800\",\"rebate\":\"41932606\",\"netCharge\":\"104194\"},\"movements\":[{\"address\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-104194\"}]}],\"memory\":[],\"experience\":[],\"experienceStorage\":\"local-fixture\",\"dataProvenance\":{\"sourceMode\":\"saved-mainnet-replay\",\"freshProviderRead\":false,\"walletHistoryComplete\":false,\"scope\":\"selected-transactions\"}}"
+          }
+        ],
+        "structuredContent": null,
+        "_meta": null
+      },
+      "error": null
+    },
+    {
+      "kind": "tool",
+      "tool": "verify_gas_payer",
+      "status": "completed",
+      "arguments": {
+        "claimedPayer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+        "reportId": "report:080728e4-f6ca-4c1b-9b1f-23f339b0956c",
+        "transaction": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"verdict\":\"pass\",\"claimed\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"observed\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"evidence\":{\"digest\":\"2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ\",\"source\":\"replay\",\"field\":\"gas.payer\"},\"memory\":null}"
+          }
+        ],
+        "structuredContent": null,
+        "_meta": null
+      },
+      "error": null
+    },
+    {
+      "kind": "tool",
+      "tool": "verify_gas_payer",
+      "status": "completed",
+      "arguments": {
+        "claimedPayer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+        "reportId": "report:080728e4-f6ca-4c1b-9b1f-23f339b0956c",
+        "transaction": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"verdict\":\"pass\",\"claimed\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"observed\":\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"evidence\":{\"digest\":\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"source\":\"replay\",\"field\":\"gas.payer\"},\"memory\":null}"
+          }
+        ],
+        "structuredContent": null,
+        "_meta": null
+      },
+      "error": null
+    },
+    {
+      "kind": "model",
+      "phase": "final_answer",
+      "text": "On 5 November 2026 UTC, the local Sui Mainnet replay contains 2 successful transactions involving the wallet:\n\n- `2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ`\n- `2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3`\n\nBoth occurred at `10:34:12.732 UTC`, checkpoint `341884811`. The wallet was the sender.\n\nOperations identified:\n\n- Each transaction was an unparsed programmable transaction block.\n- Each contained `makeMoveVector` plus 8 `moveCall` commands.\n- The available evidence does not identify the higher-level action, such as a swap or transfer.\n\nBalance and gas:\n\n- No balance debit was recorded for the queried wallet.\n- Both transactions were sponsored. Gas was paid by:\n  `0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69`\n- Gas charges paid by that address:\n  - `104,261` MIST\n  - `104,194` MIST\n  - Total: `208,455` MIST = `0.000208455 SUI`\n\nThis is based on a saved local replay dataset with incomplete wallet-history coverage, not a fresh provider query."
+    }
+  ],
+  "initialRecord": {
+    "id": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+    "record": {
+      "attempted": 100,
+      "bound": 10,
+      "constraint": "maximum",
+      "evidence": "sdk-input-validation",
+      "field": "limit",
+      "schema": "recall-tool-experience/1",
+      "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+      "source": "replay",
+      "supersedes": null,
+      "tool": "find_wallet_activity",
+      "verdict": "fail",
+      "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+    }
+  },
+  "finalLocalExperience": [
+    {
+      "id": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+      "record": {
+        "attempted": 100,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "sdk-input-validation",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": null,
+        "tool": "find_wallet_activity",
+        "verdict": "fail",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "id": "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA",
+      "record": {
+        "attempted": 10,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "successful-tool-call",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+        "tool": "find_wallet_activity",
+        "verdict": "resolved",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    }
+  ],
+  "rawEventsSha256": "7c5c6e88b198efc819d5c05fc2b549b565eee85fc494e279f102401ef45b75e2",
+  "frozenFilesUnchangedBeforeAndAfter": true,
+  "independentFinalReadback": true,
+  "assessment": "OBSERVED_CAPTURE_TO_FRESH_CHAT_RESOLUTION",
+  "firstLookup": {
+    "observed": true,
+    "limit": 10,
+    "omitted": false,
+    "valid": true,
+    "status": "completed"
+  },
+  "tatumCalls": 0,
+  "walrusCalls": 0,
+  "additionalSpendUSD": 0,
+  "limitations": [
+    "One continuation of one known task/error class; no statistical causality or general learning claim.",
+    "Local memory with saved Mainnet transaction data; no new Walrus receipt or fresh blockchain lookup.",
+    "Three persisted files were copied byte-for-byte into a fresh workspace; no prior model transcript or generated answer was carried over.",
+    "Technical experience covers supported numeric tool constraints, not arbitrary mistakes or all prose.",
+    "Catalog exposure and subsequent choice are observed; the model attention mechanism is not directly measurable."
+  ]
+}

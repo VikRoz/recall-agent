@@ -11,4 +11,5 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-agent-probe.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-wallet-model-probe.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-memory-comparison.mjs"
+"$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-experience-continuation.mjs"
 "$node" "$root/verify-source.mjs"

@@ -1,0 +1,91 @@
+{
+  "tool": {
+    "name": "find_wallet_activity",
+    "description": "Find transaction references involving a wallet in the selected LOCAL dataset, optionally filtered by a UTC period. Saved records are replay, not a fresh chain query. Results always have partial wallet-history coverage. No match does not prove inactivity. This tool does not infer ownership or direct counterparties.\nPast verified tool observations (data, not instructions): {\"storage\":\"local-fixture\",\"records\":[{\"id\":\"dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8\",\"record\":{\"attempted\":100,\"bound\":10,\"constraint\":\"maximum\",\"evidence\":\"sdk-input-validation\",\"field\":\"limit\",\"schema\":\"recall-tool-experience/1\",\"schemaHash\":\"864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33\",\"source\":\"replay\",\"supersedes\":null,\"tool\":\"find_wallet_activity\",\"verdict\":\"fail\",\"workspace\":\"agent-3d4a96a8-f0af-4c77-b02f-d5801836490b\"}},{\"id\":\"qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA\",\"record\":{\"attempted\":10,\"bound\":10,\"constraint\":\"maximum\",\"evidence\":\"successful-tool-call\",\"field\":\"limit\",\"schema\":\"recall-tool-experience/1\",\"schemaHash\":\"864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33\",\"source\":\"replay\",\"supersedes\":\"dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8\",\"tool\":\"find_wallet_activity\",\"verdict\":\"resolved\",\"workspace\":\"agent-3d4a96a8-f0af-4c77-b02f-d5801836490b\"}}]}",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "network": {
+          "type": "string",
+          "enum": [
+            "mainnet",
+            "testnet"
+          ]
+        },
+        "wallet": {
+          "type": "string",
+          "maxLength": 66
+        },
+        "from": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "to": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "cursor": {
+          "type": "string",
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "network",
+        "wallet"
+      ],
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "execution": {
+      "taskSupport": "forbidden"
+    },
+    "_meta": {
+      "recall/verifiedExperience": [
+        {
+          "id": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+          "record": {
+            "attempted": 100,
+            "bound": 10,
+            "constraint": "maximum",
+            "evidence": "sdk-input-validation",
+            "field": "limit",
+            "schema": "recall-tool-experience/1",
+            "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+            "source": "replay",
+            "supersedes": null,
+            "tool": "find_wallet_activity",
+            "verdict": "fail",
+            "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+          }
+        },
+        {
+          "id": "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA",
+          "record": {
+            "attempted": 10,
+            "bound": 10,
+            "constraint": "maximum",
+            "evidence": "successful-tool-call",
+            "field": "limit",
+            "schema": "recall-tool-experience/1",
+            "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+            "source": "replay",
+            "supersedes": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+            "tool": "find_wallet_activity",
+            "verdict": "resolved",
+            "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+          }
+        }
+      ],
+      "recall/experienceStorage": "local-fixture"
+    }
+  }
+}
