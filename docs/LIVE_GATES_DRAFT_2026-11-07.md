@@ -10,9 +10,9 @@ Prepare stage 4's real ordinary-provider trial and stage 5's ten-memory closeout
 
 | Resource | Maximum |
 | --- | ---: |
-| New native ChatGPT user turns | 4, across at most 2 fresh conversations |
+| New native ChatGPT user turns | 2, across at most 2 fresh conversations; narrowed after stage 3 offline checks |
 | Model | gpt-5.6-luna, only if the existing own-account catalog and included quota confirm access |
-| Tool calls | 12 per user turn, 48 total |
+| Tool calls | 12 per user turn, 24 total |
 | Time | 120 seconds per turn; whole admitted wave ends within 5 minutes of its fresh proof |
 | Actual Tatum unary batches | 2 attempts, at most 10 selected digests per batch |
 | Included Tatum credits | 4, at the freshly verified rate of 2 per batch |
@@ -24,7 +24,7 @@ Prepare stage 4's real ordinary-provider trial and stage 5's ten-memory closeout
 
 Native user turns are not counts of internal model RPCs. Startup preflight must verify the selected native model and included-account use before inference. No --fast, usage reset, model substitution or paid credit fallback is used. If a full task cannot fit this allowance, retain the partial/negative result; do not reopen the ledger or spend another turn for success.
 
-The exact public wallet/digest inputs, task wording, conditional follow-ups and evidence criteria must be frozen at stage 3. Do not choose a fixed wrong model call or claim that a user-supplied incorrect hypothesis was a spontaneous model error. Two historical Mainnet transaction IDs already exist in the evidence and can be freshly read through Tatum; this would be a fresh provider read of historical transactions, not fresh complete wallet-history discovery.
+Exact public inputs, two task texts, claim origin and criteria are frozen in evidence/candidate-evaluation-2026-11-07/plan.json. The warm-start offline trace used 2 simulated Tatum batches, 2 writes, 2 recalls and 36 SDK requests; it proves a reachable protocol path, not a guaranteed native route. Do not choose a fixed wrong model call or claim that a user-supplied incorrect hypothesis was a spontaneous model error. Two historical Mainnet transaction IDs already exist in the evidence and can be freshly read through Tatum; this would be a fresh provider read of historical transactions, not fresh complete wallet-history discovery.
 
 ## Access and zero-spend preflight
 
@@ -39,7 +39,7 @@ The exact public wallet/digest inputs, task wording, conditional follow-ups and 
 
 The current candidate-only inventory proves two records, leaving a conservative gap of eight. Historical records remain excluded until their current identity, relevance and uniqueness are substantiated. The published rules do not expressly demand a single namespace, so an evidence-backed reconciliation may change the final gap without changing facts or silently relabelling old work.
 
-Proposed aggregate ceiling for stages 4–5 together: at most **8 new useful writes**, including any stage 4 writes, at most **4 native user turns** and **2 Tatum batches** in total. To retain the strict two-recall run boundary even with populated namespaces, allow at most **8 explicitly enumerated waves**, each with at most 2 writes /2 content recalls /64 service requests /8 polls per job. Consequently the aggregate upper bound is 16 content recalls, 512 service requests and 64 status polls (included in those requests), not an unlimited new-run loop. Each actual wave's tighter per-operation count and payloads must be frozen; an outer durable manifest must prevent aggregate overspend. Stopped/unknown waves cannot be replaced to get success.
+Proposed aggregate ceiling for stages 4–5 together: at most **8 new useful writes**, including any stage 4 writes, at most **2 native user turns** and **2 Tatum batches** in total. To retain the strict two-recall run boundary even with populated namespaces, allow at most **8 explicitly enumerated waves**, each with at most 2 writes /2 content recalls /64 service requests /8 polls per job. Consequently the aggregate upper bound is 16 content recalls, 512 service requests and 64 status polls (included in those requests), not an unlimited new-run loop. Each actual wave's tighter per-operation count and payloads must be frozen; an outer durable manifest must prevent aggregate overspend. Stopped/unknown waves cannot be replaced to get success.
 
 This is deliberately an upper-bound draft, not a request to run eight waves. Stage 3 must first identify useful real record contents. Ten memories do not mean ten induced model failures. Existing decoders cover confirmed address rules and two verified-error variants; arbitrary positive fact snapshots or preference records would be a new data contract and require review. Do not add a record type or fabricate corrective history just to fill a count.
 
@@ -56,3 +56,7 @@ Retain source/plan hashes, initial and final counters, attempts and completed re
 Local: ROADMAP.md; CANDIDATE_SCOPE_AND_INVENTORY_2026-11-06.md; ORDINARY_PROVIDER_OFFLINE_2026-11-07.md; AGENT_LIVE_TRIAL_2026-11-06.md; MASTER_COORDINATION_2026-11-06.md; retained original approval/counters and the existence-only key/profile check.
 
 Fresh billing/sponsorship has not been rechecked and no real-account launch is ready. This draft does not promise that a particular account is currently free/authorized. Coordinator choices needed: stage 3 cases and record evidence policy; human decision needed if an existing Tatum secret must be captured or a new bounded live allowance is granted. All preparation costs $0.
+
+## Concrete temporary-key preparation
+
+The new destination and hidden capture/cleanup scripts are prepared, without opening a terminal or collecting a key. Private metadata is at /private/tmp/recall-agent-next-key-destination.json (mode 0600); it identifies the exclusive mode-0700 directory and exact tatum.key path. Source: the same account's existing Mainnet API key on https://dashboard.tatum.io/api-keys, after the fresh Free/account check. Do not create a new key. Capture is hidden input with an account-prefix/format check and exclusive O_NOFOLLOW mode-0600 creation. The key is never a command argument or model input. After completion, stop or failed startup, remove only that temporary file and clear the clipboard used for this copy; preserve all nonsecret ledgers and the in-place Walrus profile. Before an action-time approval question, the coordinator reads the concrete private destination rather than asking about an unspecified file. Nothing has been captured or copied yet.

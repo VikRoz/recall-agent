@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "status": "FROZEN_OFFLINE_CASES_NOT_LIVE_AUTHORIZATION",
+  "purpose": "Verified user-hypothesis correction and exact scoped memory across fresh chats; not a spontaneous model-error or causal-benefit claim.",
+  "claimOrigin": "user-supplied-hypothesis",
+  "network": "mainnet",
+  "publicInputs": {
+    "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+    "transaction": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
+  },
+  "nativeTasks": [
+    {
+      "id": "check-expense-hypothesis",
+      "chat": "first-fresh",
+      "text": "I'm checking expenses for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 on Sui Mainnet. For transaction 2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ, I think this wallet paid the gas. Please check that assumption, explain the balance changes in exact units, and distinguish my assumption from the onchain evidence."
+    },
+    {
+      "id": "fresh-expense-report",
+      "chat": "second-fresh",
+      "text": "Prepare a concise expense report for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 using Sui Mainnet transaction 2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ. Who paid gas, what changed for the wallet, and what cannot be inferred from this transaction?"
+    }
+  ],
+  "oracle": {
+    "live": "Raw fresh Tatum transaction response; compare gasPayment.owner, balances and computation+storage-rebate with normalized facts independently of model prose.",
+    "historicalReferenceOnly": {
+      "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+      "netGasMIST": "104261",
+      "source": "evidence/activity-model-2026-11-05/run.json",
+      "freshVerificationRequired": true
+    },
+    "memoryApplicability": [
+      "same workspace",
+      "same network",
+      "same source",
+      "same digest",
+      "observed payer matches current factual payer",
+      "same sponsorship class"
+    ],
+    "memoryIsCurrentChainOracle": false
+  },
+  "offlineFixture": {
+    "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
+    "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+    "changedPayer": "0x000000000000000000000000000000000000000000000000000000000000000d",
+    "transactionIndex": 0,
+    "otherTransactionIndex": 1,
+    "netGasMIST": "1050",
+    "walletSuiDeltaMIST": "-10000000000",
+    "initialHistoryRecords": 2,
+    "initialHistoryKind": "nonapplicable synthetic replay-tool error/resolution pair"
+  },
+  "offlineControls": [
+    "capture opt-out",
+    "same transaction fresh-process retrieval and verified resolution",
+    "other digest excluded",
+    "changed observed payer excluded",
+    "other network excluded",
+    "other source excluded",
+    "factual payer never overwritten by memory"
+  ],
+  "outcomes": [
+    "capture-retrieval-resolution-completed",
+    "facts-completed-no-capture",
+    "capture-without-resolution",
+    "explicit-limit-or-access-stop",
+    "model-or-tool-failure",
+    "uncertain-storage-stop"
+  ],
+  "constraints": {
+    "noForcedModelError": true,
+    "noPrescribedFirstTool": true,
+    "noTranscriptTransfer": true,
+    "noPromptTuningOrRetryForSuccess": true,
+    "newLiveOperationsAuthorized": false,
+    "limitsDraft": {
+      "nativeUserTurns": 2,
+      "nativeConversations": 2,
+      "toolsPerTurn": 12,
+      "secondsPerTurn": 120,
+      "proofWindowSeconds": 300,
+      "tatumAttempts": 2,
+      "maxDigestsPerBatch": 10,
+      "tatumIncludedCredits": 4,
+      "walrusWrites": 2,
+      "contentReads": 2,
+      "guardedSdkRequests": 64,
+      "pollsPerJob": 8,
+      "additionalSpendUSD": 0
+    },
+    "includesNoMemoryNativeComparison": false
+  }
+}

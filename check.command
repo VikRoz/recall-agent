@@ -7,6 +7,7 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/app/check-activity-mcp.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/app/check-activity-provider-mcp.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/app/check-agent-ordinary.mjs" --compact
+"$node" --disable-warning=ExperimentalWarning "$root/app/check-agent-evaluation.mjs" --compact
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-activity.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-activity-model.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-agent-probe.mjs"
@@ -17,4 +18,5 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-agent-live-trial.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-candidate-readiness.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-ordinary-provider.mjs"
+"$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-candidate-evaluation.mjs"
 "$node" "$root/verify-source.mjs"

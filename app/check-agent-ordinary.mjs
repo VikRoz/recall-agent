@@ -41,13 +41,13 @@ try{
  async function call(name,args){const reply=await client.callTool({name,arguments:args});assert(!reply.isError,JSON.stringify(reply));return JSON.parse(reply.content[0].text);}
  const tools=await open();
  const first=await call('prepare_report',{network:'mainnet',wallet:FIXTURE_WALLET,transactions:[FIXTURE_DIGESTS[2]]});
- assert.equal(first.experience.length,4);assert.equal(first.dataProvenance.freshProviderRead,false);
+ assert.equal(first.experience.length,0);assert.equal(first.dataProvenance.freshProviderRead,false);
  const failure=await call('verify_gas_payer',{reportId:first.reportId,transaction:FIXTURE_DIGESTS[2],claimedPayer:FIXTURE_OTHER});
  assert.equal(failure.verdict,'fail');assert.equal(failure.memory.storage,'walrus-fixture');assert(failure.memory.blobId);
  await client.close();client=undefined;
  await open();assert.notEqual(processes[0],processes[1]);
  const second=await call('prepare_report',{network:'mainnet',wallet:FIXTURE_WALLET,transactions:[FIXTURE_DIGESTS[2]]});
- assert.equal(second.experience.length,5);assert(second.experience.some(r=>r.id===failure.memory.id));
+ assert.equal(second.experience.length,1);assert(second.experience.some(r=>r.id===failure.memory.id));
  const resolution=await call('verify_gas_payer',{reportId:second.reportId,transaction:FIXTURE_DIGESTS[2],claimedPayer:FIXTURE_WALLET});
  assert.equal(resolution.verdict,'pass');assert(resolution.memory.blobId);
  await client.close();client=undefined;

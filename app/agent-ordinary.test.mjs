@@ -83,8 +83,8 @@ test('fresh independent MCP processes recover more than one exact pair and prese
    args:['--disable-warning=ExperimentalWarning',join(root,'app/agent-ordinary-fixture.mjs'),'--mcp',d]});await client.connect(t);pids.push(t.pid);await client.listTools();}
   for(let i=0;i<2;i++){
    await open();const response=await client.callTool({name:'prepare_report',arguments:{network:'mainnet',wallet:FIXTURE_WALLET,transactions:[FIXTURE_DIGESTS[i]]}});
-   assert(!response.isError);const p=JSON.parse(response.content[0].text);assert.equal(p.experience.length,4);
-   assert.deepEqual(p.experience.map(x=>x.id).sort(),[...pair(m,0),...pair(m,1)].map(operationKey).sort());
+   assert(!response.isError);const p=JSON.parse(response.content[0].text);assert.equal(p.experience.length,2);
+   assert.deepEqual(p.experience.map(x=>x.id).sort(),pair(m,i).map(operationKey).sort());
    assert(p.experience.every(x=>x.blobId===operationKey(x.record)));await client.close();client=undefined;
   }
   assert.notEqual(pids[0],pids[1]);assert.equal(ledger(d).tatumBatches,2);assert.equal(ledger(d).reads,2);assert.equal(ledger(d).writes,0);

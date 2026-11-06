@@ -86,7 +86,7 @@ test('integrity failure stops this session; unrelated network excludes memory', 
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
-test('independent MCP processes recover exact local experience on a different transaction', async () => {
+test('independent MCP processes retain exact experience without applying a literal payer to another transaction', async () => {
   const dir = directory();
   let client;
   async function open() {
@@ -112,8 +112,10 @@ test('independent MCP processes recover exact local experience on a different tr
     const secondPid = await open();
     assert.notEqual(firstPid, secondPid);
     const next = await call('prepare_report', { network: 'mainnet', wallet: FIXTURE_WALLET, transactions: [FIXTURE_DIGESTS[1]] });
-    assert.deepEqual(next.experience.map(row => row.id), [failed.memory.id, corrected.memory.id]);
-    assert.equal(next.experience[1].record.supersedes, failed.memory.id);
+    assert.deepEqual(next.experience, []);
+    const same = await call('prepare_report', { network: 'mainnet', wallet: FIXTURE_WALLET, transactions: [FIXTURE_DIGESTS[0]] });
+    assert.deepEqual(same.experience.map(row => row.id), [failed.memory.id, corrected.memory.id]);
+    assert.equal(same.experience[1].record.supersedes, failed.memory.id);
     assert.ok((await call('export_report', { reportId: next.reportId })).csv);
     assert.equal(next.experienceStorage, 'local-fixture');
   } finally { await client?.close(); rmSync(dir, { recursive: true, force: true }); }

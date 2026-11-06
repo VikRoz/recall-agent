@@ -60,6 +60,10 @@ bash start.command --example --saved
 
 Ask about a wallet and optionally a period in ordinary words. The model can find matching transaction references without you pasting their IDs. Lookup returns UTC start-inclusive/end-exclusive coverage, bounded pages and observed roles. A missing record means absent from this dataset, not an inactive wallet. The two saved transactions are not a complete wallet history. Reports and CSV label their source `replay`, never a fresh provider read. Contract changes and full wallet-history discovery remain unsupported.
 
+## Scoped gas-payer memory
+
+A stored literal payer applies only to the same transaction, network, source and observed payer. It cannot override a new transaction's facts. The [frozen expense-hypothesis evaluation](docs/EVALUATION_PREPARATION_2026-11-07.md) passed offline fresh-process and negative controls; the incorrect hypothesis is explicitly supplied by the test/user. It is not a new observed model error or an accuracy benchmark. Its two native tasks and any real-account execution remain unapproved.
+
 ## Original CSV files
 
 Export returns the code-generated CSV plus an artifact path, `file:` URI, SHA-256 and a standard MCP resource link. Open that original local file; a separately rewritten model table is not the certified export. Identical CSV bytes reuse the same file. Files remain in the private workspace `exports` directory (up to eight files, at most 65,536 bytes each). No upload or hosting occurs. Native resource rendering varies by client; the absolute path and hash are also returned as data.

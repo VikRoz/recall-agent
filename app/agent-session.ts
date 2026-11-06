@@ -38,7 +38,9 @@ export class AgentSession extends ActivitySession {
   async view(state: Parameters<ActivitySession['view']>[0]) {
     const result = await super.view(state);
     const rows = await this.experience.read();
+    // A literal observed payer is evidence for that transaction, not a rule for all sponsored transactions.
     const memory = rows.filter(row => row.record.schema === 'recall-experience/1' && state.transactions.some(tx => tx.network === row.record.network && tx.source === row.record.source
+      && tx.digest === row.record.digest && tx.gas.payer === row.record.observed
       && (tx.gas.payer !== tx.sender) === row.record.sponsored));
     return { ...result, experience: memory, experienceStorage: this.experience.storage,
       dataProvenance: this.providerProvenance ?? {sourceMode: this.activityIndex?.mode === 'saved' ? 'saved-mainnet-replay' : 'synthetic-fixture',

@@ -1,0 +1,818 @@
+{
+  "schema": 1,
+  "date": "2026-11-06T21:32:25.284Z",
+  "status": "FROZEN_HYPOTHESIS_EVALUATION_OFFLINE_COMPLETED",
+  "planSha256": "87736f52b0c568f1aa9a52866eb1c89b26155e43b0594bd0d764c90e16e4d0b1",
+  "sourceHashes": {
+    "app/agent-session.ts": "ab42c7721a0082f925ce5962795f353b85448c1bce2977c649b403553e3820bb",
+    "app/agent-evaluation-fixture.mjs": "dbe64622438bbffe03de12c4da50089897503fc117cc476be9ba4f0ad9e42c30",
+    "app/check-agent-evaluation.mjs": "dba34bfca06f6cc9e81c9f155641996ed9e13afd8a818e7cdfa81c63a9a12d1b",
+    "app/agent-experience.ts": "0c442014cd797499ac24b6e5ac1a3ca14feb0d50eddb2d8c545bc068375cef97",
+    "app/agent-ordinary.mjs": "65b6b8a9c95f0a8a865f4fc82148b2c64020a3e8eb8234bf08d4bec3412fa07f",
+    "app/agent-ordinary-fixture.mjs": "7840fad82de56b96d55945da44a44fc1755d291185035bfc73c054cc603ff9cc",
+    "app/agent-provider.mjs": "7cc215e36310f88497a3630b501bf3ebf2cad3be18f933dd5b2305e02f111b05",
+    "app/agent-run.mjs": "2ca0fd204614deddc55b8934a19bfa69698bda7feb3f11dea76d871408e0770d",
+    "app/agent-walrus-guard.mjs": "d7386863ed1805dee6d4c38f6a28cb0ebe76e937b1a419eb79ef53e3a25fedd0",
+    "app/agent-mcp.mjs": "441eec151788d81c6ae3484278d8fc238e57a37b7476d012636e328074130a9f",
+    "app/agent-tool-observer.mjs": "099a4c078a49c5a0eb20fc29ea34a65ca0342bfc4246edb40d923cc3b5b3477b",
+    "app/activity-memory.ts": "c9efe04694900cf47bd8f35872e44fdf46e8da5b1c6b40ca1bdb43c4d0612e68",
+    "app/tatum.ts": "0166900eaaafcf9ae70e31add22c529853e4988d5bc3535e403af2fd3ce35451",
+    "src/memory.ts": "7a259dfdbd216ee102a8e6b330885dfb948ca929200569b21d742f3bad844b07"
+  },
+  "sourceCommit": null,
+  "claimOrigin": "user-supplied-test-hypothesis",
+  "modelCalls": 0,
+  "externalProviderCalls": 0,
+  "additionalSpendUSD": 0,
+  "initialHistory": {
+    "records": 2,
+    "kind": "nonapplicable-synthetic-technical-pair"
+  },
+  "processIds": [
+    41571,
+    41572,
+    41583,
+    41586,
+    41588
+  ],
+  "first": {
+    "mode": "offline-ordinary-provider-fixture",
+    "reportId": "report:fa8ef967-d0bf-4e11-a478-73c58c9d5726",
+    "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
+    "asOf": "2026-11-06T21:32:23.345Z",
+    "digests": [
+      "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+    ],
+    "rows": [
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000",
+        "relation": "subject-wallet",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      },
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "10000000000",
+        "relation": "unclassified",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      },
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-1050",
+        "relation": "unclassified",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      }
+    ],
+    "totals": [
+      {
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000"
+      }
+    ],
+    "declaredWalletTotals": [
+      {
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000"
+      }
+    ],
+    "gas": [
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "computation": "1000",
+        "storage": "100",
+        "rebate": "50",
+        "netCharge": "1050"
+      }
+    ],
+    "notes": [
+      "Totals cover the supplied digests only.",
+      "Net balance changes include their onchain effects.",
+      "Gas information is displayed separately and is not subtracted again.",
+      "Declared wallet totals use the address relations confirmed by the user.",
+      "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+    ],
+    "transactionEvidence": [
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "checkpoint": "100",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "sender": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "commands": [
+          "transferObjects"
+        ],
+        "interpretation": "transfer-commands",
+        "status": "success",
+        "source": "fixture",
+        "gas": {
+          "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+          "computation": "1000",
+          "storage": "100",
+          "rebate": "50",
+          "netCharge": "1050"
+        },
+        "movements": [
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-10000000000"
+          },
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "10000000000"
+          },
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000c",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-1050"
+          }
+        ]
+      }
+    ],
+    "memory": [],
+    "experience": [],
+    "experienceStorage": "walrus-fixture",
+    "dataProvenance": {
+      "sourceMode": "offline-intercepted-tatum",
+      "freshProviderRead": false,
+      "walletHistoryComplete": false,
+      "scope": "selected-transactions"
+    }
+  },
+  "second": {
+    "mode": "offline-ordinary-provider-fixture",
+    "reportId": "report:cc560dc8-ee62-45e9-9c2b-6d59f051466b",
+    "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
+    "asOf": "2026-11-06T21:32:23.897Z",
+    "digests": [
+      "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+    ],
+    "rows": [
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000",
+        "relation": "subject-wallet",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      },
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "10000000000",
+        "relation": "unclassified",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      },
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-1050",
+        "relation": "unclassified",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      }
+    ],
+    "totals": [
+      {
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000"
+      }
+    ],
+    "declaredWalletTotals": [
+      {
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000"
+      }
+    ],
+    "gas": [
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "computation": "1000",
+        "storage": "100",
+        "rebate": "50",
+        "netCharge": "1050"
+      }
+    ],
+    "notes": [
+      "Totals cover the supplied digests only.",
+      "Net balance changes include their onchain effects.",
+      "Gas information is displayed separately and is not subtracted again.",
+      "Declared wallet totals use the address relations confirmed by the user.",
+      "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+    ],
+    "transactionEvidence": [
+      {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "checkpoint": "100",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "sender": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "commands": [
+          "transferObjects"
+        ],
+        "interpretation": "transfer-commands",
+        "status": "success",
+        "source": "fixture",
+        "gas": {
+          "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+          "computation": "1000",
+          "storage": "100",
+          "rebate": "50",
+          "netCharge": "1050"
+        },
+        "movements": [
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-10000000000"
+          },
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "10000000000"
+          },
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000c",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-1050"
+          }
+        ]
+      }
+    ],
+    "memory": [],
+    "experience": [
+      {
+        "id": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+        "record": {
+          "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+          "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+          "network": "mainnet",
+          "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+          "operation": "gas-payer",
+          "schema": "recall-experience/1",
+          "source": "fixture",
+          "sponsored": true,
+          "supersedes": null,
+          "verdict": "fail",
+          "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+        },
+        "blobId": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs"
+      }
+    ],
+    "experienceStorage": "walrus-fixture",
+    "dataProvenance": {
+      "sourceMode": "offline-intercepted-tatum",
+      "freshProviderRead": false,
+      "walletHistoryComplete": false,
+      "scope": "selected-transactions"
+    }
+  },
+  "failure": {
+    "verdict": "fail",
+    "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+    "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+    "evidence": {
+      "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+      "source": "fixture",
+      "field": "gas.payer"
+    },
+    "memory": {
+      "storage": "walrus-fixture",
+      "id": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+      "blobId": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs"
+    }
+  },
+  "resolution": {
+    "verdict": "pass",
+    "claimed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+    "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+    "evidence": {
+      "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+      "source": "fixture",
+      "field": "gas.payer"
+    },
+    "memory": {
+      "storage": "walrus-fixture",
+      "id": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino",
+      "blobId": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino"
+    }
+  },
+  "records": [
+    {
+      "id": "1fs-ZU3IMmYceMJeNtxSbfQtUZdwgrKI213iGq8mSPU",
+      "record": {
+        "attempted": 100,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "sdk-input-validation",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "8888888888888888888888888888888888888888888888888888888888888888",
+        "source": "replay",
+        "supersedes": null,
+        "tool": "historical_unavailable_tool",
+        "verdict": "fail",
+        "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+      },
+      "blobId": "1fs-ZU3IMmYceMJeNtxSbfQtUZdwgrKI213iGq8mSPU"
+    },
+    {
+      "id": "as8udNjGKa96O6ecyLsFnGdjOVpys2bPOtodmRmRk38",
+      "record": {
+        "attempted": 10,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "successful-tool-call",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "8888888888888888888888888888888888888888888888888888888888888888",
+        "source": "replay",
+        "supersedes": "1fs-ZU3IMmYceMJeNtxSbfQtUZdwgrKI213iGq8mSPU",
+        "tool": "historical_unavailable_tool",
+        "verdict": "resolved",
+        "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+      },
+      "blobId": "as8udNjGKa96O6ecyLsFnGdjOVpys2bPOtodmRmRk38"
+    },
+    {
+      "id": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+      "record": {
+        "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "operation": "gas-payer",
+        "schema": "recall-experience/1",
+        "source": "fixture",
+        "sponsored": true,
+        "supersedes": null,
+        "verdict": "fail",
+        "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+      },
+      "blobId": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs"
+    },
+    {
+      "id": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino",
+      "record": {
+        "claimed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "network": "mainnet",
+        "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "operation": "gas-payer",
+        "schema": "recall-experience/1",
+        "source": "fixture",
+        "sponsored": true,
+        "supersedes": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+        "verdict": "resolved",
+        "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+      },
+      "blobId": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino"
+    }
+  ],
+  "pairLedger": {
+    "intents": [
+      {
+        "key": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+        "namespace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4-experience",
+        "sha256": "76e60f2f3918289e59d2e18570a3c4089ca88ae07fa12775429f57b1e4501dcb",
+        "state": "done"
+      },
+      {
+        "key": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino",
+        "namespace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4-experience",
+        "sha256": "2ed5319ada76cb9e5b1c464dffdf77aa89afb63ea45cbf3565ce663983998a7a",
+        "state": "done"
+      }
+    ],
+    "jobs": {
+      "fixture-70f7bcb0-653e-4bf3-9d2b-302f9bcab853": {
+        "key": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+        "namespace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4-experience",
+        "polls": 1
+      },
+      "fixture-af93b0b1-4e79-42c8-99e5-fb825a0344be": {
+        "key": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino",
+        "namespace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4-experience",
+        "polls": 1
+      }
+    },
+    "manifestHash": "1e6a3e6ffdd7baea3ae670ba6229159868138629c3a0a939fb1ba004ab4b9696",
+    "reads": 2,
+    "requests": 36,
+    "schema": 1,
+    "stopped": null,
+    "tatumBatches": 2,
+    "writes": 2
+  },
+  "negativeCases": [
+    {
+      "name": "other-digest",
+      "report": {
+        "mode": "offline-ordinary-provider-fixture",
+        "reportId": "report:8d270509-20e1-44d6-9b34-d754bf87a63f",
+        "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "asOf": "2026-11-06T21:32:24.462Z",
+        "digests": [
+          "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR"
+        ],
+        "rows": [
+          {
+            "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+            "network": "mainnet",
+            "timestamp": "2026-11-05T00:00:00.000Z",
+            "status": "success",
+            "source": "fixture",
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-11000000000",
+            "relation": "subject-wallet",
+            "label": "",
+            "ruleId": null,
+            "memoryBlobId": null
+          },
+          {
+            "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+            "network": "mainnet",
+            "timestamp": "2026-11-05T00:00:00.000Z",
+            "status": "success",
+            "source": "fixture",
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "11000000000",
+            "relation": "unclassified",
+            "label": "",
+            "ruleId": null,
+            "memoryBlobId": null
+          },
+          {
+            "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+            "network": "mainnet",
+            "timestamp": "2026-11-05T00:00:00.000Z",
+            "status": "success",
+            "source": "fixture",
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000c",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-1050",
+            "relation": "unclassified",
+            "label": "",
+            "ruleId": null,
+            "memoryBlobId": null
+          }
+        ],
+        "totals": [
+          {
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-11000000000"
+          }
+        ],
+        "declaredWalletTotals": [
+          {
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-11000000000"
+          }
+        ],
+        "gas": [
+          {
+            "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+            "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+            "computation": "1000",
+            "storage": "100",
+            "rebate": "50",
+            "netCharge": "1050"
+          }
+        ],
+        "notes": [
+          "Totals cover the supplied digests only.",
+          "Net balance changes include their onchain effects.",
+          "Gas information is displayed separately and is not subtracted again.",
+          "Declared wallet totals use the address relations confirmed by the user.",
+          "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+        ],
+        "transactionEvidence": [
+          {
+            "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+            "network": "mainnet",
+            "checkpoint": "101",
+            "timestamp": "2026-11-05T00:00:00.000Z",
+            "sender": "0x000000000000000000000000000000000000000000000000000000000000000a",
+            "commands": [
+              "transferObjects"
+            ],
+            "interpretation": "transfer-commands",
+            "status": "success",
+            "source": "fixture",
+            "gas": {
+              "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+              "computation": "1000",
+              "storage": "100",
+              "rebate": "50",
+              "netCharge": "1050"
+            },
+            "movements": [
+              {
+                "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+                "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                "amount": "-11000000000"
+              },
+              {
+                "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+                "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                "amount": "11000000000"
+              },
+              {
+                "address": "0x000000000000000000000000000000000000000000000000000000000000000c",
+                "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                "amount": "-1050"
+              }
+            ]
+          }
+        ],
+        "memory": [],
+        "experience": [],
+        "experienceStorage": "walrus-fixture",
+        "dataProvenance": {
+          "sourceMode": "offline-intercepted-tatum",
+          "freshProviderRead": false,
+          "walletHistoryComplete": false,
+          "scope": "selected-transactions"
+        }
+      },
+      "verification": {
+        "verdict": "pass",
+        "claimed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "evidence": {
+          "digest": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+          "source": "fixture",
+          "field": "gas.payer"
+        },
+        "memory": null
+      },
+      "ledger": {
+        "intents": [],
+        "jobs": {},
+        "manifestHash": "109e34cc43c22a2afa49905cb95761fca30a8e41a4ba9705b2a959e11fbf93cd",
+        "reads": 1,
+        "requests": 14,
+        "schema": 1,
+        "stopped": null,
+        "tatumBatches": 1,
+        "writes": 0
+      }
+    },
+    {
+      "name": "changed-payer",
+      "report": {
+        "mode": "offline-ordinary-provider-fixture",
+        "reportId": "report:c4e6063f-1a67-434f-980b-5560b4b9d9a1",
+        "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "asOf": "2026-11-06T21:32:24.885Z",
+        "digests": [
+          "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+        ],
+        "rows": [
+          {
+            "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+            "network": "mainnet",
+            "timestamp": "2026-11-05T00:00:00.000Z",
+            "status": "success",
+            "source": "fixture",
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-10000000000",
+            "relation": "subject-wallet",
+            "label": "",
+            "ruleId": null,
+            "memoryBlobId": null
+          },
+          {
+            "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+            "network": "mainnet",
+            "timestamp": "2026-11-05T00:00:00.000Z",
+            "status": "success",
+            "source": "fixture",
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "10000000000",
+            "relation": "unclassified",
+            "label": "",
+            "ruleId": null,
+            "memoryBlobId": null
+          },
+          {
+            "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+            "network": "mainnet",
+            "timestamp": "2026-11-05T00:00:00.000Z",
+            "status": "success",
+            "source": "fixture",
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000d",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-1050",
+            "relation": "unclassified",
+            "label": "",
+            "ruleId": null,
+            "memoryBlobId": null
+          }
+        ],
+        "totals": [
+          {
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-10000000000"
+          }
+        ],
+        "declaredWalletTotals": [
+          {
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "netAmountBaseUnits": "-10000000000"
+          }
+        ],
+        "gas": [
+          {
+            "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+            "payer": "0x000000000000000000000000000000000000000000000000000000000000000d",
+            "computation": "1000",
+            "storage": "100",
+            "rebate": "50",
+            "netCharge": "1050"
+          }
+        ],
+        "notes": [
+          "Totals cover the supplied digests only.",
+          "Net balance changes include their onchain effects.",
+          "Gas information is displayed separately and is not subtracted again.",
+          "Declared wallet totals use the address relations confirmed by the user.",
+          "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+        ],
+        "transactionEvidence": [
+          {
+            "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+            "network": "mainnet",
+            "checkpoint": "100",
+            "timestamp": "2026-11-05T00:00:00.000Z",
+            "sender": "0x000000000000000000000000000000000000000000000000000000000000000a",
+            "commands": [
+              "transferObjects"
+            ],
+            "interpretation": "transfer-commands",
+            "status": "success",
+            "source": "fixture",
+            "gas": {
+              "payer": "0x000000000000000000000000000000000000000000000000000000000000000d",
+              "computation": "1000",
+              "storage": "100",
+              "rebate": "50",
+              "netCharge": "1050"
+            },
+            "movements": [
+              {
+                "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+                "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                "amount": "-10000000000"
+              },
+              {
+                "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+                "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                "amount": "10000000000"
+              },
+              {
+                "address": "0x000000000000000000000000000000000000000000000000000000000000000d",
+                "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+                "amount": "-1050"
+              }
+            ]
+          }
+        ],
+        "memory": [],
+        "experience": [],
+        "experienceStorage": "walrus-fixture",
+        "dataProvenance": {
+          "sourceMode": "offline-intercepted-tatum",
+          "freshProviderRead": false,
+          "walletHistoryComplete": false,
+          "scope": "selected-transactions"
+        }
+      },
+      "verification": {
+        "verdict": "fail",
+        "claimed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "observed": "0x000000000000000000000000000000000000000000000000000000000000000d",
+        "evidence": {
+          "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+          "source": "fixture",
+          "field": "gas.payer"
+        },
+        "memory": null
+      },
+      "ledger": {
+        "intents": [],
+        "jobs": {},
+        "manifestHash": "cfce34476b705df38e2e70574dbb87843c49f89e670251ee34c6a0c235f61d17",
+        "reads": 1,
+        "requests": 14,
+        "schema": 1,
+        "stopped": null,
+        "tatumBatches": 1,
+        "writes": 0
+      }
+    }
+  ],
+  "applicability": [
+    {
+      "name": "exact",
+      "relevantRecords": [
+        "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+        "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino"
+      ],
+      "factualPayer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+      "providerCalls": 0
+    },
+    {
+      "name": "other-network",
+      "relevantRecords": [],
+      "factualPayer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+      "providerCalls": 0
+    },
+    {
+      "name": "other-source",
+      "relevantRecords": [],
+      "factualPayer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+      "providerCalls": 0
+    }
+  ],
+  "noCapture": {
+    "verification": {
+      "verdict": "fail",
+      "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+      "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+      "evidence": {
+        "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "source": "fixture",
+        "field": "gas.payer"
+      },
+      "memory": null
+    },
+    "ledger": {
+      "intents": [],
+      "jobs": {},
+      "manifestHash": "cdd441aaaea613cca49ef47c3e236c72d38833251c5ddfaf2104963a141ee56c",
+      "reads": 0,
+      "requests": 11,
+      "schema": 1,
+      "stopped": null,
+      "tatumBatches": 1,
+      "writes": 0
+    }
+  },
+  "oracle": {
+    "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+    "netGasMIST": "1050",
+    "walletSuiDeltaMIST": "-10000000000"
+  },
+  "limitation": "Test code supplies the incorrect user hypothesis. No native model choice, live Tatum response, Mainnet receipt or causal memory improvement is claimed. Each negative case uses an explicitly new synthetic allowance; the completed pair ledger is unchanged."
+}
