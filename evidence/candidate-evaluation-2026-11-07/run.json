@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date": "2026-11-06T21:32:25.284Z",
+  "date": "2026-11-06T21:40:21.328Z",
   "status": "FROZEN_HYPOTHESIS_EVALUATION_OFFLINE_COMPLETED",
   "planSha256": "87736f52b0c568f1aa9a52866eb1c89b26155e43b0594bd0d764c90e16e4d0b1",
   "sourceHashes": {
@@ -19,7 +19,7 @@
     "app/tatum.ts": "0166900eaaafcf9ae70e31add22c529853e4988d5bc3535e403af2fd3ce35451",
     "src/memory.ts": "7a259dfdbd216ee102a8e6b330885dfb948ca929200569b21d742f3bad844b07"
   },
-  "sourceCommit": null,
+  "sourceCommit": "c34571bdbdb9f241f3eb1cf98450a5d2fdd25679",
   "claimOrigin": "user-supplied-test-hypothesis",
   "modelCalls": 0,
   "externalProviderCalls": 0,
@@ -29,17 +29,17 @@
     "kind": "nonapplicable-synthetic-technical-pair"
   },
   "processIds": [
-    41571,
-    41572,
-    41583,
-    41586,
-    41588
+    43098,
+    43102,
+    43103,
+    43104,
+    43106
   ],
   "first": {
     "mode": "offline-ordinary-provider-fixture",
-    "reportId": "report:fa8ef967-d0bf-4e11-a478-73c58c9d5726",
+    "reportId": "report:8c5f007c-209e-48ce-b3a3-2a3093f68e8d",
     "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
-    "asOf": "2026-11-06T21:32:23.345Z",
+    "asOf": "2026-11-06T21:40:19.309Z",
     "digests": [
       "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
     ],
@@ -167,9 +167,9 @@
   },
   "second": {
     "mode": "offline-ordinary-provider-fixture",
-    "reportId": "report:cc560dc8-ee62-45e9-9c2b-6d59f051466b",
+    "reportId": "report:91311665-2cb1-45ba-9d44-6abc088ec6f8",
     "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
-    "asOf": "2026-11-06T21:32:23.897Z",
+    "asOf": "2026-11-06T21:40:19.821Z",
     "digests": [
       "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
     ],
@@ -288,7 +288,7 @@
     "memory": [],
     "experience": [
       {
-        "id": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+        "id": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw",
         "record": {
           "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
           "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -300,9 +300,9 @@
           "sponsored": true,
           "supersedes": null,
           "verdict": "fail",
-          "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+          "workspace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee"
         },
-        "blobId": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs"
+        "blobId": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw"
       }
     ],
     "experienceStorage": "walrus-fixture",
@@ -324,8 +324,8 @@
     },
     "memory": {
       "storage": "walrus-fixture",
-      "id": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
-      "blobId": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs"
+      "id": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw",
+      "blobId": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw"
     }
   },
   "resolution": {
@@ -339,13 +339,13 @@
     },
     "memory": {
       "storage": "walrus-fixture",
-      "id": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino",
-      "blobId": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino"
+      "id": "uSVqeEd7gLd06k3m2iPpmLMaWQkDLvjbAtg0jfGDH_4",
+      "blobId": "uSVqeEd7gLd06k3m2iPpmLMaWQkDLvjbAtg0jfGDH_4"
     }
   },
   "records": [
     {
-      "id": "1fs-ZU3IMmYceMJeNtxSbfQtUZdwgrKI213iGq8mSPU",
+      "id": "zEBxXxdcCnzkFfzgMBS2VC3Bval4JYDOeSCeZmrpRm0",
       "record": {
         "attempted": 100,
         "bound": 10,
@@ -358,12 +358,12 @@
         "supersedes": null,
         "tool": "historical_unavailable_tool",
         "verdict": "fail",
-        "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+        "workspace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee"
       },
-      "blobId": "1fs-ZU3IMmYceMJeNtxSbfQtUZdwgrKI213iGq8mSPU"
+      "blobId": "zEBxXxdcCnzkFfzgMBS2VC3Bval4JYDOeSCeZmrpRm0"
     },
     {
-      "id": "as8udNjGKa96O6ecyLsFnGdjOVpys2bPOtodmRmRk38",
+      "id": "WE71QmGTS4_eiFMRCKLfARpVIRMHBczH_XDUzvpWoiE",
       "record": {
         "attempted": 10,
         "bound": 10,
@@ -373,15 +373,15 @@
         "schema": "recall-tool-experience/1",
         "schemaHash": "8888888888888888888888888888888888888888888888888888888888888888",
         "source": "replay",
-        "supersedes": "1fs-ZU3IMmYceMJeNtxSbfQtUZdwgrKI213iGq8mSPU",
+        "supersedes": "zEBxXxdcCnzkFfzgMBS2VC3Bval4JYDOeSCeZmrpRm0",
         "tool": "historical_unavailable_tool",
         "verdict": "resolved",
-        "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+        "workspace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee"
       },
-      "blobId": "as8udNjGKa96O6ecyLsFnGdjOVpys2bPOtodmRmRk38"
+      "blobId": "WE71QmGTS4_eiFMRCKLfARpVIRMHBczH_XDUzvpWoiE"
     },
     {
-      "id": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+      "id": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
         "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -393,12 +393,12 @@
         "sponsored": true,
         "supersedes": null,
         "verdict": "fail",
-        "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+        "workspace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee"
       },
-      "blobId": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs"
+      "blobId": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw"
     },
     {
-      "id": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino",
+      "id": "uSVqeEd7gLd06k3m2iPpmLMaWQkDLvjbAtg0jfGDH_4",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000c",
         "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
@@ -408,41 +408,41 @@
         "schema": "recall-experience/1",
         "source": "fixture",
         "sponsored": true,
-        "supersedes": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
+        "supersedes": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw",
         "verdict": "resolved",
-        "workspace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4"
+        "workspace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee"
       },
-      "blobId": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino"
+      "blobId": "uSVqeEd7gLd06k3m2iPpmLMaWQkDLvjbAtg0jfGDH_4"
     }
   ],
   "pairLedger": {
     "intents": [
       {
-        "key": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
-        "namespace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4-experience",
-        "sha256": "76e60f2f3918289e59d2e18570a3c4089ca88ae07fa12775429f57b1e4501dcb",
+        "key": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw",
+        "namespace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee-experience",
+        "sha256": "695f74add6bc0edaabc93b3c06e8e5704c90cd387289e9a2f900c3b97893bb1c",
         "state": "done"
       },
       {
-        "key": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino",
-        "namespace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4-experience",
-        "sha256": "2ed5319ada76cb9e5b1c464dffdf77aa89afb63ea45cbf3565ce663983998a7a",
+        "key": "uSVqeEd7gLd06k3m2iPpmLMaWQkDLvjbAtg0jfGDH_4",
+        "namespace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee-experience",
+        "sha256": "b9256a78477b80b774ea4de6da23e998b31a5909032ef8db02d8348df1831ffe",
         "state": "done"
       }
     ],
     "jobs": {
-      "fixture-70f7bcb0-653e-4bf3-9d2b-302f9bcab853": {
-        "key": "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
-        "namespace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4-experience",
+      "fixture-e5d37d52-e74d-479f-8240-737808a6bb85": {
+        "key": "uSVqeEd7gLd06k3m2iPpmLMaWQkDLvjbAtg0jfGDH_4",
+        "namespace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee-experience",
         "polls": 1
       },
-      "fixture-af93b0b1-4e79-42c8-99e5-fb825a0344be": {
-        "key": "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino",
-        "namespace": "agent-8ed51a87-c71f-41c1-818d-f36410e2f2d4-experience",
+      "fixture-fe5fc93e-774d-4102-9d49-3bdfb46fbfe0": {
+        "key": "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw",
+        "namespace": "agent-d8ffb566-cdf8-4db6-8877-b7ebe9cfe4ee-experience",
         "polls": 1
       }
     },
-    "manifestHash": "1e6a3e6ffdd7baea3ae670ba6229159868138629c3a0a939fb1ba004ab4b9696",
+    "manifestHash": "fab1d2296344c2eeee50543c0dc63e1b82e0cdc161f35e932bd2338c9ceede40",
     "reads": 2,
     "requests": 36,
     "schema": 1,
@@ -455,9 +455,9 @@
       "name": "other-digest",
       "report": {
         "mode": "offline-ordinary-provider-fixture",
-        "reportId": "report:8d270509-20e1-44d6-9b34-d754bf87a63f",
+        "reportId": "report:4ab3930e-734e-44c0-bee4-266a97f0a1c7",
         "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
-        "asOf": "2026-11-06T21:32:24.462Z",
+        "asOf": "2026-11-06T21:40:20.322Z",
         "digests": [
           "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR"
         ],
@@ -597,7 +597,7 @@
       "ledger": {
         "intents": [],
         "jobs": {},
-        "manifestHash": "109e34cc43c22a2afa49905cb95761fca30a8e41a4ba9705b2a959e11fbf93cd",
+        "manifestHash": "168d0f563e95cccbc2cd11fa96c02d131057c7dbafea2707f82dcd4c1089cf3c",
         "reads": 1,
         "requests": 14,
         "schema": 1,
@@ -610,9 +610,9 @@
       "name": "changed-payer",
       "report": {
         "mode": "offline-ordinary-provider-fixture",
-        "reportId": "report:c4e6063f-1a67-434f-980b-5560b4b9d9a1",
+        "reportId": "report:d7ec68b6-e83b-4b28-a891-ca8b1f3c1ae3",
         "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
-        "asOf": "2026-11-06T21:32:24.885Z",
+        "asOf": "2026-11-06T21:40:20.766Z",
         "digests": [
           "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
         ],
@@ -752,7 +752,7 @@
       "ledger": {
         "intents": [],
         "jobs": {},
-        "manifestHash": "cfce34476b705df38e2e70574dbb87843c49f89e670251ee34c6a0c235f61d17",
+        "manifestHash": "1347bc149adebd1bb890dc708d3dc054d10ccd2d73a5e1878374e329beb6dda8",
         "reads": 1,
         "requests": 14,
         "schema": 1,
@@ -766,8 +766,8 @@
     {
       "name": "exact",
       "relevantRecords": [
-        "duYPLzkYKJ5Z0uGFcKPECJyoiuB_oSd1Qp9XseRQHcs",
-        "LtUxmtp2y55bHEZN_993qomvtj6kXL81Zc5mOYOZino"
+        "aV90rda8DtqryTs8BujlcEyQzThyiemi-QDDuXiTuxw",
+        "uSVqeEd7gLd06k3m2iPpmLMaWQkDLvjbAtg0jfGDH_4"
       ],
       "factualPayer": "0x000000000000000000000000000000000000000000000000000000000000000c",
       "providerCalls": 0
@@ -800,7 +800,7 @@
     "ledger": {
       "intents": [],
       "jobs": {},
-      "manifestHash": "cdd441aaaea613cca49ef47c3e236c72d38833251c5ddfaf2104963a141ee56c",
+      "manifestHash": "ded6f8ce3b7a4fb3114d090316b25b0cf0552451fafd47f0f4dc66eecd600eea",
       "reads": 0,
       "requests": 11,
       "schema": 1,
