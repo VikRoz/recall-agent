@@ -1,4 +1,4 @@
-# Agent offline validation — 6 November 2026
+# Agent offline validation — updated 7 November 2026
 
 ## Scope and assumptions
 
@@ -6,7 +6,7 @@ Experimental copy of Recall Lab. The original release remains the fallback. This
 
 ## Results
 
-Latest offline suite: 103 tests pass (5 live-admission, 16 guarded-provider cases and 82 earlier tests), including eleven observer/artifact tests. The approved offline repair is implemented; see TOOL_ERROR_MEMORY_OFFLINE_2026-11-06.md. The prior 69-test suite included fail-closed model selection, failed-tool detection and CSV mismatch assessment. This does not mean the model probe passed. Wallet/period lookup and saved-data replay previously passed the complete 65-test suite. See WALLET_ACTIVITY_OFFLINE_2026-11-06.md for the new contract and seven additional tests. The 58-test result below records the preceding model-probe baseline.
+Latest offline suite: 117 tests pass, zero failures/skips (14 ordinary-provider, 5 live-admission, 16 guarded-provider cases and 82 earlier tests), including eleven observer/artifact tests. The complete check.command run passed on 7 November; the normal-launcher two-process ordinary protocol check and all saved-evidence/source verifiers passed as well. See ORDINARY_PROVIDER_OFFLINE_2026-11-07.md. The approved offline repair is implemented; see TOOL_ERROR_MEMORY_OFFLINE_2026-11-06.md. The prior 69-test suite included fail-closed model selection, failed-tool detection and CSV mismatch assessment. This does not mean the model probe passed. Wallet/period lookup and saved-data replay previously passed the complete 65-test suite. See WALLET_ACTIVITY_OFFLINE_2026-11-06.md for the new contract and seven additional tests. The 58-test result below records the preceding model-probe baseline.
 
 `bash start.command --check` passed: 58 tests (50 inherited regression tests, 7 agent tests and 1 probe-approval test), both inherited independent-process MCP checks, saved evidence recomputation and the updated development-source manifest.
 
@@ -35,3 +35,5 @@ The explicitly approved one-turn direct continuation completed the actual captur
 The approved shared-gate increment passed the full suite and its saved SDK evidence verifier. Installed SDK/Seal, independent processes, mixed typed storage, crash retention, exact receipt reuse, stale/unknown refusal and close-during-call isolation were exercised with synthetic responses only. See AGENT_WALRUS_GATE_OFFLINE_2026-11-06.md. Historical model source hashes are checked against the recorded Git revision when available, not against later product revisions. No new inference or live account access occurred.
 
 The separately approved real trial completed one native gpt-5.6-luna turn, 2 confirmed sponsored Walrus writes, 2 content recalls and 41 guarded SDK requests, without Tatum or paid fallback. The first real lookup was limit=10 and a linked resolution was captured automatically. The SDK read path enforced both plaintext receipt hashes; no third read was made and raw recall bodies were not separately archived. See AGENT_LIVE_TRIAL_2026-11-06.md. This is a single known-case trial with saved Sui facts, not a general-learning benchmark.
+
+Ordinary provider implementation is offline-only. The intercepted walkthrough retained six synthetic records and used 2 simulated Tatum batches, 2 simulated writes, 2 content recalls and 36 guarded SDK requests. Model calls, external provider requests, real credential reads and extra spending were zero. Existing source/real-trial snapshots remain unchanged.

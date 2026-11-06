@@ -33,7 +33,7 @@ export function offlineAgent(directory, capture, dataMode = 'fixture') {
 // Shared independent tools; the provider assembly supplies stores, never a task route.
 export function agentServer(session, {capture,dataMode,mode}) {
   const server = activityServer(session, mode, {exportsArtifact:true});
-  server.registerTool('find_wallet_activity', {
+  if(session.activityIndex)server.registerTool('find_wallet_activity', {
     description: 'Find transaction references involving a wallet in the selected LOCAL dataset, optionally filtered by a UTC period. Saved records are replay, not a fresh chain query. Results always have partial wallet-history coverage. No match does not prove inactivity. This tool does not infer ownership or direct counterparties.',
     inputSchema: { network: z.enum(['mainnet','testnet']), wallet: z.string().max(66),
       from: z.string().max(30).optional(), to: z.string().max(30).optional(),
@@ -52,7 +52,7 @@ export function agentServer(session, {capture,dataMode,mode}) {
     catch (error) { return { isError: true, content: [{ type: 'text', text: /^[A-Z0-9_]+$/.test(error?.code) ? error.code : 'AGENT_ERROR' }] }; }
   });
   const observe = inner => new ObservedToolTransport(inner,{store:session.experience,workspace:session.binding.project,
-    source:dataMode === 'saved' ? 'replay' : 'fixture',capture,stop:()=>{session.stopped=true;}});
+    source:dataMode === 'tatum' ? 'tatum' : dataMode === 'saved' ? 'replay' : 'fixture',capture,stop:()=>{session.stopped=true;}});
   return { session, server, observe };
 }
 async function main() {

@@ -23,26 +23,31 @@ function durable(path,value,fresh=false){
  if(!fresh)renameSync(target,path);
  const directory=openSync(join(path,'..'),'r');try{fsyncSync(directory);}finally{closeSync(directory);}
 }
-export function validateAgentManifest(m,{live=false}={}){
+export function validateAgentManifest(m,{live=false,ordinary=false}={}){
  exactKeys(m,['schema','mode','runId','owner','accountId','delegatePublicKeyHex','packageId','workspace','datasetId','source','namespaces','maxUSD','expiresAt','admission']);
- assert(m.schema===1&&m.mode===(live?'live-walrus-replay':'offline-sdk-fixture')&&m.maxUSD===0,'AGENT_OFFLINE_ONLY');
+ assert(!(live&&ordinary)&&m.schema===1&&m.mode===(ordinary?'offline-ordinary-provider-fixture':live?'live-walrus-replay':'offline-sdk-fixture')&&m.maxUSD===0,'AGENT_OFFLINE_ONLY');
  assert(/^[a-f0-9-]{36}$/.test(m.runId)&&/^agent-[a-f0-9-]{36}$/.test(m.workspace),'AGENT_RUN_ID');
  assert([m.owner,m.accountId,m.packageId].every(v=>address(v)===v)&&/^[a-f0-9]{64}$/.test(m.delegatePublicKeyHex),'AGENT_ACCOUNT');
- assert(/^[a-f0-9]{64}$/.test(m.datasetId)&&['fixture','replay'].includes(m.source),'AGENT_DATASET');
+ assert(/^[a-f0-9]{64}$/.test(m.datasetId)&&(ordinary?m.source==='fixture':['fixture','replay'].includes(m.source)),'AGENT_DATASET');
  exactKeys(m.namespaces,['rules','experience']);
  assert(m.namespaces.rules===m.workspace+'-rules'&&m.namespaces.experience===m.workspace+'-experience','AGENT_NAMESPACES');
- exactKeys(m.admission,['kind','accountId','delegatePublicKeyHex','checkedAt','maxUSD',...(live?['planHash','payloadHash','failureId','profileHash','deploymentHash']:[])]);
+ exactKeys(m.admission,['kind','accountId','delegatePublicKeyHex','checkedAt','maxUSD',...(live?['planHash','payloadHash','failureId','profileHash','deploymentHash']:[]),...(ordinary?['workspaceHash','policyHash']:[])]);
  assert(m.admission.kind===(live?'managed-production-approved':'offline-synthetic')&&m.admission.accountId===m.accountId
   &&m.admission.delegatePublicKeyHex===m.delegatePublicKeyHex&&m.admission.maxUSD===0,'AGENT_ADMISSION');
  if(live)assert(m.source==='replay'&&['planHash','payloadHash','profileHash','deploymentHash'].every(k=>/^[a-f0-9]{64}$/.test(m.admission[k]))
   &&/^[A-Za-z0-9_-]{43}$/.test(m.admission.failureId),'AGENT_LIVE_ADMISSION');
+ if(ordinary)assert([m.admission.workspaceHash,m.admission.policyHash].every(x=>/^[a-f0-9]{64}$/.test(x)),'AGENT_WORKSPACE_BINDING');
  time(m.expiresAt);time(m.admission.checkedAt);return m;
 }
 export function createAgentRun(directory,manifest,options={}){
  privateDirectory(directory);assert(readdirSync(directory).length===0,'AGENT_NEW_RUN_MUST_BE_EMPTY');
  validateAgentManifest(manifest,options);
  durable(join(directory,'agent-run.json'),manifest,true);
- for(const kind of ['rules','experience']){const p=join(directory,'journal-'+kind);mkdirSync(p,{mode:0o700});mkdirSync(join(p,'activity-jobs'),{mode:0o700});}
+ for(const kind of ['rules','experience']){
+  const p=join(options.ordinary?options.workspaceDirectory:directory,'journal-'+kind);
+  if(options.ordinary){privateDirectory(p);privateDirectory(join(p,'activity-jobs'));}
+  else{mkdirSync(p,{mode:0o700});mkdirSync(join(p,'activity-jobs'),{mode:0o700});}
+ }
  durable(join(directory,'agent-ledger.json'),{schema:1,manifestHash:runHash(manifest),stopped:null,
   tatumBatches:0,writes:0,reads:0,requests:0,intents:[],jobs:{}},true);
 }
@@ -51,7 +56,10 @@ export class AgentRunGate {
   privateDirectory(directory);this.directory=directory;this.path=join(directory,'agent-ledger.json');
   this.manifest=validateAgentManifest(privateRead(join(directory,'agent-run.json')),options);
   this.hash=runHash(this.manifest);this.lease=undefined;this.pending=undefined;
-  for(const kind of ['rules','experience']){privateDirectory(join(directory,'journal-'+kind));privateDirectory(join(directory,'journal-'+kind,'activity-jobs'));}
+  this.ordinary=options.ordinary?{directory:options.workspaceDirectory,token:options.leaseToken,approvalHash:options.approvalHash}:undefined;
+  if(this.ordinary)assert(typeof this.ordinary.directory==='string'&&typeof this.ordinary.token==='string'
+   &&/^[a-f0-9]{64}$/.test(this.ordinary.approvalHash),'AGENT_WORKSPACE_LEASE_REQUIRED');
+  for(const kind of ['rules','experience']){privateDirectory(join(this.ordinary?.directory??directory,'journal-'+kind));privateDirectory(join(this.ordinary?.directory??directory,'journal-'+kind,'activity-jobs'));}
   assert(!existsSync(join(directory,'.agent-writer-lock'))&&!existsSync(this.path+'.next'),'AGENT_OUTCOME_UNCERTAIN');
   const state=this.state();assert(state.stopped===null,'AGENT_RUN_STOPPED');
   assert(state.intents.every(i=>i.state==='done'),'AGENT_OUTCOME_UNCERTAIN');this.admit();
@@ -79,6 +87,15 @@ export class AgentRunGate {
   return s;
  }
  admit(){
+  if(this.ordinary){
+   const directory=this.ordinary.directory;privateDirectory(directory);privateDirectory(join(directory,'.ordinary-runtime'));
+   const binding=privateRead(join(directory,'ordinary-workspace.json')),active=privateRead(join(directory,'active-run.json'));
+   const lease=privateRead(join(directory,'.ordinary-runtime','lease.json'));
+   assert(runHash(binding)===this.manifest.admission.workspaceHash&&binding.identity.workspace===this.manifest.workspace
+    &&active.manifestHash===this.hash&&active.runId===this.manifest.runId
+    &&lease.manifestHash===this.hash&&lease.token===this.ordinary.token&&lease.pid===process.pid
+    &&runHash(privateRead(join(this.directory,'ordinary-approval.json')))===this.ordinary.approvalHash,'AGENT_WORKSPACE_LEASE_REQUIRED');
+  }
   const m=this.manifest,now=Date.now(),age=now-time(m.admission.checkedAt);
   assert(time(m.expiresAt)>now&&time(m.expiresAt)<=now+86400000,'AGENT_RUN_EXPIRED');
   assert(age>=0&&age<=300000,'AGENT_ADMISSION_EXPIRED');

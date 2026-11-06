@@ -12,14 +12,15 @@ import {CsvArtifacts} from './agent-export.mjs';
 import {assert} from '../src/domain.ts';
 let active=false;
 
-export async function openInjectedAgent(directory,{createSdk,transport,capture=false,wait,live=false}){
+export async function openInjectedAgent(directory,{createSdk,transport,capture=false,wait,live=false,ordinary,dataFactory}){
  assert(!active&&typeof createSdk==='function'&&typeof transport==='function','AGENT_INJECTED_PORTS_REQUIRED');
- const gate=new AgentRunGate(directory,{live}),m=gate.manifest;
- const index=loadOfflineActivity(m.source==='replay'?'saved':'fixture');
- assert(index.datasetId===m.datasetId,'AGENT_DATASET_CHANGED');
- const journals=Object.fromEntries(['rules','experience'].map(k=>[k,new FileWriteJournal(join(directory,'journal-'+k))]));
+ assert(!ordinary||(!live&&typeof dataFactory==='function'),'AGENT_ORDINARY_PORTS_REQUIRED');
+ const gate=new AgentRunGate(directory,ordinary?{ordinary:true,...ordinary}:{live}),m=gate.manifest;
+ const index=ordinary?undefined:loadOfflineActivity(m.source==='replay'?'saved':'fixture');
+ if(index)assert(index.datasetId===m.datasetId,'AGENT_DATASET_CHANGED');
+ const journals=Object.fromEntries(['rules','experience'].map(k=>[k,new FileWriteJournal(join(ordinary?.workspaceDirectory??directory,'journal-'+k))]));
  for(const journal of Object.values(journals))journal.assertSettled();
- let sdk,native,session,closed=false,inFlight=0;
+ let sdk,native,session,data,closed=false,inFlight=0;
  const original=globalThis.fetch,bound=agentWalrusFetch(gate,transport);
  const guarded=(...args)=>{assert(!closed,'AGENT_RUNTIME_CLOSED');return bound(...args);};
  const release=()=>{if(closed&&inFlight===0){if(globalThis.fetch===guarded)globalThis.fetch=original;active=false;}};
@@ -27,7 +28,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
  const close=()=>{
   if(closed)return;closed=true;
   try{if(inFlight||gate.lease||session?.busy)gate.stop('AGENT_CLIENT_CLOSED_DURING_ACTION');}
-  finally{try{native?.destroy();}finally{release();}}
+  finally{try{data?.close();}finally{try{native?.destroy();}finally{release();}}}
  };
  try{
   native=await createSdk(m);sdk={};
@@ -65,11 +66,16 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
     if(await journals.experience.load(key)){const receipt=await ports.experience.write(record,key);return {id:key,record,blobId:receipt.blobId};}
     gate.ensureWriteAvailable();return base.write(record);
    })};
+  if(ordinary)data=await dataFactory(gate);
   session=new AgentSession(binding,rules,network=>({transactions:ids=>{
+   assert(!closed,'AGENT_RUNTIME_CLOSED');
+   if(ordinary){assert(network==='mainnet','WRONG_NETWORK');return data.transactions(ids);}
    assert(network==='mainnet'||network==='testnet','WRONG_NETWORK');return index.transactions(network,ids);
   }}),undefined,undefined,()=>gate.stop('AGENT_TOOL_STOPPED'));
   session.experience=experience;session.capture=capture;session.activityIndex=index;session.artifacts=new CsvArtifacts(directory);
-  const runtime=agentServer(session,{capture,dataMode:m.source==='replay'?'saved':'fixture',mode:live?'live-walrus-sui-replay':'offline-sdk-fixture-'+m.source});
-  return {...runtime,gate,ports,rules,experience,close};
+  if(ordinary)session.providerProvenance={sourceMode:'offline-intercepted-tatum',freshProviderRead:false,walletHistoryComplete:false,scope:'selected-transactions'};
+  const runtime=agentServer(session,{capture,dataMode:m.source==='tatum'?'tatum':m.source==='replay'?'saved':'fixture',
+   mode:ordinary?'offline-ordinary-provider-fixture':live?'live-walrus-sui-replay':'offline-sdk-fixture-'+m.source});
+  return {...runtime,gate,ports,rules,experience,isBusy:()=>Boolean(inFlight||gate.lease||session?.busy),close};
  }catch(error){try{gate.stop('AGENT_OPEN_FAILED');}finally{close();}throw error;}
 }

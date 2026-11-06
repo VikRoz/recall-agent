@@ -21,6 +21,8 @@ export type ToolExperience = {
 };
 export type Experience = GasExperience | ToolExperience;
 export type ExperienceRow = { id: string; record: Experience; blobId?: string };
+// Retained project capacity is separate from each approved run's two-write allowance.
+export const MAX_EXPERIENCE_RECORDS = 20;
 const hash = (record: Experience) => createHash('sha256').update(canonical(record)).digest('base64url');
 export function validateExperience(record: Experience, workspace: string) {
   if (record.schema === 'recall-tool-experience/1') {
@@ -55,7 +57,7 @@ export function experienceParentMatches(parent: Experience | undefined, record: 
   return false;
 }
 export function validateExperienceRows(rows: ExperienceRow[], workspace: string) {
-  assert(Array.isArray(rows) && rows.length <= 2, 'EXPERIENCE_LIMIT');
+  assert(Array.isArray(rows) && rows.length <= MAX_EXPERIENCE_RECORDS, 'EXPERIENCE_LIMIT');
   const records = new Map<string, Experience>();
   for (const row of rows) {
     exactKeys(row, row.blobId === undefined ? ['id', 'record'] : ['id', 'record', 'blobId']);
@@ -100,7 +102,7 @@ export class LocalExperienceStore implements ExperienceStore {
       const rows = await this.read(), id = hash(record);
       const previous = rows.find(row => row.id === id);
       if (previous) return previous;
-      assert(rows.length < 2, 'EXPERIENCE_LIMIT');
+      assert(rows.length < MAX_EXPERIENCE_RECORDS, 'EXPERIENCE_LIMIT');
       if (record.verdict === 'resolved') {
         const parent = rows.find(row => row.id === record.supersedes)?.record;
         assert(experienceParentMatches(parent, record), 'EXPERIENCE_PARENT');

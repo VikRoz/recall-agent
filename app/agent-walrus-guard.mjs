@@ -10,6 +10,7 @@ export const deploymentHash=c=>runHash({network:c.network,packageId:c.packageId,
  suiGrpcUrl:c.suiGrpcUrl,suiRpcUrl:c.suiRpcUrl??null});
 export function validateTypedRecord(manifest,namespace,record){
  if(manifest.mode==='live-walrus-replay')assert(namespace===manifest.namespaces.experience,'AGENT_LIVE_WRITE_SCOPE');
+ if(manifest.mode==='offline-ordinary-provider-fixture'&&record.network!==undefined)assert(record.network==='mainnet','AGENT_RECORD_NETWORK');
  if(namespace===manifest.namespaces.rules)return rule(record,{owner:manifest.owner,project:manifest.workspace});
  assert(namespace===manifest.namespaces.experience,'AGENT_NAMESPACE_DENIED');
  validateExperience(record,manifest.workspace);assert(record.source===manifest.source,'AGENT_RECORD_SOURCE');return record;

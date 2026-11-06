@@ -16,6 +16,7 @@ export class AgentSession extends ActivitySession {
   capture = false;
   activityIndex!: OfflineActivityIndex;
   artifacts: any;
+  providerProvenance: {sourceMode: string; freshProviderRead: boolean; walletHistoryComplete: boolean; scope: string} | undefined;
   async export(reportId: string) {
     const value = await super.export(reportId);
     try { return {...value, artifact: this.artifacts.write(value.csv)}; }
@@ -40,7 +41,7 @@ export class AgentSession extends ActivitySession {
     const memory = rows.filter(row => row.record.schema === 'recall-experience/1' && state.transactions.some(tx => tx.network === row.record.network && tx.source === row.record.source
       && (tx.gas.payer !== tx.sender) === row.record.sponsored));
     return { ...result, experience: memory, experienceStorage: this.experience.storage,
-      dataProvenance: {sourceMode: this.activityIndex?.mode === 'saved' ? 'saved-mainnet-replay' : 'synthetic-fixture',
+      dataProvenance: this.providerProvenance ?? {sourceMode: this.activityIndex?.mode === 'saved' ? 'saved-mainnet-replay' : 'synthetic-fixture',
         freshProviderRead: false, walletHistoryComplete: false, scope: 'selected-transactions'} };
   }
   async verifyGasPayer(reportId: string, digestInput: string, claimedInput: string) {

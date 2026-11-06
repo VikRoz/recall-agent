@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "method": "offline-receipt-reconciliation-only",
+  "candidate": {
+    "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+    "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+    "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+    "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+    "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b",
+    "namespaces": {
+      "experience": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+      "rules": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-rules"
+    }
+  },
+  "sourceHashes": {
+    "evidence/agent-live-trial-2026-11-06/run.json": "138c000e9509736c67efae1eb34e37b6fdfc9aa4b58e1e4daa30cea2a4ba560b",
+    "evidence/activity-mainnet-2026-11-05/pilot-result.json": "0a302306c9fdb160ebd078ea7c3e5b8f4ab0ef9df8b120a63e5b484b45b6efe5",
+    "evidence/activity-mainnet-2026-11-05/first-result.json": "e5cd6d58c6f5f764f0bd24d5f696a003d78e23655ce0fca8eed101586fc8d1e8",
+    "evidence/activity-mainnet-2026-11-05/second-result.json": "ecafce22809bdb23885bf813c5b9c9be0660b336fa1e76d590b5efcbdc293b4a",
+    "evidence/activity-model-2026-11-05/run.json": "9437422c45bb8c2072c19cc857c23d6a8c4dd2d5dc0429bbd8938a8d7b0eafcb"
+  },
+  "records": [
+    {
+      "recordId": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+      "blobId": "vdJstaNxXqFSlPh7QI7h_CCuNyoEsCdJ_sv4Rq-deDM",
+      "recordSha256": "76437451578fd43bed1edae540befb4039ec1c34eacccd064fdf9a6a34de812f",
+      "jobId": "ac4597c3-701f-4eb1-910c-2c9c5fdc974d",
+      "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b",
+      "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+      "schema": "recall-tool-experience/1",
+      "verdict": "fail",
+      "supersedes": null,
+      "origin": "actual-prior-native-observation",
+      "candidateCounted": true,
+      "source": "evidence/agent-live-trial-2026-11-06/run.json"
+    },
+    {
+      "recordId": "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA",
+      "blobId": "fMAmwaLGrX2V84Uy9l3rgew5SUxSsUxHsgr-jdk_IFw",
+      "recordSha256": "a9afe7f5bae5dd4ea69299a698a2f6967ec704be1ccd221d70a661347b5a4b00",
+      "jobId": "f7cf962c-1443-4404-ab02-57513d5ad796",
+      "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b",
+      "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+      "schema": "recall-tool-experience/1",
+      "verdict": "resolved",
+      "supersedes": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+      "origin": "actual-native-successful-call",
+      "candidateCounted": true,
+      "source": "evidence/agent-live-trial-2026-11-06/run.json"
+    },
+    {
+      "recordId": "rule:5f3e6640-a3d2-461a-92d9-45eaca8703b3",
+      "blobId": "mvhpAwQROQWKxUBmk1RCn8w40hNwJsmkLKW29IcTHFo",
+      "recordSha256": "1bb0bfc317b6ea116b0aceccc17ea17ac9b10ab3e127c10956e2db7296719105",
+      "jobId": "1e222259-7084-46f5-aeb4-88d10c98dfff",
+      "workspace": "recall-activity-26b6c08f-f3a8-425b-837d-4ccdc7b4553e",
+      "namespace": "recall-activity-26b6c08f-f3a8-425b-837d-4ccdc7b4553e",
+      "schema": "address-rule/1",
+      "verdict": "unknown",
+      "supersedes": null,
+      "origin": "previous-activity-provider-pilot",
+      "candidateCounted": false,
+      "exclusion": "Different logical workspace and historical address-context namespace; not a current candidate experience record.",
+      "source": "evidence/activity-mainnet-2026-11-05/first-result.json"
+    },
+    {
+      "recordId": "rule:9656e77a-bb6c-4ccc-b4da-8b19e4708bb7",
+      "blobId": "v_bVufw-rg8fsDx18V35NMOVQKiK4sERMYS-OJQuENc",
+      "recordSha256": "19934a2321d80a549646b14d759994638af74de1c0ce7cdfa051956edd9289c4",
+      "jobId": "e366baf8-97fd-4ba1-8801-24d2e5e5820f",
+      "workspace": "recall-activity-26b6c08f-f3a8-425b-837d-4ccdc7b4553e",
+      "namespace": "recall-activity-26b6c08f-f3a8-425b-837d-4ccdc7b4553e",
+      "schema": "address-rule/1",
+      "verdict": "external",
+      "supersedes": "rule:5f3e6640-a3d2-461a-92d9-45eaca8703b3",
+      "origin": "previous-activity-provider-pilot",
+      "candidateCounted": false,
+      "exclusion": "Different logical workspace and historical address-context namespace; not a current candidate experience record.",
+      "source": "evidence/activity-mainnet-2026-11-05/second-result.json"
+    },
+    {
+      "recordId": "rule:8c883a31-b3d6-473f-960f-0705fa13ff9c",
+      "blobId": "CJh1BJDaX5niPuHU_Y-NiDBOoEzazBdmRg09uMp_W-0",
+      "recordSha256": "8e7996a7d793a6290ec38e5a646ead2a8f44f73cba19cd77a3fc518e6bfe4371",
+      "jobId": "9810d7de-2f10-4159-8a95-d37b2e358110",
+      "workspace": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+      "namespace": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+      "schema": "address-rule/1",
+      "verdict": "unknown",
+      "supersedes": null,
+      "origin": "previous-activity-native-model-run",
+      "candidateCounted": false,
+      "exclusion": "Different logical workspace and historical address-context namespace; not a current candidate experience record.",
+      "source": "evidence/activity-model-2026-11-05/run.json",
+      "phase": "first"
+    },
+    {
+      "recordId": "rule:1148c52b-ac0f-4bb5-808c-631873014888",
+      "blobId": "5opR5p9UyADYXUA-oVsuPs2UkyZVI9Zf0Thfq98DO4U",
+      "recordSha256": "d5bddefb40ddb6636f6f81f98ef5f354bb6a1f5ab32cedbee3845bd386853941",
+      "jobId": "5d6b8055-4408-4c73-a3eb-f9d460893a0a",
+      "workspace": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+      "namespace": "recall-activity-d2c045ca-196b-4f2c-a611-55a0de594807",
+      "schema": "address-rule/1",
+      "verdict": "external",
+      "supersedes": "rule:8c883a31-b3d6-473f-960f-0705fa13ff9c",
+      "origin": "previous-activity-native-model-run",
+      "candidateCounted": false,
+      "exclusion": "Different logical workspace and historical address-context namespace; not a current candidate experience record.",
+      "source": "evidence/activity-model-2026-11-05/run.json",
+      "phase": "second"
+    }
+  ],
+  "excludedLegacyArchive": {
+    "sourceDescription": "Archived old checkpoint-projection demo, outside this source snapshot",
+    "sourceSha256": "58ed96309d7918ff5c8433aae941f7e423366320104d35695fefea69d5b7b148",
+    "candidateCounted": false,
+    "exclusion": "Different obsolete record schema and product iteration; artifact has no bound submitted account/delegate/namespace. No import or fresh storage check.",
+    "records": [
+      {
+        "recordId": "experience:stage0-smoke",
+        "blobId": "DiyAqT9ArzQxgIpjGRy8wh7euL3MdOeJInmswZAGfvM",
+        "recordSha256": "b997a6c090e8acf83bf357947affe323c90d20dba56ef3b7a84c999f8bef8980",
+        "sourceKind": "tatum"
+      },
+      {
+        "recordId": "experience:atlas-v1-correction-1",
+        "blobId": "qpQxhrCw4zsgJm3UmZSUpwzotfOsEF6lcH3A2qyKRIE",
+        "recordSha256": "29cb08f637671b0a6ce3ae0660048000ebe2ecb01c9368f0e62bb444e73ff671",
+        "sourceKind": "tatum"
+      },
+      {
+        "recordId": "experience:coverage-v1:03",
+        "blobId": "IQzIXKHwTADNd6YumObZgYVSf1WDR0IT9afHDebNlHI",
+        "recordSha256": "453a35a15593e326499b8cb40e449734959c870bbb16249cba58c7bf5cae5372",
+        "sourceKind": "tatum"
+      },
+      {
+        "recordId": "experience:coverage-v1:05",
+        "blobId": "IHutsuaeSKVEk09QT6_dxvrCpDivizw-qxVjEnMIEGw",
+        "recordSha256": "e6533f951e32b75da4479ebe7af574194980f730dad21d32d6fff8f67113e104",
+        "sourceKind": "tatum"
+      },
+      {
+        "recordId": "experience:coverage-v1:07",
+        "blobId": "ce8Ast4hy9VIw5cdnR-BbFRaN7OJjbZghsqZhFwul74",
+        "recordSha256": "7f5dd46b21c0ddd3e36484f55adc35dab50d2289c0747bebbf0e1e6ae930792b",
+        "sourceKind": "tatum"
+      },
+      {
+        "recordId": "experience:coverage-v1:09",
+        "blobId": "zhFfmMj4H0NieBUsnGFbKcc2zIJQChOhZBVqBT-QV8w",
+        "recordSha256": "dcbfe94a5f9fa154ef269e8d0bcac7d6bcc8cb8bf2eb3880880cb3ad73618d9b",
+        "sourceKind": "fixture"
+      },
+      {
+        "recordId": "experience:coverage-v1:04",
+        "blobId": "HVkc1DZkGsMjI2aZBEzCvsAsXy9bda1kKnpsZrtY8_k",
+        "recordSha256": "b3eeba14bb9c084ffc32b5fff955c6b0ab694ee10e49d16f961037a2d751ae46",
+        "sourceKind": "tatum"
+      },
+      {
+        "recordId": "experience:coverage-v1:06",
+        "blobId": "Cb_5qxuzA8lAC1IIFrlP3JLLguivZEx7znKT5BKMu5s",
+        "recordSha256": "e73bae3572950c961c89c34f8e457a7d50a3f37a2d18cecf9029ef74690f8ac4",
+        "sourceKind": "tatum"
+      },
+      {
+        "recordId": "experience:coverage-v1:08",
+        "blobId": "YvuaUX3rF8BAzpP2beMnwKBYBbMboNHgnWeDnZKudN4",
+        "recordSha256": "96d852141c929b9e7a974a61b0348b542862d8157d9fbb8a1b5d4e9924fc6cc1",
+        "sourceKind": "tatum"
+      },
+      {
+        "recordId": "experience:coverage-v1:10",
+        "blobId": "00o9ygazsRX7mH_KdIwCIDyjIoxsEo3HNEgKJJDNB7k",
+        "recordSha256": "5c5f43332d52d23c4225cd67843cb25cd5ed852f6ac032a6d11cecd70e0ba86d",
+        "sourceKind": "fixture"
+      }
+    ]
+  },
+  "counts": {
+    "retainedCurrentCandidate": 2,
+    "inheritedActivityExcluded": 4,
+    "oldProjectionExcluded": 10,
+    "candidateTarget": 10,
+    "candidateOnlyGap": 8
+  },
+  "countPolicy": "Conservative current-candidate scope; not a statement that the official rules prohibit all historical records or require one namespace.",
+  "freshAccountInventoryChecked": false,
+  "newProviderCalls": 0,
+  "newWrites": 0,
+  "additionalSpendUSD": 0
+}

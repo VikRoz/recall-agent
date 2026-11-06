@@ -82,13 +82,15 @@ test('uncertain observation write quarantines the connection without resubmittin
  }finally{await r?.close();rmSync(d,{recursive:true,force:true});}
 });
 
-test('numeric experience validates schema, parent compatibility, privacy fields and the unchanged two-record cap',async()=>{
+test('numeric experience validates schema, parent compatibility, privacy fields and bounded retained capacity',async()=>{
  const d=dir();let r;try{
   r=await connect(d);await r.client.listTools();await r.client.callTool({name:'find_wallet_activity',arguments:{limit:100}});
   await r.client.callTool({name:'find_wallet_activity',arguments:{limit:10}});
   const rows=await r.base.read();validateExperienceRows(rows,project);
   assert.throws(()=>validateExperience({...rows[0].record,secret:'extra'},project),/INVALID_KEYS/);
   assert.throws(()=>validateExperience({...rows[0].record,field:'password'},project),/CONSTRAINT/);
+  for(let attempted=101;attempted<119;attempted++)await r.base.write({...rows[0].record,attempted});
+  assert.equal((await r.base.read()).length,20);
   await assert.rejects(r.base.write({...rows[0].record,attempted:200}),/EXPERIENCE_LIMIT/);
   const other={...rows[1].record,source:'replay'};
   const otherDir=dir();try{await assert.rejects(new LocalExperienceStore(otherDir,project).write(other),/PARENT/);}finally{rmSync(otherDir,{recursive:true,force:true});}

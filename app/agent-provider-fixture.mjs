@@ -30,16 +30,16 @@ export async function createAgentFixture(directory,source='replay'){
 }
 function frame(type,data){const bytes=new Uint8Array(5+data.length);bytes[0]=type;new DataView(bytes.buffer).setUint32(1,data.length);bytes.set(data,5);return bytes;}
 export function fixtureTransport(directory,options={}){
- const m=privateRead(join(directory,'agent-run.json')),path=join(directory,'synthetic-relayer.json');
+ const m=options.manifest??privateRead(join(directory,'agent-run.json')),path=join(directory,'synthetic-relayer.json');
  return async(input,init={})=>{
   const url=new URL(input);assert([WALRUS_RELAY,SUI_SEAL_ORIGIN].includes(url.origin),'OFFLINE_ROUTE');
   const lock=join(directory,'.synthetic-relayer-lock');mkdirSync(lock,{mode:0o700});
   try{
    const state=privateRead(path),body=url.origin===WALRUS_RELAY&&typeof init.body==='string'?JSON.parse(init.body):undefined;
    const headers=new Headers(init.headers);
-   state.requests.push({path:url.pathname,method:init.method??'GET',namespace:body?.namespace??null,
+   state.requests.push({runId:m.runId,path:url.pathname,method:init.method??'GET',namespace:body?.namespace??null,
     signed:Boolean(headers.get('x-signature')),seal:Boolean(headers.get('x-seal-session'))});
-   assert(state.requests.length<=64,'FIXTURE_REQUEST_LIMIT');
+   assert(state.requests.filter(r=>r.runId===m.runId).length<=64&&state.requests.length<=1024,'FIXTURE_REQUEST_LIMIT');
    let response;
    if(options.failPath===url.pathname)response=new Response('{}',{status:503});
    else if(url.origin===SUI_SEAL_ORIGIN){
