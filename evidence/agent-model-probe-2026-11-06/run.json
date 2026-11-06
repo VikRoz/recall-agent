@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "baselineCommit": "f1e37c0b34562c8c4534ad4e74a921a84a60d7eb",
+  "runtimeModel": "gpt-5.6-luna",
+  "data": "synthetic-fixtures",
+  "memory": "local",
+  "totalUserTurnsStarted": 4,
+  "tatumCalls": 0,
+  "walrusCalls": 0,
+  "additionalSpendUSD": 0,
+  "attempts": [
+    {
+      "name": "result",
+      "summary": {
+        "schema": 1,
+        "turns": [],
+        "status": "STOPPED",
+        "preflight": {
+          "accountType": "chatgpt",
+          "usedPercent": 16,
+          "hasCredits": false,
+          "balance": "0"
+        },
+        "model": "gpt-5.6-luna",
+        "reason": "TURN_TIMEOUT"
+      },
+      "trace": [
+        {
+          "kind": "user",
+          "chat": "one",
+          "text": "Please explain this Sui Mainnet transaction for my wallet 0xa: 4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi. What changed in my balance, and who paid the gas? Use exact base units."
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Проверю транзакцию через Recall Agent и отдельно верифицирую gas payer. Баланс посчитаю в base units по фактическим coin changes."
+        },
+        {
+          "kind": "native-tool-approval",
+          "requestId": 0,
+          "toolRequest": "Allow the recall_lab MCP server to run tool \"prepare_report\"?"
+        }
+      ],
+      "rawEventsSha256": "da4a57c9666359f2b39ac0afc886037caae3b077ca6fa3dbba7cadf3358c9bb9"
+    },
+    {
+      "name": "result-after-client-fix",
+      "summary": {
+        "schema": 1,
+        "turns": [
+          {
+            "task": "explain",
+            "chat": "one",
+            "status": "completed",
+            "tools": 2
+          },
+          {
+            "task": "reuse-export",
+            "chat": "one",
+            "status": "completed",
+            "tools": 1
+          },
+          {
+            "task": "clarify",
+            "chat": "two",
+            "status": "completed",
+            "tools": 0
+          }
+        ],
+        "status": "COMPLETED",
+        "preflight": {
+          "accountType": "chatgpt",
+          "usedPercent": 16,
+          "hasCredits": false,
+          "balance": "0"
+        },
+        "model": "gpt-5.6-luna"
+      },
+      "trace": [
+        {
+          "kind": "user",
+          "chat": "one",
+          "text": "Please explain this Sui Mainnet transaction for my wallet 0xa: 4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi. What changed in my balance, and who paid the gas? Use exact base units."
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Проверю транзакцию в Sui Mainnet по digest и отдельно верифицирую gas payer. Баланс и суммы возьму только из результатов инструментов, в точных base units."
+        },
+        {
+          "kind": "native-tool-approval",
+          "requestId": 0,
+          "toolRequest": "Allow the recall_lab MCP server to run tool \"prepare_report\"?"
+        },
+        {
+          "kind": "tool",
+          "tool": "prepare_report",
+          "status": "completed",
+          "arguments": {
+            "network": "mainnet",
+            "transactions": [
+              "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+            ],
+            "wallet": "0xa"
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"mode\":\"offline-agent-fixture\",\"reportId\":\"report:59dccb8a-75bd-4403-b1b2-cef7a140358b\",\"wallet\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"asOf\":\"2026-11-06T14:23:06.695Z\",\"digests\":[\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\"],\"rows\":[{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T00:00:00.000Z\",\"status\":\"success\",\"source\":\"fixture\",\"address\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-10000001050\",\"relation\":\"subject-wallet\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null},{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T00:00:00.000Z\",\"status\":\"success\",\"source\":\"fixture\",\"address\":\"0x000000000000000000000000000000000000000000000000000000000000000b\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"10000000000\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null}],\"totals\":[{\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-10000001050\"}],\"declaredWalletTotals\":[{\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-10000001050\"}],\"gas\":[{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"payer\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"computation\":\"1000\",\"storage\":\"100\",\"rebate\":\"50\",\"netCharge\":\"1050\"}],\"notes\":[\"Totals cover the supplied digests only.\",\"Net balance changes include their onchain effects.\",\"Gas information is displayed separately and is not subtracted again.\",\"Declared wallet totals use the address relations confirmed by the user.\",\"Address relations are user-confirmed context. They do not identify a direct transfer counterparty.\"],\"transactionEvidence\":[{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"network\":\"mainnet\",\"checkpoint\":\"100\",\"timestamp\":\"2026-11-05T00:00:00.000Z\",\"sender\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"commands\":[\"transferObjects\"],\"interpretation\":\"transfer-commands\",\"status\":\"success\",\"source\":\"fixture\",\"gas\":{\"payer\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"computation\":\"1000\",\"storage\":\"100\",\"rebate\":\"50\",\"netCharge\":\"1050\"},\"movements\":[{\"address\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-10000001050\"},{\"address\":\"0x000000000000000000000000000000000000000000000000000000000000000b\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"10000000000\"}]}],\"memory\":[],\"experience\":[],\"experienceStorage\":\"local-fixture\"}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "native-tool-approval",
+          "requestId": 1,
+          "toolRequest": "Allow the recall_lab MCP server to run tool \"verify_gas_payer\"?"
+        },
+        {
+          "kind": "tool",
+          "tool": "verify_gas_payer",
+          "status": "completed",
+          "arguments": {
+            "claimedPayer": "0x000000000000000000000000000000000000000000000000000000000000000a",
+            "reportId": "report:59dccb8a-75bd-4403-b1b2-cef7a140358b",
+            "transaction": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"verdict\":\"pass\",\"claimed\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"observed\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"evidence\":{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"source\":\"fixture\",\"field\":\"gas.payer\"},\"memory\":null}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "model",
+          "phase": "final_answer",
+          "text": "For transaction `4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi` on Sui Mainnet:\n\n- Your wallet `0xa` lost `10,000,001,050` base units of SUI.\n  - `10,000,000,000` base units transferred to `0xb`\n  - `1,050` base units net gas charge:\n    - computation: `1,000`\n    - storage: `100`\n    - rebate: `50`\n\nGas payer: your wallet, `0xa`. This was verified against the transaction’s `gas.payer` field.\n\nThe transaction data came from the available local fixture record."
+        },
+        {
+          "kind": "user",
+          "chat": "one",
+          "text": "Give me that result as CSV. I do not need new transaction data or any saved address labels."
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Экспортирую уже подготовленный отчёт в CSV, без повторного чтения транзакции и без сохранения адресных правил."
+        },
+        {
+          "kind": "native-tool-approval",
+          "requestId": 2,
+          "toolRequest": "Allow the recall_lab MCP server to run tool \"export_report\"?"
+        },
+        {
+          "kind": "tool",
+          "tool": "export_report",
+          "status": "completed",
+          "arguments": {
+            "reportId": "report:59dccb8a-75bd-4403-b1b2-cef7a140358b"
+          },
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"mode\":\"offline-agent-fixture\",\"reportId\":\"report:59dccb8a-75bd-4403-b1b2-cef7a140358b\",\"report\":{\"wallet\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"asOf\":\"2026-11-06T14:23:23.379Z\",\"digests\":[\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\"],\"rows\":[{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T00:00:00.000Z\",\"status\":\"success\",\"source\":\"fixture\",\"address\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-10000001050\",\"relation\":\"subject-wallet\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null},{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"network\":\"mainnet\",\"timestamp\":\"2026-11-05T00:00:00.000Z\",\"status\":\"success\",\"source\":\"fixture\",\"address\":\"0x000000000000000000000000000000000000000000000000000000000000000b\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"10000000000\",\"relation\":\"unclassified\",\"label\":\"\",\"ruleId\":null,\"memoryBlobId\":null}],\"totals\":[{\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-10000001050\"}],\"declaredWalletTotals\":[{\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"netAmountBaseUnits\":\"-10000001050\"}],\"gas\":[{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"payer\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"computation\":\"1000\",\"storage\":\"100\",\"rebate\":\"50\",\"netCharge\":\"1050\"}],\"notes\":[\"Totals cover the supplied digests only.\",\"Net balance changes include their onchain effects.\",\"Gas information is displayed separately and is not subtracted again.\",\"Declared wallet totals use the address relations confirmed by the user.\",\"Address relations are user-confirmed context. They do not identify a direct transfer counterparty.\"],\"transactionEvidence\":[{\"digest\":\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"network\":\"mainnet\",\"checkpoint\":\"100\",\"timestamp\":\"2026-11-05T00:00:00.000Z\",\"sender\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"commands\":[\"transferObjects\"],\"interpretation\":\"transfer-commands\",\"status\":\"success\",\"source\":\"fixture\",\"gas\":{\"payer\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"computation\":\"1000\",\"storage\":\"100\",\"rebate\":\"50\",\"netCharge\":\"1050\"},\"movements\":[{\"address\":\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"-10000001050\"},{\"address\":\"0x000000000000000000000000000000000000000000000000000000000000000b\",\"coinType\":\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"amount\":\"10000000000\"}]}],\"memory\":[],\"experience\":[],\"experienceStorage\":\"local-fixture\"},\"mediaType\":\"text/csv\",\"csv\":\"digest,network,timestamp,status,source,address,coinType,netAmountBaseUnits,relation,label,ruleId,memoryBlobId\\r\\n\\\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\\\",\\\"mainnet\\\",\\\"2026-11-05T00:00:00.000Z\\\",\\\"success\\\",\\\"fixture\\\",\\\"0x000000000000000000000000000000000000000000000000000000000000000a\\\",\\\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\\\",\\\"-10000001050\\\",\\\"subject-wallet\\\",\\\"\\\",\\\"\\\",\\\"\\\"\\r\\n\\\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\\\",\\\"mainnet\\\",\\\"2026-11-05T00:00:00.000Z\\\",\\\"success\\\",\\\"fixture\\\",\\\"0x000000000000000000000000000000000000000000000000000000000000000b\\\",\\\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\\\",\\\"10000000000\\\",\\\"unclassified\\\",\\\"\\\",\\\"\\\",\\\"\\\"\\r\\n\"}"
+              }
+            ],
+            "structuredContent": null,
+            "_meta": null
+          },
+          "error": null
+        },
+        {
+          "kind": "model",
+          "phase": "final_answer",
+          "text": "```csv\ndigest,network,timestamp,status,source,address,coinType,netAmountBaseUnits,relation,label,ruleId,memoryBlobId\n\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"mainnet\",\"2026-11-05T00:00:00.000Z\",\"success\",\"fixture\",\"0x000000000000000000000000000000000000000000000000000000000000000a\",\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"-10000001050\",\"subject-wallet\",\"\",\"\",\"\"\n\"4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi\",\"mainnet\",\"2026-11-05T00:00:00.000Z\",\"success\",\"fixture\",\"0x000000000000000000000000000000000000000000000000000000000000000b\",\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"10000000000\",\"unclassified\",\"\",\"\",\"\"\n```"
+        },
+        {
+          "kind": "user",
+          "chat": "two",
+          "text": "Why did the balance of my Sui wallet go down yesterday?"
+        },
+        {
+          "kind": "model",
+          "phase": "commentary",
+          "text": "Проверю историю Sui-транзакций за вчера и отдельно разберу комиссии, переводы и другие списания. Сначала определю доступный адрес кошелька из контекста; если его нет, попрошу адрес."
+        },
+        {
+          "kind": "model",
+          "phase": "final_answer",
+          "text": "Нужен адрес Sui-кошелька и сеть — `mainnet` или `testnet`. Под «вчера» я понимаю 5 ноября 2026 года."
+        }
+      ],
+      "rawEventsSha256": "bee999d1de62a553fd5c69e425c981a6db07fc18b58c32fa2beb54ee771f9646"
+    }
+  ],
+  "limits": [
+    "No blinded user-selected tasks",
+    "No model error memory was created",
+    "No memory benefit comparison completed",
+    "General capability policy tightened after probe; not re-tested with a model"
+  ]
+}

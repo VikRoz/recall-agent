@@ -8,7 +8,7 @@ The launcher supplies general operating rules and opens an empty Codex conversat
 
 Memory belongs to a persistent private workspace; separate client processes reuse it. Supported local-input errors can recover. Integrity failures and unknown failures stop the session. The verifier covers the structured claim submitted to it; arbitrary model prose is not automatically verified.
 
-**Today: synthetic transactions and local memory only in the launcher.** A typed Walrus transport reuses the existing SDK writer and durable uncertain-write journal and is tested with intercepted SDK responses. Its live admission is not wired into this experimental launcher. No new live model behaviour or improvement is claimed. Inherited website files, evidence and legacy entry points describe the fallback, not validation of this agent.
+**Today: synthetic transactions and local memory only in the launcher.** A typed Walrus transport reuses the existing SDK writer and durable uncertain-write journal and is tested with intercepted SDK responses. Its live admission is not wired into this experimental launcher. A preliminary native-model smoke completed report/verification, CSV reuse and clarification, with recorded capability overreach; no improvement from memory is claimed. See [probe results](docs/AGENT_MODEL_PROBE_2026-11-06.md). Inherited website files, evidence and legacy entry points describe the fallback, not validation of this agent.
 
 ## Offline checks
 
@@ -39,7 +39,7 @@ Configure a stdio server with command `/bin/bash` and arguments `["ABSOLUTE_PROJ
 ## Development gates
 
 1. Independent tool actions, verified claim capture, stable local memory — offline implementation and checks.
-2. Frozen code and genuinely new tasks with a real model — pending.
+2. Preliminary model smoke — recorded, including a failed harness attempt; genuinely new user-selected tasks and memory-benefit checks remain pending.
 3. Account-bound admission and durable shared 2/2/2 limits for live experience — pending; old exhausted budgets cannot be reused.
 4. Bounded real Sui/Walrus test and clean judge packaging — pending.
 

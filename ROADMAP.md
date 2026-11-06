@@ -2,7 +2,7 @@
 
 1. Free-task tool contract and persistent workspace — offline implemented.
 2. Verified gas-payer experience capture and correction — offline implemented.
-3. New-task model evaluation without scripted prompts — pending.
+3. Preliminary native model smoke — recorded with limitations; user-selected unseen tasks and memory benefit remain pending.
 4. Live account admission and unified durable 2/2/2 budget — pending.
 5. Independent-client Mainnet experience trial — pending.
 6. Clean installation and judge package — pending.
