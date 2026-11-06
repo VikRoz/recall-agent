@@ -15,6 +15,12 @@ export class AgentSession extends ActivitySession {
   experience!: ExperienceStore;
   capture = false;
   activityIndex!: OfflineActivityIndex;
+  artifacts: any;
+  async export(reportId: string) {
+    const value = await super.export(reportId);
+    try { return {...value, artifact: this.artifacts.write(value.csv)}; }
+    catch (error) { this.stopped = true; throw error; }
+  }
   async findActivity(query: ActivityQuery) {
     return this.action(async () => this.activityIndex.find(query));
   }
@@ -31,7 +37,7 @@ export class AgentSession extends ActivitySession {
   async view(state: Parameters<ActivitySession['view']>[0]) {
     const result = await super.view(state);
     const rows = await this.experience.read();
-    const memory = rows.filter(row => state.transactions.some(tx => tx.network === row.record.network && tx.source === row.record.source
+    const memory = rows.filter(row => row.record.schema === 'recall-experience/1' && state.transactions.some(tx => tx.network === row.record.network && tx.source === row.record.source
       && (tx.gas.payer !== tx.sender) === row.record.sponsored));
     return { ...result, experience: memory, experienceStorage: this.experience.storage,
       dataProvenance: {sourceMode: this.activityIndex?.mode === 'saved' ? 'saved-mainnet-replay' : 'synthetic-fixture',
@@ -46,7 +52,7 @@ export class AgentSession extends ActivitySession {
       const pass = claimed === tx.gas.payer;
       const rows = await this.experience.read();
       const resolved = new Set(rows.map(row => row.record.supersedes));
-      const parent = rows.find(row => row.record.verdict === 'fail' && row.record.digest === digest
+      const parent = rows.find(row => row.record.schema === 'recall-experience/1' && row.record.verdict === 'fail' && row.record.digest === digest
         && row.record.network === state.network && row.record.source === tx.source && row.record.observed === tx.gas.payer && !resolved.has(row.id));
       let saved;
       if (this.capture && (!pass || parent)) {

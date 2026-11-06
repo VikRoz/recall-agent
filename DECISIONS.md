@@ -34,3 +34,10 @@ Rejected: calling the saved subset a full history; continuing to require presele
 Do not equate native completed turns or green unit tests with a passed model acceptance. The model repeated a schema violation in a new chat and rewrote the CSV. The current technical-memory coverage does not meet the observed requirement. Preserve both model-access and tool-level failures. The user explicitly chose gpt-5.6-luna for continuation; no global model preference was changed.
 
 Fix probe model-catalog admission and native failed-status detection offline. A new transport observer, experience variant and immutable export artifact are proposed in docs/TOOL_ERROR_MEMORY_PROPOSAL_2026-11-06.md; seek approval before those contract changes. Do not silently clamp inputs, inject a scripted first action, overwrite recorded results or claim memory improvement.
+
+
+## 6 November 2026 — approved offline observation/export repair
+
+The user approved the bounded proposal. Implement a public MCP transport decorator rather than private SDK dispatch patches. Preserve SDK validation; store only supported non-secret numeric constraint evidence and a verified successful resolution in a separate schema variant. Use schema/source-qualified catalog data instead of a mandatory first task. Do not clamp input. Preserve the two-record cap and fail closed on uncertain writes.
+
+Return exact code-generated CSV as a bounded private content-addressed file with hash and resource link; retain inline output for compatibility. Client presentation and model behaviour still require native testing. Original failed evidence is immutable and no model-benefit claim is added. No provider or model operations in this increment.

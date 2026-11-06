@@ -12,11 +12,14 @@ import { readTatumKey } from './activity-key.ts';
 import { saveStartupFailure, startupCode } from './activity-diagnostic.mjs';
 import { assert, exactKeys } from '../src/domain.ts';
 
-export function activityServer(session, mode) {
+export function activityServer(session, mode, options = {}) {
   const server = new McpServer({ name: 'recall-lab-activity', version: '2.0.0' });
   const wrap = fn => async args => {
     try {
-      return { content: [{ type: 'text', text: JSON.stringify({ mode, ...await fn(args) }) }] };
+      const value = await fn(args);
+      const content = [{ type: 'text', text: JSON.stringify({ mode, ...value }) }];
+      if (value.artifact) content.push({type:'resource_link',name:'report.csv',uri:value.artifact.uri,mimeType:'text/csv',description:'Original code-generated CSV. SHA-256 '+value.artifact.sha256});
+      return { content };
     } catch (error) {
       const reason = error?.code ?? error?.message;
       const code = typeof reason === 'string' && /^[A-Z0-9_]+$/.test(reason) ? reason : 'ACTIVITY_ERROR';
@@ -48,7 +51,7 @@ export function activityServer(session, mode) {
   }, wrap(args => session.save(args.proposalId)));
   server.registerTool('export_report', {
     description: 'Return CSV produced by code for the selected transactions and current confirmed address rules. The data covers these digests only. Explain complex PTBs as unparsed when necessary.',
-    inputSchema: { reportId: id }, annotations: readOnly,
+    inputSchema: { reportId: id }, annotations: options.exportsArtifact ? {readOnlyHint:false,destructiveHint:false,openWorldHint:false} : readOnly,
   }, wrap(args => session.export(args.reportId)));
   return server;
 }

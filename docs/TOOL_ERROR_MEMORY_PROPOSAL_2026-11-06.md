@@ -2,7 +2,7 @@
 
 ## Goal and evidence
 
-Fix the observed repeat of a tool-argument constraint violation across fresh chats, and deliver the actual code-generated CSV. The wallet-model probe retained two limit=100 requests against maximum=10 and a rewritten CSV. This proposal is not an implementation or live-operation authorization.
+Fix the observed repeat of a tool-argument constraint violation across fresh chats, and deliver the actual code-generated CSV. The wallet-model probe retained two limit=100 requests against maximum=10 and a rewritten CSV. The user approved this bounded offline design with “Давай делай” on 6 November. The implementation is documented in TOOL_ERROR_MEMORY_OFFLINE_2026-11-06.md. This does not authorize live provider operations.
 
 ## Assumptions and root causes
 
@@ -22,7 +22,7 @@ Adding a max=10 reminder: schema already states that constraint; it may help a p
 
 ## Decisions and approval boundary
 
-Fixing the probe's failure detector and preserving evidence are authorized local diagnostics. Implementing the new experience variant/observer and export artifact changes data and tool contracts. Per AGENTS.md, present this bounded design and obtain approval before implementing it. No product changes in this proposal. No Mainnet writes or publication authorization is added.
+Fixing the probe's failure detector and preserving evidence are authorized local diagnostics. Implementing the new experience variant/observer and export artifact changes data and tool contracts. Per AGENTS.md, present this bounded design and obtain approval before implementing it. The approval now covers the offline product changes; no live provider operations are enabled. No Mainnet writes or publication authorization is added.
 
 ## Sources and open questions
 

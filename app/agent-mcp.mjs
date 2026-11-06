@@ -9,6 +9,8 @@ import { FixtureRuleStore } from './activity-fixture-store.ts';
 import { FIXTURE_WALLET } from './activity-fixtures.ts';
 import { LocalExperienceStore } from './agent-experience.ts';
 import { loadOfflineActivity } from './agent-activity-index.ts';
+import {ObservedToolTransport} from './agent-tool-observer.mjs';
+import {CsvArtifacts} from './agent-export.mjs';
 import { AgentSession } from './agent-session.ts';
 import { assert } from '../src/domain.ts';
 
@@ -25,7 +27,8 @@ export function offlineAgent(directory, capture, dataMode = 'fixture') {
   session.experience = new LocalExperienceStore(directory, config.project);
   session.capture = capture;
   session.activityIndex = index;
-  const server = activityServer(session, dataMode === 'saved' ? 'offline-agent-replay' : 'offline-agent-fixture');
+  session.artifacts = new CsvArtifacts(directory);
+  const server = activityServer(session, dataMode === 'saved' ? 'offline-agent-replay' : 'offline-agent-fixture', {exportsArtifact:true});
   server.registerTool('find_wallet_activity', {
     description: 'Find transaction references involving a wallet in the selected LOCAL dataset, optionally filtered by a UTC period. Saved records are replay, not a fresh chain query. Results always have partial wallet-history coverage. No match does not prove inactivity. This tool does not infer ownership or direct counterparties.',
     inputSchema: { network: z.enum(['mainnet','testnet']), wallet: z.string().max(66),
@@ -44,7 +47,9 @@ export function offlineAgent(directory, capture, dataMode = 'fixture') {
     try { return { content: [{ type: 'text', text: JSON.stringify(await session.verifyGasPayer(args.reportId, args.transaction, args.claimedPayer)) }] }; }
     catch (error) { return { isError: true, content: [{ type: 'text', text: /^[A-Z0-9_]+$/.test(error?.code) ? error.code : 'AGENT_ERROR' }] }; }
   });
-  return { session, server };
+  const observe = inner => new ObservedToolTransport(inner,{store:session.experience,workspace:binding.project,
+    source:dataMode === 'saved' ? 'replay' : 'fixture',capture,stop:()=>{session.stopped=true;}});
+  return { session, server, observe };
 }
 async function main() {
   try {
@@ -60,7 +65,8 @@ async function main() {
     assert(lstatSync(directory).isDirectory() && (lstatSync(directory).mode & 0o077) === 0, 'PRIVATE_WORKSPACE_REQUIRED');
     // No provider transports exist in this entry point. Defense in depth for accidental fetches.
     globalThis.fetch = () => { throw Error('OFFLINE_NETWORK_DENIED'); };
-    await offlineAgent(directory, options.includes('--capture-local'), options.includes('--saved') ? 'saved' : 'fixture').server.connect(new StdioServerTransport());
+    const runtime = offlineAgent(directory, options.includes('--capture-local'), options.includes('--saved') ? 'saved' : 'fixture');
+    await runtime.server.connect(runtime.observe(new StdioServerTransport()));
   } catch { console.error('AGENT_SETUP_STOPPED'); process.exitCode = 1; }
 }
 
