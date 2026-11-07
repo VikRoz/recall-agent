@@ -106,7 +106,7 @@ export function ordinaryAuthorization(directory,options={}){
 export function boundedOrdinaryTatum(gate,approval,key,createData){
  assert(['offline-ordinary-provider-fixture','live-ordinary-selected','offline-managed-admission-test'].includes(gate.manifest.mode)&&typeof createData==='function','ORDINARY_INJECTED_DATA_REQUIRED');
  let data,closed=false;
- return {close(){if(!closed){closed=true;data?.close();}},async transactions(ids){
+ return {factEvidence:id=>{assert(data?.factEvidence,'FACT_PROVENANCE_MISSING');return data.factEvidence(id);},close(){if(!closed){closed=true;data?.close();}},async transactions(ids){
   assert(!closed,'AGENT_RUNTIME_CLOSED');
   // These pure failures precede reservation and are safe for the agent to correct.
   assert(Array.isArray(ids)&&ids.length>0&&ids.length<=MAX_TRANSACTIONS,'TRANSACTION_LIST_LIMIT');

@@ -44,6 +44,11 @@ export class ActivitySession {
       transactionEvidence: state.transactions,
       memory: rules.map(row => ({ ...row.record, blobId: row.blobId })) };
   }
+  validateParticipation(state: ReportState) {
+    assert(state.transactions.every(tx => tx.sender === state.wallet || tx.movements.some(m => m.address === state.wallet)
+      || tx.gas.payer === state.wallet), 'WALLET_NOT_INVOLVED');
+  }
+  async beforeReport(_state: ReportState) {}
   async prepare(network: Network, walletInput: string, inputs: string[]) {
     return this.action(async () => {
       assert(network === 'mainnet' || network === 'testnet', 'WRONG_NETWORK');
@@ -57,9 +62,9 @@ export class ActivitySession {
       const transactions = await this.data(network).transactions(ids);
       assert(transactions.length === ids.length && transactions.every((tx, i) => tx.digest === ids[i]
         && tx.network === network), 'TRANSACTION_BATCH_MISMATCH');
-      assert(transactions.every(tx => tx.sender === wallet || tx.movements.some(m => m.address === wallet)
-        || tx.gas.payer === wallet), 'WALLET_NOT_INVOLVED');
       const state = { network, wallet, transactions };
+      this.validateParticipation(state);
+      await this.beforeReport(state);
       const value = await this.view(state);
       const reportId = 'report:' + randomUUID();
       this.reports.set(reportId, state);

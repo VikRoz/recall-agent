@@ -1,12 +1,16 @@
 import { MAX_TRANSACTIONS, digest, normalizeTransaction } from './activity.ts';
 import { assert, Fault } from '../src/domain.ts';
 import type { Network } from '../src/domain.ts';
+import { factHash, NORMALIZER_SHA256 } from './agent-facts.ts';
+import type { FactEvidence } from './agent-facts.ts';
 
 export const ENDPOINTS = {
   mainnet: 'https://sui-mainnet-grpc.gateway.tatum.io',
   testnet: 'https://sui-testnet-grpc.gateway.tatum.io',
 } as const;
 export class TatumData {
+  evidence = new Map<string, FactEvidence>();
+  factEvidence(id: string) { const value = this.evidence.get(id); assert(value, 'FACT_PROVENANCE_MISSING'); return structuredClone(value); }
   client: any; network: Network; dispose: () => void; closed = false;
   observeResponse: ((digests: string[], response: any) => void) | undefined;
   constructor(client: any, network: Network, dispose: () => void = () => {}, observeResponse?: (digests: string[], response: any) => void) {
@@ -34,6 +38,11 @@ export class TatumData {
       return normalizeTransaction(tx, tx.digest, this.network);
     });
     assert(new Set(normalized.map(tx => tx.digest)).size === digests.length, 'TRANSACTION_BATCH_DUPLICATE');
+    for (const value of values) {
+      const raw = value.result.transaction;
+      this.evidence.set(raw.digest, {kind:'tatum',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',
+        hashScope:'canonical-selected-transaction',rawTransactionSha256:factHash(raw),normalizerSha256:NORMALIZER_SHA256});
+    }
     return digests.map(id => normalized.find(tx => tx.digest === id)!);
   }
 

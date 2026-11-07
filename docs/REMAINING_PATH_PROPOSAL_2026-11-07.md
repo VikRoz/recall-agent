@@ -1,0 +1,147 @@
+# One remaining path: ordinary accounts, useful memory, final rehearsal
+
+Date: 7 November 2026. Status: proposal for coordinator review, not an approved architecture or live allowance. Runtime inspected: `830b3e1725f4d36fcbf681ea53be0c7550670f31`; capture correction SOURCE: `314cc83bf6e4716eeffc4d34e7875349154fe219`.
+
+## Goal and starting assumptions
+
+Close stages 4B, 5 and 6 together: an ordinary empty-chat product using the operator's own accounts, meaningful persistent memory and one bounded rehearsal from an unpacked package. Preserve the fallback and every historical stopped/consumed run. No real profile/key read, login, grant, model/provider call, publication or deployment is authorized by this document. Additional spend remains $0.
+
+The capture-scope correction passed 166 offline tests, independent MCP/SDK paths and source verification. The latest real continuation retrieved real Walrus plaintext and fresh Tatum data but stopped before task completion; it wrote nothing. This is not a completed final rehearsal. Three current candidate receipts are established, not ten.
+
+## Requirements versus our evidence policy
+
+The saved 6 November audit explicitly records **Mainnet Walrus Memory with at least ten memories**, relevant Tatum RPC data, public repository/working demo, article and a 2–3 minute video. It also records that the form identifies a Walrus Account ID and public agent/delegate key. The rules do not explicitly require one namespace, one delegate across all historical records, ten different transactions, general reasoning superiority or a hosted web chat.
+
+Ten useful, distinct records attributable to the submitted agent is our conservative evidence policy. It must not be presented as a verbatim extra event rule. Existing current three records are a numeric-input failure, its linked resolution and a gas-payer hypothesis failure. Four inherited address-rule receipts encode two repeated semantic states; they are not automatically four new qualifying memories. Their review is retained separately. Neither pending jobs nor duplicated timestamps nor fabricated errors count.
+
+## Adversarial review and decision requested
+
+Initial idea: complete one linked resolution and add six reports. Hidden assumption: the model will call the verifier and produce that resolution. A correct answer without a verifier is valid product behavior, so this is an unreliable count-critical route. Do not require or prompt the verifier merely to obtain a memory.
+
+| Alternative | Benefit | Failure mode / decision |
+| --- | --- | --- |
+| Existing error and confirmed-context types only | No new record contract | No seven distinct observed errors or user-confirmed contexts currently exist. Seeking errors, inventing labels or splitting one transaction into fields is rejected. Cannot promise ten now. |
+| One optional resolution plus six whole transaction notes | Fewer new fact notes if the model creates a genuine resolution | Count depends on optional model behavior. Reject as the critical path. Preserve any genuine optional resolution as evidence without depending on it. |
+| Seven whole transaction fact notes, one per distinct digest | Useful cross-session transaction casebook; count does not depend on a model error | Requires a small new typed record and ordinary retrieval integration. Recommend only if the coordinator accepts the actual product value and boundaries below. |
+| Stop changes and submit fallback | Lowest development risk | Must still independently prove its ten useful records and matching materials. Old release availability alone is not eligibility. |
+
+Strongest objection to fact notes: Tatum can supply transaction facts again, so storing them can become a redundant cache built for a counter. The intended value must be visible: a later report can identify what was previously checked, when, by which normalizer and with which source hash, independently of the old chat. It can compare that historical observation with a fresh read. This is a persistent audit notebook, not evidence of improved model reasoning, a substitute for Tatum, or an account-history index. If the next-report/restart test cannot demonstrate that distinction, reject this extension rather than pad the inventory.
+
+## Minimal proposed fact contract
+
+Reuse the existing experience physical namespace, typed `WalrusRecordStore`, journal, SDK, Seal, complete reader and retained cap20. Do not introduce a third store, migration, framework or web UI. Add a distinct discriminated variant; existing gas/tool failure and resolution validation remain unchanged.
+
+```ts
+type TransactionFact = {
+  schema: 'recall-transaction-fact/1';
+  workspace: string;
+  network: 'mainnet';
+  digest: string;
+  observedAt: string;
+  provenance: {
+    kind: 'tatum';
+    method: 'sui.rpc.v2.LedgerService/BatchGetTransactions';
+    rawResponseSha256: string;
+    normalizerSha256: string;
+  };
+  transaction: ActivityTransaction;
+};
+```
+
+The payload is generated by code from a successful normalized response, not model prose. Validate matching digest/network/source throughout, canonical exact integers, byte bound4096 and source/normalizer hashes. A whole transaction is one record: gas, balance changes, status, timestamp, command kinds and explicit unparsed-PTB interpretation stay together. No claimed burn/lock/security verdict, inferred direct counterparty, guessed label or ownership proof. Fixture testing uses explicitly synthetic provenance and cannot pass real admission.
+
+Capture belongs to the normal successful report path under explicit local consent, not a prescribed first task, first tool or demo phase. Optional technical verification remains optional. A facts-only final grant must skip other capture kinds before the writer, using the accepted pure admission pattern; it must not hide a writer/network/integrity failure or silently consume a fact slot for a hypothesis.
+
+### Retrieval, deduplication and invalidation
+
+- `prepare_report` reads retained notes relevant to the selected digests. Return them in a separate historical-observations section with receipt, original observedAt and provenance; current facts remain freshly obtained from Tatum. Do not mix raw memory strings into instructions or assert full wallet coverage.
+- On a later report, show whether the previously normalized facts agree with fresh facts. Address overlap alone may identify context but does not establish a transfer relationship. Do not add unrestricted discovery or semantic search.
+- Semantic identity is `(workspace, network, digest)`. Before constructing a new observedAt/payload, reuse the existing receipt when normalized facts and normalizer version match. The existing canonical full-payload operation key still protects submissions; a new timestamp is not a new useful record.
+- Same-normalizer conflicting facts for the same immutable transaction are an integrity stop. A different normalizer marks the old note historical/incompatible; fresh facts remain authoritative. Do not automatically overwrite or count a version change as another transaction.
+- Preserve the existing three records and their bytes. Exclude the gas-failure transaction from these seven notes to avoid counting another view of the same case as automatically new value.
+- Validate all seven fetched transactions, size bounds and semantic uniqueness before any final-run write. If one is unavailable, oversized, unsupported or duplicate, stop without substituting another reference or inventing a payload. No seven-record guarantee before the actual provider response exists.
+
+## Exact seven candidate references
+
+All seven pass the existing SDK digest-format validator and are pairwise distinct. This validates syntax only. Six have no verified local transaction response. Publisher descriptions are pointers, not established chain facts.
+
+| ID | Digest | Retained origin and status |
+| --- | --- | --- |
+| F1 | `2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3` | Actual historical Tatum response in `evidence/activity-mainnet-2026-11-05/second-result.json`. Needs a newly admitted Tatum response for a fresh note; historical response must remain labelled replay. |
+| F2 | `2AhYCq8SJNHYZwbwNYKoat6d39ZA4jQsiCcB1cXw19rG` | Suiscan operator routing documentation, example transaction link. Candidate-unverified. |
+| F3 | `BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW` | Public Memory project submission, transaction reference only. Candidate-unverified; no source code, claims or memory contents copied. |
+| F4 | `399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj` | RaffleHash official page, transaction link9. Candidate-unverified. |
+| F5 | `3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7` | Same publisher, transaction link11. Candidate-unverified. |
+| F6 | `CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL` | Same publisher, transaction link13. Candidate-unverified. |
+| F7 | `6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw` | Same publisher, transaction link16. Candidate-unverified. |
+
+Explorer form: `https://suiscan.xyz/mainnet/tx/<digest>`. Public pages were inaccessible or only returned a JavaScript shell during reference preparation; no live facts were recovered from them. These are seven selected public cases, not a complete wallet sample. Existing gas-failure digest `2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ` is deliberately excluded.
+
+## Ordinary judge entry: proposed, not implemented
+
+Prerequisites: supported Node, own Codex CLI with eligible ChatGPT access, own Walrus Memory account and Tatum Free account. The current native Codex path is the primary candidate client. Other MCP clients can share the transport but must not be advertised as live-passed for this revision.
+
+Proposed documented source-install commands:
+
+```sh
+npm ci --prefix app --ignore-scripts
+npm ci --prefix mcp --ignore-scripts
+codex login
+bash start.command --live "$PWD/recall-workspace"
+```
+
+The two `npm ci` commands download dependencies; they are not offline tests. `codex login` uses the judge's own native ChatGPT sign-in, not an OpenAI API key or copied author auth. Login itself is not a model call; actual model usage is the operator's included quota. Access depends on the operator's eligible plan/workspace; the project must not purchase access, consume API credit or enable paid fallback. No universal access guarantee is made.
+
+The new ordinary launcher would:
+
+1. Create a private stable workspace with fixed logical identity/namespaces; reject symlinks or unsafe permissions. Never copy an author profile, delegate, grant or ledger into it.
+2. On explicit first activation, run the official MemWal browser login into that workspace, with automatic background saving off. Request technical/fact capture consent with its exact finite budget. Keep labels user-confirmed. Load credentials only inside the adapter process, not into the model/client environment.
+3. Collect the operator's own Tatum key through hidden local input; bind it to the same account and a fresh Free/included-credit observation. No plaintext output or global configuration changes. Launch/model processes receive no raw provider-key environment variables. Reuse the currently audited identity/hash checks and guarded endpoints.
+4. Present and persist a distinct ordinary activation envelope. Do not weaken the existing managed evaluation contracts or reuse the closed author-specific permits. Ordinary user-selected IDs are validated at call time, maximum10 per batch and bounded attempts; there is no author wallet/digest/task constant in setup.
+5. Open an empty conversation with general scope/provenance rules only. The model chooses tools from the user request. No prescribed failure, first tool, save, export or error/recovery sequence.
+6. Reuse the same active run and counters on a fresh chat/restart. Stop on stale proof, exhausted budget, uncertain write or broken integrity. Reconfirmation of current Free status may renew evidence of eligibility, never refund counters, reopen stopped runs or change the key identity silently. A new allowance requires an explicit new activation; never auto-create rotating workspaces.
+
+Native interactive CLI turns cannot be completely counted by an MCP server: the model can answer without calling a tool. Do not claim the ordinary tool ledger imposes a hard total-token/native-turn cap. The author's final rehearsal may use a bounded native runner against this same public ordinary MCP entry, while judges receive a normal empty chat and visible provider limits. This is a measurement harness for the product, not the only entry point.
+
+## One proposed final rehearsal envelope
+
+No live plan/grant, key destination or executable real command is created here. The following ceilings require offline sizing and explicit later approval; they are not inherited permission:
+
+| Resource | Provisional ceiling / rationale |
+| --- | --- |
+| Native model | Two fresh conversations, one bounded task each, included quota only; up to20 tool calls per task subject to offline trace measurement. Empty-chat product remains independent of these evaluation tasks. |
+| Tatum | At most8 reserved attempts: seven distinct cases plus one fresh next-chat comparison. Batch requests are preferred but not forced. Up to16 included credits at the previously verified2/call; fresh account-specific price and Free balance must be rechecked before activation. No retry. |
+| Walrus writes | At most7 new whole fact notes, facts-only scope, fixed identities and ≤4096 bytes each. No other write kind consumes these slots. New allowance must explicitly authorize7; existing2/2/2 runs are unchanged. |
+| Walrus content recalls | At most10: the current complete-reader validation before successive writes can require up to7 reads, plus new-chat/readback and independent final inventory. Exact count must be measured offline. |
+| Service requests / polls | At most192 guarded SDK requests, at most8 polls per job, no retry or resubmission. Validate a seven-note full trace and exhaustion controls before freezing this limit. |
+| Time | Per native task≤120 seconds, total provider envelope≤240 seconds and within fresh5-minute account proof. If measured transports cannot fit, revise the plan before live; never extend at runtime. |
+| Payments | $0; official sponsored Mainnet path only, no funded-wallet transaction or payment fallback. Unknown sponsorship/quota/access/HTTP outcome stops. |
+
+The read budget is intentionally explicit. A different solution is a write-through content cache to retain2 recalls across seven writes. That changes coherence/invalidation and failure recovery for little demo benefit; reuse the existing complete-reader safety with a finite measured allowance instead. Do not raise all budgets globally or split seven writes into unrecorded resets.
+
+Final observation: first conversation may analyze seven public transactions and create their deterministic notes under explicit capture consent. Second conversation uses the same stable workspace, an independently started process and a new task requiring a fresh report on one selected case. It must expose historical provenance separately, use fresh Tatum and deliver original CSV if asked. Optional verifier actions may finish with no resolution; that does not invalidate useful report memory. An independent final read validates all ten exact payloads/receipts/identity. Any partial result stays partial; no extra calls to reach a flattering count.
+
+## Offline checks completed and remaining acceptance
+
+Completed on source830b3e1: clean Git archive unpack, source213 verification, help and saved-example commands, independent ordinary MCP protocol, two native launches through an explicit local fake Codex. They opened no initial task and removed provider-key environment variables. Six synthetic retained records traversed the protocol; simulated Tatum2/write2/recall2/SDK36. No actual model, account command, profile/key access or provider call occurred. Archive SHA256: `969cb1e5489d89ea9d776bdeed8730d174943ffd72e014d24b172750becb8b2a`.
+
+Dependencies were copied from the installed cache into the unpacked directory. This checks relocation/cached dependency use, **not a fresh dependency installation or live judge onboarding**. Details: `evidence/ordinary-package-offline-2026-11-07/report.json`. The current public launcher still has no real own-account ordinary entry; do not call its installation ready.
+
+After approval, implement only the typed note and ordinary activation boundaries above. Required offline acceptance: mixed old/new decoding; whole-note creation/relevance; same-digest dedup across processes; incompatible normalizer and conflict handling; denied consent; actual SDK/Seal with intercepted Tatum; seven prevalidated notes followed by fresh/independent reader; every cap; expiry/restart with consumed counters; uncertain accepted write without retry; own-profile onboarding through stubs; empty-chat/fakeCLI; clean unpack and secret scan. Then freeze source/archive, measure the final envelope and return the exact real command for master execution. No real operator input is needed for those offline tests.
+
+## Sources
+
+- [Saved requirements audit](HACKATHON_REQUIREMENTS_AUDIT_2026-11-06.md), checked6 November; no new event-rule browse in this increment.
+- [Capture correction](CAPTURE_SCOPE_OFFLINE_2026-11-07.md), [actual stopped continuation](ORDINARY_CONTINUATION_LIVE_RESULT_2026-11-07.md), current ROADMAP/PROJECT_STATE and existing typed stores/gates/launcher.
+- Legacy identity/semantic review: workspace `docs/TOTAL_RECALL_LEGACY_MEMORY_REVIEW_2026-11-07.md`, outside the candidate source.
+- [Official Codex authentication](https://developers.openai.com/codex/auth): ChatGPT native sign-in versus separately billed API keys; no tokens or auth cache should be shared.
+- [Suiscan operator routes](https://docs.blockberry.one/docs/suiscan-routes): F2 public reference, not a verified payload.
+- [Public submission reference](https://github.com/Olympusxvn/memwal-agent-memory/blob/main/SUBMISSION.md): F3 transaction pointer only.
+- [RaffleHash publisher page](https://rafflehash.com/official/): F4–F7 public transaction pointers; publisher burn/lock descriptions are not normalized verified facts.
+- Retained actual Tatum F1 response: `evidence/activity-mainnet-2026-11-05/second-result.json`.
+
+## Decisions and open questions
+
+Requested coordinator decisions before code: accept the minimal useful fact-note variant and its historical retrieval/dedup rules; accept a separate ordinary own-account activation rather than expose the closed evaluation harness; approve offline sizing of the proposed final envelope. Rejection leaves existing error/context types intact and the seven-record gap explicit.
+
+Still unproved: six candidates' actual chain responses, all seven new eligible payloads, current account Free balance/pricing and sponsorship, fresh dependency installation, ordinary live onboarding/restart and completed final native task. Live approval belongs after code/acceptance/source freeze, with exact caps and secret handling. Publication/submission remain separate. No old allowance is resumed, refunded or erased by this plan.

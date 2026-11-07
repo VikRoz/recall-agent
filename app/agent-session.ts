@@ -3,18 +3,22 @@ import { assert } from '../src/domain.ts';
 import { address, transactionId } from './activity.ts';
 import type { ActivityQuery, OfflineActivityIndex } from './agent-activity-index.ts';
 import type { ExperienceStore, Experience } from './agent-experience.ts';
+import { validateExperienceRows, experienceId } from './agent-experience.ts';
+import { isFact, transactionFact, factMatch, NORMALIZER_SHA256 } from './agent-facts.ts';
+import type { FactEvidence, TransactionFact } from './agent-facts.ts';
 
 // Only failures proved to precede external operations may recover automatically.
 const recoverable = new Set(['WRONG_NETWORK', 'INVALID_ADDRESS', 'TRANSACTION_LIST_LIMIT',
   'DUPLICATE_TRANSACTION', 'INVALID_TRANSACTION_DIGEST', 'UNSUPPORTED_EXPLORER_LINK', 'NETWORK_MISMATCH',
   'OFFLINE_TRANSACTION_NOT_FOUND', 'ACTIVITY_QUERY_TIME', 'ACTIVITY_QUERY_NETWORK', 'ACTIVITY_QUERY_RANGE', 'ACTIVITY_QUERY_LIMIT', 'ACTIVITY_QUERY_CURSOR',
   'REPORT_NOT_FOUND', 'PROPOSAL_NOT_FOUND', 'REPORT_LIMIT', 'PROPOSAL_LIMIT', 'CLAIM_TRANSACTION_NOT_IN_REPORT']);
-export type CaptureScope = 'verified-experience' | 'linked-resolution-only';
+export type CaptureScope = 'verified-experience' | 'linked-resolution-only' | 'transaction-facts-only';
 // Admission is a pure policy decision. Storage/network failures after admission remain critical.
 export function captureAdmits(scope: CaptureScope, parentId: string | undefined, record: Experience): boolean {
   if (scope === 'verified-experience') return true;
+  if (scope === 'transaction-facts-only') return isFact(record);
   assert(scope === 'linked-resolution-only' && /^[A-Za-z0-9_-]{43}$/.test(parentId ?? ''), 'AGENT_CAPTURE_SCOPE');
-  return record.verdict === 'resolved' && record.supersedes === parentId;
+  return !isFact(record) && record.verdict === 'resolved' && record.supersedes === parentId;
 }
 export class AgentSession extends ActivitySession {
   stopped = false;
@@ -23,6 +27,29 @@ export class AgentSession extends ActivitySession {
   capture = false;
   captureScope: CaptureScope = 'verified-experience';
   captureParentId: string | undefined;
+  captureFacts = false;
+  selectedTransactionsOnly = false;
+  validateParticipation(state: Parameters<ActivitySession['view']>[0]) {
+    if (!this.selectedTransactionsOnly) super.validateParticipation(state);
+  }
+  factEvidence: ((digest: string) => FactEvidence) | undefined;
+  async beforeReport(state: Parameters<ActivitySession['view']>[0]) {
+    if (!this.capture || !this.captureFacts) return;
+    assert(this.factEvidence, 'FACT_PROVENANCE_MISSING');
+    const rows = await this.experience.read();
+    // Validate every whole payload and conflict before the first write. No truncation or substitution.
+    const pending = state.transactions.map(tx => transactionFact(this.binding.project, tx, this.factEvidence!(tx.digest), this.clock()));
+    for (const note of pending) {
+      const old = rows.find(r => isFact(r.record) && r.record.network === note.network && r.record.digest === note.digest);
+      if (old) factMatch(old.record as TransactionFact, note);
+    }
+    const newNotes = pending.filter(note => !rows.some(r => isFact(r.record) && r.record.network === note.network && r.record.digest === note.digest));
+    validateExperienceRows([...rows, ...newNotes.map(record => ({id:experienceId(record), record}))], this.binding.project);
+    for (const note of pending) {
+      const old = rows.find(r => isFact(r.record) && r.record.network === note.network && r.record.digest === note.digest);
+      if (!old && captureAdmits(this.captureScope, this.captureParentId, note)) await this.experience.write(note);
+    }
+  }
   activityIndex!: OfflineActivityIndex;
   artifacts: any;
   providerProvenance: {sourceMode: string; freshProviderRead: boolean; walletHistoryComplete: boolean; scope: string} | undefined;
@@ -51,7 +78,15 @@ export class AgentSession extends ActivitySession {
     const memory = rows.filter(row => row.record.schema === 'recall-experience/1' && state.transactions.some(tx => tx.network === row.record.network && tx.source === row.record.source
       && tx.digest === row.record.digest && tx.gas.payer === row.record.observed
       && (tx.gas.payer !== tx.sender) === row.record.sponsored));
-    return { ...result, experience: memory, experienceStorage: this.experience.storage,
+    const historicalObservations = rows.filter(row => isFact(row.record) && state.transactions.some(tx => tx.digest === row.record.digest && tx.network === row.record.network && tx.source === row.record.source))
+      .map(row => { const note = row.record as TransactionFact, current = state.transactions.find(tx => tx.digest === note.digest)!;
+        const comparison = note.provenance.normalizerSha256 !== NORMALIZER_SHA256 ? 'incompatible-normalizer'
+          : factMatch(note, {...note, transaction:current});
+        return {...row, role:'historical-observation', comparison, replacesFreshData:false}; });
+    return { ...result, experience: memory, historicalObservations, experienceStorage: this.experience.storage,
+      selectedTransactionCoverage: {walletHistoryComplete:false, transactions:state.transactions.map(tx => ({digest:tx.digest,
+        walletIsSender:tx.sender === state.wallet, walletIsGasPayer:tx.gas.payer === state.wallet,
+        walletHasBalanceChange:tx.movements.some(m => m.address === state.wallet)}))},
       dataProvenance: this.providerProvenance ?? {sourceMode: this.activityIndex?.mode === 'saved' ? 'saved-mainnet-replay' : 'synthetic-fixture',
         freshProviderRead: false, walletHistoryComplete: false, scope: 'selected-transactions'} };
   }
@@ -63,7 +98,7 @@ export class AgentSession extends ActivitySession {
       assert(tx, 'CLAIM_TRANSACTION_NOT_IN_REPORT');
       const pass = claimed === tx.gas.payer;
       const rows = await this.experience.read();
-      const resolved = new Set(rows.map(row => row.record.supersedes));
+      const resolved = new Set(rows.filter(row => !isFact(row.record)).map(row => (row.record as any).supersedes));
       const parent = rows.find(row => row.record.schema === 'recall-experience/1' && row.record.verdict === 'fail' && row.record.digest === digest
         && row.record.network === state.network && row.record.source === tx.source && row.record.observed === tx.gas.payer && !resolved.has(row.id));
       let saved, captureSkipped: string | undefined;

@@ -32,7 +32,7 @@ export function offlineAgent(directory, capture, dataMode = 'fixture') {
 }
 // Shared independent tools; the provider assembly supplies stores, never a task route.
 export function agentServer(session, {capture,dataMode,mode}) {
-  const server = activityServer(session, mode, {exportsArtifact:true});
+  const server = activityServer(session, mode, {exportsArtifact:true,factCapture:session.capture && session.captureFacts});
   if(session.activityIndex)server.registerTool('find_wallet_activity', {
     description: 'Find transaction references involving a wallet in the selected LOCAL dataset, optionally filtered by a UTC period. Saved records are replay, not a fresh chain query. Results always have partial wallet-history coverage. No match does not prove inactivity. This tool does not infer ownership or direct counterparties.',
     inputSchema: { network: z.enum(['mainnet','testnet']), wallet: z.string().max(66),
@@ -45,6 +45,7 @@ export function agentServer(session, {capture,dataMode,mode}) {
   });
   const captureDescription=!capture?'Memory capture is disabled in this run.':session.captureScope==='linked-resolution-only'
     ?'Capture scope: linked resolutions only. A failed hypothesis returns its verdict and observed evidence with captureSkipped=not-admitted-by-scope; no failure is written.'
+    :session.captureScope==='transaction-facts-only'?'Capture scope: transaction facts only. Hypothesis verdicts remain factual, but technical failure/resolution writes are skipped.'
     :'Capture scope: verified mismatches and their linked verified resolutions may be saved automatically.';
   server.registerTool('verify_gas_payer', {
     description: 'Check a proposed gas-payer address against transaction evidence in an existing report. '+captureDescription+' Local or fixture IDs are not Mainnet Walrus receipts.',
@@ -55,7 +56,8 @@ export function agentServer(session, {capture,dataMode,mode}) {
     catch (error) { return { isError: true, content: [{ type: 'text', text: /^[A-Z0-9_]+$/.test(error?.code) ? error.code : 'AGENT_ERROR' }] }; }
   });
   const observe = inner => new ObservedToolTransport(inner,{store:session.experience,workspace:session.binding.project,
-    source:dataMode === 'tatum' ? 'tatum' : dataMode === 'saved' ? 'replay' : 'fixture',capture,stop:()=>{session.stopped=true;}});
+    source:dataMode === 'tatum' ? 'tatum' : dataMode === 'saved' ? 'replay' : 'fixture',
+    capture:capture && session.captureScope!=='transaction-facts-only',stop:()=>{session.stopped=true;}});
   return { session, server, observe };
 }
 async function main() {

@@ -6,6 +6,8 @@ import { address, transactionId } from './activity.ts';
 import { WalrusRecordStore } from './activity-memory.ts';
 import { readCompleteMemory } from '../src/memory.ts';
 import type { Network } from '../src/domain.ts';
+import { isFact, validateTransactionFact, factMatch } from './agent-facts.ts';
+import type { TransactionFact } from './agent-facts.ts';
 
 export type GasExperience = {
   schema: 'recall-experience/1'; workspace: string; network: Network;
@@ -19,12 +21,14 @@ export type ToolExperience = {
   evidence: 'sdk-input-validation' | 'successful-tool-call';
   verdict: 'fail' | 'resolved'; supersedes: string | null;
 };
-export type Experience = GasExperience | ToolExperience;
+export type Experience = GasExperience | ToolExperience | TransactionFact;
 export type ExperienceRow = { id: string; record: Experience; blobId?: string };
 // Retained project capacity is separate from each approved run's two-write allowance.
 export const MAX_EXPERIENCE_RECORDS = 20;
 const hash = (record: Experience) => createHash('sha256').update(canonical(record)).digest('base64url');
+export const experienceId = hash;
 export function validateExperience(record: Experience, workspace: string) {
+  if (isFact(record)) { validateTransactionFact(record, workspace); return; }
   if (record.schema === 'recall-tool-experience/1') {
     exactKeys(record, ['schema','workspace','source','tool','schemaHash','field','constraint','bound','attempted','evidence','verdict','supersedes']);
     assert(record.workspace === workspace && ['fixture','replay','tatum'].includes(record.source), 'EXPERIENCE_SCOPE');
@@ -46,7 +50,7 @@ export function validateExperience(record: Experience, workspace: string) {
     : record.verdict === 'resolved' && record.claimed === record.observed && typeof record.supersedes === 'string', 'EXPERIENCE_VERDICT');
 }
 export function experienceParentMatches(parent: Experience | undefined, record: Experience) {
-  if (!parent || parent.verdict !== 'fail' || parent.schema !== record.schema
+  if (!parent || isFact(parent) || isFact(record) || parent.verdict !== 'fail' || parent.schema !== record.schema
     || parent.workspace !== record.workspace || parent.source !== record.source) return false;
   if (parent.schema === 'recall-tool-experience/1' && record.schema === parent.schema)
     return parent.tool === record.tool && parent.schemaHash === record.schemaHash && parent.field === record.field
@@ -65,8 +69,10 @@ export function validateExperienceRows(rows: ExperienceRow[], workspace: string)
     assert(row.id === hash(row.record) && !records.has(row.id), 'EXPERIENCE_HASH');
     records.set(row.id, row.record);
   }
-  for (const row of rows.filter(r => r.record.verdict === 'resolved')) {
-    const parent = records.get(row.record.supersedes!);
+  const factKeys = rows.filter(r => isFact(r.record)).map(r => r.record.network + ':' + r.record.digest);
+  assert(new Set(factKeys).size === factKeys.length, 'FACT_DUPLICATE_TRANSACTION');
+  for (const row of rows.filter(r => !isFact(r.record) && r.record.verdict === 'resolved')) {
+    const parent = records.get((row.record as GasExperience | ToolExperience).supersedes!);
     assert(experienceParentMatches(parent, row.record), 'EXPERIENCE_PARENT');
   }
 }
@@ -89,7 +95,7 @@ export class LocalExperienceStore implements ExperienceStore {
   async read(): Promise<ExperienceRow[]> {
     if (!existsSync(this.path)) return [];
     const stat = lstatSync(this.path);
-    assert(stat.isFile() && !stat.isSymbolicLink() && stat.size <= 32768, 'EXPERIENCE_FILE');
+    assert(stat.isFile() && !stat.isSymbolicLink() && stat.size <= MAX_EXPERIENCE_RECORDS * 4608, 'EXPERIENCE_FILE');
     const rows = JSON.parse(readFileSync(this.path, 'utf8'));
     validateExperienceRows(rows, this.workspace);
     return rows;
@@ -100,10 +106,10 @@ export class LocalExperienceStore implements ExperienceStore {
     mkdirSync(lock, { mode: 0o700 });
     try {
       const rows = await this.read(), id = hash(record);
-      const previous = rows.find(row => row.id === id);
+      const previous = existingExperience(rows, record);
       if (previous) return previous;
       assert(rows.length < MAX_EXPERIENCE_RECORDS, 'EXPERIENCE_LIMIT');
-      if (record.verdict === 'resolved') {
+      if (!isFact(record) && record.verdict === 'resolved') {
         const parent = rows.find(row => row.id === record.supersedes)?.record;
         assert(experienceParentMatches(parent, record), 'EXPERIENCE_PARENT');
       }
@@ -142,10 +148,17 @@ export class WalrusExperienceStore implements ExperienceStore {
     validateExperience(record, this.workspace);
     await this.admit();
     const rows = await this.read(), id = hash(record);
-    const previous = rows.find(row => row.id === id);
+    const previous = existingExperience(rows, record);
     if (previous) return previous;
     validateExperienceRows([...rows, { id, record }], this.workspace);
     const receipt = await this.port.write(record, id);
     return { id, record, blobId: receipt.blobId };
   }
+}
+
+export function existingExperience(rows: ExperienceRow[], record: Experience): ExperienceRow | undefined {
+  if (!isFact(record)) return rows.find(row => row.id === hash(record));
+  const previous = rows.find(row => isFact(row.record) && row.record.network === record.network && row.record.digest === record.digest);
+  if (previous) factMatch(previous.record as TransactionFact, record);
+  return previous;
 }

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "sourceCommit": "830b3e1725f4d36fcbf681ea53be0c7550670f31",
+  "archiveSha256": "969cb1e5489d89ea9d776bdeed8730d174943ffd72e014d24b172750becb8b2a",
+  "directory": "/private/tmp/recall-stage46-packaging-3spr801y",
+  "checks": [
+    {
+      "name": "manifest",
+      "exitCode": 0
+    },
+    {
+      "name": "help",
+      "exitCode": 0
+    },
+    {
+      "name": "saved-example",
+      "exitCode": 0
+    },
+    {
+      "name": "independent-ordinary-protocol",
+      "exitCode": 0
+    },
+    {
+      "name": "fake-native-launch-1",
+      "exitCode": 0
+    },
+    {
+      "name": "fake-native-launch-2",
+      "exitCode": 0
+    }
+  ],
+  "cachedDependenciesCopied": true,
+  "freshDependencyInstallAttested": false,
+  "fakeNativeStarts": 2,
+  "realCliAccountCommands": 0,
+  "modelCalls": 0,
+  "providerCalls": 0,
+  "profileReads": 0,
+  "keyReads": 0,
+  "additionalSpendUSD": 0,
+  "ordinaryRealJudgeEntryPresent": false,
+  "limitation": "Clean unpack and cached dependency replay only. Codex is an explicit local stub. Real own-account onboarding/live restart remains unimplemented and untested."
+}

@@ -56,7 +56,8 @@ export function syntheticTatum(directory,options={}){
    writeFileSync(join(directory,'synthetic-tatum.json'),canonical(state),{mode:0o600});
   });
   // The real normalizer is exercised; fabricated facts stay labelled fixture even in CSV/memory.
-  return {close:()=>data.close(),transactions:async ids=>(await data.transactions(ids)).map(tx=>({...tx,source:'fixture'}))};
+  return {close:()=>data.close(),factEvidence:id=>({...data.factEvidence(id),kind:'fixture'}),
+   transactions:async ids=>(await data.transactions(ids)).map(tx=>({...tx,source:'fixture'}))};
  };
 }
 export async function openOrdinaryFixture(directory,options={}){

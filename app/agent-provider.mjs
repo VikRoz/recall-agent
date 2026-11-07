@@ -76,6 +76,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
    assert(network==='mainnet'||network==='testnet','WRONG_NETWORK');return index.transactions(network,ids);
   }}),undefined,undefined,()=>gate.stop('AGENT_TOOL_STOPPED'));
   session.experience=experience;session.capture=capture;session.activityIndex=index;session.artifacts=new CsvArtifacts(directory);
+  if(ordinary){session.selectedTransactionsOnly=true;session.factEvidence=id=>data.factEvidence(id);}
   const captureContext=gate.context();
   if(isContinuation(captureContext)){
    session.captureScope='linked-resolution-only';session.captureParentId=captureContext.baseline.origins[1].records[0].id;
