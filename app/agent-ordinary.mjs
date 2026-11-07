@@ -104,14 +104,15 @@ export function ordinaryAuthorization(directory,options={}){
  validateApproval(m,proof.providerApproval);return {binding,run,manifest:m,proof};
 }
 export function boundedOrdinaryTatum(gate,approval,key,createData){
- assert(['offline-ordinary-provider-fixture','live-ordinary-selected','offline-managed-admission-test'].includes(gate.manifest.mode)&&typeof createData==='function','ORDINARY_INJECTED_DATA_REQUIRED');
+ assert(['offline-ordinary-provider-fixture','live-ordinary-selected','offline-managed-admission-test','live-own-account-selected','offline-own-account-test'].includes(gate.manifest.mode)&&typeof createData==='function','ORDINARY_INJECTED_DATA_REQUIRED');
  let data,closed=false;
  return {factEvidence:id=>{assert(data?.factEvidence,'FACT_PROVENANCE_MISSING');return data.factEvidence(id);},close(){if(!closed){closed=true;data?.close();}},async transactions(ids){
   assert(!closed,'AGENT_RUNTIME_CLOSED');
   // These pure failures precede reservation and are safe for the agent to correct.
   assert(Array.isArray(ids)&&ids.length>0&&ids.length<=MAX_TRANSACTIONS,'TRANSACTION_LIST_LIMIT');
   ids.forEach(digest);assert(new Set(ids).size===ids.length,'DUPLICATE_TRANSACTION');
-  if(gate.manifest.mode==='live-ordinary-selected'||gate.context?.()?.plan.kind==='ordinary-single-continuation'){
+  if(gate.ownAccount&&gate.context().captureSet)assert(ids.every(id=>gate.context().captureSet.includes(id)),'OWN_APPROVED_TRANSACTION_SCOPE');
+  if(gate.manifest.mode==='live-ordinary-selected'||gate.context?.()?.plan?.kind==='ordinary-single-continuation'){
    const c=privateRead(join(gate.ordinary.directory,'managed-context.json'));
    assert(ids.length===1&&ids[0]===c.plan.publicInputs.transaction,'MANAGED_APPROVED_TRANSACTION_ONLY');
   }
@@ -120,7 +121,8 @@ export function boundedOrdinaryTatum(gate,approval,key,createData){
    assert((gate.state().tatumBatches+1)*approval.tatum.creditsPerCall<=Math.min((gate.limits?.().tatumBatches??2)*2,approval.tatum.remainingCredits),'TATUM_FREE_ALLOWANCE');
    gate.reserve('tatumBatches');
    if(!data){
-    const connected=await createData({network:'mainnet',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',key});
+    const connected=await createData({network:'mainnet',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',key,
+     ...(gate.ownAccount?{deadline:Date.parse(gate.manifest.expiresAt)}:{})});
     if(closed){connected.close();assert(false,'AGENT_RUNTIME_CLOSED');}data=connected;
    }
    gate.admit();managedPreflight(gate);validateApproval(gate.manifest,approval);validateTatumBinding(approval,key);

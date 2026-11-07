@@ -14,7 +14,7 @@ The approval specifically requires per-transaction reproducible provenance; sema
 
 ## Implemented contract
 
-`recall-transaction-fact/1` is a tagged variant alongside gas/tool observations, in the same store/namespace. It contains the entire existing normalized transaction, workspace/network/digest/source, observation time and provenance. Provenance hashes **canonical selected raw transaction**, not its batch, and identifies that hash scope explicitly. The normalizer hash covers the exact `activity.ts` module bytes. Raw provider/account responses are not returned to the model.
+`recall-transaction-fact/1` is a tagged variant alongside gas/tool observations, in the same store/namespace. It contains the entire existing normalized transaction, workspace/network/digest/source, observation time and provenance. Provenance hashes **canonical official protobuf JSON of the selected raw transaction**, not its batch, and identifies that hash scope explicitly. The normalizer hash covers the exact `activity.ts` module bytes. Raw provider/account responses are not returned to the model.
 
 TatumData retains provenance only after successful complete normalization. A session with explicit fact-capture consent validates every whole payload, corpus capacity and semantic conflict before any write. No array is truncated. `prepare_report` is the ordinary capture/retrieval path; no prescribed first tool or task was added. The ordinary assembly can report selected transactions with no observed wallet involvement, returning explicit sender/payer/balance-change coverage flags. The inherited fallback ActivitySession retains its stricter participation check.
 
@@ -24,7 +24,7 @@ Reports return `historicalObservations` separately, marked historical with prove
 
 ## Verification
 
-Eight new targeted tests passed: mixed old/new records and parent links; repeat read in an independent process; per-transaction hash independent of batch composition; oversized second payload before any write; semantic conflict stop; old-normalizer behavior; explicit opt-out and facts-only verifier behavior; absent-wallet disclosure; malformed facts and duplicate semantic identity. Existing agent/ordinary targeted regression:21/21 passed before the final annotation/validator tightening. Full integrated acceptance follows the ordinary activation increment; no live result is claimed here.
+Nine new targeted tests passed, including an installed protobuf binary decode with BigInt and nested bytes. Official ExecutedTransaction.toJson/fromJson provides the replayable proof; hashScope is protobuf-json-selected-transaction. A custom raw JSON canonicalizer was rejected after independent review reproduced a BigInt serialization failure. No global canonicalization or lossy integer conversion was introduced. Other checks: mixed old/new records and parent links; repeat read in an independent process; per-transaction hash independent of batch composition; oversized second payload before any write; semantic conflict stop; old-normalizer behavior; explicit opt-out and facts-only verifier behavior; absent-wallet disclosure; malformed facts and duplicate semantic identity. Existing agent/ordinary targeted regression:21/21 passed before the final annotation/validator tightening. Full integrated acceptance follows the ordinary activation increment; no live result is claimed here.
 
 ## Sources
 

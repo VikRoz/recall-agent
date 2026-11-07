@@ -32,7 +32,8 @@ export function offlineAgent(directory, capture, dataMode = 'fixture') {
 }
 // Shared independent tools; the provider assembly supplies stores, never a task route.
 export function agentServer(session, {capture,dataMode,mode}) {
-  const server = activityServer(session, mode, {exportsArtifact:true,factCapture:session.capture && session.captureFacts});
+  const server = activityServer(session, mode, {exportsArtifact:true,factCapture:session.capture && session.captureFacts,
+    rulesWritable:session.captureScope!=='transaction-facts-only',strictInputs:session.ownAccount===true});
   if(session.activityIndex)server.registerTool('find_wallet_activity', {
     description: 'Find transaction references involving a wallet in the selected LOCAL dataset, optionally filtered by a UTC period. Saved records are replay, not a fresh chain query. Results always have partial wallet-history coverage. No match does not prove inactivity. This tool does not infer ownership or direct counterparties.',
     inputSchema: { network: z.enum(['mainnet','testnet']), wallet: z.string().max(66),
@@ -49,7 +50,8 @@ export function agentServer(session, {capture,dataMode,mode}) {
     :'Capture scope: verified mismatches and their linked verified resolutions may be saved automatically.';
   server.registerTool('verify_gas_payer', {
     description: 'Check a proposed gas-payer address against transaction evidence in an existing report. '+captureDescription+' Local or fixture IDs are not Mainnet Walrus receipts.',
-    inputSchema: { reportId: z.string().max(120), transaction: z.string().max(200), claimedPayer: z.string().max(66) },
+    inputSchema: session.ownAccount?z.object({reportId:z.string().max(120),transaction:z.string().max(200),claimedPayer:z.string().max(66)}).strict()
+      :{ reportId: z.string().max(120), transaction: z.string().max(200), claimedPayer: z.string().max(66) },
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   }, async args => {
     try { return { content: [{ type: 'text', text: JSON.stringify(await session.verifyGasPayer(args.reportId, args.transaction, args.claimedPayer)) }] }; }

@@ -13,8 +13,9 @@ export class TatumData {
   factEvidence(id: string) { const value = this.evidence.get(id); assert(value, 'FACT_PROVENANCE_MISSING'); return structuredClone(value); }
   client: any; network: Network; dispose: () => void; closed = false;
   observeResponse: ((digests: string[], response: any) => void) | undefined;
-  constructor(client: any, network: Network, dispose: () => void = () => {}, observeResponse?: (digests: string[], response: any) => void) {
-    this.client = client; this.network = network; this.dispose = dispose; this.observeResponse = observeResponse;
+  deadline: number | undefined;
+  constructor(client: any, network: Network, dispose: () => void = () => {}, observeResponse?: (digests: string[], response: any) => void, deadline?: number) {
+    this.client = client; this.network = network; this.dispose = dispose; this.observeResponse = observeResponse; this.deadline=deadline;
   }
   close() { if (!this.closed) { this.closed = true; this.dispose(); } }
   async transactions(digests: string[]) {
@@ -22,12 +23,13 @@ export class TatumData {
       && digests.length <= MAX_TRANSACTIONS, 'TRANSACTION_LIST_LIMIT');
     digests.forEach(digest);
     assert(new Set(digests).size === digests.length, 'DUPLICATE_TRANSACTION');
+    const timeout=Math.min(10000,this.deadline===undefined?10000:this.deadline-Date.now());assert(timeout>0,'TATUM_DEADLINE_EXPIRED');
     const call = await this.client.ledgerService.batchGetTransactions({
       digests,
       readMask: { paths: ['digest', 'checkpoint', 'timestamp', 'transaction.sender',
         'transaction.digest', 'transaction.kind', 'transaction.gas_payment', 'effects.status',
         'effects.transaction_digest', 'effects.gas_used', 'balance_changes'] },
-    }, { abort: AbortSignal.timeout(10000), timeout: 10000 });
+    }, { abort: AbortSignal.timeout(timeout), timeout });
     this.observeResponse?.(digests, call.response);
     const values = call.response?.transactions;
     assert(Array.isArray(values) && values.length === digests.length, 'TRANSACTION_BATCH_INCOMPLETE');
@@ -41,13 +43,13 @@ export class TatumData {
     for (const value of values) {
       const raw = value.result.transaction;
       this.evidence.set(raw.digest, {kind:'tatum',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',
-        hashScope:'canonical-selected-transaction',rawTransactionSha256:factHash(raw),normalizerSha256:NORMALIZER_SHA256});
+        hashScope:'protobuf-json-selected-transaction',rawTransactionSha256:factHash(raw),normalizerSha256:NORMALIZER_SHA256});
     }
     return digests.map(id => normalized.find(tx => tx.digest === id)!);
   }
 
 }
-export async function connectTatum(env: Record<string, string | undefined>, network: Network = 'mainnet', observeResponse?: (digests: string[], response: any) => void) {
+export async function connectTatum(env: Record<string, string | undefined>, network: Network = 'mainnet', observeResponse?: (digests: string[], response: any) => void, deadline?: number) {
   assert(env.TATUM_API_KEY, 'TATUM_CREDENTIALS_MISSING');
   const packageName = '@mysten/sui/grpc';
   let sdk: any;
@@ -70,6 +72,6 @@ export async function connectTatum(env: Record<string, string | undefined>, netw
       meta: { 'x-api-key': env.TATUM_API_KEY }, timeout: 10000,
     });
     const client = new sdk.SuiGrpcClient({ network, transport });
-    return new TatumData(client, network, () => owner.close(), observeResponse);
+    return new TatumData(client, network, () => owner.close(), observeResponse, deadline);
   } catch (error) { owner.close(); throw error; }
 }

@@ -8,10 +8,11 @@ import {offlineAgent} from './agent-mcp.mjs';
 import {FIXTURE_WALLET,FIXTURE_OTHER,FIXTURE_DIGESTS,fixtureTransaction} from './activity-fixtures.ts';
 import {normalizeTransaction} from './activity.ts';
 import {LocalExperienceStore,experienceId,validateExperienceRows} from './agent-experience.ts';
-import {transactionFact,factHash,NORMALIZER_SHA256} from './agent-facts.ts';
+import {transactionFact,factHash,transactionProof,verifyFactProof,NORMALIZER_SHA256} from './agent-facts.ts';
+import {ExecutedTransaction} from './node_modules/@mysten/sui/dist/grpc/proto/sui/rpc/v2/executed_transaction.mjs';
 import {TatumData} from './tatum.ts';
 const at='2026-11-07T12:00:00.000Z';
-const evidence=i=>({kind:'fixture',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',hashScope:'canonical-selected-transaction',
+const evidence=i=>({kind:'fixture',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',hashScope:'protobuf-json-selected-transaction',
  rawTransactionSha256:factHash(fixtureTransaction(i)),normalizerSha256:NORMALIZER_SHA256});
 const note=(project,i=0)=>transactionFact(project,normalizeTransaction(fixtureTransaction(i),FIXTURE_DIGESTS[i],'mainnet','fixture'),evidence(i),at);
 const temporary=()=>mkdtempSync(join(tmpdir(),'recall-fact-test-'));
@@ -40,7 +41,17 @@ test('selected transaction evidence hash is reproducible and independent of batc
  const client={ledgerService:{batchGetTransactions:async({digests})=>({response:{transactions:digests.map(id=>({result:{oneofKind:'transaction',transaction:fixtureTransaction(FIXTURE_DIGESTS.indexOf(id))}}))}})}};
  const data=new TatumData(client,'mainnet');await data.transactions(FIXTURE_DIGESTS.slice(0,2));const first=data.factEvidence(FIXTURE_DIGESTS[0]);
  await data.transactions([FIXTURE_DIGESTS[0]]);assert.deepEqual(data.factEvidence(FIXTURE_DIGESTS[0]),first);
- assert.equal(first.rawTransactionSha256,factHash(fixtureTransaction(0)));assert.equal(first.hashScope,'canonical-selected-transaction');
+ assert.equal(first.rawTransactionSha256,factHash(fixtureTransaction(0)));assert.equal(first.hashScope,'protobuf-json-selected-transaction');
+});
+test('installed protobuf binary decode preserves bigint, nested bytes and replayable public proof',async()=>{
+ const value=fixtureTransaction(0);value.transaction.bcs={value:new Uint8Array([0,128,255])};
+ const raw=ExecutedTransaction.fromBinary(ExecutedTransaction.toBinary(ExecutedTransaction.create(value)));
+ assert.equal(typeof raw.checkpoint,'bigint');assert.equal(typeof raw.timestamp.seconds,'bigint');
+ assert.equal(typeof raw.effects.gasUsed.computationCost,'bigint');assert(raw.transaction.bcs.value instanceof Uint8Array);
+ const data=new TatumData({ledgerService:{batchGetTransactions:async()=>({response:{transactions:[{result:{oneofKind:'transaction',transaction:raw}}]}})}},'mainnet');
+ await data.transactions([raw.digest]);const proof=JSON.parse(JSON.stringify(transactionProof(raw))),hash=data.factEvidence(raw.digest).rawTransactionSha256;
+ assert.deepEqual(verifyFactProof(proof,hash),proof);assert.equal(proof.transaction.bcs.value,'AID/');
+ assert.throws(()=>verifyFactProof({...proof,checkpoint:'999'},hash),/FACT_RAW_PROOF_HASH/);
 });
 test('all whole payloads validate before any write; oversized second transaction is never truncated',async()=>{
  const dir=temporary();try{

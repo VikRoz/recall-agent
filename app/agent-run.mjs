@@ -8,6 +8,8 @@ import {address} from './activity.ts';
 import {PILOT_LIMITS} from './activity-live.ts';
 import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {CONTINUATION_KIND,CONTINUATION_LIMITS,continuationResolution} from './agent-continuation-contract.mjs';
+import {ownMode,validateOwnManifest,validateOwnContext,OWN_LIMITS} from './agent-own-contract.mjs';
+import {validateRetained} from './agent-own-lineage.mjs';
 
 export const runHash=value=>createHash('sha256').update(canonical(value)).digest('hex');
 export const operationKey=value=>createHash('sha256').update(canonical(value)).digest('base64url');
@@ -25,7 +27,8 @@ function durable(path,value,fresh=false){
  if(!fresh)renameSync(target,path);
  const directory=openSync(join(path,'..'),'r');try{fsyncSync(directory);}finally{closeSync(directory);}
 }
-export function validateAgentManifest(m,{live=false,ordinary=false,managedTest=false}={}){
+export function validateAgentManifest(m,{live=false,ordinary=false,managedTest=false,ownAccount=false}={}){
+ if(ownAccount){assert(ordinary&&!managedTest,'OWN_ADMISSION');return validateOwnManifest(m,{live});}
  exactKeys(m,['schema','mode','runId','owner','accountId','delegatePublicKeyHex','packageId','workspace','datasetId','source','namespaces','maxUSD','expiresAt','admission']);
  assert(!managedTest||(live&&ordinary),'AGENT_MANAGED_TEST_SCOPE');
  const ordinaryManaged=ordinary&&live;
@@ -62,6 +65,7 @@ export class AgentRunGate {
   privateDirectory(directory);this.directory=directory;this.path=join(directory,'agent-ledger.json');
   this.manifest=validateAgentManifest(privateRead(join(directory,'agent-run.json')),options);
   this.hash=runHash(this.manifest);this.lease=undefined;this.pending=undefined;this.readonly=options.readonly===true;
+  this.ownAccount=options.ownAccount===true;
   this.ordinary=options.ordinary?{directory:options.workspaceDirectory,token:options.leaseToken,approvalHash:options.approvalHash}:undefined;
   if(this.ordinary)assert(typeof this.ordinary.directory==='string'&&typeof this.ordinary.token==='string'
    &&/^[a-f0-9]{64}$/.test(this.ordinary.approvalHash),'AGENT_WORKSPACE_LEASE_REQUIRED');
@@ -71,11 +75,13 @@ export class AgentRunGate {
   assert(state.intents.every(i=>i.state==='done'),'AGENT_OUTCOME_UNCERTAIN');this.admit();
  }
  context(){
+  if(this.ownAccount){const c=validateOwnContext(privateRead(join(this.ordinary.directory,'own-account-context.json')));
+   assert(runHash(c)===this.manifest.admission.contextHash,'OWN_CONTEXT_CHANGED');validateRetained(c.retained,c.identity,{fixture:c.kind==='offline-own-account-test'});return c;}
   if(!this.ordinary||!['live-ordinary-selected','offline-managed-admission-test'].includes(this.manifest.mode))return null;
   const c=privateRead(join(this.ordinary.directory,'managed-context.json'));
   assert(runHash(c)===this.manifest.admission.contextHash,'MANAGED_CONTEXT_CHANGED');return c;
  }
- limits(){return this.context()?.plan.kind===CONTINUATION_KIND?CONTINUATION_LIMITS:PILOT_LIMITS;}
+ limits(){if(this.ownAccount){this.context();return OWN_LIMITS;}return this.context()?.plan.kind===CONTINUATION_KIND?CONTINUATION_LIMITS:PILOT_LIMITS;}
  state(){
   assert(runHash(privateRead(join(this.directory,'agent-run.json')))===this.hash,'AGENT_MANIFEST_CHANGED');
   const s=privateRead(this.path);
@@ -94,7 +100,7 @@ export class AgentRunGate {
   for(const [id,j] of Object.entries(s.jobs)){
    exactKeys(j,['namespace','key','polls']);
    assert(/^[A-Za-z0-9_-]{1,100}$/.test(id)&&keys.has(j.namespace+':'+j.key)
-    &&Number.isSafeInteger(j.polls)&&j.polls>=0&&j.polls<=PILOT_LIMITS.pollsPerJob,'AGENT_LEDGER_JOB');
+     &&Number.isSafeInteger(j.polls)&&j.polls>=0&&j.polls<=this.limits().pollsPerJob,'AGENT_LEDGER_JOB');
   }
   return s;
  }
@@ -110,6 +116,7 @@ export class AgentRunGate {
     &&runHash(privateRead(join(this.directory,'ordinary-approval.json')))===this.ordinary.approvalHash,'AGENT_WORKSPACE_LEASE_REQUIRED');
    if(['live-ordinary-selected','offline-managed-admission-test'].includes(this.manifest.mode))
     assert(runHash(privateRead(join(directory,'managed-context.json')))===this.manifest.admission.contextHash,'MANAGED_CONTEXT_CHANGED');
+   if(this.ownAccount)this.context();
   }
   const m=this.manifest,now=Date.now(),age=now-time(m.admission.checkedAt);
   assert(time(m.expiresAt)>now&&time(m.expiresAt)<=now+86400000,'AGENT_RUN_EXPIRED');
@@ -154,7 +161,14 @@ export class AgentRunGate {
  beforeSubmit(namespace,record,key){
   assert(!this.readonly,'CONTINUATION_READER_READONLY');
   assert(this.lease===namespace&&!this.pending&&operationKey(record)===key,'AGENT_WRITE_LEASE');
-  const continuation=this.context();if(continuation?.plan.kind===CONTINUATION_KIND)continuationResolution(continuation,record,key);
+  const continuation=this.context();if(continuation?.plan?.kind===CONTINUATION_KIND)continuationResolution(continuation,record,key);
+  if(this.ownAccount){
+   const c=this.context();assert(c.captureConsent,'OWN_CAPTURE_DISABLED');
+   assert(c.captureScope!=='transaction-facts-only'||(namespace===this.manifest.namespaces.experience&&record.schema==='recall-transaction-fact/1'),'OWN_CAPTURE_SCOPE');
+   const p=privateRead(join(this.ordinary.directory,'ordinary-preflight.json'));
+   assert(p.contextHash===this.manifest.admission.contextHash&&p.manifestHash===this.hash&&p.accountAuthorized===true
+    &&Date.now()-time(p.checkedAt)>=0&&Date.now()-time(p.checkedAt)<=300000,'OWN_PREFLIGHT_REQUIRED');
+  }
   if(this.manifest.mode==='live-walrus-replay'){
    const proof=privateRead(join(this.directory,'agent-live-preflight.json'));
    assert(proof.manifestHash===this.hash&&proof.emptyNamespaces===true&&proof.accountAuthorized===true

@@ -2,6 +2,12 @@
 
 A Sui agent in your own model client, with verified experience memory. Development starts from [Recall Lab](https://github.com/VikRoz/recall-lab), whose v1.0.0 remains the submission fallback. This repository is not that release and has no deployment or judge package yet.
 
+## Own-account connection prepared offline
+
+A distinct ordinary entry now supports explicit local setup with your own native ChatGPT/Codex, Walrus browser login and same-account Tatum Free key. It opens an empty chat; there is no initial task or required tool sequence. The implementation is tested with intercepted providers and fake login/client ports. **Actual own-account onboarding on this revision is not live-verified yet.**
+
+See [installation, finite limits and restart instructions](docs/OWN_ACCOUNT_LAUNCH_OFFLINE_2026-11-07.md). Once explicitly activated, verified whole-transaction observations can be saved under your consent and retrieved in later reports as historical context beside fresh Tatum facts. These notes do not prove model learning or complete wallet history. The default command remains offline, and previous exhausted evaluation runs cannot be reopened by this entry.
+
 ## Current implementation
 
 The launcher supplies general operating rules and opens an empty Codex conversation. There is no initial user task, prescribed first tool, first/second-chat sequence or mandatory failure/save/export. Independent tools provide wallet/period lookup in the selected dataset, transaction reports, address-context previews and CSV. Wallet lookup does not require the user to supply transaction digests. It is optional; no tool must run first. The gas-payer verifier checks a model-proposed claim against transaction evidence. An opt-in public-transport observer also captures supported numeric argument violations rejected by the SDK before a handler runs, and links a verified successful correction. Relevant schema/source-matched experience is restored with the tool catalog in a new process. With explicit local capture enabled, a mismatch is saved automatically and a subsequently verified correction links to it.

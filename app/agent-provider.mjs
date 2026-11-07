@@ -12,6 +12,7 @@ import {CsvArtifacts} from './agent-export.mjs';
 import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {assert} from '../src/domain.ts';
 import {isContinuation,continuationResolution} from './agent-continuation-contract.mjs';
+import {setTimeout as delay} from 'node:timers/promises';
 let active=false;
 
 export async function openInjectedAgent(directory,{createSdk,transport,capture=false,wait,live=false,ordinary,dataFactory}){
@@ -43,11 +44,15 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
   assert(await sdk.getPublicKeyHex()===m.delegatePublicKeyHex,'AGENT_DELEGATE_MISMATCH');
   await guarded(WALRUS_RELAY+'/health');
   await sdk.compatibility();
-  if(live)await guarded(WALRUS_RELAY+'/config');
+  if(live||ordinary?.ownAccount)await guarded(WALRUS_RELAY+'/config');
   const binding={owner:m.owner,project:m.workspace},ports={};
+  const boundedWait=ordinary?.ownAccount?async ms=>{
+   gate.admit();const remaining=Date.parse(m.expiresAt)-Date.now();
+   await (wait??delay)(Math.min(ms,Math.max(0,remaining)));gate.admit();
+  }:wait;
   for(const kind of ['rules','experience']){
    const namespace=m.namespaces[kind];
-   ports[kind]=new WalrusRecordStore(sdk,binding,journals[kind],r=>validateTypedRecord(m,namespace,r),wait,gate.hooks(namespace));
+   ports[kind]=new WalrusRecordStore(sdk,binding,journals[kind],r=>validateTypedRecord(m,namespace,r),boundedWait,gate.hooks(namespace));
   }
   const rules={inventory:()=>ports.rules.inventory(),recall:(...a)=>ports.rules.recall(...a),
    write:(record,key)=>gate.withWriter(m.namespaces.rules,async()=>{
@@ -78,6 +83,8 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
   session.experience=experience;session.capture=capture;session.activityIndex=index;session.artifacts=new CsvArtifacts(directory);
   if(ordinary){session.selectedTransactionsOnly=true;session.factEvidence=id=>data.factEvidence(id);}
   const captureContext=gate.context();
+  if(ordinary?.ownAccount){session.ownAccount=true;session.captureScope=captureContext.captureScope;session.captureFacts=captureContext.captureConsent;session.factCaptureSet=captureContext.captureSet;
+   session.admitFactBatch=notes=>{gate.admit();assert(notes.length<=gate.limits().writes-gate.state().writes,'OWN_FACT_BATCH_BUDGET');};}
   if(isContinuation(captureContext)){
    session.captureScope='linked-resolution-only';session.captureParentId=captureContext.baseline.origins[1].records[0].id;
   }

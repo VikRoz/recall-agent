@@ -1,6 +1,6 @@
 # One remaining path: ordinary accounts, useful memory, final rehearsal
 
-Date: 7 November 2026. Status: proposal for coordinator review, not an approved architecture or live allowance. Runtime inspected: `830b3e1725f4d36fcbf681ea53be0c7550670f31`; capture correction SOURCE: `314cc83bf6e4716eeffc4d34e7875349154fe219`.
+Date: 7 November 2026. Status: coordinator approved offline implementation and the bounded retained-lineage bridge; no live allowance. Runtime inspected: `830b3e1725f4d36fcbf681ea53be0c7550670f31`; capture correction SOURCE: `314cc83bf6e4716eeffc4d34e7875349154fe219`.
 
 ## Goal and starting assumptions
 
@@ -87,7 +87,7 @@ Proposed documented source-install commands:
 npm ci --prefix app --ignore-scripts
 npm ci --prefix mcp --ignore-scripts
 codex login
-bash start.command --live "$PWD/recall-workspace"
+bash start.command --live "$HOME/.local/share/recall-agent"
 ```
 
 The two `npm ci` commands download dependencies; they are not offline tests. `codex login` uses the judge's own native ChatGPT sign-in, not an OpenAI API key or copied author auth. Login itself is not a model call; actual model usage is the operator's included quota. Access depends on the operator's eligible plan/workspace; the project must not purchase access, consume API credit or enable paid fallback. No universal access guarantee is made.
@@ -109,7 +109,7 @@ No live plan/grant, key destination or executable real command is created here. 
 
 | Resource | Provisional ceiling / rationale |
 | --- | --- |
-| Native model | Two fresh conversations, one bounded task each, included quota only; up to20 tool calls per task subject to offline trace measurement. Empty-chat product remains independent of these evaluation tasks. |
+| Native model | Two fresh conversations, one bounded task each, included quota only; up to12 tool calls per task after offline trace measurement. Empty-chat product remains independent of these evaluation tasks. |
 | Tatum | At most8 reserved attempts: seven distinct cases plus one fresh next-chat comparison. Batch requests are preferred but not forced. Up to16 included credits at the previously verified2/call; fresh account-specific price and Free balance must be rechecked before activation. No retry. |
 | Walrus writes | At most7 new whole fact notes, facts-only scope, fixed identities and ≤4096 bytes each. No other write kind consumes these slots. New allowance must explicitly authorize7; existing2/2/2 runs are unchanged. |
 | Walrus content recalls | At most10: the current complete-reader validation before successive writes can require up to7 reads, plus new-chat/readback and independent final inventory. Exact count must be measured offline. |

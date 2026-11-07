@@ -5,6 +5,10 @@ root=$(cd -- "$(dirname -- "$0")" && pwd -P)
 node="$root/runtime/node/bin/node"
 if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 case "${1:-}" in
+  --live)
+    [[ $# -eq 2 ]] || exit 2
+    exec "$node" --disable-warning=ExperimentalWarning "$root/app/agent-own-launch.mjs" "$root" "$2"
+    ;;
   --check) [[ $# -eq 1 ]] || exit 2; exec bash "$root/check.command" ;;
   --example) shift; exec "$node" --disable-warning=ExperimentalWarning "$root/app/agent-mcp.mjs" --example "$@" ;;
   --prepare-provider-fixture)

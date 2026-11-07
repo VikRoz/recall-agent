@@ -28,23 +28,36 @@ export class AgentSession extends ActivitySession {
   captureScope: CaptureScope = 'verified-experience';
   captureParentId: string | undefined;
   captureFacts = false;
+  ownAccount = false;
+  factCaptureSet: string[] | null = null;
+  pendingFacts = new Map<string, TransactionFact>();
   selectedTransactionsOnly = false;
   validateParticipation(state: Parameters<ActivitySession['view']>[0]) {
     if (!this.selectedTransactionsOnly) super.validateParticipation(state);
   }
   factEvidence: ((digest: string) => FactEvidence) | undefined;
+  admitFactBatch: ((notes: TransactionFact[]) => void) | undefined;
   async beforeReport(state: Parameters<ActivitySession['view']>[0]) {
     if (!this.capture || !this.captureFacts) return;
     assert(this.factEvidence, 'FACT_PROVENANCE_MISSING');
     const rows = await this.experience.read();
     // Validate every whole payload and conflict before the first write. No truncation or substitution.
-    const pending = state.transactions.map(tx => transactionFact(this.binding.project, tx, this.factEvidence!(tx.digest), this.clock()));
+    let pending = state.transactions.map(tx => transactionFact(this.binding.project, tx, this.factEvidence!(tx.digest), this.clock()));
+    if(this.factCaptureSet){
+      for(const note of pending){
+        assert(this.factCaptureSet.includes(note.digest),'OWN_APPROVED_TRANSACTION_SCOPE');
+        const old=this.pendingFacts.get(note.digest);if(old)factMatch(old,note);else this.pendingFacts.set(note.digest,note);
+      }
+      if(!this.factCaptureSet.every(id=>this.pendingFacts.has(id)))return;
+      pending=this.factCaptureSet.map(id=>this.pendingFacts.get(id)!);
+    }
     for (const note of pending) {
       const old = rows.find(r => isFact(r.record) && r.record.network === note.network && r.record.digest === note.digest);
       if (old) factMatch(old.record as TransactionFact, note);
     }
     const newNotes = pending.filter(note => !rows.some(r => isFact(r.record) && r.record.network === note.network && r.record.digest === note.digest));
     validateExperienceRows([...rows, ...newNotes.map(record => ({id:experienceId(record), record}))], this.binding.project);
+    this.admitFactBatch?.(newNotes);
     for (const note of pending) {
       const old = rows.find(r => isFact(r.record) && r.record.network === note.network && r.record.digest === note.digest);
       if (!old && captureAdmits(this.captureScope, this.captureParentId, note)) await this.experience.write(note);
@@ -84,6 +97,10 @@ export class AgentSession extends ActivitySession {
           : factMatch(note, {...note, transaction:current});
         return {...row, role:'historical-observation', comparison, replacesFreshData:false}; });
     return { ...result, experience: memory, historicalObservations, experienceStorage: this.experience.storage,
+      ...(this.factCaptureSet?{factCaptureSet:{validated:this.pendingFacts.size,required:this.factCaptureSet.length,
+        restored:rows.filter(r=>isFact(r.record)&&this.factCaptureSet!.includes(r.record.digest)).length,
+        state:rows.filter(r=>isFact(r.record)&&this.factCaptureSet!.includes(r.record.digest)).length===this.factCaptureSet.length
+          ?'stored-complete-set':this.pendingFacts.size<this.factCaptureSet.length?'awaiting-complete-set':'complete-set-validated'}}:{}),
       selectedTransactionCoverage: {walletHistoryComplete:false, transactions:state.transactions.map(tx => ({digest:tx.digest,
         walletIsSender:tx.sender === state.wallet, walletIsGasPayer:tx.gas.payer === state.wallet,
         walletHasBalanceChange:tx.movements.some(m => m.address === state.wallet)}))},

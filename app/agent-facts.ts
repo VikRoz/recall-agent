@@ -4,11 +4,20 @@ import { assert, canonical, exactKeys, time } from '../src/domain.ts';
 import { address, digest, signed } from './activity.ts';
 import type { ActivityTransaction } from './activity.ts';
 import { isValidStructTag, normalizeStructTag } from '@mysten/sui/utils';
+import { ExecutedTransaction } from './node_modules/@mysten/sui/dist/grpc/proto/sui/rpc/v2/executed_transaction.mjs';
 
 export const NORMALIZER_SHA256 = createHash('sha256').update(readFileSync(new URL('./activity.ts', import.meta.url))).digest('hex');
-export const factHash = (value: unknown) => createHash('sha256').update(canonical(value)).digest('hex');
+// Official protobuf JSON preserves uint64/int64 as decimal strings, bytes as base64,
+// oneof fields and Timestamp's RFC3339 representation. Unknown fields are not hashed.
+export const transactionProof = (raw: any) => ExecutedTransaction.toJson(ExecutedTransaction.create(raw));
+export const factHash = (raw: unknown) => createHash('sha256').update(canonical(transactionProof(raw))).digest('hex');
+export const verifyFactProof = (proof: any, expected: string) => {
+  const normalized = transactionProof(ExecutedTransaction.fromJson(proof));
+  assert(createHash('sha256').update(canonical(normalized)).digest('hex') === expected, 'FACT_RAW_PROOF_HASH');
+  return normalized;
+};
 export type FactEvidence = { kind: 'tatum' | 'fixture'; method: 'sui.rpc.v2.LedgerService/BatchGetTransactions';
-  hashScope: 'canonical-selected-transaction'; rawTransactionSha256: string; normalizerSha256: string };
+  hashScope: 'protobuf-json-selected-transaction'; rawTransactionSha256: string; normalizerSha256: string };
 export type TransactionFact = { schema: 'recall-transaction-fact/1'; workspace: string; network: 'mainnet';
   digest: string; source: 'tatum' | 'fixture'; observedAt: string; provenance: FactEvidence; transaction: ActivityTransaction };
 export const isFact = (record: {schema: string}): record is TransactionFact => record.schema === 'recall-transaction-fact/1';
@@ -21,7 +30,7 @@ export function validateTransactionFact(record: TransactionFact, workspace: stri
   const p = record.provenance, tx = record.transaction;
   exactKeys(p, ['kind','method','hashScope','rawTransactionSha256','normalizerSha256']);
   assert(p.kind === record.source && p.method === 'sui.rpc.v2.LedgerService/BatchGetTransactions'
-    && p.hashScope === 'canonical-selected-transaction'
+    && p.hashScope === 'protobuf-json-selected-transaction'
     && [p.rawTransactionSha256,p.normalizerSha256].every(x => /^[a-f0-9]{64}$/.test(x)), 'FACT_PROVENANCE');
   exactKeys(tx, ['digest','network','checkpoint','timestamp','sender','commands','interpretation','status','source','gas','movements']);
   assert(tx.digest === record.digest && tx.network === record.network && tx.source === record.source

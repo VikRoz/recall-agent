@@ -1,6 +1,6 @@
 // Offline-only synthetic relayer. All SDK signing/Seal code is real; wire replies are fabricated.
 import {randomUUID,createHash} from 'node:crypto';
-import {existsSync,writeFileSync,renameSync,mkdirSync,rmSync} from 'node:fs';
+import {existsSync,writeFileSync,renameSync,mkdirSync,rmSync,lstatSync,readFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {MemWal} from '@mysten-incubation/memwal';
@@ -35,11 +35,13 @@ export function fixtureTransport(directory,options={}){
   const url=new URL(input);assert([WALRUS_RELAY,SUI_SEAL_ORIGIN].includes(url.origin),'OFFLINE_ROUTE');
   const lock=join(directory,'.synthetic-relayer-lock');mkdirSync(lock,{mode:0o700});
   try{
-   const state=privateRead(path),body=url.origin===WALRUS_RELAY&&typeof init.body==='string'?JSON.parse(init.body):undefined;
+   const info=lstatSync(path);assert(info.isFile()&&!info.isSymbolicLink()&&info.uid===process.getuid()
+    &&(info.mode&0o077)===0&&info.size<=(options.requestLimit>64?262144:32768),'FIXTURE_STATE_BOUND');
+   const state=JSON.parse(readFileSync(path,'utf8')),body=url.origin===WALRUS_RELAY&&typeof init.body==='string'?JSON.parse(init.body):undefined;
    const headers=new Headers(init.headers);
    state.requests.push({runId:m.runId,path:url.pathname,method:init.method??'GET',namespace:body?.namespace??null,
     signed:Boolean(headers.get('x-signature')),seal:Boolean(headers.get('x-seal-session'))});
-   assert(state.requests.filter(r=>r.runId===m.runId).length<=64&&state.requests.length<=1024,'FIXTURE_REQUEST_LIMIT');
+   assert(state.requests.filter(r=>r.runId===m.runId).length<=(options.requestLimit??64)&&state.requests.length<=1024,'FIXTURE_REQUEST_LIMIT');
    let response;
    if(options.failPath===url.pathname)response=new Response('{}',{status:503});
    else if(url.origin===SUI_SEAL_ORIGIN){
@@ -62,7 +64,8 @@ export function fixtureTransport(directory,options={}){
     state.jobs[job]={job_id:job,status:'done',owner:m.owner,namespace:body.namespace,blob_id};
     response=Response.json({job_id:job});
    }else if(url.pathname.startsWith('/api/remember/')){
-    const job=state.jobs[url.pathname.split('/').pop()];response=Response.json(options.pendingForever?{job_id:job.job_id,status:'pending'}:job);
+    const job=state.jobs[url.pathname.split('/').pop()];job.fixturePolls=(job.fixturePolls??0)+1;
+    response=Response.json(options.pendingForever||job.fixturePolls<(options.doneAfterPolls??1)?{job_id:job.job_id,status:'pending'}:job);
    }
    else throw Error('OFFLINE_ROUTE');
    writeFileSync(path+'.next',canonical(state),{flag:'wx',mode:0o600});renameSync(path+'.next',path);

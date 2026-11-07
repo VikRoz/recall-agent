@@ -4,6 +4,7 @@ import {validateExperience} from './agent-experience.ts';
 import {BatchGetObjectsRequest} from './node_modules/@mysten/sui/dist/grpc/proto/sui/rpc/v2/ledger_service.mjs';
 import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {runHash} from './agent-run.mjs';
+import {ownMode} from './agent-own-contract.mjs';
 
 export const WALRUS_RELAY='https://relayer.memory.walrus.xyz';
 export const SUI_SEAL_ORIGIN='https://mysten-rpc.mainnet.sui.io';
@@ -11,7 +12,7 @@ export const deploymentHash=c=>runHash({network:c.network,packageId:c.packageId,
  suiGrpcUrl:c.suiGrpcUrl,suiRpcUrl:c.suiRpcUrl??null});
 export function validateTypedRecord(manifest,namespace,record){
  if(manifest.mode==='live-walrus-replay')assert(namespace===manifest.namespaces.experience,'AGENT_LIVE_WRITE_SCOPE');
- if(['offline-ordinary-provider-fixture','live-ordinary-selected','offline-managed-admission-test'].includes(manifest.mode)&&record.network!==undefined)assert(record.network==='mainnet','AGENT_RECORD_NETWORK');
+ if((ownMode(manifest.mode)||['offline-ordinary-provider-fixture','live-ordinary-selected','offline-managed-admission-test'].includes(manifest.mode))&&record.network!==undefined)assert(record.network==='mainnet','AGENT_RECORD_NETWORK');
  if(namespace===manifest.namespaces.rules)return rule(record,{owner:manifest.owner,project:manifest.workspace});
  assert(namespace===manifest.namespaces.experience,'AGENT_NAMESPACE_DENIED');
  validateExperience(record,manifest.workspace);assert(record.source===manifest.source,'AGENT_RECORD_SOURCE');return record;
@@ -79,7 +80,8 @@ export function agentWalrusFetch(gate,transport,{phase=()=>'action'}={}){
     '/api/stats':'stats','/api/recall':'recall','/api/remember':'remember'}[url.pathname]??(job?'remember-status':'inventory'));
    gate.request(kind,job);
    if(remember)gate.sent(remember.namespace,remember.key,remember.record);
-   const timeout=AbortSignal.timeout(kind==='reads'?45000:15000);
+   const timeout=AbortSignal.timeout(Math.max(1,Math.min(kind==='reads'?45000:15000,
+    gate.ownAccount?Date.parse(m.expiresAt)-Date.now():Infinity)));
    category='transport';
    const response=await transport(input,{...options,redirect:'error',signal:options.signal?AbortSignal.any([options.signal,timeout]):timeout});
    httpStatus=response.status;category='http';
@@ -91,7 +93,7 @@ export function agentWalrusFetch(gate,transport,{phase=()=>'action'}={}){
     if(url.pathname==='/config'){
      const value=await response.clone().json();
      assert(value.network==='mainnet'&&value.packageId===m.packageId&&value.suiTransport==='grpc'
-      &&value.suiGrpcUrl===SUI_SEAL_ORIGIN&&(['live-walrus-replay','live-ordinary-selected','offline-managed-admission-test'].includes(m.mode)
+      &&value.suiGrpcUrl===SUI_SEAL_ORIGIN&&((ownMode(m.mode)||['live-walrus-replay','live-ordinary-selected','offline-managed-admission-test'].includes(m.mode))
         ?deploymentHash(value)===m.admission.deploymentHash:value.suiRpcUrl===undefined),'AGENT_CONFIG_SCOPE');
     }
    }
