@@ -188,5 +188,6 @@
   "limitations": [
     "Distinct metadata-only diagnostic server; not the live application or judge launcher.",
     "Fabricated metadata and HTTP503; no claim about the historical real failure."
-  ]
+  ],
+  "sourceCommit": "4db7fc052e297d4a28886c8de691b6ddd2d00a1b"
 }

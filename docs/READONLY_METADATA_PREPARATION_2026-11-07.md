@@ -42,6 +42,8 @@ Nine targeted cases passed using synthetic profiles and fully intercepted SDK re
 
 Saved `evidence/readonly-metadata-offline-2026-11-07/run.json` records an actual independent stdio worker for each synthetic case: success uses 5 guarded requests with three selected synthetic IDs, controlled failure uses 1 request and stops before handshake. Both SDKs are destroyed. Application ledger bytes remain unchanged. Actual models/profiles/providers: zero. `spec.json` is the public-only scope/identity/limits/source freeze, not a live grant. Full `bash start.command --check` completed once after this change: **148/148 tests, zero failures/skips**, all independent protocol/evidence/source checks (192 source files). Log: /private/tmp/recall-metadata-full-20261107.log. The preceding139-test result is historical.
 
+Product/source revision: `4db7fc052e297d4a28886c8de691b6ddd2d00a1b` (local only). Saved protocol evidence is pinned to that historical source; no actual diagnostic is implied by the pin.
+
 ## Exact prepared command — not executed
 
 Prepared directory: `/private/tmp/recall-readonly-metadata-ready-ZUtNbw`.
