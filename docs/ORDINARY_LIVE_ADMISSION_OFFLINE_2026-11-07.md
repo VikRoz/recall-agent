@@ -32,6 +32,8 @@ The saved `evidence/ordinary-managed-offline-2026-11-07/run.json` records two in
 
 Thirteen managed-boundary tests cover rejection before credential/factory use where determinable, wrong profile/key, frozen source, inherited receipt integrity, deployment preflight, independent processes, durable reservations across processes, bounded fake app-server orchestration (including quota stop), cleanup and restricted transaction scope. The orchestration test uses a local fake `codex` executable; it never runs the account CLI or performs inference. An additional Tatum regression checks raw-response observation, independent gas arithmetic and no retry if archival fails. The full integrated `bash start.command --check` completed: 131/131 tests, zero failures/skips, all independent MCP walkthroughs, saved-evidence verifiers and source verification. Log: /private/tmp/recall-managed-full-context-final.log. Documentation-only updates afterwards receive source and diff checks.
 
+Verified product/source revision: `e1ffa21f8c80de10d0ad31173f785a7f45c47e80` (local only). The saved protocol evidence is pinned to its Git bytes; subsequent documentation/pin commits do not claim another run.
+
 ## Frozen live plan — prepared, not authorized or executed
 
 Public plan: `evidence/ordinary-managed-offline-2026-11-07/live-plan.json`.

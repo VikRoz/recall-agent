@@ -1000,5 +1000,6 @@
   "limitations": [
     "Synthetic transport responses; not Mainnet receipts or a model accuracy result.",
     "Fake app-server orchestration is tested separately; no actual native inference was performed."
-  ]
+  ],
+  "sourceCommit": "e1ffa21f8c80de10d0ad31173f785a7f45c47e80"
 }
