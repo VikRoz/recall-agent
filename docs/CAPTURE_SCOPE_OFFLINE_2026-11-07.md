@@ -62,3 +62,5 @@ The successful offline branch is not a new live pass or evidence of generalized 
 ## Completed acceptance
 
 One full `bash start.command --check` run after this fix passed **166/166 tests**, zero failures/skips, all independent protocol walkthroughs, saved historical/new evidence verifiers and source213. Log: `/private/tmp/recall-capture-scope-full-20261107.log`. The expanded synthetic snapshot passed its40-request verifier; the actual stopped trace independently passed historical-source and plaintext/Tatum proof checks. No new live preparation, capture destination, grant, model or provider call was made.
+
+Frozen correction SOURCE: `314cc83bf6e4716eeffc4d34e7875349154fe219` (local only). The expanded synthetic snapshot is pinned to that Git revision; its historical source verifier passed. The actual stopped evidence remains pinned to3e03445 and its latest ledger/native bytes were checked unchanged after this correction. The old exact temporary key is still absent. No replacement workspace, grant, key path or immediate live request was prepared.

@@ -381,5 +381,6 @@
   "actualProfilesRead": 0,
   "actualKeysRead": 0,
   "additionalSpendUSD": 0,
-  "limitation": "Independent protocol clients supply the synthetic verifier claim; no actual model choice, account access, real Tatum response or Mainnet write is claimed."
+  "limitation": "Independent protocol clients supply the synthetic verifier claim; no actual model choice, account access, real Tatum response or Mainnet write is claimed.",
+  "sourceCommit": "314cc83bf6e4716eeffc4d34e7875349154fe219"
 }
