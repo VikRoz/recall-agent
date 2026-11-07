@@ -1,5 +1,8 @@
 # Single-use metadata-only SDK/stdio diagnostic — offline preparation
 
+Historical preparation snapshot. **The coordinator later executed this exact one-shot diagnostic once successfully. Its allowance is consumed. Do not repeat the command below.** See [actual result](READONLY_METADATA_RESULT_2026-11-07.md). Statements about absent grant/access below describe preparation time.
+
+
 Date: 7 November 2026.
 
 ## Goal and starting assumptions
@@ -44,7 +47,7 @@ Saved `evidence/readonly-metadata-offline-2026-11-07/run.json` records an actual
 
 Historical product/source revision `4db7fc052e297d4a28886c8de691b6ddd2d00a1b` and its saved run/spec remain unchanged. Status-shape product/source revision is7457b304c59a2f2c4fca98e81305d220f6adedea (local only). The subsequent status-shape correction is recorded separately in status-shape-run.json and spec-status-shape.json; it removes an unsupported diagnostic-only restriction, not a cause of the old real health/startup failure. No actual diagnostic is implied by either snapshot.
 
-## Exact prepared command — not executed
+## Historical prepared command — subsequently consumed
 
 The earlier ZUtNbw preparation was withdrawn before any grant/profile/network access because its source hashes predate the approved status-shape correction. Only the replacement below may be considered for a later read-only decision. The master, not this agent, will operate the one-shot command after approval.
 

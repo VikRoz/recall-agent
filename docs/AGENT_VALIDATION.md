@@ -1,5 +1,8 @@
 # Agent offline validation — updated 7 November 2026
 
+The subsequent actual metadata-only diagnostic is checked by `evidence/verify-readonly-metadata-live.mjs`: historical source bytes, result/counter/stdio hash binding, all three original done receipts and retained stopped/native state. This new saved-evidence check makes no provider or profile calls and is separate from the 149-test offline suite. See READONLY_METADATA_RESULT_2026-11-07.md.
+
+
 ## Scope and assumptions
 
 Experimental copy of Recall Lab. The original release remains the fallback. This record covers code/protocol checks; these offline checks perform no real model task or Mainnet operation. A separate subsequent model probe is documented in AGENT_MODEL_PROBE_2026-11-06.md.
