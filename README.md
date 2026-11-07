@@ -62,7 +62,7 @@ Ask about a wallet and optionally a period in ordinary words. The model can find
 
 ## Prepared real ordinary evaluation
 
-[Stage 4A](docs/ORDINARY_LIVE_ADMISSION_OFFLINE_2026-11-07.md) now has a distinct managed admission and a bounded two-conversation runner. The offline SDK/Seal/Tatum checks are intercepted; they are not account access or a new Mainnet run. The prepared real context contains no grant or captured key. The default launcher remains offline. This two-turn evaluation grant does not authorize interactive `--codex`; the primary bounded judge launch remains stage 6 work.
+[Stage 4A](docs/ORDINARY_LIVE_ADMISSION_OFFLINE_2026-11-07.md) now has a distinct managed admission and a bounded two-conversation runner. The offline SDK/Seal/Tatum checks are intercepted; they are not account access or a new Mainnet run. The separately approved [real attempt](docs/ORDINARY_LIVE_RESULT_2026-11-07.md) completed one actual Tatum report and Walrus write, then stopped before the second generation because the required MCP client failed initialization. New-record readback/resolution are unproved; the allowance is stopped and the temporary key was deleted. The default launcher remains offline. This two-turn evaluation grant does not authorize interactive `--codex`; the primary bounded judge launch remains stage 6 work.
 
 ## Scoped gas-payer memory
 
