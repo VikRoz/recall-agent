@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {assert,canonical,exactKeys} from '../src/domain.ts';
 import {validateExperienceRows,experienceId} from './agent-experience.ts';
 const sha=v=>createHash('sha256').update(v).digest('hex');
+export const closedOriginHash=origin=>sha(canonical({manifest:origin.manifest,ledger:origin.ledger,native:origin.native}));
 export function ownPath(path){assert(typeof path==='string'&&isAbsolute(path)&&realpathSync(path)===path,'OWN_PRIVATE_PATH');return path;}
 function originFile(path,role){
  ownPath(path);const names={manifest:['agent-run.json'],ledger:['agent-ledger.json'],native:['native-budget.json','agent-native-turn.json']};
@@ -16,7 +17,7 @@ function originFile(path,role){
 }
 export function validateRetained(retained,identity,{fixture=false,freeze=false}={}){
  if(retained===null)return null;
- exactKeys(retained,['identity','records','receipts','origins']);
+ exactKeys(retained,['identity','records','receipts','origins',...(Object.hasOwn(retained,'closedAddenda')?['closedAddenda']:[])]);
  assert(canonical(retained.identity)===canonical(identity)&&retained.records.length===3&&retained.origins.length===3,'OWN_RETAINED_IDENTITY');
  validateExperienceRows(retained.records,identity.workspace);
  assert(new Set(retained.origins.map(o=>o.role)).size===3&&['storage','ordinary-write','closed-zero-write'].every(k=>retained.origins.some(o=>o.role===k)),'OWN_CLOSED_LINEAGE');
@@ -48,5 +49,27 @@ export function validateRetained(retained,identity,{fixture=false,freeze=false}=
    &&origin.ledger.intents.some(i=>i.key===row.id&&i.sha256===receipt.sha256&&i.namespace===identity.workspace+'-experience')
    &&origin.ledger.jobs[receipt.jobId]?.key===row.id&&origin.ledger.jobs[receipt.jobId]?.namespace===identity.workspace+'-experience','OWN_RETAINED_RECEIPT');
  }
- assert(Object.keys(retained.receipts).length===3,'OWN_RETAINED_RECEIPT');return retained;
+ assert(Object.keys(retained.receipts).length===3,'OWN_RETAINED_RECEIPT');
+ if(Object.hasOwn(retained,'closedAddenda')){
+  const addenda=retained.closedAddenda;
+  assert(Array.isArray(addenda)&&addenda.length>0&&addenda.length<=8,'OWN_CLOSED_ADDENDA');
+  const hashes=new Set(retained.origins.map(closedOriginHash)),runs=new Set(retained.origins.map(o=>o.manifest.runId));
+  for(const origin of addenda){
+   exactKeys(origin,['manifest','ledger','native','files']);const m=origin.manifest,s=origin.ledger,n=origin.native,h=closedOriginHash(origin);
+   assert(!hashes.has(h)&&!runs.has(m.runId),'OWN_DUPLICATE_CLOSED_ORIGIN');hashes.add(h);runs.add(m.runId);
+   assert(['owner','accountId','delegatePublicKeyHex','packageId','workspace'].every(k=>m[k]===identity[k])
+    &&m.namespaces?.experience===identity.workspace+'-experience'&&m.namespaces?.rules===identity.workspace+'-rules'
+    &&m.mode===(fixture?'offline-own-account-test':'live-own-account-selected'),'OWN_CLOSED_ADDENDUM_IDENTITY');
+   assert(s.manifestHash===sha(canonical(m))&&s.writes===0&&Array.isArray(s.intents)&&s.intents.length===0
+    &&s.jobs&&typeof s.jobs==='object'&&!Array.isArray(s.jobs)&&Object.keys(s.jobs).length===0&&typeof s.stopped==='string'&&s.stopped.length>0
+    &&n?.turns?.length===1&&n.turns[0].status==='stopped'&&typeof n.stopped==='string'&&n.stopped.length>0,'OWN_CLOSED_ADDENDUM_STOP');
+   assert(Object.keys(origin.files).sort().join(',')==='ledger,manifest,native','OWN_LINEAGE_FILES');
+   for(const role of ['manifest','ledger','native']){
+    const ref=origin.files[role];exactKeys(ref,freeze?['path']:['path','sha256']);const actual=originFile(ref.path,role);
+    assert(canonical(actual.value)===canonical(origin[role]),'OWN_LINEAGE_CHANGED');
+    if(freeze)ref.sha256=actual.sha256;else assert(ref.sha256===actual.sha256,'OWN_LINEAGE_CHANGED');
+   }
+  }
+ }
+ return retained;
 }

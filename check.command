@@ -34,4 +34,5 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-ordinary-continuation.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-ordinary-continuation.mjs" --capture-scope
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-continuation-live.mjs"
+"$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-own-account-live.mjs"
 "$node" "$root/verify-source.mjs"

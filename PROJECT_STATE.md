@@ -1,6 +1,10 @@
 # Recall Agent development state
 
 Date: 7 November 2026. Separate private repository: VikRoz/recall-agent.
+Latest actual result: the aa7d8ed own-account rehearsal pRaby9 stopped at one `prepare_report` with `TRANSACTION_UNAVAILABLE`. Tatum1/write0/read1/SDK13; one native slot consumed, second chat/final reader/CSV not run, key absent, original three origins unchanged. Candidate receipts remain3/10. Six exact historical Tatum proofs passed independent offline validation; the replacement seventh is separately verified through official public Sui, with no Tatum availability claim. See [actual result and dataset review](docs/OWN_ACCOUNT_STOP_AND_DATASET_REVIEW_2026-11-07.md). This supersedes the earlier preparation-only status below.
+
+Current offline increment keeps the core three lineage origins exact and adds bounded closed zero-write addenda. The new real plan requires the exact pRaby9 manifest/ledger/native snapshot and replaces only the unavailable digest. Its operation/time limits, general empty-chat product entry and no-retry policy are unchanged. New preparation is not a grant, credential transfer or activation; the master remains the sole real operator.
+
 Baseline: VikRoz/recall-lab at c884ad88176e93c2856dfcc3892467379ace0293. Original source, public site and v1.0.0 release remain unchanged and available for the fallback application. Upstream push is disabled in this working copy.
 
 Added wallet activity lookup on 6 November: independent find_wallet_activity tool, UTC period filtering, bounded query-bound pagination and explicit partial coverage. Default synthetic index and a hash-pinned saved Mainnet index both feed the existing report/CSV path. The saved index has two distinct transactions and marks source as replay. Workspace dataset binding prevents silent switching. No external lookup provider is enabled.

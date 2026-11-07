@@ -1,0 +1,242 @@
+{
+  "schema": 1,
+  "sourceRun": "aa7d8ed7afe6e27166b73e01977193747a7a18b0",
+  "observedWindow": {
+    "nativeReservedAt": "2026-11-07T18:17:56.291Z",
+    "finishedAt": "2026-11-07T18:18:20.517Z"
+  },
+  "rows": [
+    {
+      "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+      "actualOrigin": "tatum",
+      "sourceRunObservedAt": "2026-11-07T18:18:20.432Z",
+      "proofSha256": "2c4ca04ca408b9fff61ecdec68832a6eef9886a14048a345cc5e033ca35bbba8",
+      "normalized": {
+        "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+        "network": "mainnet",
+        "checkpoint": "330378809",
+        "timestamp": "2026-10-05T01:33:44.760Z",
+        "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+        "commands": [
+          "moveCall"
+        ],
+        "interpretation": "unparsed-ptb",
+        "status": "success",
+        "source": "tatum",
+        "gas": {
+          "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "computation": "100000",
+          "storage": "988000",
+          "rebate": "2595780",
+          "netCharge": "-1507780"
+        },
+        "movements": [
+          {
+            "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "1507780"
+          }
+        ]
+      },
+      "factPayloadBytes": 1239,
+      "stored": false,
+      "mainnetReceipt": null
+    },
+    {
+      "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+      "actualOrigin": "tatum",
+      "sourceRunObservedAt": "2026-11-07T18:18:20.431Z",
+      "proofSha256": "30cb5af416df68c06635e96e94f4b8fd04620be6d2676ef85ec9334abad95c11",
+      "normalized": {
+        "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+        "network": "mainnet",
+        "checkpoint": "330417625",
+        "timestamp": "2026-10-05T04:04:18.498Z",
+        "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+        "commands": [
+          "moveCall"
+        ],
+        "interpretation": "unparsed-ptb",
+        "status": "success",
+        "source": "tatum",
+        "gas": {
+          "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "computation": "100000",
+          "storage": "12061200",
+          "rebate": "5146416",
+          "netCharge": "7014784"
+        },
+        "movements": [
+          {
+            "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-7014784"
+          }
+        ]
+      },
+      "factPayloadBytes": 1241,
+      "stored": false,
+      "mainnetReceipt": null
+    },
+    {
+      "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+      "actualOrigin": "tatum",
+      "sourceRunObservedAt": "2026-11-07T18:18:20.427Z",
+      "proofSha256": "8599b47fff42362fae30d3f746f220bd2f3a8696145ffe6044b5982c781a5d65",
+      "normalized": {
+        "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+        "network": "mainnet",
+        "checkpoint": "330414435",
+        "timestamp": "2026-10-05T03:52:07.997Z",
+        "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+        "commands": [
+          "moveCall"
+        ],
+        "interpretation": "unparsed-ptb",
+        "status": "success",
+        "source": "tatum",
+        "gas": {
+          "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "computation": "100000",
+          "storage": "12061200",
+          "rebate": "5146416",
+          "netCharge": "7014784"
+        },
+        "movements": [
+          {
+            "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-7014784"
+          }
+        ]
+      },
+      "factPayloadBytes": 1241,
+      "stored": false,
+      "mainnetReceipt": null
+    },
+    {
+      "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+      "actualOrigin": "tatum",
+      "sourceRunObservedAt": "2026-11-07T18:18:20.415Z",
+      "proofSha256": "8c7db73dc890f0de5c302a6a10401b1b5fa436ee01b61c7b8975b4e6bede8aa0",
+      "normalized": {
+        "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+        "network": "mainnet",
+        "checkpoint": "341884811",
+        "timestamp": "2026-11-05T10:34:12.732Z",
+        "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "commands": [
+          "makeMoveVector",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall"
+        ],
+        "interpretation": "unparsed-ptb",
+        "status": "success",
+        "source": "tatum",
+        "gas": {
+          "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "computation": "100000",
+          "storage": "41936800",
+          "rebate": "41932606",
+          "netCharge": "104194"
+        },
+        "movements": [
+          {
+            "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-104194"
+          }
+        ]
+      },
+      "factPayloadBytes": 1334,
+      "stored": false,
+      "mainnetReceipt": null
+    },
+    {
+      "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+      "actualOrigin": "tatum",
+      "sourceRunObservedAt": "2026-11-07T18:18:20.418Z",
+      "proofSha256": "ecc7a044c617714c904822bf557ed42b546200a97a93baaf29a475f6190710eb",
+      "normalized": {
+        "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+        "network": "mainnet",
+        "checkpoint": "281795481",
+        "timestamp": "2026-06-01T07:10:34.541Z",
+        "sender": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+        "commands": [
+          "moveCall",
+          "moveCall",
+          "transferObjects"
+        ],
+        "interpretation": "unparsed-ptb",
+        "status": "success",
+        "source": "tatum",
+        "gas": {
+          "payer": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+          "computation": "100000",
+          "storage": "8618400",
+          "rebate": "2595780",
+          "netCharge": "6122620"
+        },
+        "movements": [
+          {
+            "address": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-6122620"
+          }
+        ]
+      },
+      "factPayloadBytes": 1269,
+      "stored": false,
+      "mainnetReceipt": null
+    },
+    {
+      "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+      "actualOrigin": "tatum",
+      "sourceRunObservedAt": "2026-11-07T18:18:20.422Z",
+      "proofSha256": "f0af6566b4ca47d6fdc5e50b6b4b76932f530b48650f9139680f4a73e44635d6",
+      "normalized": {
+        "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+        "network": "mainnet",
+        "checkpoint": "327964518",
+        "timestamp": "2026-09-28T17:01:01.716Z",
+        "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+        "commands": [
+          "moveCall"
+        ],
+        "interpretation": "unparsed-ptb",
+        "status": "success",
+        "source": "tatum",
+        "gas": {
+          "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "computation": "100000",
+          "storage": "14911200",
+          "rebate": "7809912",
+          "netCharge": "7201288"
+        },
+        "movements": [
+          {
+            "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-7201288"
+          }
+        ]
+      },
+      "factPayloadBytes": 1241,
+      "stored": false,
+      "mainnetReceipt": null
+    }
+  ],
+  "missing": [
+    "2AhYCq8SJNHYZwbwNYKoat6d39ZA4jQsiCcB1cXw19rG"
+  ],
+  "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+  "providerCalls": 0,
+  "modelCalls": 0
+}

@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {runHash} from '../app/agent-run.mjs';
+import {canonical} from '../src/domain.ts';
+import {normalizeTransaction} from '../app/activity.ts';
+import {transactionFact,verifyFactProof,NORMALIZER_SHA256} from '../app/agent-facts.ts';
+import {ExecutedTransaction} from '../app/node_modules/@mysten/sui/dist/grpc/proto/sui/rpc/v2/executed_transaction.mjs';
+import {verifyRecordedSource} from './recorded-source.mjs';
+const base=new URL('./own-account-live-2026-11-07/',import.meta.url),read=name=>JSON.parse(readFileSync(new URL(name,base))),r=read('run.json');
+assert.equal(r.ledger.manifestHash,runHash(r.manifest));assert.deepEqual([r.ledger.tatumBatches,r.ledger.writes,r.ledger.reads,r.ledger.requests],[1,0,1,13]);
+assert.deepEqual(r.ledger.intents,[]);assert.deepEqual(r.ledger.jobs,{});assert.equal(r.ledger.stopped,'ORDINARY_TATUM_STOPPED');
+assert.equal(r.nativeBudget.turns.length,1);assert.equal(r.nativeBudget.turns[0].status,'stopped');assert.equal(r.nativeBudget.stopped,'NATIVE_STOPPED');
+assert.equal(r.secondNativeStarted,false);assert.equal(r.finalReaderRan,false);assert.equal(r.candidateReceiptCount,3);
+assert.equal(r.temporaryKeyAbsent,true);assert.equal(r.originalStatesUnchanged,true);assert.equal(r.retries,0);assert.equal(r.additionalSpendUSD,0);
+const tools=read('tools.json').tools;assert.equal(tools.length,1);assert.equal(tools[0].publicResultCode,'TRANSACTION_UNAVAILABLE');assert.equal(tools[0].status,'failed');
+const review=read('six-response-review.json');assert.equal(review.rows.length,6);assert.equal(review.normalizerSha256,NORMALIZER_SHA256);
+for(const row of review.rows){
+ const proof=read('tatum-proofs/'+row.proofSha256+'.json');verifyFactProof(proof,row.proofSha256);
+ const tx=normalizeTransaction(ExecutedTransaction.fromJson(proof),row.digest,'mainnet','tatum');assert.deepEqual(tx,row.normalized);
+ const fact=transactionFact(r.manifest.workspace,tx,{kind:'tatum',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',hashScope:'protobuf-json-selected-transaction',rawTransactionSha256:row.proofSha256,normalizerSha256:NORMALIZER_SHA256},row.sourceRunObservedAt);
+ assert.equal(Buffer.byteLength(canonical(fact)),row.factPayloadBytes);assert.equal(row.stored,false);assert.equal(row.mainnetReceipt,null);
+}
+assert.deepEqual(tools[0].arguments.transactions.filter(id=>!review.rows.some(row=>row.digest===id)),r.unavailableInCapturedBatch);
+const seventh=read('seventh-response-review.json'),proof=read('official-sui-seventh.json');verifyFactProof(proof,seventh.rawProofSha256);
+assert.equal(createHash('sha256').update(canonical(proof)).digest('hex'),seventh.rawProofSha256);
+const actual=normalizeTransaction(ExecutedTransaction.fromJson(proof),proof.digest,'mainnet','tatum');actual.source='official-public-sui-grpc';assert.deepEqual(actual,seventh.normalized);
+assert.equal(seventh.tatumAvailability,'not-yet-verified');assert.equal(seventh.stored,false);assert(seventh.projectionOnly.wholePayloadBytes<=4096);
+const source=verifyRecordedSource({sourceCommit:r.sourceCommit,productAndHarnessSha256:r.sourceHashes});
+console.log(JSON.stringify({status:r.status,source,sixHistoricalTatumProofs:true,seventhOfficialSuiProof:true,newReceipts:0,candidateReceipts:3,retries:0,additionalSpendUSD:0}));

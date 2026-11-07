@@ -8,7 +8,8 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 import {createOwnFixture,syntheticRetained} from './agent-own-fixture.mjs';
 import {ordinaryFixtureConsent,SYNTHETIC_TATUM_KEY} from './agent-ordinary-fixture.mjs';
 import {ownAuthorization} from './agent-own.mjs';
-import {prepareOwnRehearsal,runOwnRehearsal,ownRehearsalPlan} from './agent-own-rehearsal.mjs';
+import {prepareOwnRehearsal,runOwnRehearsal,ownRehearsalPlan,rehearsalContext,REHEARSAL_CLOSED_ADDENDA} from './agent-own-rehearsal.mjs';
+import {closedOriginHash} from './agent-own-lineage.mjs';
 import {ownNativeArgs,nativeOwnTurn} from './agent-own-native.mjs';
 import {runHash,privateRead} from './agent-run.mjs';
 import {managedFile} from './agent-managed.mjs';
@@ -63,6 +64,41 @@ test('frozen plan names seven distinct public cases and native config points to 
  assert(!p.ids.includes('2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ'));assert.equal(p.limits.nativeTurns,2);assert.equal(p.limits.toolsPerTurn,12);
  const config=ownNativeArgs(root,'/private/workspace',[],{fixture:true});assert(config.some(x=>x.includes('agent-own-entry.mjs')&&x.includes('--native-limit=12')));
  assert(!config.some(x=>x.includes('agent-managed-entry.mjs')));
+ assert(!p.ids.includes('2AhYCq8SJNHYZwbwNYKoat6d39ZA4jQsiCcB1cXw19rG'));assert(p.ids.includes('9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj'));
+ assert.deepEqual(p.requiredClosedAddenda,REHEARSAL_CLOSED_ADDENDA);
+});
+// Re-materialize public archived metadata only: no private path, key, profile or provider.
+function actualPublicConnection(base){
+ const read=name=>JSON.parse(readFileSync(join(root,'evidence',name,'run.json'))),first=read('agent-live-trial-2026-11-06'),second=read('ordinary-live-2026-11-07'),third=read('ordinary-continuation-live-2026-11-07'),fourth=read('own-account-live-2026-11-07');
+ const identity=Object.fromEntries(['owner','accountId','delegatePublicKeyHex','packageId','workspace'].map(k=>[k,fourth.manifest[k]]));
+ const origin=(name,run,native,records)=>{const folder=join(base,name);mkdirSync(folder,{mode:0o700});const files={};
+  for(const [key,value,file] of [['manifest',run.manifest,'agent-run.json'],['ledger',run.ledger,'agent-ledger.json'],['native',native,'native-budget.json']]){
+   const path=join(folder,file);writeFileSync(path,canonical(value),{mode:0o600});files[key]={path};}
+  return {manifest:run.manifest,ledger:run.ledger,native,files,...(records?{records,role:name}:{})};};
+ const retained={identity,records:[...first.records,second.newRecord],receipts:{...first.receipts,[second.newRecord.id]:second.receipt},origins:[
+  origin('storage',first,first.nativePermit,first.records),origin('ordinary-write',second,second.nativeBudget,[second.newRecord]),origin('closed-zero-write',third,third.nativeBudget,[])],
+  closedAddenda:[origin('pRaby9',fourth,fourth.nativeBudget)]};
+ return {root,identity,config:{network:'mainnet',packageId:identity.packageId,suiTransport:'grpc',suiGrpcUrl:'https://mysten-rpc.mainnet.sui.io'},credentialRoot:base,keyFile:join(base,'capture','tatum.key'),retained};
+}
+test('real preparation requires exact closed pRaby9 metadata in addition to the immutable three origins before external ports',async()=>{
+ for(const mutation of ['none','missing','empty','different','duplicate','bytes','lost-core','removed-after-prepare']){const base=temporary();try{
+  const c=actualPublicConnection(base),directory=join(base,'prepared');for(const p of ['prepared','capture'])mkdirSync(join(base,p),{mode:0o700});
+  assert.equal(closedOriginHash(c.retained.closedAddenda[0]),REHEARSAL_CLOSED_ADDENDA[0]);
+  if(mutation==='missing')delete c.retained.closedAddenda;if(mutation==='empty')c.retained.closedAddenda=[];
+  if(mutation==='different'){const o=c.retained.closedAddenda[0];o.native.stopped='OTHER_STOP';writeFileSync(o.files.native.path,canonical(o.native));}
+  if(mutation==='duplicate')c.retained.closedAddenda.push(structuredClone(c.retained.closedAddenda[0]));
+  if(mutation==='lost-core')c.retained.origins.pop();
+  if(['none','bytes','removed-after-prepare'].includes(mutation)){
+   const result=prepareOwnRehearsal(directory,c);assert.equal(result.retained.origins.length,3);assert.equal(result.retained.closedAddenda.length,1);
+   if(mutation==='bytes'){const p=c.retained.closedAddenda[0].files.ledger.path;writeFileSync(p,readFileSync(p,'utf8')+'\n');
+    assert.throws(()=>rehearsalContext(directory),/OWN_LINEAGE_CHANGED/);}
+   else if(mutation==='removed-after-prepare'){
+    delete result.retained.closedAddenda;writeFileSync(join(directory,'rehearsal-context.json'),canonical(result));let factoryCalls=0;
+    await assert.rejects(runOwnRehearsal(directory,{ports:{readKey:()=>{factoryCalls++;throw Error('MUST_NOT_READ');}}}),/REHEARSAL_REQUIRED_CLOSED_ADDENDA/);assert.equal(factoryCalls,0);
+   }else assert.deepEqual(rehearsalContext(directory).plan.requiredClosedAddenda,REHEARSAL_CLOSED_ADDENDA);
+  }else assert.throws(()=>prepareOwnRehearsal(directory,c),mutation==='different'?/REHEARSAL_REQUIRED_CLOSED_ADDENDA/:undefined);
+  assert.equal(existsSync(c.keyFile),false);assert.equal(existsSync(join(directory,'state')),false);
+ }finally{rmSync(base,{recursive:true,force:true});}}
 });
 test('cleanup refuses to delete a replaced file even after an otherwise owned capture',async()=>{
  const {base,directory,c}=await setup();try{

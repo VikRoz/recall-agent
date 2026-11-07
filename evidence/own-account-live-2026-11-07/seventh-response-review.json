@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+  "actualOrigin": "official-public-sui-grpc",
+  "rawProofSha256": "9a8cfefff881088c13cb9eca995b89107f77cd3aa09868ec6244a7815fe601ca",
+  "normalized": {
+    "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+    "network": "mainnet",
+    "checkpoint": "341884811",
+    "timestamp": "2026-11-05T10:34:12.732Z",
+    "sender": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+    "commands": [
+      "makeMoveVector",
+      "moveCall",
+      "moveCall",
+      "moveCall",
+      "moveCall",
+      "moveCall",
+      "moveCall"
+    ],
+    "interpretation": "unparsed-ptb",
+    "status": "success",
+    "source": "official-public-sui-grpc",
+    "gas": {
+      "payer": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+      "computation": "101000",
+      "storage": "19699200",
+      "rebate": "19697230",
+      "netCharge": "102970"
+    },
+    "movements": [
+      {
+        "address": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "amount": "-102970"
+      }
+    ]
+  },
+  "projectionOnly": {
+    "source": "fixture",
+    "wholePayloadBytes": 1318,
+    "limit": 4096,
+    "stored": false
+  },
+  "tatumAvailability": "not-yet-verified",
+  "providerCallsInThisReview": 0,
+  "modelCalls": 0,
+  "stored": false
+}

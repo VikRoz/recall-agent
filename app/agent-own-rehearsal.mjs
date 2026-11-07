@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import {assert,canonical,exactKeys,time} from '../src/domain.ts';
 import {privateDirectory,privateRead,runHash} from './agent-run.mjs';
 import {managedFile,managedRuntimeHashes} from './agent-managed.mjs';
-import {validateRetained,ownPath} from './agent-own-lineage.mjs';
+import {validateRetained,ownPath,closedOriginHash} from './agent-own-lineage.mjs';
 import {createOwnActivation,ownAuthorization,openOwnAccount} from './agent-own.mjs';
 import {OWN_LIMITS} from './agent-own-contract.mjs';
 import {readTatumKey} from './activity-key.ts';
@@ -15,11 +15,17 @@ import {validateTatumBinding} from './activity-live.ts';
 import {ownRealPorts} from './agent-own-entry.mjs';
 import {nativeOwnTurn} from './agent-own-native.mjs';
 import {cleanClientEnv} from './agent-own-launch.mjs';
-export const REHEARSAL_IDS=['2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3','2AhYCq8SJNHYZwbwNYKoat6d39ZA4jQsiCcB1cXw19rG',
+export const REHEARSAL_IDS=['2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3','9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj',
  'BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW','399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj',
  '3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7','CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL','6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw'];
 const wallet='0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23';
-export function ownRehearsalPlan(root){return {schema:1,kind:'own-account-final-rehearsal',model:'gpt-5.6-luna',network:'mainnet',ids:REHEARSAL_IDS,
+// Exact public stopped pRaby9 manifest/ledger/native snapshot; not a renewed allowance.
+export const REHEARSAL_CLOSED_ADDENDA=['e36194decf681b651c1d2b62455b9b055e6cfc7ca92ee569eb51c6ef9da3bea3'];
+export function validateRehearsalLineage(retained,plan){
+ assert(canonical((retained?.closedAddenda??[]).map(closedOriginHash))===canonical(plan.requiredClosedAddenda),'REHEARSAL_REQUIRED_CLOSED_ADDENDA');
+}
+export function ownRehearsalPlan(root,{fixture=false}={}){return {schema:1,kind:'own-account-final-rehearsal',model:'gpt-5.6-luna',network:'mainnet',ids:REHEARSAL_IDS,
+ requiredClosedAddenda:fixture?[]:REHEARSAL_CLOSED_ADDENDA,
  limits:{...OWN_LIMITS,nativeTurns:2,toolsPerTurn:12,secondsPerTurn:120,totalSeconds:240,maxUSD:0},noRetry:true,paidFallback:false,
  tasks:[{id:'seven-selected-cases',text:'Review these seven Sui Mainnet transactions as research case notes. For each, report status, gas payer, net gas and exact balance changes in base units, plus any uncertainty. Check whether monitored wallet '+wallet+' is involved; do not assume it appears in every case. Use current chain data and distinguish any historical observation. Transactions: '+REHEARSAL_IDS.join(', ')+'.'},
  {id:'fresh-session-comparison',text:'Revisit Sui Mainnet transaction '+REHEARSAL_IDS[0]+' for monitored wallet '+wallet+'. Retrieve its historical observation, show the memory blob ID and provenance, then compare it with fresh chain data. Explain whether the facts agree, keeping historical and current evidence separate. Export this selected-case report as the original CSV artifact and give its path and SHA-256. Do not invent a complete wallet history.'}],
@@ -31,16 +37,17 @@ export function prepareOwnRehearsal(directory,{root,identity,config,credentialRo
  privateDirectory(dirname(keyFile));ownPath(dirname(keyFile));assert(!existsSync(keyFile),'REHEARSAL_KEY_MUST_BE_ABSENT');
  const publicProof=validateRetained(structuredClone(retained),identity,{fixture,freeze:true});
  const c={schema:1,kind:fixture?'offline-rehearsal-test':'prepared-not-authorized',root:ownPath(resolve(root)),identity,config,credentialRoot,keyFile,
-  keyDirectory:fingerprint(dirname(keyFile)),retained:publicProof,plan:ownRehearsalPlan(root)};
+  keyDirectory:fingerprint(dirname(keyFile)),retained:publicProof,plan:ownRehearsalPlan(root,{fixture})};
+ validateRehearsalLineage(c.retained,c.plan);
  managedFile(join(directory,'rehearsal-context.json'),c);managedFile(join(directory,'native-budget.json'),{schema:1,contextHash:runHash(c),turns:[],stopped:null});return c;
 }
 export function rehearsalContext(directory,{fixture=false}={}){
  privateDirectory(directory);const c=privateRead(join(directory,'rehearsal-context.json'));
  exactKeys(c,['schema','kind','root','identity','config','credentialRoot','keyFile','keyDirectory','retained','plan']);
  assert(c.schema===1&&c.kind===(fixture?'offline-rehearsal-test':'prepared-not-authorized')
-  &&canonical(c.plan)===canonical(ownRehearsalPlan(c.root)),'REHEARSAL_SOURCE_OR_SCOPE_CHANGED');
+  &&canonical(c.plan)===canonical(ownRehearsalPlan(c.root,{fixture})),'REHEARSAL_SOURCE_OR_SCOPE_CHANGED');
  assert(canonical(fingerprint(dirname(c.keyFile)))===canonical(c.keyDirectory)&&!lstatSync(dirname(c.keyFile)).isSymbolicLink(),'REHEARSAL_KEY_DIRECTORY_CHANGED');
- validateRetained(c.retained,c.identity,{fixture});return c;
+ validateRetained(c.retained,c.identity,{fixture});validateRehearsalLineage(c.retained,c.plan);return c;
 }
 function grant(directory,c,{fixture=false,cleanupOnly=false}={}){
  const g=privateRead(join(directory,'rehearsal-grant.json'));
@@ -114,7 +121,7 @@ export async function runOwnRehearsal(directory,{fixture=false,ports={}}={}){
   mkdirSync(state,{mode:0o700});createOwnActivation(state,{identity:c.identity,config:c.config,credentialRoot:c.credentialRoot,keyFile:c.keyFile,
    profileHash:runHash(Object.fromEntries(['owner','accountId','delegatePublicKeyHex','packageId'].map(k=>[k,c.identity[k]]))),
    tatum:g.tatum,captureConsent:true,captureScope:'transaction-facts-only',captureSet:c.plan.ids,checkedAt:g.checkedAt,
-   retained:{...structuredClone(c.retained),origins:c.retained.origins.map(o=>({...structuredClone(o),files:Object.fromEntries(Object.entries(o.files).map(([k,v])=>[k,{path:v.path}]))}))}},{fixture});
+   retained:{...structuredClone(c.retained),...Object.fromEntries(['origins','closedAddenda'].filter(k=>c.retained[k]).map(k=>[k,c.retained[k].map(o=>({...structuredClone(o),files:Object.fromEntries(Object.entries(o.files).map(([k,v])=>[k,{path:v.path}]))}))]))}},{fixture});
   if(fixture)await ports.initializeFixture(state,c);
   mkdirSync(join(state,'client'),{mode:0o700});
   const inventory=(ports.inventory??(()=>{const r=spawnSync('codex',['mcp','list','--json'],{env:cleanClientEnv(),encoding:'utf8',timeout:15000,maxBuffer:1048576});assert(r.status===0,'MCP_INVENTORY');return JSON.parse(r.stdout);}))();
