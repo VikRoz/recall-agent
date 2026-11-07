@@ -18,7 +18,7 @@ function originFile(path,role){
 export function validateRetained(retained,identity,{fixture=false,freeze=false}={}){
  if(retained===null)return null;
  exactKeys(retained,['identity','records','receipts','origins',...(Object.hasOwn(retained,'closedAddenda')?['closedAddenda']:[])]);
- assert(canonical(retained.identity)===canonical(identity)&&retained.records.length===3&&retained.origins.length===3,'OWN_RETAINED_IDENTITY');
+ assert(canonical(retained.identity)===canonical(identity)&&Array.isArray(retained.records)&&retained.records.length>=3&&retained.records.length<=20&&retained.origins.length===3,'OWN_RETAINED_IDENTITY');
  validateExperienceRows(retained.records,identity.workspace);
  assert(new Set(retained.origins.map(o=>o.role)).size===3&&['storage','ordinary-write','closed-zero-write'].every(k=>retained.origins.some(o=>o.role===k)),'OWN_CLOSED_LINEAGE');
  const originRows=[];
@@ -42,26 +42,21 @@ export function validateRetained(retained,identity,{fixture=false,freeze=false}=
   originRows.push(...origin.records);
  }
  assert(originRows.length===3&&new Set(originRows.map(r=>r.id)).size===3,'OWN_RETAINED_ORIGIN_COUNT');
- for(const row of retained.records){
-  const receipt=retained.receipts[row.id],origin=retained.origins.find(o=>o.records.some(r=>r.id===row.id));
-  assert(row.id===experienceId(row.record)&&canonical(origin?.records.find(r=>r.id===row.id))===canonical(row)
-   &&receipt?.state==='done'&&receipt.blobId===row.blobId&&receipt.sha256===sha(canonical(row.record))
-   &&origin.ledger.intents.some(i=>i.key===row.id&&i.sha256===receipt.sha256&&i.namespace===identity.workspace+'-experience')
-   &&origin.ledger.jobs[receipt.jobId]?.key===row.id&&origin.ledger.jobs[receipt.jobId]?.namespace===identity.workspace+'-experience','OWN_RETAINED_RECEIPT');
- }
- assert(Object.keys(retained.receipts).length===3,'OWN_RETAINED_RECEIPT');
  if(Object.hasOwn(retained,'closedAddenda')){
   const addenda=retained.closedAddenda;
   assert(Array.isArray(addenda)&&addenda.length>0&&addenda.length<=8,'OWN_CLOSED_ADDENDA');
   const hashes=new Set(retained.origins.map(closedOriginHash)),runs=new Set(retained.origins.map(o=>o.manifest.runId));
   for(const origin of addenda){
-   exactKeys(origin,['manifest','ledger','native','files']);const m=origin.manifest,s=origin.ledger,n=origin.native,h=closedOriginHash(origin);
+   exactKeys(origin,['manifest','ledger','native','files',...(Object.hasOwn(origin,'records')?['records']:[])]);const m=origin.manifest,s=origin.ledger,n=origin.native,h=closedOriginHash(origin);
    assert(!hashes.has(h)&&!runs.has(m.runId),'OWN_DUPLICATE_CLOSED_ORIGIN');hashes.add(h);runs.add(m.runId);
    assert(['owner','accountId','delegatePublicKeyHex','packageId','workspace'].every(k=>m[k]===identity[k])
     &&m.namespaces?.experience===identity.workspace+'-experience'&&m.namespaces?.rules===identity.workspace+'-rules'
     &&m.mode===(fixture?'offline-own-account-test':'live-own-account-selected'),'OWN_CLOSED_ADDENDUM_IDENTITY');
-   assert(s.manifestHash===sha(canonical(m))&&s.writes===0&&Array.isArray(s.intents)&&s.intents.length===0
-    &&s.jobs&&typeof s.jobs==='object'&&!Array.isArray(s.jobs)&&Object.keys(s.jobs).length===0&&typeof s.stopped==='string'&&s.stopped.length>0
+   const rows=origin.records??[];
+   assert(s.manifestHash===sha(canonical(m))&&Number.isSafeInteger(s.writes)&&s.writes>=0&&s.writes<=7
+    &&Array.isArray(rows)&&rows.length===s.writes&&Array.isArray(s.intents)&&s.intents.length===s.writes&&s.intents.every(i=>i.state==='done')
+    &&rows.every(r=>r.record.schema==='recall-transaction-fact/1'&&r.record.source===(fixture?'fixture':'tatum'))
+    &&s.jobs&&typeof s.jobs==='object'&&!Array.isArray(s.jobs)&&Object.keys(s.jobs).length===s.writes&&typeof s.stopped==='string'&&s.stopped.length>0
     &&n?.turns?.length===1&&n.turns[0].status==='stopped'&&typeof n.stopped==='string'&&n.stopped.length>0,'OWN_CLOSED_ADDENDUM_STOP');
    assert(Object.keys(origin.files).sort().join(',')==='ledger,manifest,native','OWN_LINEAGE_FILES');
    for(const role of ['manifest','ledger','native']){
@@ -69,7 +64,18 @@ export function validateRetained(retained,identity,{fixture=false,freeze=false}=
     assert(canonical(actual.value)===canonical(origin[role]),'OWN_LINEAGE_CHANGED');
     if(freeze)ref.sha256=actual.sha256;else assert(ref.sha256===actual.sha256,'OWN_LINEAGE_CHANGED');
    }
+   originRows.push(...rows);
   }
  }
+ const allOrigins=[...retained.origins,...(retained.closedAddenda??[])];
+ assert(originRows.length===retained.records.length&&new Set(originRows.map(r=>r.id)).size===originRows.length,'OWN_RETAINED_ORIGIN_COUNT');
+ for(const row of retained.records){
+  const receipt=retained.receipts[row.id],origin=allOrigins.find(o=>o.records?.some(r=>r.id===row.id));
+  assert(row.id===experienceId(row.record)&&canonical(origin?.records.find(r=>r.id===row.id))===canonical(row)
+   &&receipt?.state==='done'&&receipt.blobId===row.blobId&&receipt.sha256===sha(canonical(row.record))
+   &&origin.ledger.intents.some(i=>i.key===row.id&&i.sha256===receipt.sha256&&i.namespace===identity.workspace+'-experience')
+   &&origin.ledger.jobs[receipt.jobId]?.key===row.id&&origin.ledger.jobs[receipt.jobId]?.namespace===identity.workspace+'-experience','OWN_RETAINED_RECEIPT');
+ }
+ assert(Object.keys(retained.receipts).length===retained.records.length,'OWN_RETAINED_RECEIPT');
  return retained;
 }

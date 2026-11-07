@@ -73,7 +73,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
     validateTypedRecord(m,m.namespaces.experience,record);const key=operationKey(record);
     gate.checkWriteScope(m.namespaces.experience,record);
     const c=gate.context();if(isContinuation(c))continuationResolution(c,record,key);
-    if(await journals.experience.load(key)){const receipt=await ports.experience.write(record,key);return {id:key,record,blobId:receipt.blobId};}
+    if(await journals.experience.load(key)){gate.submissionProof(m.namespaces.experience,record,key);const receipt=await ports.experience.write(record,key);return {id:key,record,blobId:receipt.blobId};}
     gate.ensureWriteAvailable();return base.write(record);
    })};
   if(ordinary)data=await dataFactory(gate);
@@ -86,7 +86,10 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
   if(ordinary){session.selectedTransactionsOnly=true;session.factEvidence=id=>data.factEvidence(id);}
   const captureContext=gate.context();
   if(ordinary?.ownAccount){session.ownAccount=true;session.captureScope=captureContext.captureScope;session.captureFacts=captureContext.captureConsent;session.factCaptureSet=captureContext.captureSet;
-   session.admitFactBatch=notes=>{gate.admit();assert(notes.length<=gate.limits().writes-gate.state().writes,'OWN_FACT_BATCH_BUDGET');};}
+   session.admitFactBatch=notes=>{gate.admit();const state=gate.state(),policy=gate.context().writePolicy;
+    assert(notes.length<=gate.limits().writes-state.writes,'OWN_FACT_BATCH_BUDGET');
+    if(policy&&notes.length){assert(state.writes===0&&notes.length===policy.digests.length&&notes.every(n=>policy.digests.includes(n.digest)),'OWN_EXACT_MISSING_BATCH');}
+   };}
   if(isContinuation(captureContext)){
    session.captureScope='linked-resolution-only';session.captureParentId=captureContext.baseline.origins[1].records[0].id;
   }

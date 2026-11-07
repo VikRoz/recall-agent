@@ -5,10 +5,10 @@ import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {spawn,spawnSync} from 'node:child_process';
 import {fileURLToPath,pathToFileURL} from 'node:url';
-import {createOwnFixture,syntheticRetained} from './agent-own-fixture.mjs';
+import {createOwnFixture,syntheticRetained,syntheticPartialRetained} from './agent-own-fixture.mjs';
 import {ordinaryFixtureConsent,SYNTHETIC_TATUM_KEY} from './agent-ordinary-fixture.mjs';
 import {ownAuthorization} from './agent-own.mjs';
-import {prepareOwnRehearsal,runOwnRehearsal,ownRehearsalPlan,rehearsalContext,REHEARSAL_CLOSED_ADDENDA} from './agent-own-rehearsal.mjs';
+import {prepareOwnRehearsal,runOwnRehearsal,ownRehearsalPlan,rehearsalContext,REHEARSAL_CLOSED_ADDENDA,REHEARSAL_IDS} from './agent-own-rehearsal.mjs';
 import {closedOriginHash} from './agent-own-lineage.mjs';
 import {ownNativeArgs,nativeOwnTurn} from './agent-own-native.mjs';
 import {runHash,privateRead} from './agent-run.mjs';
@@ -17,10 +17,10 @@ import {canonical} from '../src/domain.ts';
 import {createOwnCaptureSpec,captureOwnKey,captureOwnClipboard,executeOwnRehearsal} from './agent-own-exec.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url)),temporary=()=>realpathSync(mkdtempSync(join(tmpdir(),'recall-own-rehearsal-test-')));
 async function setup(){const base=temporary();for(const p of ['initial','origins','prepared','capture'])mkdirSync(join(base,p),{mode:0o700});
- await createOwnFixture(join(base,'initial'));const a=ownAuthorization(join(base,'initial'),{fixture:true}),retained=syntheticRetained(a.context.identity,join(base,'origins'));
+ await createOwnFixture(join(base,'initial'));const a=ownAuthorization(join(base,'initial'),{fixture:true}),retained=syntheticPartialRetained(a.context.identity,join(base,'origins'),REHEARSAL_IDS);
  const connection={root,identity:a.context.identity,config:a.context.config,credentialRoot:join(base,'initial'),keyFile:join(base,'capture','tatum.key'),retained};
  const directory=join(base,'prepared'),c=prepareOwnRehearsal(directory,connection,{fixture:true});
- const consent=ordinaryFixtureConsent();managedFile(join(directory,'rehearsal-grant.json'),{schema:1,kind:'offline-test-only',contextHash:runHash(c),planHash:runHash(c.plan),checkedAt:new Date().toISOString(),sponsored:true,tatum:consent.tatum});
+ const consent=ordinaryFixtureConsent();managedFile(join(directory,'rehearsal-grant.json'),{schema:1,kind:'offline-test-only',contextHash:runHash(c),planHash:runHash(c.plan),writePolicyHash:runHash(c.plan.writePolicy),maxNewWrites:3,checkedAt:new Date().toISOString(),sponsored:true,tatum:consent.tatum});
  writeFileSync(connection.keyFile,SYNTHETIC_TATUM_KEY,{mode:0o600,flag:'wx'});return {base,directory,c};
 }
 function ports(mode='success'){return {readKey:()=>SYNTHETIC_TATUM_KEY,inventory:()=>[],
@@ -37,11 +37,13 @@ test('bounded author wrapper traverses two fake app-servers and actual public MC
  const {base,directory,c}=await setup();try{
   const result=await runOwnRehearsal(directory,{fixture:true,ports:ports()});assert.equal(result.status,'COMPLETED',JSON.stringify(result));
   assert.equal(result.turns.length,2);assert.notEqual(result.turns[0].thread,result.turns[1].thread);assert(result.turns.every(t=>t.tools<=12&&t.approvals<=12));
-  assert.equal(result.reader.rows.length,10);assert.equal(result.reader.counters.tatumBatches,2);assert.equal(result.reader.counters.writes,7);assert.equal(result.reader.counters.reads,10);
+  assert.equal(result.reader.rows.length,10);assert.equal(result.reader.counters.tatumBatches,3);assert.equal(result.reader.counters.writes,3);assert.equal(result.reader.counters.reads,7);
+  assert.equal(result.preparation.explicitOperatorAction,true);assert.equal(result.preparation.modelInitiatedSaving,false);assert.equal(result.preparation.modelCalls,0);assert.equal(result.preparation.newWrites,3);
   assert(result.reader.counters.requests<=192);assert.equal(result.keyAbsent,true);assert.equal(result.closedOriginsUnchanged,true);
   const budget=privateRead(join(directory,'native-budget.json'));assert.equal(budget.turns.length,2);assert(budget.turns.every(t=>t.status==='completed'));
   await assert.rejects(runOwnRehearsal(directory,{fixture:true,ports:ports()}),/REHEARSAL_ALREADY_ATTEMPTED/);
   assert.equal(existsSync(c.keyFile),false);
+  console.log(JSON.stringify({status:'OFFLINE_COMPLETION_OPERATOR_THEN_TWO_FAKE_NATIVE_SESSIONS_PASSED',synthetic:true,initialRecords:7,finalRecords:10,counts:{tatumBatches:result.reader.counters.tatumBatches,writes:result.reader.counters.writes,reads:result.reader.counters.reads,requests:result.reader.counters.requests},operatorPid:result.preparation.processPid,readerPid:result.reader.pid,nativeProcesses:2,originalCsvHash:result.turns[1].acceptance.csvArtifact.sha256,providerCalls:0,modelCalls:0,additionalSpendUSD:0}));
  }finally{rmSync(base,{recursive:true,force:true});}
 });
 test('quota and unexpected native authorization stop without retry and consume their single reserved slot',async()=>{
@@ -69,31 +71,37 @@ test('frozen plan names seven distinct public cases and native config points to 
 });
 // Re-materialize public archived metadata only: no private path, key, profile or provider.
 function actualPublicConnection(base){
- const read=name=>JSON.parse(readFileSync(join(root,'evidence',name,'run.json'))),first=read('agent-live-trial-2026-11-06'),second=read('ordinary-live-2026-11-07'),third=read('ordinary-continuation-live-2026-11-07'),fourth=read('own-account-live-2026-11-07');
+ const read=name=>JSON.parse(readFileSync(join(root,'evidence',name,'run.json'))),first=read('agent-live-trial-2026-11-06'),second=read('ordinary-live-2026-11-07'),third=read('ordinary-continuation-live-2026-11-07'),fourth=read('own-account-live-2026-11-07'),fifth=read('own-account-partial-live-2026-11-07');
  const identity=Object.fromEntries(['owner','accountId','delegatePublicKeyHex','packageId','workspace'].map(k=>[k,fourth.manifest[k]]));
  const origin=(name,run,native,records)=>{const folder=join(base,name);mkdirSync(folder,{mode:0o700});const files={};
   for(const [key,value,file] of [['manifest',run.manifest,'agent-run.json'],['ledger',run.ledger,'agent-ledger.json'],['native',native,'native-budget.json']]){
    const path=join(folder,file);writeFileSync(path,canonical(value),{mode:0o600});files[key]={path};}
-  return {manifest:run.manifest,ledger:run.ledger,native,files,...(records?{records,role:name}:{})};};
- const retained={identity,records:[...first.records,second.newRecord],receipts:{...first.receipts,[second.newRecord.id]:second.receipt},origins:[
+  return {manifest:run.manifest,ledger:run.ledger,native,files,...(records?{records,...(['storage','ordinary-write','closed-zero-write'].includes(name)?{role:name}:{})}:{})};};
+ const partialRows=fifth.actualNewRecords.map(({id,record,blobId})=>({id,record,blobId}));
+ const retained={identity,records:[...first.records,second.newRecord,...partialRows],receipts:{...first.receipts,[second.newRecord.id]:second.receipt,...fifth.actualNewReceipts},origins:[
   origin('storage',first,first.nativePermit,first.records),origin('ordinary-write',second,second.nativeBudget,[second.newRecord]),origin('closed-zero-write',third,third.nativeBudget,[])],
-  closedAddenda:[origin('pRaby9',fourth,fourth.nativeBudget)]};
+  closedAddenda:[origin('pRaby9',fourth,fourth.nativeBudget),origin('pHQ6kI',fifth,fifth.nativeBudget,partialRows)]};
  return {root,identity,config:{network:'mainnet',packageId:identity.packageId,suiTransport:'grpc',suiGrpcUrl:'https://mysten-rpc.mainnet.sui.io'},credentialRoot:base,keyFile:join(base,'capture','tatum.key'),retained};
 }
 test('real preparation requires exact closed pRaby9 metadata in addition to the immutable three origins before external ports',async()=>{
- for(const mutation of ['none','missing','empty','different','duplicate','bytes','lost-core','removed-after-prepare']){const base=temporary();try{
+ for(const mutation of ['none','missing','empty','different','duplicate','bytes','lost-core','removed-after-prepare','missing-partial','pending-partial','changed-partial-payload','missing-row','receipt-mismatch']){const base=temporary();try{
   const c=actualPublicConnection(base),directory=join(base,'prepared');for(const p of ['prepared','capture'])mkdirSync(join(base,p),{mode:0o700});
   assert.equal(closedOriginHash(c.retained.closedAddenda[0]),REHEARSAL_CLOSED_ADDENDA[0]);
   if(mutation==='missing')delete c.retained.closedAddenda;if(mutation==='empty')c.retained.closedAddenda=[];
   if(mutation==='different'){const o=c.retained.closedAddenda[0];o.native.stopped='OTHER_STOP';writeFileSync(o.files.native.path,canonical(o.native));}
   if(mutation==='duplicate')c.retained.closedAddenda.push(structuredClone(c.retained.closedAddenda[0]));
   if(mutation==='lost-core')c.retained.origins.pop();
+  if(mutation==='missing-partial')c.retained.closedAddenda.pop();
+  if(mutation==='pending-partial')c.retained.closedAddenda[1].ledger.intents[0].state='sent';
+  if(mutation==='changed-partial-payload')c.retained.closedAddenda[1].records[0].record.observedAt='2026-11-07T00:00:00.000Z';
+  if(mutation==='missing-row')c.retained.records.pop();
+  if(mutation==='receipt-mismatch')c.retained.receipts[c.retained.records[3].id].sha256='f'.repeat(64);
   if(['none','bytes','removed-after-prepare'].includes(mutation)){
-   const result=prepareOwnRehearsal(directory,c);assert.equal(result.retained.origins.length,3);assert.equal(result.retained.closedAddenda.length,1);
+   const result=prepareOwnRehearsal(directory,c);assert.equal(result.retained.origins.length,3);assert.equal(result.retained.closedAddenda.length,2);assert.equal(result.retained.records.length,7);
    if(mutation==='bytes'){const p=c.retained.closedAddenda[0].files.ledger.path;writeFileSync(p,readFileSync(p,'utf8')+'\n');
     assert.throws(()=>rehearsalContext(directory),/OWN_LINEAGE_CHANGED/);}
    else if(mutation==='removed-after-prepare'){
-    delete result.retained.closedAddenda;writeFileSync(join(directory,'rehearsal-context.json'),canonical(result));let factoryCalls=0;
+    result.retained.closedAddenda.shift();writeFileSync(join(directory,'rehearsal-context.json'),canonical(result));let factoryCalls=0;
     await assert.rejects(runOwnRehearsal(directory,{ports:{readKey:()=>{factoryCalls++;throw Error('MUST_NOT_READ');}}}),/REHEARSAL_REQUIRED_CLOSED_ADDENDA/);assert.equal(factoryCalls,0);
    }else assert.deepEqual(rehearsalContext(directory).plan.requiredClosedAddenda,REHEARSAL_CLOSED_ADDENDA);
   }else assert.throws(()=>prepareOwnRehearsal(directory,c),mutation==='different'?/REHEARSAL_REQUIRED_CLOSED_ADDENDA/:undefined);

@@ -15,18 +15,26 @@ import {validateTatumBinding} from './activity-live.ts';
 import {ownRealPorts} from './agent-own-entry.mjs';
 import {nativeOwnTurn} from './agent-own-native.mjs';
 import {cleanClientEnv} from './agent-own-launch.mjs';
+import {Client} from '../mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/client/index.js';
+import {StdioClientTransport} from '../mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/client/stdio.js';
 export const REHEARSAL_IDS=['2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3','9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj',
  'BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW','399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj',
  '3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7','CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL','6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw'];
 const wallet='0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23';
 // Exact public stopped pRaby9 manifest/ledger/native snapshot; not a renewed allowance.
-export const REHEARSAL_CLOSED_ADDENDA=['e36194decf681b651c1d2b62455b9b055e6cfc7ca92ee569eb51c6ef9da3bea3'];
+export const REHEARSAL_CLOSED_ADDENDA=['e36194decf681b651c1d2b62455b9b055e6cfc7ca92ee569eb51c6ef9da3bea3','e2d1ec9e6e0c47aa3b60a64ec70ba847bb238b28f627bbe9dc784b2af61283a7'];
+export const REHEARSAL_RETAINED_HASH='cc9e197aff8ed3dbab55924352a72513b2c0ddec7509479920c2837aa3a877e3';
+const retainedHash=r=>runHash({records:r.records,receipts:r.receipts});
 export function validateRehearsalLineage(retained,plan){
  assert(canonical((retained?.closedAddenda??[]).map(closedOriginHash))===canonical(plan.requiredClosedAddenda),'REHEARSAL_REQUIRED_CLOSED_ADDENDA');
+ assert(retained?.records.length===7&&retainedHash(retained)===plan.retainedProofHash,'REHEARSAL_REQUIRED_SEVEN_RECORDS');
 }
-export function ownRehearsalPlan(root,{fixture=false}={}){return {schema:1,kind:'own-account-final-rehearsal',model:'gpt-5.6-luna',network:'mainnet',ids:REHEARSAL_IDS,
- requiredClosedAddenda:fixture?[]:REHEARSAL_CLOSED_ADDENDA,
- limits:{...OWN_LIMITS,nativeTurns:2,toolsPerTurn:12,secondsPerTurn:120,totalSeconds:240,maxUSD:0},noRetry:true,paidFallback:false,
+export function ownRehearsalPlan(root,{fixture=false,retained=null}={}){return {schema:1,kind:'own-account-final-rehearsal',model:'gpt-5.6-luna',network:'mainnet',ids:REHEARSAL_IDS,
+ requiredClosedAddenda:fixture?(retained?.closedAddenda??[]).map(closedOriginHash):REHEARSAL_CLOSED_ADDENDA,
+ retainedProofHash:fixture&&retained?retainedHash(retained):REHEARSAL_RETAINED_HASH,
+ writePolicy:{schema:1,kind:'exact-missing-transaction-facts',digests:REHEARSAL_IDS.slice(4),maxNewWrites:3,submissionProofs:true},
+ preparation:{kind:'explicit-operator-action-through-public-mcp',tool:'prepare_report',arguments:{network:'mainnet',wallet,transactions:REHEARSAL_IDS}},
+ limits:{...OWN_LIMITS,writes:3,nativeTurns:2,toolsPerTurn:12,secondsPerTurn:120,totalSeconds:240,maxUSD:0},noRetry:true,paidFallback:false,
  tasks:[{id:'seven-selected-cases',text:'Review these seven Sui Mainnet transactions as research case notes. For each, report status, gas payer, net gas and exact balance changes in base units, plus any uncertainty. Check whether monitored wallet '+wallet+' is involved; do not assume it appears in every case. Use current chain data and distinguish any historical observation. Transactions: '+REHEARSAL_IDS.join(', ')+'.'},
  {id:'fresh-session-comparison',text:'Revisit Sui Mainnet transaction '+REHEARSAL_IDS[0]+' for monitored wallet '+wallet+'. Retrieve its historical observation, show the memory blob ID and provenance, then compare it with fresh chain data. Explain whether the facts agree, keeping historical and current evidence separate. Export this selected-case report as the original CSV artifact and give its path and SHA-256. Do not invent a complete wallet history.'}],
  runtimeHashes:managedRuntimeHashes(root)};}
@@ -37,23 +45,23 @@ export function prepareOwnRehearsal(directory,{root,identity,config,credentialRo
  privateDirectory(dirname(keyFile));ownPath(dirname(keyFile));assert(!existsSync(keyFile),'REHEARSAL_KEY_MUST_BE_ABSENT');
  const publicProof=validateRetained(structuredClone(retained),identity,{fixture,freeze:true});
  const c={schema:1,kind:fixture?'offline-rehearsal-test':'prepared-not-authorized',root:ownPath(resolve(root)),identity,config,credentialRoot,keyFile,
-  keyDirectory:fingerprint(dirname(keyFile)),retained:publicProof,plan:ownRehearsalPlan(root,{fixture})};
+  keyDirectory:fingerprint(dirname(keyFile)),retained:publicProof,plan:ownRehearsalPlan(root,{fixture,retained:publicProof})};
  validateRehearsalLineage(c.retained,c.plan);
  managedFile(join(directory,'rehearsal-context.json'),c);managedFile(join(directory,'native-budget.json'),{schema:1,contextHash:runHash(c),turns:[],stopped:null});return c;
 }
 export function rehearsalContext(directory,{fixture=false}={}){
- privateDirectory(directory);const c=privateRead(join(directory,'rehearsal-context.json'));
+ privateDirectory(directory);const c=privateRead(join(directory,'rehearsal-context.json'),65536);
  exactKeys(c,['schema','kind','root','identity','config','credentialRoot','keyFile','keyDirectory','retained','plan']);
  assert(c.schema===1&&c.kind===(fixture?'offline-rehearsal-test':'prepared-not-authorized')
-  &&canonical(c.plan)===canonical(ownRehearsalPlan(c.root,{fixture})),'REHEARSAL_SOURCE_OR_SCOPE_CHANGED');
+  &&canonical(c.plan)===canonical(ownRehearsalPlan(c.root,{fixture,retained:c.retained})),'REHEARSAL_SOURCE_OR_SCOPE_CHANGED');
  assert(canonical(fingerprint(dirname(c.keyFile)))===canonical(c.keyDirectory)&&!lstatSync(dirname(c.keyFile)).isSymbolicLink(),'REHEARSAL_KEY_DIRECTORY_CHANGED');
  validateRetained(c.retained,c.identity,{fixture});validateRehearsalLineage(c.retained,c.plan);return c;
 }
 function grant(directory,c,{fixture=false,cleanupOnly=false}={}){
  const g=privateRead(join(directory,'rehearsal-grant.json'));
- exactKeys(g,['schema','kind','contextHash','planHash','checkedAt','sponsored','tatum']);
+ exactKeys(g,['schema','kind','contextHash','planHash','checkedAt','sponsored','tatum','writePolicyHash','maxNewWrites']);
  assert(g.schema===1&&g.kind===(fixture?'offline-test-only':'human-approved-zero-cost')&&g.contextHash===runHash(c)&&g.planHash===runHash(c.plan)
-  &&g.sponsored===true&&g.tatum.plan==='FREE'&&g.tatum.creditsPerCall===2&&g.tatum.remainingCredits>=16
+  &&g.maxNewWrites===3&&g.maxNewWrites===c.plan.writePolicy.maxNewWrites&&g.writePolicyHash===runHash(c.plan.writePolicy)&&g.sponsored===true&&g.tatum.plan==='FREE'&&g.tatum.creditsPerCall===2&&g.tatum.remainingCredits>=16
   &&Number.isSafeInteger(g.tatum.remainingCredits),'REHEARSAL_GRANT_REQUIRED');
  exactKeys(g.tatum,['accountId','plan','remainingCredits','creditsPerCall','keySha256']);
  assert(/^[a-f0-9]{24}$/.test(g.tatum.accountId)&&/^[a-f0-9]{64}$/.test(g.tatum.keySha256),'REHEARSAL_TATUM_BINDING');
@@ -66,7 +74,7 @@ function ticket(directory,c,g){
  managedFile(join(directory,'temporary-key-ticket.json'),t);return t;
 }
 export function cleanupOwnRehearsalKey(directory){
- const c=privateRead(join(directory,'rehearsal-context.json')),t=privateRead(join(directory,'temporary-key-ticket.json'));
+ const c=privateRead(join(directory,'rehearsal-context.json'),65536),t=privateRead(join(directory,'temporary-key-ticket.json'));
  assert(t.contextHash===runHash(c)&&t.path===c.keyFile&&canonical(t.parent)===canonical(fingerprint(dirname(t.path))),'REHEARSAL_CLEANUP_SCOPE');
  if(!existsSync(t.path))return {deleted:false,absent:true};
  const fd=openSync(t.path,constants.O_RDONLY|constants.O_NOFOLLOW|constants.O_NONBLOCK);
@@ -108,6 +116,34 @@ export function validateOwnNativeOutcome(out,state,index,plan,{fixture=false}={}
  assert(message.includes(artifact.sha256)&&(message.includes(artifact.path)||message.includes(artifact.uri))&&message.includes(applicable.blobId),'REHEARSAL_CSV_DELIVERY');
  return {historicalBlobId:applicable.blobId,csvArtifact:artifact};
 }
+export async function prepareOwnCorpus(directory,state,c,deadline,{fixture=false,signal}={}){
+ const remaining=()=>{assert(!signal?.aborted&&Date.now()<deadline,'REHEARSAL_PREPARATION_DEADLINE');return deadline-Date.now();};
+ managedFile(join(directory,'operator-preparation.json'),{schema:1,kind:c.plan.preparation.kind,contextHash:runHash(c),startedAt:new Date().toISOString(),deadline:new Date(deadline).toISOString(),modelCalls:0});
+ const client=new Client({name:'recall-explicit-operator-preparation',version:'1'}),wire=new StdioClientTransport({command:process.execPath,
+  args:['--disable-warning=ExperimentalWarning',join(c.root,'app/agent-own-entry.mjs'),'--mcp',state,...(fixture?['--offline-fixture']:[])],env:cleanClientEnv()});
+ let report,pid;
+ try{
+  await client.connect(wire,{timeout:remaining(),signal});pid=wire.pid;
+  const timeout=remaining(),reply=await client.callTool({name:c.plan.preparation.tool,arguments:c.plan.preparation.arguments},undefined,
+   {timeout,maxTotalTimeout:timeout,resetTimeoutOnProgress:false,signal});
+  assert(!reply.isError,'REHEARSAL_PREPARATION_TOOL_STOPPED');report=JSON.parse(reply.content[0].text);
+  assert(report.dataProvenance?.freshProviderRead===!fixture&&report.dataProvenance.scope==='selected-transactions'
+   &&report.dataProvenance.walletHistoryComplete===false&&report.factCaptureSet?.state==='stored-complete-set','REHEARSAL_PREPARATION_NOT_COMPLETE');
+  assert(report.transactionEvidence?.length===7&&c.plan.ids.every(id=>report.transactionEvidence.some(tx=>tx.digest===id)),'REHEARSAL_PREPARATION_SEVEN_MISSING');
+  assert(report.historicalObservations?.length===7&&c.plan.ids.every(id=>report.historicalObservations.some(row=>row.record.digest===id
+   &&row.comparison==='same'&&row.role==='historical-observation'&&row.replacesFreshData===false)),'REHEARSAL_PREPARATION_CONTENT_MISSING');
+ }catch(error){
+  assert(Date.now()<deadline,'REHEARSAL_PREPARATION_DEADLINE');assert(!signal?.aborted,'REHEARSAL_PREPARATION_INTERRUPTED');
+  const code=error.code??error.message;assert(false,typeof code==='string'&&/^[A-Z0-9_]+$/.test(code)?code:'REHEARSAL_PREPARATION_MCP_STOPPED');
+ }finally{await client.close();}
+ remaining();const a=ownAuthorization(state,{fixture}),ledger=privateRead(join(a.run,'agent-ledger.json'));
+ assert(!existsSync(join(state,'.ordinary-runtime'))&&ledger.writes===c.plan.writePolicy.maxNewWrites&&ledger.intents.every(i=>i.state==='done'),'REHEARSAL_PREPARATION_PARTIAL');
+ const result={schema:1,kind:c.plan.preparation.kind,explicitOperatorAction:true,modelInitiatedSaving:false,processPid:pid,
+  freshProviderRead:!fixture,selectedCases:7,newWrites:ledger.writes,candidateContentRecords:10,deadline:new Date(deadline).toISOString(),finishedAt:new Date().toISOString(),
+  observations:report.historicalObservations.map(row=>({id:row.id,blobId:row.blobId,digest:row.record.digest,sha256:runHash(row.record),comparison:row.comparison})),
+  counters:{tatumBatches:ledger.tatumBatches,writes:ledger.writes,reads:ledger.reads,requests:ledger.requests},modelCalls:0};
+ managedFile(join(directory,'preparation-result.json'),result);return result;
+}
 export async function runOwnRehearsal(directory,{fixture=false,ports={}}={}){
  const c=rehearsalContext(directory,{fixture}),g=grant(directory,c,{fixture,cleanupOnly:true});
  assert(!existsSync(join(directory,'execution.json'))&&!existsSync(join(directory,'state')),'REHEARSAL_ALREADY_ATTEMPTED');
@@ -117,15 +153,16 @@ export async function runOwnRehearsal(directory,{fixture=false,ports={}}={}){
  try{
   ticket(directory,c,g);owned=true;
   grant(directory,c,{fixture});
+  const deadline=time(g.checkedAt)+240000;
   const key=(ports.readKey??readTatumKey)(c.keyFile,g.tatum.accountId);validateTatumBinding({tatum:g.tatum},key);
   mkdirSync(state,{mode:0o700});createOwnActivation(state,{identity:c.identity,config:c.config,credentialRoot:c.credentialRoot,keyFile:c.keyFile,
    profileHash:runHash(Object.fromEntries(['owner','accountId','delegatePublicKeyHex','packageId'].map(k=>[k,c.identity[k]]))),
-   tatum:g.tatum,captureConsent:true,captureScope:'transaction-facts-only',captureSet:c.plan.ids,checkedAt:g.checkedAt,
+   tatum:g.tatum,captureConsent:true,captureScope:'transaction-facts-only',captureSet:c.plan.ids,writePolicy:c.plan.writePolicy,checkedAt:g.checkedAt,
    retained:{...structuredClone(c.retained),...Object.fromEntries(['origins','closedAddenda'].filter(k=>c.retained[k]).map(k=>[k,c.retained[k].map(o=>({...structuredClone(o),files:Object.fromEntries(Object.entries(o.files).map(([k,v])=>[k,{path:v.path}]))}))]))}},{fixture});
   if(fixture)await ports.initializeFixture(state,c);
   mkdirSync(join(state,'client'),{mode:0o700});
-  const inventory=(ports.inventory??(()=>{const r=spawnSync('codex',['mcp','list','--json'],{env:cleanClientEnv(),encoding:'utf8',timeout:15000,maxBuffer:1048576});assert(r.status===0,'MCP_INVENTORY');return JSON.parse(r.stdout);}))();
-  const deadline=time(g.checkedAt)+240000;
+  const inventory=(ports.inventory??(()=>{assert(Date.now()<deadline,'REHEARSAL_DEADLINE');const r=spawnSync('codex',['mcp','list','--json'],{env:cleanClientEnv(),encoding:'utf8',timeout:Math.max(1,Math.min(15000,deadline-Date.now())),maxBuffer:1048576});assert(r.status===0,'MCP_INVENTORY');return JSON.parse(r.stdout);}))();
+  summary.preparation=await (ports.preparation??prepareOwnCorpus)(directory,state,c,deadline,{fixture,signal:signals.signal});
   for(let index=0;index<2;index++){
    rehearsalContext(directory,{fixture});assert(!signals.signal.aborted&&Date.now()<deadline,'REHEARSAL_DEADLINE');
    nativeReservation(directory,c,index);
@@ -135,14 +172,14 @@ export async function runOwnRehearsal(directory,{fixture=false,ports={}}={}){
    summary.turns[index].acceptance=validateOwnNativeOutcome(join(directory,'native-'+index),state,index,c.plan,{fixture});
    const a=ownAuthorization(state,{fixture}),ledger=privateRead(join(a.run,'agent-ledger.json'));
    assert(!existsSync(join(state,'.ordinary-runtime')),'REHEARSAL_MCP_NOT_CLOSED');
-   if(index===0)assert(ledger.writes===7&&ledger.intents.every(i=>i.state==='done'),'REHEARSAL_FIRST_TASK_PARTIAL');
+   assert(ledger.writes===c.plan.writePolicy.maxNewWrites&&ledger.intents.every(i=>i.state==='done'),'REHEARSAL_FIRST_TASK_PARTIAL');
   }
   const reader=(ports.reader??independentOwnReader);
   summary.reader=await reader(state,c.root,deadline,{fixture});
   assert(summary.reader.rows.length===10&&summary.reader.rows.filter(r=>r.record.schema==='recall-transaction-fact/1').length===7,'REHEARSAL_FINAL_INVENTORY');
   for(const old of c.retained.records)assert(summary.reader.rows.some(r=>canonical(r)===canonical(old)),'REHEARSAL_OLD_RECORD_CHANGED');
   summary.status='COMPLETED';
- }catch(error){summary.status='STOPPED';summary.reason=error.code??(/^[A-Z0-9_]+$/.test(error.message??'')?error.message:'REHEARSAL_ERROR');
+ }catch(error){summary.status='STOPPED';const code=error.code??error.message;summary.reason=typeof code==='string'&&/^[A-Z0-9_]+$/.test(code)?code:'REHEARSAL_ERROR';
   const b=privateRead(join(directory,'native-budget.json'));b.stopped??=summary.reason;managedFile(join(directory,'native-budget.json'),b,false);stopCurrentActivation(state,summary.reason);
  }finally{
   process.removeListener('SIGINT',interrupt);process.removeListener('SIGTERM',interrupt);

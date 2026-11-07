@@ -2,7 +2,7 @@
 import {createHash} from 'node:crypto';
 import {constants,openSync,closeSync,fstatSync,readFileSync,writeFileSync,lstatSync,mkdirSync,
  readdirSync,renameSync,fsyncSync,rmSync,existsSync} from 'node:fs';
-import {join} from 'node:path';
+import {join,basename} from 'node:path';
 import {assert,canonical,exactKeys,time} from '../src/domain.ts';
 import {address} from './activity.ts';
 import {PILOT_LIMITS} from './activity-live.ts';
@@ -10,15 +10,17 @@ import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {CONTINUATION_KIND,CONTINUATION_LIMITS,continuationResolution} from './agent-continuation-contract.mjs';
 import {ownMode,validateOwnManifest,validateOwnContext,OWN_LIMITS} from './agent-own-contract.mjs';
 import {validateRetained} from './agent-own-lineage.mjs';
+import {saveSubmissionProof} from './agent-submission-proof.mjs';
 
 export const runHash=value=>createHash('sha256').update(canonical(value)).digest('hex');
 export const operationKey=value=>createHash('sha256').update(canonical(value)).digest('base64url');
 export function privateDirectory(path){
  const s=lstatSync(path);assert(s.isDirectory()&&!s.isSymbolicLink()&&s.uid===process.getuid()&&(s.mode&0o077)===0,'AGENT_PRIVATE_DIRECTORY');
 }
-export function privateRead(path){
+export function privateRead(path,maxBytes=32768){
+ assert(maxBytes===32768||(maxBytes===65536&&['own-account-context.json','rehearsal-context.json'].includes(basename(path))),'AGENT_PRIVATE_READ_SCOPE');
  const fd=openSync(path,constants.O_RDONLY|constants.O_NOFOLLOW|constants.O_NONBLOCK);
- try {const s=fstatSync(fd);assert(s.isFile()&&s.uid===process.getuid()&&(s.mode&0o077)===0&&s.size<=32768,'AGENT_PRIVATE_FILE');return JSON.parse(readFileSync(fd,'utf8'));}
+ try {const s=fstatSync(fd);assert(s.isFile()&&s.uid===process.getuid()&&(s.mode&0o077)===0&&s.size<=maxBytes,'AGENT_PRIVATE_FILE');return JSON.parse(readFileSync(fd,'utf8'));}
  finally {closeSync(fd);}
 }
 function durable(path,value,fresh=false){
@@ -75,13 +77,13 @@ export class AgentRunGate {
   assert(state.intents.every(i=>i.state==='done'),'AGENT_OUTCOME_UNCERTAIN');this.admit();
  }
  context(){
-  if(this.ownAccount){const c=validateOwnContext(privateRead(join(this.ordinary.directory,'own-account-context.json')));
+  if(this.ownAccount){const c=validateOwnContext(privateRead(join(this.ordinary.directory,'own-account-context.json'),65536));
    assert(runHash(c)===this.manifest.admission.contextHash,'OWN_CONTEXT_CHANGED');validateRetained(c.retained,c.identity,{fixture:c.kind==='offline-own-account-test'});return c;}
   if(!this.ordinary||!['live-ordinary-selected','offline-managed-admission-test'].includes(this.manifest.mode))return null;
   const c=privateRead(join(this.ordinary.directory,'managed-context.json'));
   assert(runHash(c)===this.manifest.admission.contextHash,'MANAGED_CONTEXT_CHANGED');return c;
  }
- limits(){if(this.ownAccount){this.context();return OWN_LIMITS;}return this.context()?.plan.kind===CONTINUATION_KIND?CONTINUATION_LIMITS:PILOT_LIMITS;}
+ limits(){if(this.ownAccount){const c=this.context();return c.writePolicy?{...OWN_LIMITS,writes:c.writePolicy.maxNewWrites}:OWN_LIMITS;}return this.context()?.plan.kind===CONTINUATION_KIND?CONTINUATION_LIMITS:PILOT_LIMITS;}
  state(){
   assert(runHash(privateRead(join(this.directory,'agent-run.json')))===this.hash,'AGENT_MANIFEST_CHANGED');
   const s=privateRead(this.path);
@@ -164,7 +166,11 @@ export class AgentRunGate {
   assert(c.captureScope!=='transaction-facts-only'||(namespace===this.manifest.namespaces.experience&&record.schema==='recall-transaction-fact/1'),'OWN_CAPTURE_SCOPE');
   if(c.captureSet)assert(namespace===this.manifest.namespaces.experience&&record.schema==='recall-transaction-fact/1'
    &&record.network==='mainnet'&&c.captureSet.includes(record.digest),'OWN_CAPTURE_SET_SCOPE');
+  if(c.writePolicy){assert(namespace===this.manifest.namespaces.experience&&record.schema==='recall-transaction-fact/1'
+    &&c.writePolicy.digests.includes(record.digest),'OWN_MISSING_FACT_SCOPE');
+   const state=this.state();assert(state.writes<c.writePolicy.maxNewWrites||state.intents.some(i=>i.key===operationKey(record)&&i.sha256===runHash(record)&&i.state==='done'),'OWN_NEW_WRITE_LIMIT');}
  }
+ submissionProof(namespace,record,key){if(this.ownAccount&&this.context().writePolicy){this.checkWriteScope(namespace,record);return saveSubmissionProof(this.directory,record,key);}}
  beforeSubmit(namespace,record,key){
   assert(!this.readonly,'CONTINUATION_READER_READONLY');
   assert(this.lease===namespace&&!this.pending&&operationKey(record)===key,'AGENT_WRITE_LEASE');
@@ -174,6 +180,7 @@ export class AgentRunGate {
    const p=privateRead(join(this.ordinary.directory,'ordinary-preflight.json'));
    assert(p.contextHash===this.manifest.admission.contextHash&&p.manifestHash===this.hash&&p.accountAuthorized===true
     &&Date.now()-time(p.checkedAt)>=0&&Date.now()-time(p.checkedAt)<=300000,'OWN_PREFLIGHT_REQUIRED');
+   this.submissionProof(namespace,record,key);
   }
   if(this.manifest.mode==='live-walrus-replay'){
    const proof=privateRead(join(this.directory,'agent-live-preflight.json'));

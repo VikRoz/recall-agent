@@ -4,14 +4,22 @@ import {address,digest} from './activity.ts';
 import {isAbsolute} from 'node:path';
 export const OWN_LIMITS=Object.freeze({tatumBatches:8,writes:7,reads:10,requests:192,pollsPerJob:8});
 export const ownMode=mode=>['live-own-account-selected','offline-own-account-test'].includes(mode);
+export function validateOwnWritePolicy(p){
+ exactKeys(p,['schema','kind','digests','maxNewWrites','submissionProofs']);
+ assert(p.schema===1&&p.kind==='exact-missing-transaction-facts'&&Array.isArray(p.digests)
+  &&p.digests.length>0&&p.digests.length<=OWN_LIMITS.writes&&new Set(p.digests).size===p.digests.length
+  &&p.maxNewWrites===p.digests.length&&p.submissionProofs===true,'OWN_WRITE_POLICY');p.digests.forEach(digest);return p;
+}
 export function validateOwnContext(c){
- exactKeys(c,['schema','kind','identity','config','captureConsent','captureScope','limits','profileHash','expiresAt','credentialRoot','keyFile','retained','captureSet']);
+ exactKeys(c,['schema','kind','identity','config','captureConsent','captureScope','limits','profileHash','expiresAt','credentialRoot','keyFile','retained','captureSet',...(Object.hasOwn(c,'writePolicy')?['writePolicy']:[])]);
  assert(c.schema===1&&['own-account-explicit','offline-own-account-test'].includes(c.kind)
   &&typeof c.captureConsent==='boolean'&&['transaction-facts-only','verified-experience'].includes(c.captureScope)
   &&canonical(c.limits)===canonical(OWN_LIMITS)&&/^[a-f0-9]{64}$/.test(c.profileHash),'OWN_CONTEXT');
  assert(isAbsolute(c.credentialRoot)&&isAbsolute(c.keyFile),'OWN_CREDENTIAL_PATH');
  assert(c.captureSet===null||(Array.isArray(c.captureSet)&&c.captureSet.length===7&&new Set(c.captureSet).size===7),'OWN_CAPTURE_SET');
  c.captureSet?.forEach(digest);
+ if(Object.hasOwn(c,'writePolicy')){validateOwnWritePolicy(c.writePolicy);assert(c.captureConsent&&c.captureScope==='transaction-facts-only'
+  &&c.captureSet&&c.writePolicy.digests.every(d=>c.captureSet.includes(d)),'OWN_WRITE_POLICY');}
  exactKeys(c.identity,['owner','accountId','delegatePublicKeyHex','packageId','workspace']);
  assert([c.identity.owner,c.identity.accountId,c.identity.packageId].every(x=>address(x)===x)
   &&/^[a-f0-9]{64}$/.test(c.identity.delegatePublicKeyHex)&&/^agent-[a-f0-9-]{36}$/.test(c.identity.workspace),'OWN_IDENTITY');
