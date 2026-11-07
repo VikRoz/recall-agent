@@ -57,6 +57,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
   const rules={inventory:()=>ports.rules.inventory(),recall:(...a)=>ports.rules.recall(...a),
    write:(record,key)=>gate.withWriter(m.namespaces.rules,async()=>{
     validateTypedRecord(m,m.namespaces.rules,record);assert(operationKey(record)===key,'AGENT_OPERATION_KEY');
+    gate.checkWriteScope(m.namespaces.rules,record);
     if(await journals.rules.load(key))return ports.rules.write(record,key);
     gate.ensureWriteAvailable();
     const rows=await readRules(ports.rules,binding);
@@ -70,6 +71,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
   },write:record=>
    gate.withWriter(m.namespaces.experience,async()=>{
     validateTypedRecord(m,m.namespaces.experience,record);const key=operationKey(record);
+    gate.checkWriteScope(m.namespaces.experience,record);
     const c=gate.context();if(isContinuation(c))continuationResolution(c,record,key);
     if(await journals.experience.load(key)){const receipt=await ports.experience.write(record,key);return {id:key,record,blobId:receipt.blobId};}
     gate.ensureWriteAvailable();return base.write(record);

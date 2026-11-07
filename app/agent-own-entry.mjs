@@ -34,10 +34,11 @@ export function ownRealPorts(directory){
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  let runtime;
  try{
-  const [mode,directory,...rest]=process.argv.slice(2);assert(mode==='--mcp'&&directory&&(rest.length===0||(rest.length===1&&rest[0]==='--offline-fixture')),'OWN_ENTRY');
-  const fixture=rest.length===1;ownAuthorization(directory,{fixture});
+  const [mode,directory,...rest]=process.argv.slice(2);assert(mode==='--mcp'&&directory&&new Set(rest).size===rest.length&&rest.every(x=>['--offline-fixture','--native-limit=12'].includes(x)),'OWN_ENTRY');
+  const fixture=rest.includes('--offline-fixture');ownAuthorization(directory,{fixture});
   if(fixture){globalThis.fetch=()=>{throw Error('OFFLINE_NETWORK_DENIED');};const {openOwnFixture}=await import('./agent-own-fixture.mjs');const options=privateRead(join(directory,'synthetic-options.json'));assert(Object.keys(options).join(',')==='doneAfterPolls'&&Number.isInteger(options.doneAfterPolls)&&options.doneAfterPolls>=1&&options.doneAfterPolls<=8,'OWN_FIXTURE_OPTIONS');runtime=await openOwnFixture(directory,options);}
   else runtime=await openOwnAccount(directory,ownRealPorts(directory));
+  if(rest.includes('--native-limit=12'))runtime.session.nativeToolLimit=12;
   let closed=false;const close=()=>{if(closed)return;closed=true;runtime.close();runtime.server.close().finally(()=>process.exit(0));};
   process.stdin.once('end',close);process.once('SIGINT',close);process.once('SIGTERM',close);
   await runtime.server.connect(runtime.observe(new StdioServerTransport()));

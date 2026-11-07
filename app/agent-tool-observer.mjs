@@ -7,10 +7,11 @@ export const toolSchemaHash = tool => sha({name:tool.name,inputSchema:tool.input
 
 // Decorates the public MCP Transport. SDK dispatch and validation stay untouched.
 export class ObservedToolTransport {
-  constructor(inner,{store,workspace,source,capture,stop}) {
+  constructor(inner,{store,workspace,source,capture,stop,maxToolCalls}) {
     this.inner=inner;this.store=store;this.workspace=workspace;this.source=source;
     this.capture=capture;this.stop=stop;this.pending=new Map();this.catalog=new Map();
     this.rows=undefined;this.failed=false;this.queue=Promise.resolve();
+    assert(maxToolCalls===undefined||maxToolCalls===12,'OBSERVER_NATIVE_TOOL_BOUND');this.maxToolCalls=maxToolCalls;this.toolCalls=0;
   }
   get sessionId(){return this.inner.sessionId;}
   setProtocolVersion(v){this.inner.setProtocolVersion?.(v);}
@@ -22,6 +23,9 @@ export class ObservedToolTransport {
           return;
         }
         if(message.id!==undefined&&(message.method==='tools/list'||message.method==='tools/call')){
+          if(message.method==='tools/call'&&this.maxToolCalls!==undefined&&this.toolCalls++>=this.maxToolCalls){
+            this.failed=true;this.stop?.();this.inner.send({jsonrpc:'2.0',id:message.id,error:{code:-32603,message:'NATIVE_TOOL_LIMIT_DO_NOT_RETRY'}}).catch(e=>this.onerror?.(e));return;
+          }
           assert(this.pending.size<16&&!this.pending.has(message.id),'OBSERVER_REQUEST_LIMIT');
           if(message.method==='tools/list')this.pending.set(message.id,{kind:'list'});
           else {

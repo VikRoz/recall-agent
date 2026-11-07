@@ -158,13 +158,19 @@ export class AgentRunGate {
    this.pending=undefined;this.lease=undefined;rmSync(lock,{recursive:true});
   }
  }
+ checkWriteScope(namespace,record){
+  if(!this.ownAccount)return;
+  const c=this.context();assert(c.captureConsent,'OWN_CAPTURE_DISABLED');
+  assert(c.captureScope!=='transaction-facts-only'||(namespace===this.manifest.namespaces.experience&&record.schema==='recall-transaction-fact/1'),'OWN_CAPTURE_SCOPE');
+  if(c.captureSet)assert(namespace===this.manifest.namespaces.experience&&record.schema==='recall-transaction-fact/1'
+   &&record.network==='mainnet'&&c.captureSet.includes(record.digest),'OWN_CAPTURE_SET_SCOPE');
+ }
  beforeSubmit(namespace,record,key){
   assert(!this.readonly,'CONTINUATION_READER_READONLY');
   assert(this.lease===namespace&&!this.pending&&operationKey(record)===key,'AGENT_WRITE_LEASE');
   const continuation=this.context();if(continuation?.plan?.kind===CONTINUATION_KIND)continuationResolution(continuation,record,key);
   if(this.ownAccount){
-   const c=this.context();assert(c.captureConsent,'OWN_CAPTURE_DISABLED');
-   assert(c.captureScope!=='transaction-facts-only'||(namespace===this.manifest.namespaces.experience&&record.schema==='recall-transaction-fact/1'),'OWN_CAPTURE_SCOPE');
+   this.checkWriteScope(namespace,record);
    const p=privateRead(join(this.ordinary.directory,'ordinary-preflight.json'));
    assert(p.contextHash===this.manifest.admission.contextHash&&p.manifestHash===this.hash&&p.accountAuthorized===true
     &&Date.now()-time(p.checkedAt)>=0&&Date.now()-time(p.checkedAt)<=300000,'OWN_PREFLIGHT_REQUIRED');

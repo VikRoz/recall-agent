@@ -59,7 +59,7 @@ export function agentServer(session, {capture,dataMode,mode}) {
   });
   const observe = inner => new ObservedToolTransport(inner,{store:session.experience,workspace:session.binding.project,
     source:dataMode === 'tatum' ? 'tatum' : dataMode === 'saved' ? 'replay' : 'fixture',
-    capture:capture && session.captureScope!=='transaction-facts-only',stop:()=>{session.stopped=true;}});
+    capture:capture && session.captureScope!=='transaction-facts-only',maxToolCalls:session.nativeToolLimit,stop:()=>{session.stopped=true;}});
   return { session, server, observe };
 }
 async function main() {

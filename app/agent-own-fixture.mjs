@@ -25,10 +25,11 @@ export async function createOwnFixture(directory,options={}){
 }
 export function ownFixturePorts(directory,options={}){
  const {manifest,context}=ownAuthorization(directory,{fixture:true});
- return {identity:async()=>context.identity,readKey:async()=>SYNTHETIC_TATUM_KEY,createSdk:fixtureSdk,
+ const ids=context.captureSet??OWN_FIXTURE_IDS,publicProfile=Object.fromEntries(['owner','accountId','delegatePublicKeyHex','packageId'].map(k=>[k,context.identity[k]]));
+ return {identity:async()=>runHash(context.identity)===context.profileHash?context.identity:publicProfile,readKey:async()=>SYNTHETIC_TATUM_KEY,createSdk:fixtureSdk,
   transport:fixtureTransport(directory,{...options,manifest,requestLimit:192,configReply:context.config}),wait:options.wait??(async()=>{}),
-  createData:syntheticTatum(directory,{...options,digestIndex:Object.fromEntries(OWN_FIXTURE_IDS.map((id,i)=>[id,i])),transactionReply:i=>{
-   const raw=fixtureTransaction(i%3),id=OWN_FIXTURE_IDS[i];raw.digest=id;raw.transaction.digest=id;raw.effects.transactionDigest=id;
+  createData:syntheticTatum(directory,{...options,digestIndex:Object.fromEntries(ids.map((id,i)=>[id,i])),transactionReply:i=>{
+   const raw=fixtureTransaction(i%3),id=ids[i];raw.digest=id;raw.transaction.digest=id;raw.effects.transactionDigest=id;
    return options.transactionReply?.(raw,i)??raw;
   }})};
 }
@@ -38,7 +39,7 @@ export function syntheticRetained(identity,root){
  root=realpathSync(root);
  const fail={schema:'recall-tool-experience/1',workspace:identity.workspace,source:'replay',tool:'find_wallet_activity',schemaHash:'a'.repeat(64),field:'limit',constraint:'maximum',bound:10,attempted:100,evidence:'sdk-input-validation',verdict:'fail',supersedes:null};
  const payloads=[fail,{...fail,attempted:10,evidence:'successful-tool-call',verdict:'resolved',supersedes:operationKey(fail)},
-  {schema:'recall-experience/1',workspace:identity.workspace,source:'fixture',network:'mainnet',operation:'gas-payer',digest:'3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7',sponsored:false,claimed:address('0xb'),observed:FIXTURE_WALLET,verdict:'fail',supersedes:null}];
+  {schema:'recall-experience/1',workspace:identity.workspace,source:'fixture',network:'mainnet',operation:'gas-payer',digest:'2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ',sponsored:false,claimed:address('0xb'),observed:FIXTURE_WALLET,verdict:'fail',supersedes:null}];
  const records=payloads.map(record=>({id:operationKey(record),record,blobId:operationKey(record)})),receipts={},origins=[];
  for(const [index,role] of ['storage','ordinary-write','closed-zero-write'].entries()){
   const path=join(root,role);mkdirSync(path,{mode:0o700});

@@ -12,8 +12,38 @@ import {FIXTURE_WALLET,FIXTURE_OTHER} from './activity-fixtures.ts';
 import {privateRead,runHash} from './agent-run.mjs';
 import {OWN_LIMITS} from './agent-own-contract.mjs';
 import {PILOT_LIMITS} from './activity-live.ts';
+import {transactionFact,NORMALIZER_SHA256} from './agent-facts.ts';
+import {normalizeTransaction} from './activity.ts';
+import {fixtureTransaction} from './activity-fixtures.ts';
+import {operationKey} from './agent-run.mjs';
+import {FileWriteJournal} from './activity-memory.ts';
+import {Client} from '../mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/client/index.js';
+import {StdioClientTransport} from '../mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/client/stdio.js';
+import {fileURLToPath} from 'node:url';
 const dir=()=>mkdtempSync(join(tmpdir(),'recall-own-test-'));
 const save=(p,x)=>writeFileSync(p,JSON.stringify(x),{mode:0o600});
+test('capture-set writer rejects a direct or cached out-of-set note before reservation or transport',async()=>{
+ for(const cached of [false,true]){const d=dir();let r;try{
+  const m=await createOwnFixture(d,{captureSet:OWN_FIXTURE_IDS}),id='3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7';
+  const raw=fixtureTransaction(0);raw.digest=id;raw.transaction.digest=id;raw.effects.transactionDigest=id;
+  const record=transactionFact(m.workspace,normalizeTransaction(raw,id,'mainnet','fixture'),{kind:'fixture',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',hashScope:'protobuf-json-selected-transaction',rawTransactionSha256:'a'.repeat(64),normalizerSha256:NORMALIZER_SHA256},new Date().toISOString());
+  if(cached){await new FileWriteJournal(join(d,'journal-experience')).save(operationKey(record),{state:'done',sha256:runHash(record),blobId:operationKey(record),jobId:'cached-outside'});
+   const p=join(d,'synthetic-relayer.json'),backend=privateRead(p);backend.records.push({namespace:m.namespaces.experience,text:JSON.stringify(record),blob_id:operationKey(record),key:operationKey(record)});backend.revision++;save(p,backend);}
+  r=await openOwnFixture(d);const before=r.gate.state().requests;
+  await assert.rejects(r.experience.write(record),/OWN_CAPTURE_SET_SCOPE/);const s=r.gate.state();
+  assert.equal(s.writes,0);assert.equal(s.intents.length,0);assert.equal(s.requests,before);
+ }finally{r?.close();rmSync(d,{recursive:true,force:true});}}
+});
+test('bounded public MCP rejects a thirteenth tool before handler or provider transport',async()=>{
+ const d=dir();let client;try{await createOwnFixture(d,{captureConsent:false});const a=ownAuthorization(d,{fixture:true});
+  client=new Client({name:'native-bound-check',version:'1'});await client.connect(new StdioClientTransport({command:process.execPath,
+   args:['--disable-warning=ExperimentalWarning',fileURLToPath(new URL('./agent-own-entry.mjs',import.meta.url)),'--mcp',d,'--offline-fixture','--native-limit=12']}));
+  const first=await client.callTool({name:'prepare_report',arguments:{network:'mainnet',wallet:FIXTURE_WALLET,transactions:[OWN_FIXTURE_IDS[0]]}});assert(!first.isError);const report=JSON.parse(first.content[0].text);
+  for(let i=0;i<11;i++)assert(!(await client.callTool({name:'refresh_report',arguments:{reportId:report.reportId}})).isError);
+  const before=privateRead(join(a.run,'agent-ledger.json'));await assert.rejects(client.callTool({name:'refresh_report',arguments:{reportId:report.reportId}}),/NATIVE_TOOL_LIMIT/);
+  const after=privateRead(join(a.run,'agent-ledger.json'));assert.equal(after.requests,before.requests);assert.equal(after.tatumBatches,1);assert.equal(after.writes,0);
+ }finally{await client?.close();rmSync(d,{recursive:true,force:true});}
+});
 test('ordinary activation has distinct finite caps and cannot reset or reopen old grants',async()=>{
  const d=dir();try{await createOwnFixture(d);const a=ownAuthorization(d,{fixture:true});
   assert.deepEqual(PILOT_LIMITS,{tatumBatches:2,writes:2,reads:2,requests:64,pollsPerJob:8});
@@ -75,7 +105,7 @@ test('ordinary client starts empty, scrubs secrets, isolates official login and 
  const args=ownClientArgs('/node','/root','/private/state',[]);
  for(let i=0;i<args.length;i+=2)assert(['-C','-s','-a','-c'].includes(args[i]));
  assert(!args.some(x=>/2GrJ|2it6|first task|nextTool/.test(x)));
- assert.deepEqual(cleanClientEnv({PATH:'/bin',TATUM_API_KEY:'synthetic',OPENAI_API_KEY:'synthetic',MEMWAL_CREDS_DIR:'synthetic'}),{PATH:'/bin'});
+ assert.deepEqual(cleanClientEnv({PATH:'/bin',TATUM_API_KEY:'synthetic',OPENAI_API_KEY:'synthetic',MEMWAL_CREDS_DIR:'synthetic',OPENAI_ACCESS_TOKEN:'synthetic',UNRELATED_ACCESS_TOKEN:'synthetic'}),{PATH:'/bin'});
  const c=loginCommand('/node','/root','/private/work');assert(c.args.includes('login'));assert.equal(c.env.MEMWAL_AUTO_SAVE,'0');assert.equal(c.env.MEMWAL_CREDS_DIR,'/private/work/profile');
  await assert.rejects(launchOwn(process.cwd(),join(process.cwd(),'inside'),{ports:{exec:()=>{throw Error('MUST_NOT_EXEC');}}}),/OWN_WORKSPACE_MUST_BE_OUTSIDE_SOURCE/);
 });
