@@ -1,6 +1,21 @@
 # Recall Agent development state
 
-Date: 7 November 2026. Separate private repository: VikRoz/recall-agent.
+Date: 7 November 2026. Candidate repository: VikRoz/recall-agent, currently private.
+
+## Current result and next gate
+
+The actual e72bdee/is5Kld run completed one primary native report with fresh Tatum facts, seven historical Walrus observations and the original 2,110-byte CSV delivered with its SHA-256. Ten unique candidate Mainnet receipts are completed, with exact signed content checks. The final three fact writes were explicit operator preparation through the public MCP, not spontaneous model learning. Actual counters: Tatum3/write3/content-read6/SDK85; additional spend $0, temporary key absent, five earlier origin snapshots unchanged.
+
+The frozen extended harness remains **STOPPED**: native0 completed; native1 completed report/export tools but no final answer before the shared240-second deadline; the dedicated final reader did not run. No counters, deadline or acceptance flags were reset. General learning and unseen-error recovery remain unproved. [Actual audit](docs/ACTUAL_COMPLETION_REQUIREMENTS_AUDIT_2026-11-07.md) · [Ten-record inventory](docs/MAINNET_MEMORY_INVENTORY.md).
+
+The coordinator independently ran the saved-evidence verifier, checked the full primary answer and both CSV hashes, and accepted stages4B/5 for this primary working flow. Current work is stage6: a clean judge package from unchanged runtime `e72bdeef88d583edeccfb6c3f59b73cfaeac57af`, then stage7 source freeze and stage8 publication materials. The runtime already passed209 integrated tests and45 targeted checks. Packaging checks use intercepted providers/stub clients only; no new account, model or provider action is authorized by packaging.
+
+README, installation, English article, video outline, receipt inventory and a static evidence-site preview are prepared together. Candidate visibility, push, release and Pages settings remain unchanged pending a concrete publication approval. Existing fallback VikRoz/recall-lab v1.0.0 is untouched. Older local ZIPs are historical and must not be called the current release.
+
+## Historical development snapshots
+
+The dated snapshots below preserve earlier decisions and failed attempts. Their phrases such as “current”, “pending” and old counts describe that snapshot only; the current status above supersedes them. Negative results are not overwritten.
+
 Current offline completion increment: coordinator approved operator preparation through the same public MCP before two native sessions, preserving the shared240-second deadline. Seven exact retained rows and both spent own-account origins are required. The exact-three policy is enforced before writer cache/reservation/transport, and new public payload artifacts are durable before submission.209/209 full integrated tests and45 targeted checks passed, all protocol/evidence/source264 checks green; completion synthetic7→10 used Tatum3/write3/read7/SDK87 with original CSV and independent reader. The old general protocol remains2/7/10/92. See [offline result and boundaries](docs/OWN_ACCOUNT_COMPLETION_OFFLINE_2026-11-07.md). No new actual grant, capture, provider or model operation has run; actual receipts remain7/10.
 
 Newest actual result:12bd1c2/pHQ6kI fetched all seven Tatum transactions and completed four new Walrus writes, then stopped at the120-second native deadline while the synchronous first tool was still storing. Ledger Tatum1/write4/read5/SDK45, native1 consumed; no second model session/final reader/CSV. Key absent and previous four origins unchanged. Candidate completed receipts are now7/10. Four exact payloads were recovered offline by unique full receipt-hash/operation-key matches; this is not new signed readback. [Actual timing, payload proof and proposed completion path](docs/OWN_ACCOUNT_PARTIAL_RESULT_AND_COMPLETION_PLAN_2026-11-07.md). No rerun or new allowance is implied. Runtime remains unchanged since12bd1c2; the preparation-outside-generation alternative is a proposal awaiting review.

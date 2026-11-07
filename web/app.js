@@ -4,24 +4,26 @@ for (const button of document.querySelectorAll('[data-copy]')) {
     try {
       await navigator.clipboard.writeText(button.dataset.copy);
       button.textContent = 'Copied ✓'; button.disabled = true;
-      if (status) status.textContent = 'Command copied. Run it in the extracted project folder.';
+      if (status) status.textContent = 'Command copied. Run it inside the extracted Recall-Agent folder.';
       setTimeout(() => { button.textContent = 'Copy command'; button.disabled = false; }, 2500);
     } catch { if (status) status.textContent = 'Select and copy the command above.'; }
   });
 }
-if (document.querySelector('#first-blob')) {
-  fetch('evidence/activity-model-2026-11-05/run.json').then(r => { if (!r.ok) throw Error(); return r.json(); }).then(e => {
-    document.querySelector('#first-blob').textContent = e.first.receipt.blobId;
-    document.querySelector('#second-blob').textContent = e.second.receipt.blobId;
-    document.querySelector('#before-label').textContent = e.first.proposal.preview.label;
-    document.querySelector('#after-label').textContent = e.second.proposal.preview.label;
-    const body = document.querySelector('#report-row'); body.replaceChildren();
-    for (const row of e.second.exported.report.rows) {
+const rows = document.querySelector('#record-rows');
+if (rows) {
+  fetch('evidence/own-account-completion-live-2026-11-07/run.json').then(r => { if (!r.ok) throw Error(); return r.json(); }).then(run => {
+    if (run.candidateCompletedReceiptCount !== 10 || run.allRecords.length !== 10) throw Error();
+    rows.replaceChildren();
+    for (const [index, row] of run.allRecords.entries()) {
+      const record = row.record;
+      const purpose = record.schema === 'recall-transaction-fact/1' ? record.digest
+        : record.schema === 'recall-tool-experience/1' ? `${record.tool}: ${record.verdict} · limit ${record.attempted}`
+        : 'Verified gas-payer hypothesis mismatch';
       const tr = document.createElement('tr');
-      for (const value of [row.digest, row.netAmountBaseUnits, row.label]) {
-        const td = document.createElement('td'); td.textContent = value; td.style.overflowWrap = 'anywhere'; tr.append(td);
+      for (const text of [String(index + 1), purpose, row.blobId]) {
+        const td = document.createElement('td'); td.textContent = text; td.style.overflowWrap = 'anywhere'; tr.append(td);
       }
-      body.append(tr);
+      rows.append(tr);
     }
-  }).catch(() => { if (status) status.textContent = 'Saved evidence could not load. You can download it from the source repository.'; });
+  }).catch(() => { if (status) status.textContent = 'Saved evidence could not load. Use the receipt link above.'; });
 }
