@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {createContinuationFixture,continuationOptions,continuationFixturePorts} from './agent-continuation-fixture.mjs';
 import {continuationHappyPath,continuationWalkthrough,continuationTask,originHashes} from './check-agent-continuation.mjs';
 import {armManaged,managedPreflightInventory,reserveManagedTurn,completeManagedTurn,admittedManaged,openManaged,checkBaseline,managedFile} from './agent-managed.mjs';
-import {baselineRows,validateContinuationBaseline} from './agent-continuation-contract.mjs';
+import {baselineRows,validateContinuationBaseline,candidateContinuationBaseline} from './agent-continuation-contract.mjs';
 import {evaluateManaged,readContinuation,readContinuationProcess,withTemporaryKey} from './agent-managed-entry.mjs';
 import {privateRead,runHash} from './agent-run.mjs';
 import {FIXTURE_WALLET} from './activity-fixtures.ts';
@@ -34,7 +34,7 @@ test('optional refresh spends the second read; independent reader cannot obtain 
 test('three-origin payload validation preserves known stop/native provenance and rejects malformed unions',async()=>{
  const p=parent();try{const {context:c}=await createContinuationFixture(p);const base=c.baseline;
   checkBaseline(base,{managedTest:true});assert.equal(baselineRows(base).length,3);
-  for(const edit of [b=>b.origins[1].ledger.stopped='OTHER_STOP',b=>b.origins[1].ledger.intents[0].state='sent',
+  for(const edit of [b=>b.origins[0].sourceCommit='bad-source',b=>b.origins[1].ledger.stopped='OTHER_STOP',b=>b.origins[1].ledger.intents[0].state='sent',
    b=>b.origins[1].ledger.jobs={},b=>b.origins[1].receipts[Object.keys(b.origins[1].receipts)[0]].sha256='0'.repeat(64),
    b=>b.origins[1].manifest.owner='0x'+'f'.repeat(64),b=>b.origins[1].nativeBudget.turns[1].status='completed',
    b=>b.metadata.expectedBlobIds.pop(),b=>b.origins[1].records[0].id=b.origins[0].records[0].id]){
@@ -149,4 +149,10 @@ const send=m=>console.log(JSON.stringify(m));rl.createInterface({input:process.s
   if(failBoot){assert.equal(log.filter(x=>x.task).length,0);assert.equal(b.stopped,'NATIVE_STOPPED');}
   else{assert.deepEqual(log.find(x=>x.task).task,[{type:'text',text:c.plan.tasks[0].text}]);assert.equal(privateRead(join(d,'managed-result.json')).status,'COMPLETED_NO_RESOLUTION');}
  }finally{process.env.PATH=oldPath;delete process.env.RECALL_CONTINUATION_LOG;delete process.env.RECALL_CONTINUATION_FAIL;rmSync(p,{recursive:true,force:true});}}
+});
+
+test('actual retained public origin bundles accept their historical abbreviated Git revision without rewriting it',()=>{
+ const b=candidateContinuationBaseline(root);assert.equal(b.origins[0].sourceCommit,'b1072c8');
+ validateContinuationBaseline(b,{root});assert.equal(b.origins[1].ledger.stopped,'AGENT_PROVIDER_OR_POLICY_ERROR');
+ assert.equal(b.origins[1].nativeBudget.turns.length,2);assert.equal(baselineRows(b).length,3);
 });

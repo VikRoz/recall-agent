@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date": "2026-11-07T09:11:19.871Z",
+  "date": "2026-11-07T09:16:27.881Z",
   "status": "OFFLINE_SINGLE_CONTINUATION_VERIFIED",
   "synthetic": true,
   "task": {
@@ -28,7 +28,7 @@
     "app/agent-activity-index.ts": "60faf0e9b1f2f97801295e584b8503aaf8b37f4e2c39e613c827d2e95eb0a05e",
     "app/agent-comparison-assess.mjs": "8d349d01fb97d3b01adba38f654fa5ce694958f1926ec0d256a7a99589d1441a",
     "app/agent-comparison-prepare.mjs": "af9dea6cb545d2147e0e8a58241b82af92f3f8a9c03d18e2e285a9db6bf68487",
-    "app/agent-continuation-contract.mjs": "e39015f186725591c5e16bbcdc2282afd23bc6960e05063622f721da2f6f4984",
+    "app/agent-continuation-contract.mjs": "17bf66b690bf4f22c29211da87d439129279af866d1c97ace8a4b8dee05b0df4",
     "app/agent-continuation-fixture.mjs": "8a7974fed5681257eabedcbad1ab93ef1984a29bdeeef44ff79366f1f52b235c",
     "app/agent-continuation-prepare.mjs": "0d28262e5758a5354c8f75f03aadf118c5b868f70f680f142a4291b50a0aeb4d",
     "app/agent-diagnostic.mjs": "53dc9be41f74834f744f3b035aab0b5471457ab799a7e8bf920e6cbf2659ed36",
@@ -73,13 +73,13 @@
   },
   "originalStatesUnchanged": true,
   "initialRecords": 3,
-  "nativeMcpPid": 18067,
-  "readerPid": 18069,
+  "nativeMcpPid": 21200,
+  "readerPid": 21202,
   "report": {
     "mode": "offline-managed-admission-test",
-    "reportId": "report:31310bc1-6116-4dae-b36a-1adaead920b7",
+    "reportId": "report:c12c888a-25a1-4418-b059-0be9fecf2abc",
     "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
-    "asOf": "2026-11-07T09:11:19.318Z",
+    "asOf": "2026-11-07T09:16:27.337Z",
     "digests": [
       "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
     ],
@@ -198,7 +198,7 @@
     "memory": [],
     "experience": [
       {
-        "id": "VXX8pQBhhVS9-4nXyq3X9eRapmQwX3eWRTtO1yfcL5Y",
+        "id": "doVJmX3_A2rKD6Ugv7IzMhtfE1PmLPJbF2Uc6Zba8EI",
         "record": {
           "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
           "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
@@ -210,9 +210,9 @@
           "sponsored": true,
           "supersedes": null,
           "verdict": "fail",
-          "workspace": "agent-4fc8d961-6e3e-4453-9ebb-b8b3cbedc7e1"
+          "workspace": "agent-074c8eb4-53aa-499b-a0d1-652b92271fcd"
         },
-        "blobId": "VXX8pQBhhVS9-4nXyq3X9eRapmQwX3eWRTtO1yfcL5Y"
+        "blobId": "doVJmX3_A2rKD6Ugv7IzMhtfE1PmLPJbF2Uc6Zba8EI"
       }
     ],
     "experienceStorage": "walrus-fixture",
@@ -234,14 +234,14 @@
     },
     "memory": {
       "storage": "walrus-fixture",
-      "id": "ZPP4PZX7QRi6BsgxpJWkQsPMluiuAFlHWcJjEluFsAw",
-      "blobId": "ZPP4PZX7QRi6BsgxpJWkQsPMluiuAFlHWcJjEluFsAw"
+      "id": "9UgS3LwGcra-WBOx7UHvxQ_hyEqWYRu86Ow82GGQhWU",
+      "blobId": "9UgS3LwGcra-WBOx7UHvxQ_hyEqWYRu86Ow82GGQhWU"
     }
   },
   "records": [
     {
-      "blobId": "87C4Q1-Yt0ywXi82K3qPXYbfVNLiLkoCwsdRtX-d-hM",
-      "id": "87C4Q1-Yt0ywXi82K3qPXYbfVNLiLkoCwsdRtX-d-hM",
+      "blobId": "KLMON-TbeY6ajAZ5l4NH93VnHZ6rKZAKPaK7x0A9Hqw",
+      "id": "KLMON-TbeY6ajAZ5l4NH93VnHZ6rKZAKPaK7x0A9Hqw",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
         "digest": "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8",
@@ -253,12 +253,12 @@
         "sponsored": false,
         "supersedes": null,
         "verdict": "fail",
-        "workspace": "agent-4fc8d961-6e3e-4453-9ebb-b8b3cbedc7e1"
+        "workspace": "agent-074c8eb4-53aa-499b-a0d1-652b92271fcd"
       }
     },
     {
-      "blobId": "40XaNRutoAid4oFVgGHIwYDBlG1OBngnsWJ6pBsHOlM",
-      "id": "40XaNRutoAid4oFVgGHIwYDBlG1OBngnsWJ6pBsHOlM",
+      "blobId": "09xmAosLBg1OtZz5vPHPnIC6zszyohiCyHJbiBcDRXY",
+      "id": "09xmAosLBg1OtZz5vPHPnIC6zszyohiCyHJbiBcDRXY",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
         "digest": "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8",
@@ -268,14 +268,14 @@
         "schema": "recall-experience/1",
         "source": "fixture",
         "sponsored": false,
-        "supersedes": "87C4Q1-Yt0ywXi82K3qPXYbfVNLiLkoCwsdRtX-d-hM",
+        "supersedes": "KLMON-TbeY6ajAZ5l4NH93VnHZ6rKZAKPaK7x0A9Hqw",
         "verdict": "resolved",
-        "workspace": "agent-4fc8d961-6e3e-4453-9ebb-b8b3cbedc7e1"
+        "workspace": "agent-074c8eb4-53aa-499b-a0d1-652b92271fcd"
       }
     },
     {
-      "blobId": "VXX8pQBhhVS9-4nXyq3X9eRapmQwX3eWRTtO1yfcL5Y",
-      "id": "VXX8pQBhhVS9-4nXyq3X9eRapmQwX3eWRTtO1yfcL5Y",
+      "blobId": "doVJmX3_A2rKD6Ugv7IzMhtfE1PmLPJbF2Uc6Zba8EI",
+      "id": "doVJmX3_A2rKD6Ugv7IzMhtfE1PmLPJbF2Uc6Zba8EI",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
         "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
@@ -287,12 +287,12 @@
         "sponsored": true,
         "supersedes": null,
         "verdict": "fail",
-        "workspace": "agent-4fc8d961-6e3e-4453-9ebb-b8b3cbedc7e1"
+        "workspace": "agent-074c8eb4-53aa-499b-a0d1-652b92271fcd"
       }
     },
     {
-      "blobId": "ZPP4PZX7QRi6BsgxpJWkQsPMluiuAFlHWcJjEluFsAw",
-      "id": "ZPP4PZX7QRi6BsgxpJWkQsPMluiuAFlHWcJjEluFsAw",
+      "blobId": "9UgS3LwGcra-WBOx7UHvxQ_hyEqWYRu86Ow82GGQhWU",
+      "id": "9UgS3LwGcra-WBOx7UHvxQ_hyEqWYRu86Ow82GGQhWU",
       "record": {
         "claimed": "0x000000000000000000000000000000000000000000000000000000000000000c",
         "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
@@ -302,29 +302,29 @@
         "schema": "recall-experience/1",
         "source": "fixture",
         "sponsored": true,
-        "supersedes": "VXX8pQBhhVS9-4nXyq3X9eRapmQwX3eWRTtO1yfcL5Y",
+        "supersedes": "doVJmX3_A2rKD6Ugv7IzMhtfE1PmLPJbF2Uc6Zba8EI",
         "verdict": "resolved",
-        "workspace": "agent-4fc8d961-6e3e-4453-9ebb-b8b3cbedc7e1"
+        "workspace": "agent-074c8eb4-53aa-499b-a0d1-652b92271fcd"
       }
     }
   ],
   "counters": {
     "intents": [
       {
-        "key": "ZPP4PZX7QRi6BsgxpJWkQsPMluiuAFlHWcJjEluFsAw",
-        "namespace": "agent-4fc8d961-6e3e-4453-9ebb-b8b3cbedc7e1-experience",
-        "sha256": "64f3f83d95fb4118ba06c831a495a442c3cc96e8ae00594759c263125b85b00c",
+        "key": "9UgS3LwGcra-WBOx7UHvxQ_hyEqWYRu86Ow82GGQhWU",
+        "namespace": "agent-074c8eb4-53aa-499b-a0d1-652b92271fcd-experience",
+        "sha256": "f54812dcbc0672b6be5813b1ed41efc50fe1c84a96611bbce8ec3cd861908565",
         "state": "done"
       }
     ],
     "jobs": {
-      "fixture-5e29876d-451b-4916-be5e-02e9adb1a4ad": {
-        "key": "ZPP4PZX7QRi6BsgxpJWkQsPMluiuAFlHWcJjEluFsAw",
-        "namespace": "agent-4fc8d961-6e3e-4453-9ebb-b8b3cbedc7e1-experience",
+      "fixture-757af7e1-a9b9-4282-bc56-8dcd590b6e69": {
+        "key": "9UgS3LwGcra-WBOx7UHvxQ_hyEqWYRu86Ow82GGQhWU",
+        "namespace": "agent-074c8eb4-53aa-499b-a0d1-652b92271fcd-experience",
         "polls": 1
       }
     },
-    "manifestHash": "8d7a85b53a814f178b77aadbbc9ff798aaacb5f499f0d54ffc0f2f923cd85a87",
+    "manifestHash": "2eca4bcb47bd6142f0b332660493fa4b8cd5b2d0885cfd99a86abbc0c40adacc",
     "reads": 2,
     "requests": 36,
     "schema": 1,
@@ -333,14 +333,14 @@
     "writes": 1
   },
   "native": {
-    "contextHash": "a0c6f8e6940b3f57314e6b9add309458df4f085228c40731f3a6e9728a419f22",
+    "contextHash": "182d0bd50ee8980b1b1ac4ae8f18aa94f6921b173efceb1b4e72aa700bc46c0f",
     "model": "gpt-5.6-luna",
     "schema": 1,
     "stopped": null,
     "turns": [
       {
         "index": 0,
-        "reservedAt": "2026-11-07T09:11:18.852Z",
+        "reservedAt": "2026-11-07T09:16:26.875Z",
         "status": "completed",
         "taskHash": "340973662dd42cdac03fa279839c728f2c6911b3c15fee7e20ed76e29e50b0bd"
       }

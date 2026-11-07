@@ -29,7 +29,8 @@ export function validateContinuationBaseline(b,{root,managedTest=false}={}){
  for(let n=0;n<2;n++){
   const o=b.origins[n],s=o.ledger,m=o.manifest;
   exactKeys(o,['sourceCommit','manifest','ledger','records','receipts','nativeBudget']);
-  assert(/^[a-f0-9]{40}$/.test(o.sourceCommit)&&identityKeys.every(k=>m[k]===first[k]),'CONTINUATION_IDENTITY');
+  assert(/^[a-f0-9]{7,40}$/.test(o.sourceCommit),'CONTINUATION_SOURCE_REVISION');
+  assert(identityKeys.every(k=>m[k]===first[k]),'CONTINUATION_IDENTITY');
   assert(s.manifestHash===runHash(m)&&s.stopped===(n===0?null:'AGENT_PROVIDER_OR_POLICY_ERROR')
    &&s.writes===(n===0?2:1)&&s.intents.length===s.writes&&s.intents.every(i=>i.state==='done')
    &&Object.keys(s.jobs).length===s.writes,'CONTINUATION_UNSETTLED_OR_STOP');

@@ -66,7 +66,7 @@ Ask about a wallet and optionally a period in ordinary words. The model can find
 
 ## Scoped gas-payer memory
 
-A stored literal payer applies only to the same transaction, network, source and observed payer. It cannot override a new transaction's facts. The [frozen expense-hypothesis evaluation](docs/EVALUATION_PREPARATION_2026-11-07.md) passed offline fresh-process and negative controls; the incorrect hypothesis is explicitly supplied by the test/user. It is not a new observed model error or an accuracy benchmark. Its two native tasks and any real-account execution remain unapproved.
+A stored literal payer applies only to the same transaction, network, source and observed payer. It cannot override a new transaction's facts. The [frozen expense-hypothesis evaluation](docs/EVALUATION_PREPARATION_2026-11-07.md) passed offline fresh-process and negative controls; the incorrect hypothesis is explicitly supplied by the test/user. It is not a new observed model error or an accuracy benchmark. The subsequent actual attempt and its partial stop are recorded above. The new one-conversation continuation requires its own finite live grant.
 
 ## Original CSV files
 

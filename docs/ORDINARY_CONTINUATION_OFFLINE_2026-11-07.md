@@ -43,3 +43,28 @@ Rejected alternatives remain reset/resume, repeating the first hypothesis, copyi
 ## Open gate
 
 Coordinator review of the completed offline acceptance, source freeze and exact command. A new native turn and temporary existing-key capture require the separate concrete human consent before any live execution. Current metadata diagnostic and older trial allowances remain consumed. Actual plaintext retrieval/model choice/resolution/readback for this continuation and later judge packaging are still open. Publication, deployment and additional spend: zero.
+
+
+## Real-state preparation check and historical revision format
+
+After the first162-test acceptance, offline preparation against the actual retained public bundles exposed an incorrect assumption: the old source pin is the valid abbreviated Git revision `b1072c8`, while the new origin validator initially expected40 characters. The candidate identities all matched. The check now accepts7–40 hexadecimal characters, consistent with the existing historical source verifier, while exact candidate bundle equality remains mandatory. Historical artifacts were not rewritten. A new regression validates those actual retained public bundles offline. This code correction requires a new integrated acceptance; the earlier162 result is historical.
+
+Preparation against both original private nonsecret ledgers, journals and stopped native budget subsequently succeeded without opening a profile, key, SDK or model. Context size16,548 bytes remains within the existing32KiB private-file bound. The new workspace has zero native reservations, no grant and no key file. It contains only public receipt proofs and preparation metadata.
+
+## Frozen launch preparation — not authorized or executed
+
+Private workspace: `/private/tmp/recall-agent-continuation-ready-mGqXhs/workspace`.
+
+Plan SHA-256: `6675c4bb909448e441ac6f86a9924af02579ebe5799924339296f1c489de1087`.
+Context SHA-256: `97ccdfc410182257a31809de51211fc024e85b3045931743ea636863216e66e1`.
+New, currently absent key destination: `/private/tmp/recall-agent-continuation-ready-mGqXhs/capture/tatum.key`.
+
+The exact argument array is saved in the workspace's `prepared.json`; the coordinator is the sole future operator:
+
+```sh
+/Users/sirquickflip/.hermes/node/bin/node --disable-warning=ExperimentalWarning "/Users/sirquickflip/Documents/ChatGPT/Хакатоны/work/recall-agent/app/agent-managed-entry.mjs" --evaluate /private/tmp/recall-agent-continuation-ready-mGqXhs/workspace
+```
+
+**Do not execute yet.** Only after the separate concrete native/key-capture permission and coordinator's source/command review may the existing key be captured privately at this new owned destination and the finite grant be issued. The private `approval-template.json` has a null timestamp/account/balance/key hash; no real grant is created automatically. Recheck Free, included quota and sponsorship at action time, not from the old screenshot. This is the new one-turn allowance, not reuse of either the stopped trial or metadata diagnostic.
+
+Final acceptance after the historical-revision fix: **163/163 tests passed**, zero failures/skips, all independent protocol, historical/new evidence and source206 checks. Log: `/private/tmp/recall-continuation-final-full-20261107.log`. The additional regression validates the actual public original bundles; the prior13 targeted/162 integrated results remain historical. The new actual-state preparation succeeded entirely offline, with grant/key absent and no native reservation.
