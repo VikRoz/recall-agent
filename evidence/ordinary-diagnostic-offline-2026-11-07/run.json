@@ -144,5 +144,6 @@
   "limitations": [
     "Controlled synthetic HTTP failure, not diagnosis of the real 7 November startup cause.",
     "No model inference, real profile/key, account access or provider request."
-  ]
+  ],
+  "sourceCommit": "fdd7fcf0949070b498c2c43ec5b28c82d8be69e2"
 }

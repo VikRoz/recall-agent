@@ -39,6 +39,8 @@ The saved independent-process walkthrough is `evidence/ordinary-diagnostic-offli
 
 The full integrated `bash start.command --check` passed once after this change: **139/139 tests, zero failures/skips**, all independent MCP walkthroughs, saved evidence verifiers and source checks (183 files). Log: /private/tmp/recall-diagnostic-full-20261107.log. The earlier 131-test acceptance remains historical.
 
+Product/source revision: `fdd7fcf0949070b498c2c43ec5b28c82d8be69e2`, local only. The saved offline diagnostic evidence is pinned to that historical Git revision; the original real attempt remains pinned separately to e1ffa21.
+
 ## Historical inference, not a captured route event
 
 Local inspection of the frozen SDK shows synchronous `MemWal.create` and local `getPublicKeyHex`; in frozen `openInjectedAgent`, the first subsequent fetch is `/health`, with compatibility/config afterwards. Combined with the real counter changing 28→29 at second startup, this narrows the failure location to that health request/guard/transport. It does **not** recover the missing response status, body, validation cause or network error. The real outcome artifact remains unchanged and does not retroactively assert a captured route.
