@@ -7,6 +7,7 @@ import {assert,canonical,exactKeys,time} from '../src/domain.ts';
 import {address} from './activity.ts';
 import {PILOT_LIMITS} from './activity-live.ts';
 import {recordFirstFailure} from './agent-diagnostic.mjs';
+import {CONTINUATION_KIND,CONTINUATION_LIMITS,continuationResolution} from './agent-continuation-contract.mjs';
 
 export const runHash=value=>createHash('sha256').update(canonical(value)).digest('hex');
 export const operationKey=value=>createHash('sha256').update(canonical(value)).digest('base64url');
@@ -60,7 +61,7 @@ export class AgentRunGate {
  constructor(directory,options={}){
   privateDirectory(directory);this.directory=directory;this.path=join(directory,'agent-ledger.json');
   this.manifest=validateAgentManifest(privateRead(join(directory,'agent-run.json')),options);
-  this.hash=runHash(this.manifest);this.lease=undefined;this.pending=undefined;
+  this.hash=runHash(this.manifest);this.lease=undefined;this.pending=undefined;this.readonly=options.readonly===true;
   this.ordinary=options.ordinary?{directory:options.workspaceDirectory,token:options.leaseToken,approvalHash:options.approvalHash}:undefined;
   if(this.ordinary)assert(typeof this.ordinary.directory==='string'&&typeof this.ordinary.token==='string'
    &&/^[a-f0-9]{64}$/.test(this.ordinary.approvalHash),'AGENT_WORKSPACE_LEASE_REQUIRED');
@@ -69,12 +70,18 @@ export class AgentRunGate {
   const state=this.state();assert(state.stopped===null,'AGENT_RUN_STOPPED');
   assert(state.intents.every(i=>i.state==='done'),'AGENT_OUTCOME_UNCERTAIN');this.admit();
  }
+ context(){
+  if(!this.ordinary||!['live-ordinary-selected','offline-managed-admission-test'].includes(this.manifest.mode))return null;
+  const c=privateRead(join(this.ordinary.directory,'managed-context.json'));
+  assert(runHash(c)===this.manifest.admission.contextHash,'MANAGED_CONTEXT_CHANGED');return c;
+ }
+ limits(){return this.context()?.plan.kind===CONTINUATION_KIND?CONTINUATION_LIMITS:PILOT_LIMITS;}
  state(){
   assert(runHash(privateRead(join(this.directory,'agent-run.json')))===this.hash,'AGENT_MANIFEST_CHANGED');
   const s=privateRead(this.path);
   exactKeys(s,['schema','manifestHash','stopped','tatumBatches','writes','reads','requests','intents','jobs']);
   assert(s.schema===1&&s.manifestHash===this.hash&&(s.stopped===null||/^[A-Z0-9_]+$/.test(s.stopped)),'AGENT_LEDGER_BINDING');
-  for(const k of ['tatumBatches','writes','reads','requests'])assert(Number.isSafeInteger(s[k])&&s[k]>=0&&s[k]<=PILOT_LIMITS[k],'AGENT_LEDGER_COUNTER');
+  for(const k of ['tatumBatches','writes','reads','requests'])assert(Number.isSafeInteger(s[k])&&s[k]>=0&&s[k]<=this.limits()[k],'AGENT_LEDGER_COUNTER');
   assert(Array.isArray(s.intents)&&s.intents.length===s.writes,'AGENT_LEDGER_INTENTS');
   const keys=new Set();
   for(const i of s.intents){
@@ -118,21 +125,23 @@ export class AgentRunGate {
  stop(code){this.update(s=>{s.stopped??=/^[A-Z0-9_]+$/.test(code)?code:'AGENT_PROVIDER_ERROR';},true);}
  reserve(kind){
   assert(['tatumBatches','reads','requests'].includes(kind),'AGENT_COUNTER_KIND');
-  const s=this.update(s=>{if(s[kind]>=PILOT_LIMITS[kind])s.stopped='LIMIT_'+kind.toUpperCase();else s[kind]++;});
+  assert(!this.readonly||kind!=='tatumBatches','CONTINUATION_READER_READONLY');
+  const s=this.update(s=>{if(s[kind]>=this.limits()[kind])s.stopped='LIMIT_'+kind.toUpperCase();else s[kind]++;});
   assert(s.stopped===null,'AGENT_LIMIT');
  }
  ensureWriteAvailable(){
-  this.admit();if(this.state().writes>=PILOT_LIMITS.writes){this.stop('LIMIT_WRITES');assert(false,'AGENT_LIMIT');}
+  this.admit();assert(!this.readonly,'CONTINUATION_READER_READONLY');if(this.state().writes>=this.limits().writes){this.stop('LIMIT_WRITES');assert(false,'AGENT_LIMIT');}
  }
  request(kind,job){
   const s=this.update(s=>{
-   if(s.requests>=PILOT_LIMITS.requests){s.stopped='LIMIT_REQUESTS';return;}
-   if(kind==='reads'&&s.reads>=PILOT_LIMITS.reads){s.stopped='LIMIT_READS';return;}
-   if(job){assert(Object.hasOwn(s.jobs,job),'AGENT_UNKNOWN_JOB');if(s.jobs[job].polls>=PILOT_LIMITS.pollsPerJob){s.stopped='POLL_LIMIT';return;}}
+   if(s.requests>=this.limits().requests){s.stopped='LIMIT_REQUESTS';return;}
+   if(kind==='reads'&&s.reads>=this.limits().reads){s.stopped='LIMIT_READS';return;}
+   if(job){assert(Object.hasOwn(s.jobs,job),'AGENT_UNKNOWN_JOB');if(s.jobs[job].polls>=this.limits().pollsPerJob){s.stopped='POLL_LIMIT';return;}}
    s.requests++;if(kind==='reads')s.reads++;if(job)s.jobs[job].polls++;
   });assert(s.stopped===null,'AGENT_LIMIT');
  }
  async withWriter(namespace,fn){
+  assert(!this.readonly,'CONTINUATION_READER_READONLY');
   const lock=join(this.directory,'.agent-writer-lock');mkdirSync(lock,{mode:0o700});
   this.lease=namespace;
   try{this.admit();return await fn();}
@@ -143,7 +152,9 @@ export class AgentRunGate {
   }
  }
  beforeSubmit(namespace,record,key){
+  assert(!this.readonly,'CONTINUATION_READER_READONLY');
   assert(this.lease===namespace&&!this.pending&&operationKey(record)===key,'AGENT_WRITE_LEASE');
+  const continuation=this.context();if(continuation?.plan.kind===CONTINUATION_KIND)continuationResolution(continuation,record,key);
   if(this.manifest.mode==='live-walrus-replay'){
    const proof=privateRead(join(this.directory,'agent-live-preflight.json'));
    assert(proof.manifestHash===this.hash&&proof.emptyNamespaces===true&&proof.accountAuthorized===true
@@ -164,8 +175,8 @@ export class AgentRunGate {
   const intent={namespace,key,sha256:runHash(record),state:'reserved'};
   const s=this.update(s=>{
    assert(!s.intents.some(i=>i.namespace===namespace&&i.key===key),'AGENT_OPERATION_ALREADY_RESERVED');
-   if(s.requests>=PILOT_LIMITS.requests){s.stopped='LIMIT_REQUESTS';return;}
-   if(s.writes>=PILOT_LIMITS.writes){s.stopped='LIMIT_WRITES';return;}s.writes++;s.intents.push(intent);
+   if(s.requests>=this.limits().requests){s.stopped='LIMIT_REQUESTS';return;}
+   if(s.writes>=this.limits().writes){s.stopped='LIMIT_WRITES';return;}s.writes++;s.intents.push(intent);
   });assert(s.stopped===null,'AGENT_LIMIT');this.pending={...intent};
  }
  sent(namespace,key,record){

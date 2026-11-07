@@ -11,7 +11,9 @@ import {validateTatumBinding,PILOT_LIMITS} from './activity-live.ts';
 import {privateRead,privateDirectory,runHash,operationKey} from './agent-run.mjs';
 import {createOrdinaryWorkspace,createOrdinaryRun,ordinaryBinding,ordinaryAuthorization,openInjectedOrdinary} from './agent-ordinary.mjs';
 import {profileIdentity} from './agent-live.mjs';
+import {FileWriteJournal} from './activity-memory.ts';
 import {validateExperienceRows} from './agent-experience.ts';
+import {CONTINUATION_KIND,CONTINUATION_LIMITS,isContinuation,baselineRows,baselineReceipts,baselineManifest,candidateContinuationBaseline,validateContinuationBaseline} from './agent-continuation-contract.mjs';
 import {deploymentHash,WALRUS_RELAY} from './agent-walrus-guard.mjs';
 const platformFetch=globalThis.fetch.bind(globalThis);
 export const MANAGED_LIMITS=Object.freeze({...PILOT_LIMITS,nativeTurns:2,toolsPerTurn:12,secondsPerTurn:120,maxUSD:0});
@@ -41,7 +43,15 @@ export function createManagedPlan(root){
   noRetry:true,noPromptTuning:true,claimOrigin:'user-supplied-hypothesis',tasks:e.nativeTasks,publicInputs:e.publicInputs,
   evaluationHash:bytesHash(path),runtimeHashes:managedRuntimeHashes(root)};
 }
+export function createContinuationPlan(root){
+ const old=createManagedPlan(root),baseline=candidateContinuationBaseline(root);
+ return {...old,kind:CONTINUATION_KIND,limits:CONTINUATION_LIMITS,tasks:[old.tasks[1]],claimOrigin:'existing-verified-user-hypothesis',baselineHash:runHash(baseline)};
+}
 export function verifyFrozenPlan(plan,root){
+ if(plan.kind===CONTINUATION_KIND){
+  const reference=createContinuationPlan(root);
+  assert(canonical(plan)===canonical(reference),'CONTINUATION_FROZEN_PLAN');return plan;
+ }
  assert(plan.schema===1&&plan.kind==='ordinary-selected-live-evaluation'&&plan.network==='mainnet'
   &&plan.model==='gpt-5.6-luna'&&canonical(plan.limits)===canonical(MANAGED_LIMITS)
   &&plan.tasks.length===2&&new Set(plan.tasks.map(t=>t.chat)).size===2
@@ -56,7 +66,8 @@ export function verifyFrozenPlan(plan,root){
  }
  return plan;
 }
-export function checkBaseline(baseline){
+export function checkBaseline(baseline,options={}){
+ if(baseline?.schema===2)return validateContinuationBaseline(baseline,options);
  assert(baseline.schema===1&&baseline.manifest&&baseline.ledger&&baseline.receipts&&baseline.records,'MANAGED_BASELINE');
  const {manifest:m,ledger:s,receipts,records}=baseline;
  assert(s.manifestHash===runHash(m)&&s.stopped===null&&s.intents.length===s.writes
@@ -71,33 +82,57 @@ export function checkBaseline(baseline){
  return baseline;
 }
 // Called with public metadata only. Does not open profile, key, model or provider.
-export function prepareManaged(directory,{plan,root,identity,config,profileRoot,keyFile,priorRoot,baseline,managedTest=false}){
- verifyFrozenPlan(plan,root);checkBaseline(baseline);
+export function prepareManaged(directory,{plan,root,identity,config,profileRoot,keyFile,priorRoot,baseline,priorOrigins,managedTest=false}){
+ verifyFrozenPlan(plan,root);checkBaseline(baseline,{root,managedTest});
+ assert((plan.kind===CONTINUATION_KIND)===(baseline.schema===2),'CONTINUATION_BASELINE_KIND');
+ if(baseline.schema===2)assert(runHash(baseline)===plan.baselineHash||managedTest,'CONTINUATION_BASELINE_HASH');
  assert(isAbsolute(profileRoot)&&isAbsolute(keyFile)&&isAbsolute(priorRoot)&&basenameKey(keyFile),'MANAGED_PATH');
  const keyDirectory=dirname(keyFile);privateDirectory(keyDirectory);
  assert(realpathSync(keyDirectory)===keyDirectory&&!existsSync(keyFile),'MANAGED_KEY_MUST_BE_ABSENT');
- const old=baseline.manifest;
+ const old=baselineManifest(baseline);
  assert(canonical(identity)===canonical(Object.fromEntries(['owner','accountId','delegatePublicKeyHex','packageId','workspace'].map(k=>[k,old[k]])))
   &&config.packageId===identity.packageId&&config.network==='mainnet'&&config.suiTransport==='grpc','MANAGED_BASELINE_IDENTITY');
  const options={live:true,managedTest};createOrdinaryWorkspace(directory,identity,options);
- for(const row of baseline.records)managedFile(join(directory,'journal-experience','activity-jobs',row.id+'.json'),baseline.receipts[row.id]);
+ for(const row of baselineRows(baseline))managedFile(join(directory,'journal-experience','activity-jobs',row.id+'.json'),baselineReceipts(baseline)[row.id]);
  const context={schema:1,kind:managedTest?'offline-managed-boundary-test':'prepared-not-authorized',root:realpathSync(root),
-  plan,identity,config,profileRoot,keyFile,keyDirectoryIdentity:fingerprint(keyDirectory,true),priorRoot,baseline};
+  plan,identity,config,profileRoot,keyFile,keyDirectoryIdentity:fingerprint(keyDirectory,true),priorRoot,baseline,...(baseline.schema===2?{priorOrigins}: {})};
  managedFile(join(directory,'managed-context.json'),context);
  managedFile(join(directory,'native-budget.json'),{schema:1,contextHash:runHash(context),model:plan.model,turns:[],stopped:null});
+ if(isContinuation(context))priorUnchanged(context);
  return {contextHash:runHash(context),planHash:runHash(plan),authorized:false};
 }
 function basenameKey(path){return path===join(dirname(path),'tatum.key');}
 export function managedContext(directory,{managedTest=false}={}){
  privateDirectory(directory);const c=privateRead(join(directory,'managed-context.json'));
- exactKeys(c,['schema','kind','root','plan','identity','config','profileRoot','keyFile','keyDirectoryIdentity','priorRoot','baseline']);
+ exactKeys(c,['schema','kind','root','plan','identity','config','profileRoot','keyFile','keyDirectoryIdentity','priorRoot','baseline',...(isContinuation(c)?['priorOrigins']:[])]);
  assert(c.schema===1&&c.kind===(managedTest?'offline-managed-boundary-test':'prepared-not-authorized'),'MANAGED_CONTEXT_SCOPE');
- verifyFrozenPlan(c.plan,c.root);checkBaseline(c.baseline);
+ verifyFrozenPlan(c.plan,c.root);checkBaseline(c.baseline,{root:c.root,managedTest});
+ assert(isContinuation(c)===(c.baseline.schema===2)&&(!isContinuation(c)||managedTest||c.plan.baselineHash===runHash(c.baseline)),'CONTINUATION_BASELINE_KIND');
  const b=ordinaryBinding(directory,{live:true,managedTest});assert(canonical(b.identity)===canonical(c.identity),'MANAGED_IDENTITY');
  assert(basenameKey(c.keyFile)&&canonical(fingerprint(dirname(c.keyFile),true))===canonical(c.keyDirectoryIdentity),'MANAGED_KEY_DIRECTORY_CHANGED');
  return c;
 }
 function priorUnchanged(c){
+ if(isContinuation(c)){
+  assert(Array.isArray(c.priorOrigins)&&c.priorOrigins.length===2&&c.priorRoot===c.priorOrigins[1].workspace,'CONTINUATION_ORIGIN_FILES');
+  for(let n=0;n<2;n++){
+   const paths=c.priorOrigins[n],o=c.baseline.origins[n];
+   exactKeys(paths,['run','journal','workspace','native']);
+   for(const path of [paths.run,paths.journal,paths.workspace]){assert(isAbsolute(path),'CONTINUATION_ORIGIN_FILES');privateDirectory(path);}
+   for(const scope of new Set([paths.run,paths.workspace]))for(const lock of ['.ordinary-runtime','.ordinary-admission','.native-reservation','.agent-writer-lock','.agent-ledger-lock','agent-ledger.json.next'])
+    assert(!existsSync(join(scope,lock)),'CONTINUATION_PRIOR_UNCERTAIN');
+   assert(runHash(privateRead(join(paths.run,'agent-run.json')))===runHash(o.manifest)
+    &&runHash(privateRead(join(paths.run,'agent-ledger.json')))===runHash(o.ledger),'MANAGED_PRIOR_CHANGED');
+   privateDirectory(join(paths.journal,'activity-jobs'));new FileWriteJournal(paths.journal).assertSettled();
+   const allReceipts=baselineReceipts(c.baseline);
+   for(const name of readdirSync(join(paths.journal,'activity-jobs'))){const id=name.slice(0,-5);
+    assert(allReceipts[id]&&runHash(privateRead(join(paths.journal,'activity-jobs',name)))===runHash(allReceipts[id]),'MANAGED_PRIOR_CHANGED');}
+   for(const row of o.records)assert(runHash(privateRead(join(paths.journal,'activity-jobs',row.id+'.json')))===runHash(o.receipts[row.id]),'MANAGED_PRIOR_CHANGED');
+   if(o.nativeBudget)assert(isAbsolute(paths.native)&&runHash(privateRead(paths.native))===runHash(o.nativeBudget),'MANAGED_PRIOR_CHANGED');
+   else assert(paths.native===null,'CONTINUATION_ORIGIN_FILES');
+  }
+  return;
+ }
  const dir=c.priorRoot;privateDirectory(dir);
  assert(runHash(privateRead(join(dir,'agent-run.json')))===runHash(c.baseline.manifest)
   &&runHash(privateRead(join(dir,'agent-ledger.json')))===runHash(c.baseline.ledger)
@@ -116,16 +151,16 @@ export function managedGrant(directory,options={}){
   &&g.tatum.creditsPerCall===2&&/^[a-f0-9]{24}$/.test(g.tatum.accountId)&&/^[a-f0-9]{64}$/.test(g.tatum.keySha256),'MANAGED_FREE_REQUIRED');
  priorUnchanged(c);return {context:c,grant:g};
 }
-function secrets(c,g,ports){
+function secrets(c,g,ports,{reader=false}={}){
  let p,key;
  try{
   p=ports.readProfile(c.profileRoot);
   assert(runHash(profileIdentity(p))===runHash(Object.fromEntries(['owner','accountId','delegatePublicKeyHex','packageId'].map(k=>[k,c.identity[k]]))),'MANAGED_PROFILE_CHANGED');
-  key=ports.readKey(c.keyFile,g.tatum.accountId);
+  if(!reader)key=ports.readKey(c.keyFile,g.tatum.accountId);
   // validate provider allowance before constructing any SDK/native channel
   assert(g.tatum.plan==='FREE'&&Number.isSafeInteger(g.tatum.remainingCredits)&&g.tatum.remainingCredits>=4
    &&g.tatum.creditsPerCall===2&&/^[a-f0-9]{24}$/.test(g.tatum.accountId),'MANAGED_FREE_REQUIRED');
-  validateTatumBinding({tatum:g.tatum},key);
+  if(!reader)validateTatumBinding({tatum:g.tatum},key);
   return {p,key};
  }catch(e){if(p)p.delegatePrivateKey='';throw e;}
 }
@@ -164,18 +199,28 @@ export function admittedManaged(directory,options={}){
 }
 export async function openManaged(directory,options={}){
  const auth=admittedManaged(directory,options),ports=portsFor(options,directory),{context:c,grant:g}=auth;
- const {p,key}=secrets(c,g,ports);
+ assert(!options.reader||isContinuation(c),'CONTINUATION_READER_SCOPE');
+ if(options.reader)requireContinuationReader(directory,options);
+ if(options.native&&isContinuation(c))requireManagedNativePermit(directory,options);
+ const {p,key}=secrets(c,g,ports,{reader:options.reader===true});
  if(!options.managedTest)globalThis.fetch=()=>{throw Error('MANAGED_UNGUARDED_NETWORK_DENIED');};
- try{return await openInjectedOrdinary(directory,{live:true,managedTest:options.managedTest??false,
+ try{const r=await openInjectedOrdinary(directory,{live:true,managedTest:options.managedTest??false,readonly:options.reader===true,
   createSdk:async m=>{try{return await ports.createSdk(p,m);}finally{p.delegatePrivateKey='';}},
-  transport:ports.transport,createData:ports.createData,tatumKey:key,wait:ports.wait});}
+  transport:ports.transport,createData:options.reader?()=>{assert(false,'CONTINUATION_READER_READONLY');}:ports.createData,tatumKey:key,wait:ports.wait});
+  if(options.native&&isContinuation(c)){
+   try{const rows=await r.experience.read();assert(canonical(rows)===canonical(baselineRows(c.baseline))
+     ||canonical([...rows].sort((a,b)=>a.id.localeCompare(b.id)))===canonical(baselineRows(c.baseline).sort((a,b)=>a.id.localeCompare(b.id))),'CONTINUATION_BASELINE_READBACK');}
+   catch(error){r.gate.stop('CONTINUATION_BASELINE_READ_STOPPED');r.close();throw error;}
+  }
+  return r;}
+
  finally{p.delegatePrivateKey='';}
 }
 export async function managedPreflightInventory(directory,options={}){
  let r;const abort=()=>r?.close();options.signal?.addEventListener('abort',abort,{once:true});
  try{assert(!options.signal?.aborted,'MANAGED_INTERRUPTED');r=await openManaged(directory,options);assert(!options.signal?.aborted,'MANAGED_INTERRUPTED');const inventories={rules:await r.ports.rules.inventory(),experience:await r.ports.experience.inventory()};
   const c=managedContext(directory,options);assert(inventories.rules.blobIds.length===0
-   &&canonical(inventories.experience.blobIds)===canonical(c.baseline.records.map(r=>r.blobId).sort()),'MANAGED_INITIAL_INVENTORY_CHANGED');
+   &&canonical(inventories.experience.blobIds)===canonical(baselineRows(c.baseline).map(r=>r.blobId).sort()),'MANAGED_INITIAL_INVENTORY_CHANGED');
   managedFile(join(directory,'ordinary-preflight.json'),{contextHash:runHash(c),manifestHash:r.gate.hash,
    checkedAt:new Date().toISOString(),accountAuthorized:true,admissionBasis:'matched-signed-account+official-managed-sponsorship+pinned-deployment',inventories});
   return {inventories,counters:r.gate.state()};
@@ -188,7 +233,7 @@ export function reserveManagedTurn(directory,index,taskPlan,options={}){
  const lock=join(directory,'.native-reservation');mkdirSync(lock,{mode:0o700});
  try{const b=privateRead(join(directory,'native-budget.json')),ledger=privateRead(join(run,'agent-ledger.json'));
   assert(b.schema===1&&b.contextHash===runHash(c)&&b.model===c.plan.model&&b.stopped===null&&ledger.stopped===null
-   &&b.turns.length===index&&index<2&&b.turns.every(t=>t.status==='completed')
+   &&b.turns.length===index&&index<c.plan.limits.nativeTurns&&b.turns.every(t=>t.status==='completed')
    &&taskPlan.model===c.plan.model&&taskPlan.dataMode===(options.managedTest?'ordinary-managed-test':'ordinary-managed')&&taskPlan.tasks.length===1
    &&canonical(taskPlan.tasks[0])===canonical(c.plan.tasks[index]),'MANAGED_NATIVE_ALLOWANCE');
   b.turns.push({index,taskHash:runHash(taskPlan.tasks[0]),reservedAt:new Date().toISOString(),status:'reserved'});
@@ -228,8 +273,18 @@ export function cleanupTemporaryKey(directory){
  finally{closeSync(fd);}return {deleted:true};
 }
 
-export function requireManagedNativePermit(directory){
- const b=privateRead(join(directory,'native-budget.json')),c=managedContext(directory);
- assert(b.contextHash===runHash(c)&&b.model===c.plan.model&&b.stopped===null&&b.turns.length>=1&&b.turns.length<=2
+export function requireManagedNativePermit(directory,options={}){
+ const b=privateRead(join(directory,'native-budget.json')),c=managedContext(directory,options);
+ assert(b.contextHash===runHash(c)&&b.model===c.plan.model&&b.stopped===null&&b.turns.length>=1&&b.turns.length<=c.plan.limits.nativeTurns
   &&b.turns.at(-1).status==='reserved'&&b.turns.at(-1).taskHash===runHash(c.plan.tasks[b.turns.length-1]),'MANAGED_NATIVE_PERMIT_REQUIRED');
+}
+
+export function requireContinuationReader(directory,options={}){
+ const {context:c,run}=admittedManaged(directory,options),b=privateRead(join(directory,'native-budget.json')),s=privateRead(join(run,'agent-ledger.json'));
+ assert(isContinuation(c)&&b.schema===1&&b.model===c.plan.model&&b.contextHash===runHash(c)&&b.stopped===null&&b.turns.length===1&&b.turns[0].status==='completed'
+  &&b.turns[0].taskHash===runHash(c.plan.tasks[0])&&s.writes===1&&s.intents.length===1&&s.intents[0].state==='done'
+  &&s.stopped===null&&!existsSync(join(directory,'.ordinary-runtime')),'CONTINUATION_READER_SCOPE');
+ const parent=c.baseline.origins[1].records[0],key=s.intents[0].key,r=privateRead(join(directory,'journal-experience/activity-jobs',key+'.json'));
+ assert(r.state==='done'&&r.sha256===s.intents[0].sha256&&s.jobs[r.jobId]?.key===key,'CONTINUATION_READER_SCOPE');
+ return {context:c,run,state:s,parent,receipt:r};
 }

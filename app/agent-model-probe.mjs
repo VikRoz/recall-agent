@@ -13,6 +13,7 @@ import {agentArgs,agentPolicy} from './agent-launch.mjs';
 import {codexArgs} from './activity-codex.mjs';
 import {prepareLiveModelProbe,reserveLiveNativeTurn} from './agent-live.mjs';
 import {admittedManaged,reserveManagedTurn} from './agent-managed.mjs';
+import {isContinuation} from './agent-continuation-contract.mjs';
 import {managedArgs,managedPolicy} from './agent-managed-entry.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const [out,workspace,tasksFile]=process.argv.slice(2);
@@ -25,7 +26,7 @@ mkdirSync(out,{mode:0o700});if(managed){admittedManaged(workspace,{managedTest})
 const env={...process.env};for(const key of Object.keys(env))if(/API_KEY|DELEGATE|MEMWAL|TATUM/.test(key))delete env[key];
 const inventory=spawnSync('codex',['mcp','list','--json'],{env,encoding:'utf8',timeout:15000,maxBuffer:1048576});
 assert(inventory.status===0,'MCP_INVENTORY');
-const args=managed?(managedTest?codexArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout),'--mcp','agent-managed-fixture.mjs'):managedArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout))):live?codexArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout),'--live','agent-provider-live.mjs')
+const args=managed?(managedTest?codexArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout),'--mcp',isContinuation(admittedManaged(workspace,{managedTest}).context)?'agent-continuation-fixture.mjs':'agent-managed-fixture.mjs'):managedArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout))):live?codexArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout),'--live','agent-provider-live.mjs')
  :agentArgs(process.execPath,root,workspace,JSON.parse(inventory.stdout),true,plan.dataMode??'fixture');
 assert(plan.model===undefined||typeof plan.model==='string','PROBE_MODEL');
 const config=[];for(let i=0;i<args.length;i+=2)if(args[i]==='-c')config.push('-c',args[i+1]);

@@ -1,5 +1,8 @@
 # Single fresh-conversation continuation — proposal, not live admission
 
+Historical proposal, subsequently approved by the coordinator for **offline implementation only**. See [implementation and acceptance](ORDINARY_CONTINUATION_OFFLINE_2026-11-07.md). Real access and key capture still require a separate concrete decision.
+
+
 Date: 7 November 2026.
 
 ## Goal and assumptions

@@ -111,13 +111,13 @@ export function boundedOrdinaryTatum(gate,approval,key,createData){
   // These pure failures precede reservation and are safe for the agent to correct.
   assert(Array.isArray(ids)&&ids.length>0&&ids.length<=MAX_TRANSACTIONS,'TRANSACTION_LIST_LIMIT');
   ids.forEach(digest);assert(new Set(ids).size===ids.length,'DUPLICATE_TRANSACTION');
-  if(gate.manifest.mode==='live-ordinary-selected'){
+  if(gate.manifest.mode==='live-ordinary-selected'||gate.context?.()?.plan.kind==='ordinary-single-continuation'){
    const c=privateRead(join(gate.ordinary.directory,'managed-context.json'));
    assert(ids.length===1&&ids[0]===c.plan.publicInputs.transaction,'MANAGED_APPROVED_TRANSACTION_ONLY');
   }
   try{
    gate.admit();managedPreflight(gate);validateApproval(gate.manifest,approval);validateTatumBinding(approval,key);
-   assert((gate.state().tatumBatches+1)*approval.tatum.creditsPerCall<=Math.min(4,approval.tatum.remainingCredits),'TATUM_FREE_ALLOWANCE');
+   assert((gate.state().tatumBatches+1)*approval.tatum.creditsPerCall<=Math.min((gate.limits?.().tatumBatches??2)*2,approval.tatum.remainingCredits),'TATUM_FREE_ALLOWANCE');
    gate.reserve('tatumBatches');
    if(!data){
     const connected=await createData({network:'mainnet',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',key});
@@ -128,7 +128,7 @@ export function boundedOrdinaryTatum(gate,approval,key,createData){
   }catch(error){gate.stop('ORDINARY_TATUM_STOPPED');throw error;}
  }};
 }
-export async function openInjectedOrdinary(directory,{createSdk,transport,createData,tatumKey,wait,live=false,managedTest=false}){
+export async function openInjectedOrdinary(directory,{createSdk,transport,createData,tatumKey,wait,live=false,managedTest=false,readonly=false}){
  const root=realpathSync(directory);
  assert(typeof createSdk==='function'&&typeof transport==='function'&&typeof createData==='function','ORDINARY_INJECTED_PORTS_REQUIRED');
  // Every RPC/read/write, including catalog retrieval, owns this process-wide project lease.
@@ -142,7 +142,7 @@ export async function openInjectedOrdinary(directory,{createSdk,transport,create
  const {run,manifest,proof}=authorization;let runtime,closed=false;
  try{
   runtime=await openInjectedAgent(run,{createSdk,transport,wait,live,capture:proof.captureConsent,
-   ordinary:{workspaceDirectory:root,leaseToken:token,approvalHash:runHash(proof),managedTest},dataFactory:gate=>boundedOrdinaryTatum(gate,proof.providerApproval,tatumKey,createData)});
+   ordinary:{workspaceDirectory:root,leaseToken:token,approvalHash:runHash(proof),managedTest,readonly},dataFactory:gate=>boundedOrdinaryTatum(gate,proof.providerApproval,tatumKey,createData)});
   const close=()=>{
    if(closed)return;closed=true;
    const busy=runtime.isBusy();runtime.close();

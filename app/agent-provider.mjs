@@ -11,12 +11,13 @@ import {loadOfflineActivity} from './agent-activity-index.ts';
 import {CsvArtifacts} from './agent-export.mjs';
 import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {assert} from '../src/domain.ts';
+import {isContinuation,continuationResolution} from './agent-continuation-contract.mjs';
 let active=false;
 
 export async function openInjectedAgent(directory,{createSdk,transport,capture=false,wait,live=false,ordinary,dataFactory}){
  assert(!active&&typeof createSdk==='function'&&typeof transport==='function','AGENT_INJECTED_PORTS_REQUIRED');
  assert(!ordinary||typeof dataFactory==='function','AGENT_ORDINARY_PORTS_REQUIRED');
- const gate=new AgentRunGate(directory,ordinary?{ordinary:true,live,...ordinary}:{live}),m=gate.manifest;
+ const gate=new AgentRunGate(directory,ordinary?{ordinary:true,live,...ordinary,readonly:ordinary.readonly===true}:{live}),m=gate.manifest;
  const index=ordinary?undefined:loadOfflineActivity(m.source==='replay'?'saved':'fixture');
  if(index)assert(index.datasetId===m.datasetId,'AGENT_DATASET_CHANGED');
  const journals=Object.fromEntries(['rules','experience'].map(k=>[k,new FileWriteJournal(join(ordinary?.workspaceDirectory??directory,'journal-'+k))]));
@@ -64,6 +65,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
   },write:record=>
    gate.withWriter(m.namespaces.experience,async()=>{
     validateTypedRecord(m,m.namespaces.experience,record);const key=operationKey(record);
+    const c=gate.context();if(isContinuation(c))continuationResolution(c,record,key);
     if(await journals.experience.load(key)){const receipt=await ports.experience.write(record,key);return {id:key,record,blobId:receipt.blobId};}
     gate.ensureWriteAvailable();return base.write(record);
    })};

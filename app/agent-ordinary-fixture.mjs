@@ -44,7 +44,7 @@ export function syntheticTatum(directory,options={}){
    assert(state.requests.length<=32,'OFFLINE_TATUM_TRACE_LIMIT');
    writeFileSync(join(directory,'synthetic-tatum.json'),canonical(state),{mode:0o600});
    const response=options.fail?Promise.reject(Error('SYNTHETIC_TATUM_FAILURE')):Promise.resolve({transactions:request.digests.map(id=>{
-    const index=FIXTURE_DIGESTS.indexOf(id);assert(index>=0,'SYNTHETIC_TRANSACTION_UNAVAILABLE');
+    const index=options.digestIndex?.[id]??FIXTURE_DIGESTS.indexOf(id);assert(index>=0,'SYNTHETIC_TRANSACTION_UNAVAILABLE');
     return {result:{oneofKind:'transaction',transaction:options.transactionReply?options.transactionReply(index):fixtureTransaction(index)}};
    })});
    return new UnaryCall(rpc,callOptions.meta??{},input,Promise.resolve({}),response,
