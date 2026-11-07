@@ -1,0 +1,137 @@
+[
+  {
+    "emittedAtMs": 1794044384070,
+    "tool": "prepare_report",
+    "server": "recall_lab",
+    "status": "completed",
+    "arguments": {
+      "network": "mainnet",
+      "transactions": [
+        "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
+      ],
+      "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23"
+    },
+    "result": {
+      "mode": "live-ordinary-selected",
+      "reportId": "report:34475c26-a29d-4867-aa9e-123c627d7aa0",
+      "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+      "asOf": "2026-11-07T09:39:43.411Z",
+      "digests": [
+        "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
+      ],
+      "rows": [
+        {
+          "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "network": "mainnet",
+          "timestamp": "2026-11-05T10:34:12.732Z",
+          "status": "success",
+          "source": "tatum",
+          "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+          "netAmountBaseUnits": "-104261",
+          "relation": "unclassified",
+          "label": "",
+          "ruleId": null,
+          "memoryBlobId": null
+        }
+      ],
+      "totals": [],
+      "declaredWalletTotals": [],
+      "gas": [
+        {
+          "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "computation": "100000",
+          "storage": "42605600",
+          "rebate": "42601339",
+          "netCharge": "104261"
+        }
+      ],
+      "notes": [
+        "Totals cover the supplied digests only.",
+        "Net balance changes include their onchain effects.",
+        "Gas information is displayed separately and is not subtracted again.",
+        "Declared wallet totals use the address relations confirmed by the user.",
+        "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+      ],
+      "transactionEvidence": [
+        {
+          "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "network": "mainnet",
+          "checkpoint": "341884811",
+          "timestamp": "2026-11-05T10:34:12.732Z",
+          "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+          "commands": [
+            "makeMoveVector",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall"
+          ],
+          "interpretation": "unparsed-ptb",
+          "status": "success",
+          "source": "tatum",
+          "gas": {
+            "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "computation": "100000",
+            "storage": "42605600",
+            "rebate": "42601339",
+            "netCharge": "104261"
+          },
+          "movements": [
+            {
+              "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+              "amount": "-104261"
+            }
+          ]
+        }
+      ],
+      "memory": [],
+      "experience": [
+        {
+          "id": "u_sZWbg61sd8xJc0KYtrIRnGCQYJ_8Z14T2oKboK5IM",
+          "record": {
+            "claimed": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+            "network": "mainnet",
+            "observed": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "operation": "gas-payer",
+            "schema": "recall-experience/1",
+            "source": "tatum",
+            "sponsored": true,
+            "supersedes": null,
+            "verdict": "fail",
+            "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+          },
+          "blobId": "YJ1F4vBD8iCTpPO7x1BukyKeFv0TlYfsXb7at2coK94"
+        }
+      ],
+      "experienceStorage": "walrus",
+      "dataProvenance": {
+        "sourceMode": "live-tatum-selected",
+        "freshProviderRead": true,
+        "walletHistoryComplete": false,
+        "scope": "selected-transactions"
+      }
+    },
+    "durationMs": 1984
+  },
+  {
+    "emittedAtMs": 1794044389647,
+    "tool": "verify_gas_payer",
+    "server": "recall_lab",
+    "status": "failed",
+    "arguments": {
+      "claimedPayer": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+      "reportId": "report:34475c26-a29d-4867-aa9e-123c627d7aa0",
+      "transaction": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
+    },
+    "result": "CONTINUATION_RESOLUTION_ONLY",
+    "durationMs": 880
+  }
+]

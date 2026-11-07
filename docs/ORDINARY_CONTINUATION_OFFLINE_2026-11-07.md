@@ -1,5 +1,8 @@
 # One fresh native conversation — offline implementation
 
+Historical preparation, subsequently executed once. **The mGqXhs command/grant/native allowance is now consumed and stopped. Do not repeat it.** See [actual result](ORDINARY_CONTINUATION_LIVE_RESULT_2026-11-07.md). The old offline test intentionally rejected wrong-claim capture, but the live result exposed that rejection as a business-verdict/capture-policy coupling defect. Its offline correction is separately approved.
+
+
 Date: 7 November 2026.
 
 ## Goal and assumptions
