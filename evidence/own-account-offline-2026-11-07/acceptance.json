@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "status": "CLEAN_UNPACK_AND_OFFLINE_INSTALL_PASSED",
+  "sourceCommit": "eb3df42c8d5e43aecde21aa170822cfe37ee6e6d",
+  "sourceArchiveSha256": "d82d9592d7e0a53c7c8cc9eaffd332ec16801f5153379d9b7ae54fd94f6d8405",
+  "packageSha256": "43784fe7faa077687c3b1187a57048409109e5451f55569c7518313fdecf523b",
+  "packageBytes": 21511035,
+  "checks": [
+    {
+      "name": "offline-ci-app",
+      "exitCode": 0
+    },
+    {
+      "name": "offline-ci-mcp",
+      "exitCode": 0
+    },
+    {
+      "name": "source",
+      "exitCode": 0
+    },
+    {
+      "name": "help",
+      "exitCode": 0
+    },
+    {
+      "name": "relocated-own-setup",
+      "exitCode": 0
+    },
+    {
+      "name": "own-protocol",
+      "exitCode": 0
+    },
+    {
+      "name": "own-protocol-count-sizing",
+      "exitCode": 0
+    }
+  ],
+  "integrityCheckedCachedTarballs": 163,
+  "freshDependencyInstall": true,
+  "packageDependenciesIncluded": true,
+  "deepGeneratedCodecPresent": true,
+  "normalCounters": {
+    "tatumBatches": 2,
+    "writes": 7,
+    "reads": 10,
+    "requests": 92
+  },
+  "countSizingCounters": {
+    "tatumBatches": 8,
+    "writes": 7,
+    "reads": 10,
+    "requests": 185
+  },
+  "fullSuiteAlreadyPassedTests": 189,
+  "realProviderCalls": 0,
+  "modelCalls": 0,
+  "realProfileReads": 0,
+  "realLoginCalls": 0,
+  "additionalSpendUSD": 0,
+  "limitations": [
+    "npm tarballs came from a verified local cache; no registry download was tested.",
+    "Login/client actions in relocated setup are explicit stubs.",
+    "Count sizing185 does not prove wall-time completion; the240-second stop is retained.",
+    "Package is local, not published or live-approved."
+  ],
+  "packageFile": "Recall-Agent.zip",
+  "zipUnpackCheck": {
+    "status": "ACTUAL_JUDGE_ZIP_UNPACK_PASSED",
+    "sourceCommit": "eb3df42c8d5e43aecde21aa170822cfe37ee6e6d",
+    "checks": [
+      {
+        "name": "source",
+        "exitCode": 0
+      },
+      {
+        "name": "one-command-help",
+        "exitCode": 0
+      },
+      {
+        "name": "unpacked-own-protocol",
+        "exitCode": 0
+      }
+    ],
+    "noCredentialOrLedgerFiles": true,
+    "sourceManifestVerified": true,
+    "modelCalls": 0,
+    "providerCalls": 0,
+    "additionalSpendUSD": 0
+  },
+  "integratedLogSha256": "a7d8c80e73051165c382a9e2d36ac9d5c841aa21b44e2377e836f8d4e4c43a41"
+}

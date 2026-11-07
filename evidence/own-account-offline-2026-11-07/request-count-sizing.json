@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "sourceCommit": "eb3df42c8d5e43aecde21aa170822cfe37ee6e6d",
+  "sourceArchiveSha256": "d82d9592d7e0a53c7c8cc9eaffd332ec16801f5153379d9b7ae54fd94f6d8405",
+  "attestation": "Git archive strict source manifest verified before this intercepted protocol run",
+  "run": {
+    "schema": 1,
+    "status": "OWN_ACCOUNT_OFFLINE_PROTOCOL_PASSED",
+    "sourceCommit": "",
+    "sourceNote": "Runtime worktree hashes are frozen at final acceptance, not attested by the HEAD label alone.",
+    "processIds": [
+      53709,
+      53712,
+      53717
+    ],
+    "initialRecords": 3,
+    "finalRecords": 10,
+    "worstPermittedTrace": true,
+    "synthetic": true,
+    "realProviderCalls": 0,
+    "realProfileReads": 0,
+    "modelCalls": 0,
+    "additionalSpendUSD": 0,
+    "counters": {
+      "tatumBatches": 8,
+      "writes": 7,
+      "reads": 10,
+      "requests": 185
+    },
+    "freshProviderSimulated": true,
+    "historicalComparison": "same",
+    "originalCsvHash": "28d7b9306320dc1111bc777e31b193e6805b44a6e6bd93cf0cb2b6f38aad12e3",
+    "limits": {
+      "tatumBatches": 8,
+      "writes": 7,
+      "reads": 10,
+      "requests": 192,
+      "pollsPerJob": 8
+    },
+    "limitation": "All replies, old records and receipts are synthetic. Native client and live own-account onboarding remain untested."
+  }
+}
