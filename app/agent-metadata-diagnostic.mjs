@@ -147,10 +147,10 @@ export async function executeMetadata(directory,options={}){
   const page=await sdk.listMemories({namespace:c.namespace,limit:100});
   assert(page.must_resync===false&&page.has_more===false&&Number.isSafeInteger(page.snapshot_version)&&page.snapshot_version>=0&&Array.isArray(page.memories),'AGENT_INVENTORY_SCOPE');
   const rows=page.memories.filter(r=>r.namespace_id===c.namespace);assert(rows.length<=20,'AGENT_INVENTORY_SCOPE');
-  assert(rows.every(r=>['stored','active'].includes(r.status)&&/^[A-Za-z0-9_-]{43}$/.test(r.blob_id)),'AGENT_INVENTORY_SCOPE');
+  assert(rows.every(r=>typeof r.status==='string'&&r.status.length>0&&r.status.length<=METADATA_LIMITS.responseBytes&&/^[A-Za-z0-9_-]{43}$/.test(r.blob_id)),'AGENT_INVENTORY_SCOPE');
   const blobIds=rows.map(r=>r.blob_id).sort();assert(new Set(blobIds).size===blobIds.length&&c.expectedBlobIds.every(id=>blobIds.includes(id)),'AGENT_INVENTORY_SCOPE');
   gate.finish();const result={schema:1,status:'CURRENT_METADATA_DIAGNOSTIC_STARTUP_COMPLETED',contextHash:runHash(c),namespace:c.namespace,
-   blobIds,allExpectedReceiptsPresent:true,revision:page.snapshot_version,requests:gate.state().requests,
+   blobIds,allExpectedMetadataIdsPresent:true,metadataStatusInterpretation:'not-evaluated',revision:page.snapshot_version,requests:gate.state().requests,
    synthetic:!!options.testMode,modelCalls:0,tatumCalls:0,contentReads:0,writes:0,additionalSpendUSD:0,
    scope:'metadata-only-diagnostic-not-live-product-or-historical-cause'};
   managedFile(join(directory,'metadata-result.json'),result);return result;

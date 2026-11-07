@@ -26,4 +26,5 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-ordinary-live.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-ordinary-diagnostic.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-readonly-metadata.mjs"
+"$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-readonly-metadata.mjs" --status-shape
 "$node" "$root/verify-source.mjs"

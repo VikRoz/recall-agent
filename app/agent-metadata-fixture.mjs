@@ -25,14 +25,18 @@ export function metadataFixturePorts(directory,options={}){
  return {readProfile:()=>{update(s=>s.profileReads++);return {...c.identity,walletAddress:c.identity.owner,delegatePrivateKey:'01'.repeat(32)};},
   createSdk:(p,ctx)=>{update(s=>s.created++);const sdk=MemWal.create({key:p.delegatePrivateKey,accountId:ctx.identity.accountId,namespace:ctx.namespace,serverUrl:'https://relayer.memory.walrus.xyz',requestTimeoutMs:15000,preflightTimeoutMs:8000});
    const destroy=sdk.destroy.bind(sdk);let closed=false;sdk.destroy=()=>{if(!closed){closed=true;update(s=>s.destroyed++);destroy();}};return sdk;},
-  transport:fixtureTransport(directory,{manifest:m,...options})};
+  transport:async(...args)=>{const response=await fixtureTransport(directory,{manifest:m,...options})(...args);
+   if(Object.hasOwn(options,'metadataStatus')&&new URL(args[0]).pathname.endsWith('/memories')){
+    const body=await response.json();for(const row of body.memories)if(row.namespace_id===c.namespace)row.status=options.metadataStatus;return Response.json(body);
+   }return response;
+  }};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  let server;try{const [mode,directory]=process.argv.slice(2);assert(mode==='--worker'&&directory,'OFFLINE_METADATA_ONLY');globalThis.fetch=()=>{throw Error('OFFLINE_NETWORK_DENIED');};
   const c=metadataContext(directory,{testMode:true}),launch=privateRead(join(directory,'metadata-launch.json'));assert(launch.contextHash===runHash(c)&&launch.pid===process.ppid,'AGENT_METADATA_LAUNCH_BINDING');
   const o=existsSync(join(directory,'synthetic-options.json'))?privateRead(join(directory,'synthetic-options.json')):{};
-  assert(Object.keys(o).length===0||Object.keys(o).length===1&&o.failHealth===true,'OFFLINE_METADATA_OPTIONS');
-  server=await serveMetadata(directory,{testMode:true,ports:metadataFixturePorts(directory,o.failHealth?{failPath:'/health'}:{})});
+  assert(Object.keys(o).length===0||Object.keys(o).length===1&&(o.failHealth===true||typeof o.metadataStatus==='string'&&o.metadataStatus.length>0&&o.metadataStatus.length<=128),'OFFLINE_METADATA_OPTIONS');
+  server=await serveMetadata(directory,{testMode:true,ports:metadataFixturePorts(directory,o.failHealth?{failPath:'/health'}:o)});
   let closing=false;const close=()=>{if(closing)return;closing=true;server.close().finally(()=>process.exit(0));};
   process.stdin.once('end',close);process.once('SIGINT',close);process.once('SIGTERM',close);await server.connect(new StdioServerTransport());
  }catch(error){await server?.close();console.error(metadataPublicCode(error));process.exitCode=1;}

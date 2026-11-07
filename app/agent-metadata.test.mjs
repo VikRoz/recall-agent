@@ -124,3 +124,14 @@ test('stdio startup failure consumes the one launch and keeps the SDK first-fail
   await assert.rejects(runMetadataStdio(d,{testMode:true,workerFile:join(root,'app/agent-metadata-fixture.mjs')}),/EEXIST/);assert.equal(counter(d).requests,1);
  }finally{rmSync(p,{recursive:true,force:true});}
 });
+
+test('metadata status is an open string shape, never an active/readable/storage verdict',async()=>{
+ for(const status of ['future_pending_PRIVATE_CANARY','',null,42]){const p=temp();try{const {directory:d}=await createMetadataFixture(p);
+  const pending=executeMetadata(d,{testMode:true,ports:metadataFixturePorts(d,{metadataStatus:status})});
+  if(typeof status==='string'&&status.length>0){const result=await pending;
+   assert.equal(result.allExpectedMetadataIdsPresent,true);assert.equal(result.metadataStatusInterpretation,'not-evaluated');
+   assert.equal(result.blobIds.length,3);assert.equal(result.contentReads,0);assert.equal(result.writes,0);
+   assert(!readFileSync(join(d,'metadata-result.json'),'utf8').includes(status));
+  }else{await assert.rejects(pending,/AGENT_INVENTORY_SCOPE/);assert(!existsSync(join(d,'metadata-result.json')));assert.equal(counter(d).stopped,'READONLY_DIAGNOSTIC_STOPPED');}
+ }finally{rmSync(p,{recursive:true,force:true});}}
+});

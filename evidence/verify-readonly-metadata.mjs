@@ -3,10 +3,12 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {verifyRecordedSource} from './recorded-source.mjs';
 import {runHash} from '../app/agent-run.mjs';
-const r=JSON.parse(readFileSync(new URL('readonly-metadata-offline-2026-11-07/run.json',import.meta.url),'utf8'));
+const statusShape=process.argv[2]==='--status-shape';assert(process.argv.length===2||process.argv.length===3&&statusShape);
+const r=JSON.parse(readFileSync(new URL('readonly-metadata-offline-2026-11-07/'+(statusShape?'status-shape-run.json':'run.json'),import.meta.url),'utf8'));
 assert.equal(r.status,'OFFLINE_READONLY_METADATA_STARTUP_PREPARED');assert.equal(r.synthetic,true);assert.equal(r.actualProfilesRead,false);
 assert.equal(r.actualProviderCalls,0);assert.equal(r.actualModelCalls,0);assert.equal(r.additionalSpendUSD,0);
 const {success:s,failure:f}=r;
+if(statusShape){assert.equal(r.metadataStatusShapeRegression,true);assert.equal(s.result.allExpectedMetadataIdsPresent,true);assert.equal(s.result.metadataStatusInterpretation,'not-evaluated');assert(!JSON.stringify(s.result).includes('future_pending_PRIVATE_CANARY'));}
 assert.equal(s.stdio.initialized,true);assert.equal(s.stdio.resultHash,runHash(s.result));assert.equal(s.stdio.status,'STDIO_DIAGNOSTIC_COMPLETED');
 assert.equal(s.counter.finished,true);assert.equal(s.counter.requests,5);assert.equal(s.counter.stopped,null);assert.equal(s.result.requests,5);assert.equal(s.result.blobIds.length,3);
 assert.equal(s.sdk.created,1);assert.equal(s.sdk.destroyed,1);assert.equal(s.oldLedgerUnchanged,true);assert(s.trace.every(t=>!t.seal));assert.equal(s.trace.length,5);
