@@ -2,6 +2,7 @@ import {assert,canonical} from '../src/domain.ts';
 import {rule} from './activity.ts';
 import {validateExperience} from './agent-experience.ts';
 import {BatchGetObjectsRequest} from './node_modules/@mysten/sui/dist/grpc/proto/sui/rpc/v2/ledger_service.mjs';
+import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {runHash} from './agent-run.mjs';
 
 export const WALRUS_RELAY='https://relayer.memory.walrus.xyz';
@@ -15,13 +16,15 @@ export function validateTypedRecord(manifest,namespace,record){
  assert(namespace===manifest.namespaces.experience,'AGENT_NAMESPACE_DENIED');
  validateExperience(record,manifest.workspace);assert(record.source===manifest.source,'AGENT_RECORD_SOURCE');return record;
 }
-export function agentWalrusFetch(gate,transport){
+export function agentWalrusFetch(gate,transport,{phase=()=>'action'}={}){
  const m=gate.manifest;
  return async(input,options={})=>{
+  let safeRoute='unknown',safeMethod='unknown',httpStatus=null,category='admission';
   try{
-   gate.admit();
+   gate.admit();category='validation';
    assert(typeof input==='string'||input instanceof URL,'AGENT_FETCH_INPUT');
    const url=new URL(input),method=options.method??'GET';
+   if(['GET','POST'].includes(method))safeMethod=method;
    assert(!url.username&&!url.password&&!url.hash,'AGENT_ROUTE');
    const headers=new Headers(options.headers);
    assert(!headers.has('x-delegate-key')&&!headers.has('authorization'),'AGENT_RAW_CREDENTIAL_DENIED');
@@ -71,11 +74,16 @@ export function agentWalrusFetch(gate,transport){
     const request=BatchGetObjectsRequest.fromBinary(frame.subarray(5));
     assert(request.requests.length===1&&request.requests[0].objectId===m.packageId,'AGENT_SEAL_PACKAGE_SCOPE');
    }
+   // Emit only route enums after the full route/body validation succeeds; rejected URLs remain unknown.
+   safeRoute=url.origin===SUI_SEAL_ORIGIN?'seal-package':({'/health':'health','/version':'version','/config':'config',
+    '/api/stats':'stats','/api/recall':'recall','/api/remember':'remember'}[url.pathname]??(job?'remember-status':'inventory'));
    gate.request(kind,job);
    if(remember)gate.sent(remember.namespace,remember.key,remember.record);
    const timeout=AbortSignal.timeout(kind==='reads'?45000:15000);
+   category='transport';
    const response=await transport(input,{...options,redirect:'error',signal:options.signal?AbortSignal.any([options.signal,timeout]):timeout});
-   assert(response.ok,'AGENT_PROVIDER_HTTP');
+   httpStatus=response.status;category='http';
+   assert(response.ok,'AGENT_PROVIDER_HTTP');category='response';
    if(url.origin===WALRUS_RELAY){
     if(remember){const ack=await response.clone().json();gate.job(ack.job_id);}
     if(url.pathname==='/api/stats'){const value=await response.clone().json();assert(value.owner===m.owner,'AGENT_OWNER_MISMATCH');}
@@ -88,6 +96,7 @@ export function agentWalrusFetch(gate,transport){
     }
    }
    return response;
-  }catch(error){gate.stop('AGENT_PROVIDER_OR_POLICY_ERROR');throw error;}
+  }catch(error){recordFirstFailure(gate,{phase:phase(),route:safeRoute,method:safeMethod,httpStatus,category,error});
+   gate.stop('AGENT_PROVIDER_OR_POLICY_ERROR');throw error;}
  };
 }

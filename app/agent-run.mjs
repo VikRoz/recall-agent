@@ -6,6 +6,7 @@ import {join} from 'node:path';
 import {assert,canonical,exactKeys,time} from '../src/domain.ts';
 import {address} from './activity.ts';
 import {PILOT_LIMITS} from './activity-live.ts';
+import {recordFirstFailure} from './agent-diagnostic.mjs';
 
 export const runHash=value=>createHash('sha256').update(canonical(value)).digest('hex');
 export const operationKey=value=>createHash('sha256').update(canonical(value)).digest('base64url');
@@ -91,6 +92,7 @@ export class AgentRunGate {
   return s;
  }
  admit(){
+  try{
   if(this.ordinary){
    const directory=this.ordinary.directory;privateDirectory(directory);privateDirectory(join(directory,'.ordinary-runtime'));
    const binding=privateRead(join(directory,'ordinary-workspace.json')),active=privateRead(join(directory,'active-run.json'));
@@ -106,6 +108,7 @@ export class AgentRunGate {
   assert(time(m.expiresAt)>now&&time(m.expiresAt)<=now+86400000,'AGENT_RUN_EXPIRED');
   assert(age>=0&&age<=300000,'AGENT_ADMISSION_EXPIRED');
   assert(this.state().stopped===null,'AGENT_RUN_STOPPED');
+  }catch(error){recordFirstFailure(this,{phase:'admission',category:'admission',error});throw error;}
  }
  update(fn,stopping=false){
   const lock=join(this.directory,'.agent-ledger-lock');mkdirSync(lock,{mode:0o700});

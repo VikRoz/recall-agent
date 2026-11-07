@@ -9,6 +9,7 @@ import {AgentSession} from './agent-session.ts';
 import {agentServer} from './agent-mcp.mjs';
 import {loadOfflineActivity} from './agent-activity-index.ts';
 import {CsvArtifacts} from './agent-export.mjs';
+import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {assert} from '../src/domain.ts';
 let active=false;
 
@@ -20,14 +21,14 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
  if(index)assert(index.datasetId===m.datasetId,'AGENT_DATASET_CHANGED');
  const journals=Object.fromEntries(['rules','experience'].map(k=>[k,new FileWriteJournal(join(ordinary?.workspaceDirectory??directory,'journal-'+k))]));
  for(const journal of Object.values(journals))journal.assertSettled();
- let sdk,native,session,data,closed=false,inFlight=0;
- const original=globalThis.fetch,bound=agentWalrusFetch(gate,transport);
- const guarded=(...args)=>{assert(!closed,'AGENT_RUNTIME_CLOSED');return bound(...args);};
+ let sdk,native,session,data,closed=false,inFlight=0,starting=true;
+ const original=globalThis.fetch,bound=agentWalrusFetch(gate,transport,{phase:()=>starting?'startup':'action'});
+ const guarded=(...args)=>{try{assert(!closed,'AGENT_RUNTIME_CLOSED');}catch(error){recordFirstFailure(gate,{phase:'late-close',category:'lifecycle',error});throw error;}return bound(...args);};
  const release=()=>{if(closed&&inFlight===0){if(globalThis.fetch===guarded)globalThis.fetch=original;active=false;}};
  active=true;globalThis.fetch=guarded;
  const close=()=>{
   if(closed)return;closed=true;
-  try{if(inFlight||gate.lease||session?.busy)gate.stop('AGENT_CLIENT_CLOSED_DURING_ACTION');}
+  try{if(inFlight||gate.lease||session?.busy){recordFirstFailure(gate,{phase:'close',category:'lifecycle',faultCode:'AGENT_CLIENT_CLOSED_DURING_ACTION'});gate.stop('AGENT_CLIENT_CLOSED_DURING_ACTION');}}
   finally{try{data?.close();}finally{try{native?.destroy();}finally{release();}}}
  };
  try{
@@ -77,6 +78,6 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
    freshProviderRead:Boolean(live&&!ordinary.managedTest),walletHistoryComplete:false,scope:'selected-transactions'};
   const runtime=agentServer(session,{capture,dataMode:m.source==='tatum'?'tatum':m.source==='replay'?'saved':'fixture',
    mode:ordinary?m.mode:live?'live-walrus-sui-replay':'offline-sdk-fixture-'+m.source});
-  return {...runtime,gate,ports,rules,experience,isBusy:()=>Boolean(inFlight||gate.lease||session?.busy),close};
- }catch(error){try{gate.stop('AGENT_OPEN_FAILED');}finally{close();}throw error;}
+  starting=false;return {...runtime,gate,ports,rules,experience,isBusy:()=>Boolean(inFlight||gate.lease||session?.busy),close};
+ }catch(error){recordFirstFailure(gate,{phase:'startup',category:'sdk',error});try{gate.stop('AGENT_OPEN_FAILED');}finally{close();}throw error;}
 }

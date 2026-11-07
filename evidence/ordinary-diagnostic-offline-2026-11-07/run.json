@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "status": "OFFLINE_FIRST_FAILURE_DIAGNOSTIC_VERIFIED",
+  "sourceHashes": {
+    "app/activity-codex.mjs": "1c717b3aaa118205814a973e443ccd3bac076e3b8b2c7f0a18f91af83f61b122",
+    "app/activity-diagnostic.mjs": "fa193cc83cb88baf7f1377325cfe87ae95841dd4c00cc292fc457e09ef93f48b",
+    "app/activity-fixture-store.ts": "23e31359678d7ad57d8feaf134e5dbfdbe3b339be271de7b787d66fb77bc483f",
+    "app/activity-fixtures.ts": "475eeca68f24e6b0a61f4fdcdfada7618114ed1befe041edd80e96aa9489f004",
+    "app/activity-input.ts": "7df01f5096511644b57728f12fdfca77100533c92d1b4742f480eccad488c21c",
+    "app/activity-key.ts": "2d2fbbb0c6e59b5e6f4ac56f0902cea7c12963fd410a25091d09b19e6b0123ff",
+    "app/activity-live.ts": "7d3418714a6f0a61d7fdef708dc9375e387d10125133631928c6f08d4db98f4a",
+    "app/activity-mcp.mjs": "4b446a2a9c7e5d7db3e4f8da6ffa04faf882b8a9223768c2d4000bc288f91659",
+    "app/activity-memory.ts": "c9efe04694900cf47bd8f35872e44fdf46e8da5b1c6b40ca1bdb43c4d0612e68",
+    "app/activity-pilot-fixture.ts": "9869f6e6e3bd5d250fbdc687b009625af61c1d6fe3bee6dbd242ab277aac0343",
+    "app/activity-pilot.ts": "ad52024d03c9463f9cfc43ac4f86ce6989393d5725aff59b04d36a8376e85954",
+    "app/activity-resume.ts": "d8221cba1b65e8df2b398cbbe86931db464082e33e18a2c191c74620efb1fd78",
+    "app/activity-session.ts": "c4cc88ab757050fd9c0c5d1151147bb0c8e491eb7acb94a36f241625c1dd96ed",
+    "app/activity-setup.ts": "0a480d4bf584ec413ac873a450e8b664d9c2ef0fb17bfd27e440ec1b36501aba",
+    "app/activity.ts": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+    "app/agent-activity-index.ts": "60faf0e9b1f2f97801295e584b8503aaf8b37f4e2c39e613c827d2e95eb0a05e",
+    "app/agent-comparison-assess.mjs": "8d349d01fb97d3b01adba38f654fa5ce694958f1926ec0d256a7a99589d1441a",
+    "app/agent-comparison-prepare.mjs": "af9dea6cb545d2147e0e8a58241b82af92f3f8a9c03d18e2e285a9db6bf68487",
+    "app/agent-diagnostic.mjs": "53dc9be41f74834f744f3b035aab0b5471457ab799a7e8bf920e6cbf2659ed36",
+    "app/agent-evaluation-fixture.mjs": "dbe64622438bbffe03de12c4da50089897503fc117cc476be9ba4f0ad9e42c30",
+    "app/agent-experience.ts": "0c442014cd797499ac24b6e5ac1a3ca14feb0d50eddb2d8c545bc068375cef97",
+    "app/agent-export.mjs": "e738db140ef8e63db3b12fb0684110e46372e87be07f75616c05fb1e8cca3990",
+    "app/agent-launch.mjs": "1b93084f36ff2d1d56ceba185d88db18266957e012493001bc31c6e1b4ed9b06",
+    "app/agent-live.mjs": "4696b673075f4fc5ad79bb8ea0f65dec2a6cd1065534cfad5872522d9d4eae91",
+    "app/agent-managed-entry.mjs": "d2b2aab1564fd3dd43c4c104d23cd82fe8b501d520974a2e5c5ad224717bf713",
+    "app/agent-managed-fixture.mjs": "8ab970fe475b7fba4d82bdf2d14c19f13f62d9c462dd51883d2cc29eff757f6d",
+    "app/agent-managed-prepare.mjs": "dcc373430ba55e058f96b027cfdcdcf6b4c37b17caf6032ed5f902b9b67221b7",
+    "app/agent-managed.mjs": "62c8c3d64a4255577c4f76872215134fa47195d9759fb21a84974e9e9d3e3fc7",
+    "app/agent-mcp.mjs": "441eec151788d81c6ae3484278d8fc238e57a37b7476d012636e328074130a9f",
+    "app/agent-model-probe.mjs": "c3470891afebcb35454e92cf7b03494ca4816c39dacad9fea668df8c0181dfba",
+    "app/agent-ordinary-fixture.mjs": "7840fad82de56b96d55945da44a44fc1755d291185035bfc73c054cc603ff9cc",
+    "app/agent-ordinary.mjs": "1b8044a680afd5802d31bcca6820c33174beb79b059b64961f27df94a2a59b9e",
+    "app/agent-probe-approval.mjs": "ac582a556bf54b1ae483e2b29f29080e773c647376cf86d4040da998bfc9f3ac",
+    "app/agent-probe-model.mjs": "379307321b1b264764084718c0a9ac756831a5123863e862d3831d56e49a80bb",
+    "app/agent-probe-results.mjs": "7b41faf7e8c1fc7ae198ae16e54098b913a94067b264fb0e1c11e398b6bf6f22",
+    "app/agent-probe-workspace.mjs": "24737f695d37539c1fc1adc8121b5ee5844826e071be9903b319c37069f778ed",
+    "app/agent-provider-fixture.mjs": "2da73328b75e7a642f55c85b3799fec05873873aa56a9059ce212068e1973ad2",
+    "app/agent-provider-live.mjs": "12d94c3d1b6c948736ffd5e1d35ea54b1f209c718df626455951cc559793d1c8",
+    "app/agent-provider.mjs": "b408a19a97e70ac144d6368411c6d4111cc78d76a5166340b21ad8ccbddb226a",
+    "app/agent-run.mjs": "9f94d86f1f991083ccc515e7daecf5745f56696471b0545e45e577cba8c40da6",
+    "app/agent-session.ts": "ab42c7721a0082f925ce5962795f353b85448c1bce2977c649b403553e3820bb",
+    "app/agent-tool-observer.mjs": "099a4c078a49c5a0eb20fc29ea34a65ca0342bfc4246edb40d923cc3b5b3477b",
+    "app/agent-walrus-guard.mjs": "3aa323811f5f4d93a26e44ad1a63643d534484ccb8457ae7eb7988aba04776c8",
+    "app/claude-config.mjs": "4e3ffb164f066e1efc92dd3edba7db1eaeb6318d0662f7142ad42204a2324218",
+    "app/package-lock.json": "f9a472644f970382cdccdafd9b7beb6400015f61280af26de08d12724cbe95ea",
+    "app/package.json": "79d9620866c8016bf7e76514fe019e76cb94fee7f8e9c5a6f58e954f2dae4be7",
+    "app/tatum.ts": "df2438fb4b3fd07895aa57a15292767d12e7071ad6fde1c770480de5616c5052",
+    "app/walrus.mjs": "5c34060518bdd621aca0214fbac190d48c4acc480f22396e1561b1d1e47fe5bf",
+    "mcp/package-lock.json": "7e5e8a24a29472766d5f7996da34a68b423b97bf76fe14b4093713cd974c69d7",
+    "mcp/package.json": "cb4492b1b5ada694f5a4525ef7ace188c89b903df1633a39edcc8cf4d4b8df52",
+    "src/domain.ts": "dc0ee666952d544e16aa56223d4db20d6cd185884ee9685e95e5e65892758e9c",
+    "src/memory.ts": "7a259dfdbd216ee102a8e6b330885dfb948ca929200569b21d742f3bad844b07",
+    "start.command": "11a5bc55b13069d9777b4e38bb170bde063e23626b8d63f20f9f3fd3411aa9bf"
+  },
+  "synthetic": true,
+  "actualProviderCalls": 0,
+  "actualModelCalls": 0,
+  "realCredentialsRead": false,
+  "additionalSpendUSD": 0,
+  "independentProcesses": 2,
+  "controlledFailure": "second-startup-health-503-after-intercepted-remember",
+  "observed": {
+    "verdict": "fail",
+    "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+    "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+    "evidence": {
+      "digest": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+      "source": "fixture",
+      "field": "gas.payer"
+    },
+    "memory": {
+      "storage": "walrus-fixture",
+      "id": "EeSdLJGMwBqCpIWT3zOa3jbtT3xYHe7xAkV9HwxSpKQ",
+      "blobId": "EeSdLJGMwBqCpIWT3zOa3jbtT3xYHe7xAkV9HwxSpKQ"
+    }
+  },
+  "diagnostic": {
+    "category": "http",
+    "contextHash": "c59c1040217f9817514632fc664a71cb317087a167ec38ef0b02dab4f9fd3bd3",
+    "faultCode": "AGENT_PROVIDER_HTTP",
+    "httpStatus": 503,
+    "manifestHash": "ea9e88f8cfef2b77193644122bbdca303cf4b4066825be687d644ff5df9a8e6f",
+    "method": "GET",
+    "phase": "startup",
+    "recordedAt": "2026-11-07T08:10:30.643Z",
+    "requestCount": 26,
+    "route": "health",
+    "schema": 1
+  },
+  "before": {
+    "intents": [
+      {
+        "key": "EeSdLJGMwBqCpIWT3zOa3jbtT3xYHe7xAkV9HwxSpKQ",
+        "namespace": "agent-41797b5c-270d-4b70-aecc-9fa9ac99fcf4-experience",
+        "sha256": "11e49d2c918cc01a82a48593df339ade36ed4f7c581deef102457d1f0c52a4a4",
+        "state": "done"
+      }
+    ],
+    "jobs": {
+      "fixture-b55d642d-8666-4d05-af1d-19a6e5f23d00": {
+        "key": "EeSdLJGMwBqCpIWT3zOa3jbtT3xYHe7xAkV9HwxSpKQ",
+        "namespace": "agent-41797b5c-270d-4b70-aecc-9fa9ac99fcf4-experience",
+        "polls": 1
+      }
+    },
+    "manifestHash": "ea9e88f8cfef2b77193644122bbdca303cf4b4066825be687d644ff5df9a8e6f",
+    "reads": 1,
+    "requests": 25,
+    "schema": 1,
+    "stopped": null,
+    "tatumBatches": 1,
+    "writes": 1
+  },
+  "after": {
+    "intents": [
+      {
+        "key": "EeSdLJGMwBqCpIWT3zOa3jbtT3xYHe7xAkV9HwxSpKQ",
+        "namespace": "agent-41797b5c-270d-4b70-aecc-9fa9ac99fcf4-experience",
+        "sha256": "11e49d2c918cc01a82a48593df339ade36ed4f7c581deef102457d1f0c52a4a4",
+        "state": "done"
+      }
+    ],
+    "jobs": {
+      "fixture-b55d642d-8666-4d05-af1d-19a6e5f23d00": {
+        "key": "EeSdLJGMwBqCpIWT3zOa3jbtT3xYHe7xAkV9HwxSpKQ",
+        "namespace": "agent-41797b5c-270d-4b70-aecc-9fa9ac99fcf4-experience",
+        "polls": 1
+      }
+    },
+    "manifestHash": "ea9e88f8cfef2b77193644122bbdca303cf4b4066825be687d644ff5df9a8e6f",
+    "reads": 1,
+    "requests": 26,
+    "schema": 1,
+    "stopped": "AGENT_PROVIDER_OR_POLICY_ERROR",
+    "tatumBatches": 1,
+    "writes": 1
+  },
+  "ledgerSchemaUnchanged": true,
+  "limitations": [
+    "Controlled synthetic HTTP failure, not diagnosis of the real 7 November startup cause.",
+    "No model inference, real profile/key, account access or provider request."
+  ]
+}
