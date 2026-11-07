@@ -43,8 +43,11 @@ export function agentServer(session, {capture,dataMode,mode}) {
     try { return {content: [{type: 'text', text: JSON.stringify(await session.findActivity(args))}]}; }
     catch (error) { return {isError: true, content: [{type: 'text', text: /^[A-Z0-9_]+$/.test(error?.code) ? error.code : 'AGENT_ERROR'}]}; }
   });
+  const captureDescription=!capture?'Memory capture is disabled in this run.':session.captureScope==='linked-resolution-only'
+    ?'Capture scope: linked resolutions only. A failed hypothesis returns its verdict and observed evidence with captureSkipped=not-admitted-by-scope; no failure is written.'
+    :'Capture scope: verified mismatches and their linked verified resolutions may be saved automatically.';
   server.registerTool('verify_gas_payer', {
-    description: 'Check a proposed gas-payer address against transaction evidence in an existing report. A verified mismatch and its verified resolution can be saved automatically when capture is enabled. Local or fixture IDs are not Mainnet Walrus receipts.',
+    description: 'Check a proposed gas-payer address against transaction evidence in an existing report. '+captureDescription+' Local or fixture IDs are not Mainnet Walrus receipts.',
     inputSchema: { reportId: z.string().max(120), transaction: z.string().max(200), claimedPayer: z.string().max(66) },
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
   }, async args => {

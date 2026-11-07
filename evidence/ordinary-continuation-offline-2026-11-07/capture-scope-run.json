@@ -1,0 +1,385 @@
+{
+  "schema": 1,
+  "date": "2026-11-07T09:55:31.915Z",
+  "status": "OFFLINE_SINGLE_CONTINUATION_VERIFIED",
+  "synthetic": true,
+  "task": {
+    "chat": "second-fresh",
+    "id": "fresh-expense-report",
+    "text": "Prepare a concise expense report for wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 using Sui Mainnet transaction 2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ. Who paid gas, what changed for the wallet, and what cannot be inferred from this transaction?"
+  },
+  "taskHash": "340973662dd42cdac03fa279839c728f2c6911b3c15fee7e20ed76e29e50b0bd",
+  "sourceHashes": {
+    "app/activity-codex.mjs": "1c717b3aaa118205814a973e443ccd3bac076e3b8b2c7f0a18f91af83f61b122",
+    "app/activity-diagnostic.mjs": "fa193cc83cb88baf7f1377325cfe87ae95841dd4c00cc292fc457e09ef93f48b",
+    "app/activity-fixture-store.ts": "23e31359678d7ad57d8feaf134e5dbfdbe3b339be271de7b787d66fb77bc483f",
+    "app/activity-fixtures.ts": "475eeca68f24e6b0a61f4fdcdfada7618114ed1befe041edd80e96aa9489f004",
+    "app/activity-input.ts": "7df01f5096511644b57728f12fdfca77100533c92d1b4742f480eccad488c21c",
+    "app/activity-key.ts": "2d2fbbb0c6e59b5e6f4ac56f0902cea7c12963fd410a25091d09b19e6b0123ff",
+    "app/activity-live.ts": "7d3418714a6f0a61d7fdef708dc9375e387d10125133631928c6f08d4db98f4a",
+    "app/activity-mcp.mjs": "4b446a2a9c7e5d7db3e4f8da6ffa04faf882b8a9223768c2d4000bc288f91659",
+    "app/activity-memory.ts": "c9efe04694900cf47bd8f35872e44fdf46e8da5b1c6b40ca1bdb43c4d0612e68",
+    "app/activity-pilot-fixture.ts": "9869f6e6e3bd5d250fbdc687b009625af61c1d6fe3bee6dbd242ab277aac0343",
+    "app/activity-pilot.ts": "ad52024d03c9463f9cfc43ac4f86ce6989393d5725aff59b04d36a8376e85954",
+    "app/activity-resume.ts": "d8221cba1b65e8df2b398cbbe86931db464082e33e18a2c191c74620efb1fd78",
+    "app/activity-session.ts": "c4cc88ab757050fd9c0c5d1151147bb0c8e491eb7acb94a36f241625c1dd96ed",
+    "app/activity-setup.ts": "0a480d4bf584ec413ac873a450e8b664d9c2ef0fb17bfd27e440ec1b36501aba",
+    "app/activity.ts": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+    "app/agent-activity-index.ts": "60faf0e9b1f2f97801295e584b8503aaf8b37f4e2c39e613c827d2e95eb0a05e",
+    "app/agent-comparison-assess.mjs": "8d349d01fb97d3b01adba38f654fa5ce694958f1926ec0d256a7a99589d1441a",
+    "app/agent-comparison-prepare.mjs": "af9dea6cb545d2147e0e8a58241b82af92f3f8a9c03d18e2e285a9db6bf68487",
+    "app/agent-continuation-contract.mjs": "17bf66b690bf4f22c29211da87d439129279af866d1c97ace8a4b8dee05b0df4",
+    "app/agent-continuation-fixture.mjs": "8a7974fed5681257eabedcbad1ab93ef1984a29bdeeef44ff79366f1f52b235c",
+    "app/agent-continuation-prepare.mjs": "0d28262e5758a5354c8f75f03aadf118c5b868f70f680f142a4291b50a0aeb4d",
+    "app/agent-diagnostic.mjs": "53dc9be41f74834f744f3b035aab0b5471457ab799a7e8bf920e6cbf2659ed36",
+    "app/agent-evaluation-fixture.mjs": "dbe64622438bbffe03de12c4da50089897503fc117cc476be9ba4f0ad9e42c30",
+    "app/agent-experience.ts": "0c442014cd797499ac24b6e5ac1a3ca14feb0d50eddb2d8c545bc068375cef97",
+    "app/agent-export.mjs": "e738db140ef8e63db3b12fb0684110e46372e87be07f75616c05fb1e8cca3990",
+    "app/agent-launch.mjs": "1b93084f36ff2d1d56ceba185d88db18266957e012493001bc31c6e1b4ed9b06",
+    "app/agent-live.mjs": "4696b673075f4fc5ad79bb8ea0f65dec2a6cd1065534cfad5872522d9d4eae91",
+    "app/agent-managed-entry.mjs": "3ccf3442c6d6579e8c33a2e21e1246d9f285b39bd46b61b51b4f587df70078d0",
+    "app/agent-managed-fixture.mjs": "8ab970fe475b7fba4d82bdf2d14c19f13f62d9c462dd51883d2cc29eff757f6d",
+    "app/agent-managed-prepare.mjs": "dcc373430ba55e058f96b027cfdcdcf6b4c37b17caf6032ed5f902b9b67221b7",
+    "app/agent-managed.mjs": "68c0efbadfda4d71f0434c257852ce27cd584d17939d7b1d674d8b85d33cce61",
+    "app/agent-mcp.mjs": "8db1b51b4b1761f78f92641c90360ff55bf3b3a20e53cb23fe8850452c6f57e8",
+    "app/agent-metadata-diagnostic.mjs": "c17395b25b4388c727d9a2e2225e6a1c8447376faa939273cdf9925883f3673e",
+    "app/agent-metadata-fixture.mjs": "f7552e15551002323dd896189fee9d5a36b8339a5c5c818853759fc482dbd8a0",
+    "app/agent-metadata-prepare.mjs": "c557f4cef3c2e68bd745fdf9d27b93a6dc85dbccf94274643ef3b7feff2443e0",
+    "app/agent-model-probe.mjs": "66ca8ba5e519cb092fa437e1c2c8a0c7d8d2fbb97f08c246323347e04d4b26a2",
+    "app/agent-ordinary-fixture.mjs": "0b04fab2474fbd6d1eed67cfea4d28930573dc8dc0348efb03cc709f4bbc2874",
+    "app/agent-ordinary.mjs": "52a3964b52cd98bf2b0ca9fe5fdbabbfe065bb0dcf6033c433008eef50d68e4f",
+    "app/agent-probe-approval.mjs": "ac582a556bf54b1ae483e2b29f29080e773c647376cf86d4040da998bfc9f3ac",
+    "app/agent-probe-model.mjs": "379307321b1b264764084718c0a9ac756831a5123863e862d3831d56e49a80bb",
+    "app/agent-probe-results.mjs": "7b41faf7e8c1fc7ae198ae16e54098b913a94067b264fb0e1c11e398b6bf6f22",
+    "app/agent-probe-workspace.mjs": "24737f695d37539c1fc1adc8121b5ee5844826e071be9903b319c37069f778ed",
+    "app/agent-provider-fixture.mjs": "2da73328b75e7a642f55c85b3799fec05873873aa56a9059ce212068e1973ad2",
+    "app/agent-provider-live.mjs": "12d94c3d1b6c948736ffd5e1d35ea54b1f209c718df626455951cc559793d1c8",
+    "app/agent-provider.mjs": "9f1c20d50171bccc6c0bbad72861199736bc567bde60e830d465608a42806287",
+    "app/agent-run.mjs": "ddf5541e8a25d39564638a1451c9d32f4df2dbfc2cc81f2cf255a0934c430a73",
+    "app/agent-session.ts": "977743010cddd19a73dfdbbe9a3be438e2edb5b57ba2ceef94165cd9b21fb44e",
+    "app/agent-tool-observer.mjs": "099a4c078a49c5a0eb20fc29ea34a65ca0342bfc4246edb40d923cc3b5b3477b",
+    "app/agent-walrus-guard.mjs": "3aa323811f5f4d93a26e44ad1a63643d534484ccb8457ae7eb7988aba04776c8",
+    "app/claude-config.mjs": "4e3ffb164f066e1efc92dd3edba7db1eaeb6318d0662f7142ad42204a2324218",
+    "app/package-lock.json": "f9a472644f970382cdccdafd9b7beb6400015f61280af26de08d12724cbe95ea",
+    "app/package.json": "79d9620866c8016bf7e76514fe019e76cb94fee7f8e9c5a6f58e954f2dae4be7",
+    "app/tatum.ts": "df2438fb4b3fd07895aa57a15292767d12e7071ad6fde1c770480de5616c5052",
+    "app/walrus.mjs": "5c34060518bdd621aca0214fbac190d48c4acc480f22396e1561b1d1e47fe5bf",
+    "mcp/package-lock.json": "7e5e8a24a29472766d5f7996da34a68b423b97bf76fe14b4093713cd974c69d7",
+    "mcp/package.json": "cb4492b1b5ada694f5a4525ef7ace188c89b903df1633a39edcc8cf4d4b8df52",
+    "src/domain.ts": "dc0ee666952d544e16aa56223d4db20d6cd185884ee9685e95e5e65892758e9c",
+    "src/memory.ts": "7a259dfdbd216ee102a8e6b330885dfb948ca929200569b21d742f3bad844b07",
+    "start.command": "11a5bc55b13069d9777b4e38bb170bde063e23626b8d63f20f9f3fd3411aa9bf",
+    "app/check-agent-continuation.mjs": "269499e743c9f5d6980c0bf82d981112f69bddb34ee6d00bb80c04a90f93c110"
+  },
+  "originalStatesUnchanged": true,
+  "initialRecords": 3,
+  "nativeMcpPid": 29810,
+  "readerPid": 29814,
+  "verificationDescription": "Check a proposed gas-payer address against transaction evidence in an existing report. Capture scope: linked resolutions only. A failed hypothesis returns its verdict and observed evidence with captureSkipped=not-admitted-by-scope; no failure is written. Local or fixture IDs are not Mainnet Walrus receipts.",
+  "wrongHypotheses": [
+    {
+      "verdict": "fail",
+      "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+      "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+      "evidence": {
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "source": "fixture",
+        "field": "gas.payer"
+      },
+      "captureScope": "linked-resolution-only",
+      "captureSkipped": "not-admitted-by-scope",
+      "memory": null
+    },
+    {
+      "verdict": "fail",
+      "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
+      "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+      "evidence": {
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "source": "fixture",
+        "field": "gas.payer"
+      },
+      "captureScope": "linked-resolution-only",
+      "captureSkipped": "not-admitted-by-scope",
+      "memory": null
+    }
+  ],
+  "report": {
+    "mode": "offline-managed-admission-test",
+    "reportId": "report:bfb5bbda-64b9-42fc-9bd7-6ba0f93baf18",
+    "wallet": "0x000000000000000000000000000000000000000000000000000000000000000a",
+    "asOf": "2026-11-07T09:55:31.316Z",
+    "digests": [
+      "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ"
+    ],
+    "rows": [
+      {
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000",
+        "relation": "subject-wallet",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      },
+      {
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "10000000000",
+        "relation": "unclassified",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      },
+      {
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "status": "success",
+        "source": "fixture",
+        "address": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-1050",
+        "relation": "unclassified",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      }
+    ],
+    "totals": [
+      {
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000"
+      }
+    ],
+    "declaredWalletTotals": [
+      {
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-10000000000"
+      }
+    ],
+    "gas": [
+      {
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "computation": "1000",
+        "storage": "100",
+        "rebate": "50",
+        "netCharge": "1050"
+      }
+    ],
+    "notes": [
+      "Totals cover the supplied digests only.",
+      "Net balance changes include their onchain effects.",
+      "Gas information is displayed separately and is not subtracted again.",
+      "Declared wallet totals use the address relations confirmed by the user.",
+      "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+    ],
+    "transactionEvidence": [
+      {
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "network": "mainnet",
+        "checkpoint": "100",
+        "timestamp": "2026-11-05T00:00:00.000Z",
+        "sender": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "commands": [
+          "transferObjects"
+        ],
+        "interpretation": "transfer-commands",
+        "status": "success",
+        "source": "fixture",
+        "gas": {
+          "payer": "0x000000000000000000000000000000000000000000000000000000000000000c",
+          "computation": "1000",
+          "storage": "100",
+          "rebate": "50",
+          "netCharge": "1050"
+        },
+        "movements": [
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000a",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-10000000000"
+          },
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000b",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "10000000000"
+          },
+          {
+            "address": "0x000000000000000000000000000000000000000000000000000000000000000c",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-1050"
+          }
+        ]
+      }
+    ],
+    "memory": [],
+    "experience": [
+      {
+        "id": "qHw8_oJV1dTxg1EU4e_M0Ugj6fcTmwl8spmFZum8-mE",
+        "record": {
+          "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+          "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+          "network": "mainnet",
+          "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+          "operation": "gas-payer",
+          "schema": "recall-experience/1",
+          "source": "fixture",
+          "sponsored": true,
+          "supersedes": null,
+          "verdict": "fail",
+          "workspace": "agent-1706acf0-b0c1-497a-ab6d-a4d1a5e23a96"
+        },
+        "blobId": "qHw8_oJV1dTxg1EU4e_M0Ugj6fcTmwl8spmFZum8-mE"
+      }
+    ],
+    "experienceStorage": "walrus-fixture",
+    "dataProvenance": {
+      "sourceMode": "offline-managed-boundary-test",
+      "freshProviderRead": false,
+      "walletHistoryComplete": false,
+      "scope": "selected-transactions"
+    }
+  },
+  "resolution": {
+    "verdict": "pass",
+    "claimed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+    "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+    "evidence": {
+      "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+      "source": "fixture",
+      "field": "gas.payer"
+    },
+    "captureScope": "linked-resolution-only",
+    "memory": {
+      "storage": "walrus-fixture",
+      "id": "7egmN5XrBgIC4_0U-XNDD7sJ-Wk28K4FR4aA0-FD7sU",
+      "blobId": "7egmN5XrBgIC4_0U-XNDD7sJ-Wk28K4FR4aA0-FD7sU"
+    }
+  },
+  "records": [
+    {
+      "blobId": "VmpJRcsA1_fJR4Lai1do8NQYKYvXbyRfKMc_uqEN09c",
+      "id": "VmpJRcsA1_fJR4Lai1do8NQYKYvXbyRfKMc_uqEN09c",
+      "record": {
+        "claimed": "0x000000000000000000000000000000000000000000000000000000000000000b",
+        "digest": "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8",
+        "network": "mainnet",
+        "observed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "operation": "gas-payer",
+        "schema": "recall-experience/1",
+        "source": "fixture",
+        "sponsored": false,
+        "supersedes": null,
+        "verdict": "fail",
+        "workspace": "agent-1706acf0-b0c1-497a-ab6d-a4d1a5e23a96"
+      }
+    },
+    {
+      "blobId": "-tCqQJ_grhLWj1p7gV4HdjYTeNpRLZ4t5BS_dCRYcBU",
+      "id": "-tCqQJ_grhLWj1p7gV4HdjYTeNpRLZ4t5BS_dCRYcBU",
+      "record": {
+        "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "digest": "CktRuQ2mttgRGkXJtyksdKHjUdc2C4TgDzyB98oEzy8",
+        "network": "mainnet",
+        "observed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "operation": "gas-payer",
+        "schema": "recall-experience/1",
+        "source": "fixture",
+        "sponsored": false,
+        "supersedes": "VmpJRcsA1_fJR4Lai1do8NQYKYvXbyRfKMc_uqEN09c",
+        "verdict": "resolved",
+        "workspace": "agent-1706acf0-b0c1-497a-ab6d-a4d1a5e23a96"
+      }
+    },
+    {
+      "blobId": "qHw8_oJV1dTxg1EU4e_M0Ugj6fcTmwl8spmFZum8-mE",
+      "id": "qHw8_oJV1dTxg1EU4e_M0Ugj6fcTmwl8spmFZum8-mE",
+      "record": {
+        "claimed": "0x000000000000000000000000000000000000000000000000000000000000000a",
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "network": "mainnet",
+        "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "operation": "gas-payer",
+        "schema": "recall-experience/1",
+        "source": "fixture",
+        "sponsored": true,
+        "supersedes": null,
+        "verdict": "fail",
+        "workspace": "agent-1706acf0-b0c1-497a-ab6d-a4d1a5e23a96"
+      }
+    },
+    {
+      "blobId": "7egmN5XrBgIC4_0U-XNDD7sJ-Wk28K4FR4aA0-FD7sU",
+      "id": "7egmN5XrBgIC4_0U-XNDD7sJ-Wk28K4FR4aA0-FD7sU",
+      "record": {
+        "claimed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "network": "mainnet",
+        "observed": "0x000000000000000000000000000000000000000000000000000000000000000c",
+        "operation": "gas-payer",
+        "schema": "recall-experience/1",
+        "source": "fixture",
+        "sponsored": true,
+        "supersedes": "qHw8_oJV1dTxg1EU4e_M0Ugj6fcTmwl8spmFZum8-mE",
+        "verdict": "resolved",
+        "workspace": "agent-1706acf0-b0c1-497a-ab6d-a4d1a5e23a96"
+      }
+    }
+  ],
+  "counters": {
+    "intents": [
+      {
+        "key": "7egmN5XrBgIC4_0U-XNDD7sJ-Wk28K4FR4aA0-FD7sU",
+        "namespace": "agent-1706acf0-b0c1-497a-ab6d-a4d1a5e23a96-experience",
+        "sha256": "ede8263795eb060202e3fd14f973430fbb09f96936f0ae05478680d3e143eec5",
+        "state": "done"
+      }
+    ],
+    "jobs": {
+      "fixture-25d93e6a-bfff-4055-b3c8-7367d79b4c41": {
+        "key": "7egmN5XrBgIC4_0U-XNDD7sJ-Wk28K4FR4aA0-FD7sU",
+        "namespace": "agent-1706acf0-b0c1-497a-ab6d-a4d1a5e23a96-experience",
+        "polls": 1
+      }
+    },
+    "manifestHash": "c4d6281f40a1d057c298d18bb688a8dcb815495442c3936b760e97a26c72d483",
+    "reads": 2,
+    "requests": 40,
+    "schema": 1,
+    "stopped": null,
+    "tatumBatches": 1,
+    "writes": 1
+  },
+  "native": {
+    "contextHash": "36206926e5274dc0aa1bd1685a9883db5472edfae27726a9d96f86553d804e6b",
+    "model": "gpt-5.6-luna",
+    "schema": 1,
+    "stopped": null,
+    "turns": [
+      {
+        "index": 0,
+        "reservedAt": "2026-11-07T09:55:30.827Z",
+        "status": "completed",
+        "taskHash": "340973662dd42cdac03fa279839c728f2c6911b3c15fee7e20ed76e29e50b0bd"
+      }
+    ]
+  },
+  "modelCalls": 0,
+  "actualProviderCalls": 0,
+  "actualProfilesRead": 0,
+  "actualKeysRead": 0,
+  "additionalSpendUSD": 0,
+  "limitation": "Independent protocol clients supply the synthetic verifier claim; no actual model choice, account access, real Tatum response or Mainnet write is claimed."
+}

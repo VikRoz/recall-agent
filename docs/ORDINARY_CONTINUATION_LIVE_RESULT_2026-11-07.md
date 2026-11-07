@@ -38,3 +38,5 @@ Rejected: forcing a correct next call or tuning the frozen user task; permitting
 Sources: the actual artifacts above; `docs/ORDINARY_CONTINUATION_OFFLINE_2026-11-07.md`; frozen `app/agent-session.ts`, `app/agent-provider.mjs`, `app/agent-continuation-contract.mjs`; coordinator's explicit human approval and actual command result. No new source lookup/API occurred during this fixation.
 
 Open: implement and verify the approved offline capture-scope separation, then freeze/review the integrated revision. There is **no new real/native/key allowance**, no resume/refund of this consumed run, and no automatic immediate third live request. Whole-task completion, linked resolution, final reader and judge packaging remain open. No push, publication or deployment.
+
+Subsequent offline correction completed: [capture-scope separation](CAPTURE_SCOPE_OFFLINE_2026-11-07.md), integrated166/166 acceptance. This adds no new actual model/provider outcome and does not change the stopped trace or its consumed allowance.

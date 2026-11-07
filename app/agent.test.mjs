@@ -43,11 +43,12 @@ test('verified mismatch auto-captures only with consent and correction links the
   try {
     const { session } = offlineAgent(dir, false);
     const report = await prepare(session);
-    assert.equal((await session.verifyGasPayer(report.reportId, FIXTURE_DIGESTS[0], FIXTURE_OTHER)).memory, null);
+    const optedOut = await session.verifyGasPayer(report.reportId, FIXTURE_DIGESTS[0], FIXTURE_OTHER);
+    assert.equal(optedOut.memory, null); assert.equal(optedOut.captureScope, 'disabled');
     assert.deepEqual(await session.experience.read(), []);
     session.capture = true;
     const failure = await session.verifyGasPayer(report.reportId, FIXTURE_DIGESTS[0], FIXTURE_OTHER);
-    assert.equal(failure.verdict, 'fail');
+    assert.equal(failure.verdict, 'fail'); assert.equal(failure.captureScope, 'verified-experience'); assert.equal(failure.captureSkipped, undefined);
     assert.equal(failure.memory.storage, 'local-fixture');
     assert.deepEqual(await session.verifyGasPayer(report.reportId, FIXTURE_DIGESTS[0], FIXTURE_OTHER), failure);
     const correction = await session.verifyGasPayer(report.reportId, FIXTURE_DIGESTS[0], FIXTURE_WALLET);

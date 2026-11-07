@@ -11,7 +11,7 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/app/check-agent-managed.mjs" --compact
 "$node" --disable-warning=ExperimentalWarning "$root/app/check-agent-diagnostic.mjs" --compact
 "$node" --disable-warning=ExperimentalWarning "$root/app/check-agent-metadata.mjs" --compact
-"$node" --disable-warning=ExperimentalWarning "$root/app/check-agent-continuation.mjs" --compact
+"$node" --disable-warning=ExperimentalWarning "$root/app/check-agent-continuation.mjs" --compact --capture-scope
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-activity.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-activity-model.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-agent-probe.mjs"
@@ -30,5 +30,6 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-readonly-metadata.mjs" --status-shape
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-readonly-metadata-live.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-ordinary-continuation.mjs"
+"$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-ordinary-continuation.mjs" --capture-scope
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-continuation-live.mjs"
 "$node" "$root/verify-source.mjs"

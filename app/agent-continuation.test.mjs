@@ -11,7 +11,7 @@ import {armManaged,managedPreflightInventory,reserveManagedTurn,completeManagedT
 import {baselineRows,validateContinuationBaseline,candidateContinuationBaseline} from './agent-continuation-contract.mjs';
 import {evaluateManaged,readContinuation,readContinuationProcess,withTemporaryKey} from './agent-managed-entry.mjs';
 import {privateRead,runHash} from './agent-run.mjs';
-import {FIXTURE_WALLET} from './activity-fixtures.ts';
+import {FIXTURE_WALLET,FIXTURE_OTHER} from './activity-fixtures.ts';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const parent=()=>mkdtempSync(join(tmpdir(),'recall-continuation-test-'));
 globalThis.fetch=()=>{throw Error('OFFLINE_NETWORK_DENIED');};
@@ -62,12 +62,43 @@ test('missing/corrupt plaintext stops the native MCP before tool exposure, Tatum
   assert.equal(s.tatumBatches,0);assert.equal(s.writes,0);assert(s.stopped);assert.equal(privateRead(join(d,'synthetic-tatum.json')).requests.length,0);
  }finally{r?.close();rmSync(p,{recursive:true,force:true});}}
 });
-test('incorrect claim cannot submit a new failure or reserve the resolution-only write',async()=>{
+test('same and different wrong hypotheses return normal fail while capture is skipped before writer admission',async()=>{
  const p=parent();let r;try{const {directory:d}=await setup(p),opened=await preparedRuntime(d);r=opened.r;
-  await assert.rejects(r.session.verifyGasPayer(opened.report.reportId,opened.report.digests[0],FIXTURE_WALLET),/CONTINUATION_RESOLUTION_ONLY/);
+  for(const claimed of [FIXTURE_WALLET,FIXTURE_OTHER]){
+   const result=await r.session.verifyGasPayer(opened.report.reportId,opened.report.digests[0],claimed);
+   assert.equal(result.verdict,'fail');assert.equal(result.memory,null);assert.equal(result.captureScope,'linked-resolution-only');
+   assert.equal(result.captureSkipped,'not-admitted-by-scope');assert.equal(result.observed,opened.report.gas[0].payer);
+   assert.equal(r.session.stopped,false);assert.equal(r.gate.state().stopped,null);
+  }
   assert.equal(r.gate.state().writes,0);assert.equal(r.gate.state().intents.length,0);
   assert(!privateRead(join(d,'synthetic-relayer.json')).requests.some(x=>x.path==='/api/remember'));
  }finally{r?.close();rmSync(p,{recursive:true,force:true});}
+});
+test('MCP returns two normal failed hypotheses then can write one allowed linked resolution and read it independently',async()=>{
+ const r=await continuationHappyPath({hypotheses:true});assert.equal(r.wrongHypotheses.length,2);
+ assert(r.wrongHypotheses.every(v=>v.verdict==='fail'&&v.memory===null&&v.captureSkipped==='not-admitted-by-scope'));
+ assert.equal(r.resolution.verdict,'pass');assert.equal(r.resolution.captureScope,'linked-resolution-only');
+ assert.equal(r.counters.writes,1);assert.equal(r.counters.tatumBatches,1);assert.equal(r.counters.reads,2);assert(r.counters.requests<=64);
+ assert(r.verificationDescription.includes('linked resolutions only'));assert(r.verificationDescription.includes('not-admitted-by-scope'));
+ assert(!r.verificationDescription.includes(r.report.experience[0].id));assert(!r.verificationDescription.includes(r.report.gas[0].payer));
+});
+test('direct experience writer still rejects the old cached failure before receipt reuse or a new reservation',async()=>{
+ const p=parent();let r;try{const {directory:d,context:c}=await setup(p);r=await openManaged(d,{...continuationOptions(d),native:true});
+  await assert.rejects(r.experience.write(c.baseline.origins[1].records[0].record),/CONTINUATION_RESOLUTION_ONLY/);
+  assert.equal(r.gate.state().writes,0);assert.equal(r.gate.state().intents.length,0);assert(r.gate.state().stopped);
+ }finally{r?.close();rmSync(p,{recursive:true,force:true});}
+});
+test('an admitted resolution write retains critical HTTP and accepted-but-unknown outcome stops',async()=>{
+ for(const fault of [{failPath:'/api/remember'},{failAfterAccepted:true}]){const p=parent();let r;try{const {directory:d,context:c}=await setup(p);
+  r=await openManaged(d,{managedTest:true,ports:continuationFixturePorts(d,fault),native:true});
+  const report=await r.session.prepare('mainnet',FIXTURE_WALLET,[c.plan.publicInputs.transaction]);
+  await assert.rejects(r.session.verifyGasPayer(report.reportId,report.digests[0],report.gas[0].payer));
+  assert.equal(r.session.stopped,true);assert(r.gate.state().stopped);assert.equal(r.gate.state().writes,1);
+  assert.equal(r.gate.state().intents[0].state,'sent');
+  assert.equal(privateRead(join(d,'synthetic-relayer.json')).requests.filter(x=>x.path==='/api/remember').length,1);
+  r.close();r=undefined;completeManagedTurn(d,0,'STOPPED');
+  await assert.rejects(async()=>readContinuation(d,continuationOptions(d)));assert(!existsSync(join(d,'continuation-reader-use.json')));
+ }finally{r?.close();rmSync(p,{recursive:true,force:true});}}
 });
 test('second Tatum attempt stops before the generated client sends another request',async()=>{
  const p=parent();let r;try{const {directory:d,context:c}=await setup(p),opened=await preparedRuntime(d);r=opened.r;
@@ -92,7 +123,7 @@ test('reader cannot run before native completion, with a pending write, or after
   if(kind!=='reserved')completeManagedTurn(d,0,'COMPLETED');
   if(kind==='pending')mutate(run,'agent-ledger.json',s=>s.intents[0].state='sent');
   if(kind==='stopped')mutate(run,'agent-ledger.json',s=>s.stopped='CRITICAL_STOP');
-  await assert.rejects(readContinuation(d,continuationOptions(d)));assert(!existsSync(join(d,'continuation-reader-use.json')));
+  await assert.rejects(async()=>readContinuation(d,continuationOptions(d)));assert(!existsSync(join(d,'continuation-reader-use.json')));
  }finally{r?.close();rmSync(p,{recursive:true,force:true});}}
 });
 test('single reservation rejects a first-task substitution, a second turn and any retry after failed bootstrap',async()=>{

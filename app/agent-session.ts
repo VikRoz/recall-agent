@@ -9,11 +9,20 @@ const recoverable = new Set(['WRONG_NETWORK', 'INVALID_ADDRESS', 'TRANSACTION_LI
   'DUPLICATE_TRANSACTION', 'INVALID_TRANSACTION_DIGEST', 'UNSUPPORTED_EXPLORER_LINK', 'NETWORK_MISMATCH',
   'OFFLINE_TRANSACTION_NOT_FOUND', 'ACTIVITY_QUERY_TIME', 'ACTIVITY_QUERY_NETWORK', 'ACTIVITY_QUERY_RANGE', 'ACTIVITY_QUERY_LIMIT', 'ACTIVITY_QUERY_CURSOR',
   'REPORT_NOT_FOUND', 'PROPOSAL_NOT_FOUND', 'REPORT_LIMIT', 'PROPOSAL_LIMIT', 'CLAIM_TRANSACTION_NOT_IN_REPORT']);
+export type CaptureScope = 'verified-experience' | 'linked-resolution-only';
+// Admission is a pure policy decision. Storage/network failures after admission remain critical.
+export function captureAdmits(scope: CaptureScope, parentId: string | undefined, record: Experience): boolean {
+  if (scope === 'verified-experience') return true;
+  assert(scope === 'linked-resolution-only' && /^[A-Za-z0-9_-]{43}$/.test(parentId ?? ''), 'AGENT_CAPTURE_SCOPE');
+  return record.verdict === 'resolved' && record.supersedes === parentId;
+}
 export class AgentSession extends ActivitySession {
   stopped = false;
   failures = 0;
   experience!: ExperienceStore;
   capture = false;
+  captureScope: CaptureScope = 'verified-experience';
+  captureParentId: string | undefined;
   activityIndex!: OfflineActivityIndex;
   artifacts: any;
   providerProvenance: {sourceMode: string; freshProviderRead: boolean; walletHistoryComplete: boolean; scope: string} | undefined;
@@ -57,15 +66,18 @@ export class AgentSession extends ActivitySession {
       const resolved = new Set(rows.map(row => row.record.supersedes));
       const parent = rows.find(row => row.record.schema === 'recall-experience/1' && row.record.verdict === 'fail' && row.record.digest === digest
         && row.record.network === state.network && row.record.source === tx.source && row.record.observed === tx.gas.payer && !resolved.has(row.id));
-      let saved;
+      let saved, captureSkipped: string | undefined;
       if (this.capture && (!pass || parent)) {
         const record: Experience = { schema: 'recall-experience/1', workspace: this.binding.project,
           network: state.network, operation: 'gas-payer', source: tx.source, digest, sponsored: tx.gas.payer !== tx.sender,
           claimed, observed: tx.gas.payer, verdict: pass ? 'resolved' : 'fail', supersedes: pass ? parent!.id : null };
-        saved = await this.experience.write(record);
+        if (captureAdmits(this.captureScope, this.captureParentId, record)) saved = await this.experience.write(record);
+        else captureSkipped = 'not-admitted-by-scope';
       }
       return { verdict: pass ? 'pass' : 'fail', claimed, observed: tx.gas.payer,
         evidence: { digest, source: tx.source, field: 'gas.payer' },
+        captureScope: this.capture ? this.captureScope : 'disabled',
+        ...(captureSkipped ? {captureSkipped} : {}),
         memory: saved ? { storage: this.experience.storage, id: saved.id, ...(saved.blobId ? { blobId: saved.blobId } : {}) } : null };
     });
   }

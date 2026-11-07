@@ -11,7 +11,7 @@ import {createContinuationFixture,continuationOptions} from './agent-continuatio
 import {armManaged,managedPreflightInventory,reserveManagedTurn,completeManagedTurn,admittedManaged,managedRuntimeHashes} from './agent-managed.mjs';
 import {readContinuationProcess} from './agent-managed-entry.mjs';
 import {privateRead,runHash} from './agent-run.mjs';
-import {FIXTURE_WALLET} from './activity-fixtures.ts';
+import {FIXTURE_WALLET,FIXTURE_OTHER} from './activity-fixtures.ts';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const sha=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
 export const continuationTask=c=>({schema:1,dataMode:'ordinary-managed-test',model:c.plan.model,tasks:c.plan.tasks,managedTurnIndex:0});
@@ -48,16 +48,23 @@ export async function continuationWalkthrough(){
    nativeMcpPid,verified,duplicate,exhausted,originalStatesUnchanged:true,modelCalls:0,actualProviderCalls:0,additionalSpendUSD:0};
  }finally{await client?.close();rmSync(parent,{recursive:true,force:true});}
 }
-export async function continuationHappyPath(){
+export async function continuationHappyPath({hypotheses=false}={}){
  const parent=mkdtempSync(join(tmpdir(),'recall-continuation-happy-'));let client;
  try{
   const {directory:d,context:c,priorOrigins}=await createContinuationFixture(parent),before=originHashes(priorOrigins),options=continuationOptions(d);
   armManaged(d,options);await managedPreflightInventory(d,options);reserveManagedTurn(d,0,continuationTask(c),{managedTest:true});
   client=new Client({name:'continuation-happy-offline',version:'1'});const wire=new StdioClientTransport({command:process.execPath,args:['--disable-warning=ExperimentalWarning',join(root,'app/agent-continuation-fixture.mjs'),'--mcp',d]});
-  await client.connect(wire);const nativeMcpPid=wire.pid;await client.listTools();
+  await client.connect(wire);const nativeMcpPid=wire.pid;const catalog=await client.listTools();
+  const verificationDescription=catalog.tools.find(t=>t.name==='verify_gas_payer').description;
   const call=async(name,args)=>{const r=await client.callTool({name,arguments:args});assert(!r.isError,JSON.stringify(r));return JSON.parse(r.content[0].text);};
   const report=await call('prepare_report',{network:'mainnet',wallet:FIXTURE_WALLET,transactions:[c.plan.publicInputs.transaction]});
   assert.equal(report.experience.length,1);assert.equal(report.experience[0].id,c.baseline.origins[1].records[0].id);
+  const wrongHypotheses=[];
+  if(hypotheses)for(const claimedPayer of [FIXTURE_WALLET,FIXTURE_OTHER]){
+   const verdict=await call('verify_gas_payer',{reportId:report.reportId,transaction:c.plan.publicInputs.transaction,claimedPayer});
+   assert.equal(verdict.verdict,'fail');assert.equal(verdict.memory,null);assert.equal(verdict.captureScope,'linked-resolution-only');
+   assert.equal(verdict.captureSkipped,'not-admitted-by-scope');assert.equal(verdict.observed,report.gas[0].payer);wrongHypotheses.push(verdict);
+  }
   const resolution=await call('verify_gas_payer',{reportId:report.reportId,transaction:c.plan.publicInputs.transaction,claimedPayer:report.gas[0].payer});
   assert.equal(resolution.verdict,'pass');assert(resolution.memory.blobId);await client.close();client=undefined;completeManagedTurn(d,0,'COMPLETED');
   const result=await readContinuationProcess(d,{managedTest:true});assert.notEqual(result.readerPid,nativeMcpPid);
@@ -69,12 +76,13 @@ export async function continuationHappyPath(){
   for(const f of before)assert.equal(sha(f.path),f.sha256);
   return {schema:1,date:new Date().toISOString(),status:'OFFLINE_SINGLE_CONTINUATION_VERIFIED',synthetic:true,
    task:c.plan.tasks[0],taskHash:runHash(c.plan.tasks[0]),sourceHashes:{...managedRuntimeHashes(root),'app/check-agent-continuation.mjs':sha(join(root,'app/check-agent-continuation.mjs'))},
-   originalStatesUnchanged:true,initialRecords:3,nativeMcpPid,readerPid:result.readerPid,report,resolution,records:result.records,counters:result.counters,native:result.native,
+   originalStatesUnchanged:true,initialRecords:3,nativeMcpPid,readerPid:result.readerPid,verificationDescription,wrongHypotheses,report,resolution,records:result.records,counters:result.counters,native:result.native,
    modelCalls:0,actualProviderCalls:0,actualProfilesRead:0,actualKeysRead:0,additionalSpendUSD:0,
    limitation:'Independent protocol clients supply the synthetic verifier claim; no actual model choice, account access, real Tatum response or Mainnet write is claimed.'};
  }finally{await client?.close();rmSync(parent,{recursive:true,force:true});}
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  globalThis.fetch=()=>{throw Error('OFFLINE_NETWORK_DENIED');};
- const r=await continuationHappyPath();console.log(JSON.stringify(process.argv[2]==='--compact'?{status:r.status,counters:r.counters,independentProcesses:r.nativeMcpPid!==r.readerPid,actualProviderCalls:0,modelCalls:0}:r,null,2));
+ const options=process.argv.slice(2);assert(options.every(o=>['--compact','--capture-scope'].includes(o))&&new Set(options).size===options.length);
+ const r=await continuationHappyPath({hypotheses:options.includes('--capture-scope')});console.log(JSON.stringify(options.includes('--compact')?{status:r.status,counters:r.counters,independentProcesses:r.nativeMcpPid!==r.readerPid,actualProviderCalls:0,modelCalls:0}:r,null,2));
 }
