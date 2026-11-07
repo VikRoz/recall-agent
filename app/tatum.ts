@@ -8,8 +8,9 @@ export const ENDPOINTS = {
 } as const;
 export class TatumData {
   client: any; network: Network; dispose: () => void; closed = false;
-  constructor(client: any, network: Network, dispose: () => void = () => {}) {
-    this.client = client; this.network = network; this.dispose = dispose;
+  observeResponse: ((digests: string[], response: any) => void) | undefined;
+  constructor(client: any, network: Network, dispose: () => void = () => {}, observeResponse?: (digests: string[], response: any) => void) {
+    this.client = client; this.network = network; this.dispose = dispose; this.observeResponse = observeResponse;
   }
   close() { if (!this.closed) { this.closed = true; this.dispose(); } }
   async transactions(digests: string[]) {
@@ -23,6 +24,7 @@ export class TatumData {
         'transaction.digest', 'transaction.kind', 'transaction.gas_payment', 'effects.status',
         'effects.transaction_digest', 'effects.gas_used', 'balance_changes'] },
     }, { abort: AbortSignal.timeout(10000), timeout: 10000 });
+    this.observeResponse?.(digests, call.response);
     const values = call.response?.transactions;
     assert(Array.isArray(values) && values.length === digests.length, 'TRANSACTION_BATCH_INCOMPLETE');
     const normalized = values.map((value: any) => {
@@ -36,7 +38,7 @@ export class TatumData {
   }
 
 }
-export async function connectTatum(env: Record<string, string | undefined>, network: Network = 'mainnet') {
+export async function connectTatum(env: Record<string, string | undefined>, network: Network = 'mainnet', observeResponse?: (digests: string[], response: any) => void) {
   assert(env.TATUM_API_KEY, 'TATUM_CREDENTIALS_MISSING');
   const packageName = '@mysten/sui/grpc';
   let sdk: any;
@@ -59,6 +61,6 @@ export async function connectTatum(env: Record<string, string | undefined>, netw
       meta: { 'x-api-key': env.TATUM_API_KEY }, timeout: 10000,
     });
     const client = new sdk.SuiGrpcClient({ network, transport });
-    return new TatumData(client, network, () => owner.close());
+    return new TatumData(client, network, () => owner.close(), observeResponse);
   } catch (error) { owner.close(); throw error; }
 }

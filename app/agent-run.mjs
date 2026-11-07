@@ -23,20 +23,24 @@ function durable(path,value,fresh=false){
  if(!fresh)renameSync(target,path);
  const directory=openSync(join(path,'..'),'r');try{fsyncSync(directory);}finally{closeSync(directory);}
 }
-export function validateAgentManifest(m,{live=false,ordinary=false}={}){
+export function validateAgentManifest(m,{live=false,ordinary=false,managedTest=false}={}){
  exactKeys(m,['schema','mode','runId','owner','accountId','delegatePublicKeyHex','packageId','workspace','datasetId','source','namespaces','maxUSD','expiresAt','admission']);
- assert(!(live&&ordinary)&&m.schema===1&&m.mode===(ordinary?'offline-ordinary-provider-fixture':live?'live-walrus-replay':'offline-sdk-fixture')&&m.maxUSD===0,'AGENT_OFFLINE_ONLY');
+ assert(!managedTest||(live&&ordinary),'AGENT_MANAGED_TEST_SCOPE');
+ const ordinaryManaged=ordinary&&live;
+ const expectedMode=ordinary?(live?(managedTest?'offline-managed-admission-test':'live-ordinary-selected'):'offline-ordinary-provider-fixture'):live?'live-walrus-replay':'offline-sdk-fixture';
+ assert(m.schema===1&&m.mode===expectedMode&&m.maxUSD===0,'AGENT_OFFLINE_ONLY');
  assert(/^[a-f0-9-]{36}$/.test(m.runId)&&/^agent-[a-f0-9-]{36}$/.test(m.workspace),'AGENT_RUN_ID');
  assert([m.owner,m.accountId,m.packageId].every(v=>address(v)===v)&&/^[a-f0-9]{64}$/.test(m.delegatePublicKeyHex),'AGENT_ACCOUNT');
- assert(/^[a-f0-9]{64}$/.test(m.datasetId)&&(ordinary?m.source==='fixture':['fixture','replay'].includes(m.source)),'AGENT_DATASET');
+ assert(/^[a-f0-9]{64}$/.test(m.datasetId)&&(ordinary?m.source===(live&&!managedTest?'tatum':'fixture'):['fixture','replay'].includes(m.source)),'AGENT_DATASET');
  exactKeys(m.namespaces,['rules','experience']);
  assert(m.namespaces.rules===m.workspace+'-rules'&&m.namespaces.experience===m.workspace+'-experience','AGENT_NAMESPACES');
- exactKeys(m.admission,['kind','accountId','delegatePublicKeyHex','checkedAt','maxUSD',...(live?['planHash','payloadHash','failureId','profileHash','deploymentHash']:[]),...(ordinary?['workspaceHash','policyHash']:[])]);
- assert(m.admission.kind===(live?'managed-production-approved':'offline-synthetic')&&m.admission.accountId===m.accountId
+ exactKeys(m.admission,['kind','accountId','delegatePublicKeyHex','checkedAt','maxUSD',...(live&&!ordinary?['planHash','payloadHash','failureId','profileHash','deploymentHash']:[]),...(ordinary?['workspaceHash','policyHash']:[]),...(ordinaryManaged?['profileHash','deploymentHash','contextHash']:[])]);
+ assert(m.admission.kind===(managedTest?'managed-boundary-test':live?'managed-production-approved':'offline-synthetic')&&m.admission.accountId===m.accountId
   &&m.admission.delegatePublicKeyHex===m.delegatePublicKeyHex&&m.admission.maxUSD===0,'AGENT_ADMISSION');
- if(live)assert(m.source==='replay'&&['planHash','payloadHash','profileHash','deploymentHash'].every(k=>/^[a-f0-9]{64}$/.test(m.admission[k]))
+ if(live&&!ordinary)assert(m.source==='replay'&&['planHash','payloadHash','profileHash','deploymentHash'].every(k=>/^[a-f0-9]{64}$/.test(m.admission[k]))
   &&/^[A-Za-z0-9_-]{43}$/.test(m.admission.failureId),'AGENT_LIVE_ADMISSION');
  if(ordinary)assert([m.admission.workspaceHash,m.admission.policyHash].every(x=>/^[a-f0-9]{64}$/.test(x)),'AGENT_WORKSPACE_BINDING');
+ if(ordinaryManaged)assert(['profileHash','deploymentHash','contextHash'].every(k=>/^[a-f0-9]{64}$/.test(m.admission[k])),'AGENT_MANAGED_BINDING');
  time(m.expiresAt);time(m.admission.checkedAt);return m;
 }
 export function createAgentRun(directory,manifest,options={}){
@@ -95,6 +99,8 @@ export class AgentRunGate {
     &&active.manifestHash===this.hash&&active.runId===this.manifest.runId
     &&lease.manifestHash===this.hash&&lease.token===this.ordinary.token&&lease.pid===process.pid
     &&runHash(privateRead(join(this.directory,'ordinary-approval.json')))===this.ordinary.approvalHash,'AGENT_WORKSPACE_LEASE_REQUIRED');
+   if(['live-ordinary-selected','offline-managed-admission-test'].includes(this.manifest.mode))
+    assert(runHash(privateRead(join(directory,'managed-context.json')))===this.manifest.admission.contextHash,'MANAGED_CONTEXT_CHANGED');
   }
   const m=this.manifest,now=Date.now(),age=now-time(m.admission.checkedAt);
   assert(time(m.expiresAt)>now&&time(m.expiresAt)<=now+86400000,'AGENT_RUN_EXPIRED');
@@ -144,6 +150,13 @@ export class AgentRunGate {
    assert(state.writes===0?record.verdict==='fail'&&key===this.manifest.admission.failureId
     :state.writes===1&&record.verdict==='resolved'&&record.supersedes===this.manifest.admission.failureId
       &&privateRead(join(this.directory,'agent-native-turn.json')).manifestHash===this.hash,'AGENT_LIVE_WRITE_SCOPE');
+  }
+  if(['live-ordinary-selected','offline-managed-admission-test'].includes(this.manifest.mode)){
+   const p=privateRead(join(this.ordinary.directory,'ordinary-preflight.json'));
+   assert(p.contextHash===this.manifest.admission.contextHash&&p.manifestHash===this.hash&&p.accountAuthorized===true
+    &&Date.now()-time(p.checkedAt)>=0&&Date.now()-time(p.checkedAt)<=300000,'ORDINARY_MANAGED_PREFLIGHT_REQUIRED');
+   assert(namespace===this.manifest.namespaces.experience&&record.schema==='recall-experience/1'
+    &&record.operation==='gas-payer'&&record.source===this.manifest.source,'ORDINARY_MANAGED_WRITE_SCOPE');
   }
   const intent={namespace,key,sha256:runHash(record),state:'reserved'};
   const s=this.update(s=>{

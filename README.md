@@ -60,6 +60,10 @@ bash start.command --example --saved
 
 Ask about a wallet and optionally a period in ordinary words. The model can find matching transaction references without you pasting their IDs. Lookup returns UTC start-inclusive/end-exclusive coverage, bounded pages and observed roles. A missing record means absent from this dataset, not an inactive wallet. The two saved transactions are not a complete wallet history. Reports and CSV label their source `replay`, never a fresh provider read. Contract changes and full wallet-history discovery remain unsupported.
 
+## Prepared real ordinary evaluation
+
+[Stage 4A](docs/ORDINARY_LIVE_ADMISSION_OFFLINE_2026-11-07.md) now has a distinct managed admission and a bounded two-conversation runner. The offline SDK/Seal/Tatum checks are intercepted; they are not account access or a new Mainnet run. The prepared real context contains no grant or captured key. The default launcher remains offline. This two-turn evaluation grant does not authorize interactive `--codex`; the primary bounded judge launch remains stage 6 work.
+
 ## Scoped gas-payer memory
 
 A stored literal payer applies only to the same transaction, network, source and observed payer. It cannot override a new transaction's facts. The [frozen expense-hypothesis evaluation](docs/EVALUATION_PREPARATION_2026-11-07.md) passed offline fresh-process and negative controls; the incorrect hypothesis is explicitly supplied by the test/user. It is not a new observed model error or an accuracy benchmark. Its two native tasks and any real-account execution remain unapproved.

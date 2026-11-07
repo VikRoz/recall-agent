@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 export function verifyRecordedSource(freeze){
  const commit=freeze.sourceCommit,files=freeze.productAndHarnessSha256;
  assert(/^[a-f0-9]{7,40}$/.test(commit)&&Object.keys(files).length>0);
- for(const [path,hash] of Object.entries(files))assert((/^(app|src)\/[A-Za-z0-9_.\/-]+$/.test(path)||path==='start.command')
+ for(const [path,hash] of Object.entries(files))assert((/^(app|src)\/[A-Za-z0-9_.\/-]+$/.test(path)||['start.command','mcp/package.json','mcp/package-lock.json'].includes(path))
   &&!path.includes('..')&&/^[a-f0-9]{64}$/.test(hash));
  const cwd=fileURLToPath(new URL('../',import.meta.url));
  const available=spawnSync('git',['cat-file','-e',commit+'^{commit}'],{cwd,stdio:'ignore'});

@@ -14,8 +14,8 @@ let active=false;
 
 export async function openInjectedAgent(directory,{createSdk,transport,capture=false,wait,live=false,ordinary,dataFactory}){
  assert(!active&&typeof createSdk==='function'&&typeof transport==='function','AGENT_INJECTED_PORTS_REQUIRED');
- assert(!ordinary||(!live&&typeof dataFactory==='function'),'AGENT_ORDINARY_PORTS_REQUIRED');
- const gate=new AgentRunGate(directory,ordinary?{ordinary:true,...ordinary}:{live}),m=gate.manifest;
+ assert(!ordinary||typeof dataFactory==='function','AGENT_ORDINARY_PORTS_REQUIRED');
+ const gate=new AgentRunGate(directory,ordinary?{ordinary:true,live,...ordinary}:{live}),m=gate.manifest;
  const index=ordinary?undefined:loadOfflineActivity(m.source==='replay'?'saved':'fixture');
  if(index)assert(index.datasetId===m.datasetId,'AGENT_DATASET_CHANGED');
  const journals=Object.fromEntries(['rules','experience'].map(k=>[k,new FileWriteJournal(join(ordinary?.workspaceDirectory??directory,'journal-'+k))]));
@@ -56,7 +56,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
     validateRules([...rows,{record,blobId:key}],binding);
     return ports.rules.write(record,key);
    })};
-  const storage=live?'walrus':'walrus-fixture';
+  const storage=live&&!ordinary?.managedTest?'walrus':'walrus-fixture';
   const base=new WalrusExperienceStore(ports.experience,async()=>gate.admit(),storage);
   const experience={storage,read:async()=>{
    try{return await base.read();}catch(error){gate.stop('AGENT_MEMORY_READ_STOPPED');throw error;}
@@ -73,9 +73,10 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
    assert(network==='mainnet'||network==='testnet','WRONG_NETWORK');return index.transactions(network,ids);
   }}),undefined,undefined,()=>gate.stop('AGENT_TOOL_STOPPED'));
   session.experience=experience;session.capture=capture;session.activityIndex=index;session.artifacts=new CsvArtifacts(directory);
-  if(ordinary)session.providerProvenance={sourceMode:'offline-intercepted-tatum',freshProviderRead:false,walletHistoryComplete:false,scope:'selected-transactions'};
+  if(ordinary)session.providerProvenance={sourceMode:live&&!ordinary.managedTest?'live-tatum-selected':ordinary.managedTest?'offline-managed-boundary-test':'offline-intercepted-tatum',
+   freshProviderRead:Boolean(live&&!ordinary.managedTest),walletHistoryComplete:false,scope:'selected-transactions'};
   const runtime=agentServer(session,{capture,dataMode:m.source==='tatum'?'tatum':m.source==='replay'?'saved':'fixture',
-   mode:ordinary?'offline-ordinary-provider-fixture':live?'live-walrus-sui-replay':'offline-sdk-fixture-'+m.source});
+   mode:ordinary?m.mode:live?'live-walrus-sui-replay':'offline-sdk-fixture-'+m.source});
   return {...runtime,gate,ports,rules,experience,isBusy:()=>Boolean(inFlight||gate.lease||session?.busy),close};
  }catch(error){try{gate.stop('AGENT_OPEN_FAILED');}finally{close();}throw error;}
 }

@@ -23,3 +23,19 @@ test('installed native transport constructs the Tatum client without a network c
     assert.equal(typeof data.client.ledgerService.batchGetTransactions, 'function');
   } finally { data.close(); }
 });
+
+test('raw transaction observation preserves provider evidence and stops without retry if archival fails', async () => {
+  const { fixtureTransaction, FIXTURE_DIGESTS } = await import('./activity-fixtures.ts');
+  const raw = fixtureTransaction(0); let attempts = 0, observed: any;
+  const client = { ledgerService: { batchGetTransactions: async () => { attempts++; return { response: { transactions: [{ result: { oneofKind: 'transaction', transaction: raw } }] } }; } } };
+  const data = new TatumData(client, 'mainnet', () => {}, (digests, response) => { observed = { digests, response }; });
+  const [tx] = await data.transactions([FIXTURE_DIGESTS[0]]);
+  assert.deepEqual(observed.digests, [FIXTURE_DIGESTS[0]]);
+  assert.equal(observed.response.transactions[0].result.transaction.transaction.gasPayment.owner, tx.gas.payer);
+  const used = raw.effects.gasUsed;
+  assert.equal((BigInt(used.computationCost) + BigInt(used.storageCost) - BigInt(used.storageRebate)).toString(), tx.gas.netCharge);
+  assert.equal(tx.source, 'tatum'); assert.equal(attempts, 1); data.close();
+  const stopped = new TatumData(client, 'mainnet', () => {}, () => { throw Error('SYNTHETIC_ARCHIVE_FAILED'); });
+  await assert.rejects(stopped.transactions([FIXTURE_DIGESTS[0]]), /SYNTHETIC_ARCHIVE_FAILED/);
+  assert.equal(attempts, 2); stopped.close();
+});
