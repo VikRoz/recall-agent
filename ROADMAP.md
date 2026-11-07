@@ -25,6 +25,8 @@ Independent free-task tools, persistent workspace, wallet/period lookup over sel
 
 ## Scope and execution boundaries
 
+Newest actual rehearsal12bd1c2/pHQ6kI completed four useful fact writes after all seven Tatum proofs passed; candidate completed receipts7/10. It stopped at the120-second native deadline during serial storage, with second chat/final reader/CSV still open. Exact payload proof, measured timing and a proposed three-missing-note completion are recorded in [partial result and completion proposal](docs/OWN_ACCOUNT_PARTIAL_RESULT_AND_COMPLETION_PLAN_2026-11-07.md). This supersedes the previous3/10 status below, without reopening either stopped run or approving a new execution.
+
 Latest actual own-account attempt aa7d8ed/pRaby9 is closed: one native turn, Tatum1/write0/read1/SDK13, key absent, candidate3/10. Its six returned proofs were validated offline and a replacement seventh was independently confirmed through official public Sui. The next distinct preparation preserves this fourth closed origin as an exact required addendum, changes only the unavailable digest and keeps all ceilings unchanged. See [stopped result and dataset review](docs/OWN_ACCOUNT_STOP_AND_DATASET_REVIEW_2026-11-07.md). Later milestones remain open until actual acceptance.
 
 - These are development stages, never a prescribed first task/tool route. A user task may end without an error, memory write, correction or export. No forced wrong model call, silent argument clamping or nextTool script is introduced for a successful video.

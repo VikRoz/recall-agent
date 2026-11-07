@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "algorithm": "Finite millisecond enumeration of observedAt in frozen transactionFact payload; accept only exact full canonical SHA-256 AND operationKey matches against actual done receipts.",
+  "sourceCommit": "12bd1c28df1b75dab41c8b53429d2b09d2776ebf",
+  "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+  "window": {
+    "start": "2026-11-07T18:45:49.206Z",
+    "end": "2026-11-07T18:46:07.731Z",
+    "basis": "Latest archived Tatum response through earliest completed write; all payloads constructed before first write.",
+    "maxCandidatesPerDigest": 120000,
+    "actualCandidatesPerDigest": 18526
+  },
+  "counts": [
+    {
+      "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+      "candidates": 18526,
+      "matches": 0
+    },
+    {
+      "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+      "candidates": 18526,
+      "matches": 0
+    },
+    {
+      "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+      "candidates": 18526,
+      "matches": 0
+    },
+    {
+      "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+      "candidates": 18526,
+      "matches": 1
+    },
+    {
+      "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+      "candidates": 18526,
+      "matches": 1
+    },
+    {
+      "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+      "candidates": 18526,
+      "matches": 1
+    },
+    {
+      "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+      "candidates": 18526,
+      "matches": 1
+    }
+  ],
+  "matches": [
+    {
+      "id": "YOu3RtmiwtYtSVug9KLsA114cduJ4flWcqhrnDrZ3Ec",
+      "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+      "observedAt": "2026-11-07T18:45:50.357Z",
+      "sha256": "60ebb746d9a2c2d62d495ba0f4a2ec035d7871db89e1f95672a86b9c3ad9dc47",
+      "blobId": "kJ0LDNAJhwCrnSpUbE-qXq2CClDplvH1FfR8OL6cDk0"
+    },
+    {
+      "id": "nNHme2A9dorkoBjQQv1w3cysD2npVOYiUGK8keSGOG4",
+      "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+      "observedAt": "2026-11-07T18:45:50.358Z",
+      "sha256": "9cd1e67b603d768ae4a018d042fd70ddccac0f69e954e6225062bc91e486386e",
+      "blobId": "QZ5x7cCekw1Kbmd67I3G3VzrJIz9sQJUfQ9ikozbWX8"
+    },
+    {
+      "id": "h8UIRr6qw6cSCFCa4D5WW4bohHHELt4zvM3j0OmtRmg",
+      "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+      "observedAt": "2026-11-07T18:45:50.358Z",
+      "sha256": "87c50846beaac3a71208509ae03e565b86e88471c42ede33bccde3d0e9ad4668",
+      "blobId": "-hI4vLuqlLZvvSiAhgCOTwigSWJUypnYZTZy6shRVmk"
+    },
+    {
+      "id": "FgJey_NG37AyXlLz7jt--zuwmccCAS_SN1lHdCf4RhU",
+      "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+      "observedAt": "2026-11-07T18:45:50.358Z",
+      "sha256": "16025ecbf346dfb0325e52f3ee3b7efb3bb099c702012fd23759477427f84615",
+      "blobId": "qNvF31QX1tU3e_Llfs7Vsbb7pUFK6TAbabbyOLOssuU"
+    }
+  ],
+  "providerCalls": 0,
+  "modelCalls": 0,
+  "signedReadback": false
+}
