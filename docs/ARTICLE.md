@@ -58,4 +58,4 @@ The tool boundary is MCP and the memory schema does not depend on a particular m
 
 The README provides installation, account setup, a small optional transaction example and offline checks. The source includes the ten-memory inventory, actual receipts, raw public transaction proofs, original CSVs and the stopped extended-run evidence. Public pages present saved results; live questions run in the local model client.
 
-Runtime implementation last changed at e72bdeef88d583edeccfb6c3f59b73cfaeac57af. AI assistance was used for implementation, testing and documentation. Source is MIT licensed. The final judge archive, article and site publication are prepared together; the new walkthrough is recorded by the project author.
+Core transaction and memory implementation was live-tested at e72bdeef88d583edeccfb6c3f59b73cfaeac57af. AI assistance was used for implementation, testing and documentation. Source is MIT licensed. The final judge archive, article and site publication are prepared together; the new walkthrough is recorded by the project author.

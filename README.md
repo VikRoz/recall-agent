@@ -58,4 +58,4 @@ npm ci --prefix app --ignore-scripts --no-audit --no-fund
 npm ci --prefix mcp --ignore-scripts --no-audit --no-fund
 ```
 
-Runtime implementation last changed at `e72bdeef88d583edeccfb6c3f59b73cfaeac57af`. Publication and a new walkthrough are prepared separately; older Recall Lab releases are not this candidate. MIT licensed; AI assistance was used for implementation, testing and documentation.
+Core transaction/memory implementation is the live-tested `e72bdeef88d583edeccfb6c3f59b73cfaeac57af`. The launcher confirmation and terminal-width repair was checked offline on 8 November; it does not claim another live trial. Publication and a new walkthrough are prepared separately; older Recall Lab releases are not this candidate. MIT licensed; AI assistance was used for implementation, testing and documentation.

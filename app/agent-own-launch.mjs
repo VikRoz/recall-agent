@@ -45,10 +45,10 @@ export async function launchOwn(root,home,{ports={}}={}){
    const creditsText=(await ask('Remaining INCLUDED credits shown now: ')).trim().replaceAll(',','');
    const checkedAt=new Date().toISOString();
    assert(/^[0-9]+$/.test(creditsText)&&Number.isSafeInteger(Number(creditsText))&&Number(creditsText)>=16,'OWN_INCLUDED_CREDITS');
-   assert((await ask('Type FREE-SPONSORED to confirm Free pricing and official sponsored Walrus only: ')).trim()==='FREE-SPONSORED','OWN_ZERO_COST_UNCONFIRMED');
-   const captureScope=(await ask('Memory scope: type FACTS for transaction notes only, or ALL for verified notes/errors/corrections: ')).trim();
+   const captureScope=(await ask('Memory scope (FACTS / ALL): ')).trim();
    assert(['FACTS','ALL'].includes(captureScope),'OWN_CAPTURE_CONSENT_REQUIRED');
-   assert((await ask('Type ACTIVATE to permit this exact bounded activation with your accounts: ')).trim()==='ACTIVATE','OWN_ACTIVATION_DENIED');
+   console.log('ACTIVATE confirms the shown limits, Tatum Free pricing and official sponsored Walrus only.');
+   assert((await ask('Type ACTIVATE to start: ')).trim()==='ACTIVATE','OWN_ACTIVATION_DENIED');
    const key=(await ask('Paste your same-account Tatum Mainnet key (hidden): ',true)).trim();
    assert(key.startsWith('t-'+accountId)&&/^[A-Za-z0-9_-]{32,256}$/.test(key),'TATUM_KEY_ACCOUNT');
    const keyFile=join(home,'tatum.key');assert(!existsSync(keyFile),'OWN_EXISTING_KEY_STOPPED');
@@ -71,9 +71,12 @@ export async function launchOwn(root,home,{ports={}}={}){
 function interactiveQuestions(){
  assert(process.stdin.isTTY,'OWN_TERMINAL_REQUIRED');let hidden=false;
  const output=new Writable({write(chunk,_encoding,done){if(!hidden)process.stdout.write(chunk);done();}});
+ // Preserve real terminal width for wrapped input while suppressing secret echo.
+ Object.defineProperty(output,'columns',{get:()=>process.stdout.columns});
+ const resize=()=>output.emit('resize');process.stdout.on('resize',resize);
  const rl=createInterface({input:process.stdin,output,terminal:true});
  const ask=async(text,secret=false)=>{hidden=secret;if(secret)process.stdout.write(text);try{return await rl.question(secret?'':text);}finally{if(secret)process.stdout.write('\n');hidden=false;}};
- ask.close=()=>rl.close();return ask;
+ ask.close=()=>{process.stdout.off('resize',resize);rl.close();};return ask;
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  try{const [root,home,...rest]=process.argv.slice(2);assert(root&&home&&rest.length===0,'OWN_LAUNCH_OPTIONS');await launchOwn(root,home);}

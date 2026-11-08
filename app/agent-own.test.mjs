@@ -136,7 +136,7 @@ test('retained proof requires actual signed content read before exposing tools a
 });
 test('first own-account setup and restart use only injected login/profile/key inputs and preserve the same budget',async()=>{
  const home=realpathSync(dir()),events=[];try{
-  const account='0'.repeat(24),answers=[account,'100','FREE-SPONSORED','FACTS','ACTIVATE','t-'+account+'-public-synthetic-sentinel'];
+  const account='0'.repeat(24),answers=[account,'100','FACTS','ACTIVATE','t-'+account+'-public-synthetic-sentinel'];
   const ports={exec:(cmd,args)=>{events.push([cmd,...args]);if(cmd==='codex')return {status:0,stdout:args[0]==='login'?'Logged in using ChatGPT':'[]',stderr:''};
    mkdirSync(join(home,'profile'),{mode:0o700});return {status:0};},
    profile:()=>({walletAddress:FIXTURE_WALLET,accountId:'0x'+'1'.repeat(64),delegatePublicKeyHex:'2'.repeat(64),packageId:'0x'+'3'.repeat(64),delegatePrivateKey:'public-synthetic-test-only'}),
@@ -145,6 +145,19 @@ test('first own-account setup and restart use only injected login/profile/key in
   await launchOwn(process.cwd(),home,{ports});assert.deepEqual(readFileSync(join(a.run,'agent-ledger.json')),before);assert.equal(answers.length,0);
   assert.equal(events.filter(x=>Array.isArray(x)&&x.some(y=>String(y).includes('memwal-mcp.js'))).length,1);
   assert(events.filter(x=>x.args).every(x=>x.providerKeyEnvPresent===false));
+ }finally{rmSync(home,{recursive:true,force:true});}
+});
+test('declining the single activation confirmation stops before key input, activation or client start',async()=>{
+ const home=realpathSync(dir()),questions=[],answers=['0'.repeat(24),'100','ALL','NO'];let closed=false,spawned=false;
+ const ask=async(text,secret)=>{questions.push({text,secret:!!secret});return answers.shift();};ask.close=()=>{closed=true;};
+ try{
+  await assert.rejects(launchOwn(process.cwd(),home,{ports:{
+   exec:()=>({status:0,stdout:'Logged in using ChatGPT',stderr:''}),
+   profile:()=>({walletAddress:FIXTURE_WALLET,accountId:'0x'+'1'.repeat(64),delegatePublicKeyHex:'2'.repeat(64),packageId:'0x'+'3'.repeat(64),delegatePrivateKey:'public-synthetic-test-only'}),
+   ask,spawn:()=>{spawned=true;throw Error('MUST_NOT_START');}
+  }}),/OWN_ACTIVATION_DENIED/);
+  assert.equal(answers.length,0);assert(closed);assert(!spawned);assert(questions.every(q=>!q.secret));
+  assert(!existsSync(join(home,'state')));assert(!existsSync(join(home,'tatum.key')));
  }finally{rmSync(home,{recursive:true,force:true});}
 });
 test('slow relayer stops at the unchanged 240-second deadline with consumed uncertainty, rather than extending time',async()=>{

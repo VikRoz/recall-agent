@@ -24,7 +24,7 @@ If you see `start.command: No such file or directory`, Terminal is in the wrong 
 1. Complete official Walrus browser sign-in. The project reuses its official Memory client; you do not paste a delegate private key or wallet seed into chat.
 2. If that setup asks about automatic memory, choose manual saving (`2`). Recall Agent itself saves validated records under your next explicit activation scope.
 3. Enter the **Tatum Account ID**, then the included-credit number. These are separate fields: `99,976` is a credit count, not an Account ID.
-4. Confirm `FREE-SPONSORED` only after checking your Free account and sponsorship. Choose `FACTS` or `ALL`, then `ACTIVATE`.
+4. Choose `FACTS` or `ALL`. After checking your Free account and sponsorship, type `ACTIVATE` once to confirm them and the displayed limits. There is no separate confirmation phrase.
 5. Paste that account's Mainnet API key into the hidden Terminal field. Hidden input shows no characters. Press Enter once.
 
 Wait for the Codex composer. Chat prompts belong there, not at a shell prompt ending in `%` or `$`. No initial user task is sent by the launcher.
