@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-08",
+  "synthetic": true,
+  "source": "52436d2",
+  "independentConfigOnlyAddsPreviouslyDocumentedRpcUrl": true,
+  "code": "AGENT_CONFIG_SCOPE",
+  "failure": {
+    "category": "response",
+    "contextHash": "538634db6239f396f6cf227ca9ac3a3b7c77c871942f22a015df8c5106667b4e",
+    "faultCode": "AGENT_CONFIG_SCOPE",
+    "httpStatus": 200,
+    "manifestHash": "fb76879c67e11f7aee1ffecc6a714f3ef258a5be96ebeb84c97dd56234baa711",
+    "method": "GET",
+    "phase": "startup",
+    "recordedAt": "2026-11-08T14:41:30.984Z",
+    "requestCount": 3,
+    "route": "config",
+    "schema": 1
+  },
+  "counters": {
+    "tatum": 0,
+    "writes": 0,
+    "reads": 0,
+    "requests": 3
+  },
+  "realProviderCalls": 0,
+  "realProfileReads": 0,
+  "modelCalls": 0,
+  "additionalSpendUSD": 0
+}

@@ -1,0 +1,11 @@
+{
+  "intents": [],
+  "jobs": {},
+  "manifestHash": "9f8c22db235c0a1b9bff32789e5c70107db992edc588da90651dca53bd0e5872",
+  "reads": 0,
+  "requests": 3,
+  "schema": 1,
+  "stopped": "AGENT_PROVIDER_OR_POLICY_ERROR",
+  "tatumBatches": 0,
+  "writes": 0
+}

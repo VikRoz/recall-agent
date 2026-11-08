@@ -1,0 +1,13 @@
+{
+  "category": "response",
+  "contextHash": "e7dd6ccee34db9e4d63a38053112f7f63b90ab909db826ccdc7f9e1cf6650bc3",
+  "faultCode": "AGENT_CONFIG_SCOPE",
+  "httpStatus": 200,
+  "manifestHash": "9f8c22db235c0a1b9bff32789e5c70107db992edc588da90651dca53bd0e5872",
+  "method": "GET",
+  "phase": "startup",
+  "recordedAt": "2026-11-08T14:38:59.557Z",
+  "requestCount": 3,
+  "route": "config",
+  "schema": 1
+}

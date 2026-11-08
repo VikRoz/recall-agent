@@ -12,6 +12,8 @@ import {FIXTURE_WALLET,FIXTURE_OTHER} from './activity-fixtures.ts';
 import {privateRead,runHash} from './agent-run.mjs';
 import {OWN_LIMITS} from './agent-own-contract.mjs';
 import {PILOT_LIMITS} from './activity-live.ts';
+import {agentWalrusFetch,WALRUS_RELAY} from './agent-walrus-guard.mjs';
+const observedMainnetConfig=JSON.parse(readFileSync(new URL('../evidence/user-led-startup-2026-11-08/public-config.json',import.meta.url))).config;
 import {transactionFact,NORMALIZER_SHA256} from './agent-facts.ts';
 import {normalizeTransaction} from './activity.ts';
 import {fixtureTransaction} from './activity-fixtures.ts';
@@ -139,9 +141,14 @@ test('first own-account setup and restart use only injected login/profile/key in
   const account='0'.repeat(24),answers=[account,'100','FACTS','ACTIVATE','t-'+account+'-public-synthetic-sentinel'];
   const ports={exec:(cmd,args)=>{events.push([cmd,...args]);if(cmd==='codex')return {status:0,stdout:args[0]==='login'?'Logged in using ChatGPT':'[]',stderr:''};
    mkdirSync(join(home,'profile'),{mode:0o700});return {status:0};},
-   profile:()=>({walletAddress:FIXTURE_WALLET,accountId:'0x'+'1'.repeat(64),delegatePublicKeyHex:'2'.repeat(64),packageId:'0x'+'3'.repeat(64),delegatePrivateKey:'public-synthetic-test-only'}),
+   profile:()=>({walletAddress:FIXTURE_WALLET,accountId:'0x'+'1'.repeat(64),delegatePublicKeyHex:'2'.repeat(64),packageId:observedMainnetConfig.packageId,delegatePrivateKey:'public-synthetic-test-only'}),
    ask:async()=>answers.shift(),spawn:(_cmd,args,options)=>{events.push({args,providerKeyEnvPresent:Object.keys(options.env).some(k=>/API_KEY|MEMWAL|TATUM|DELEGATE/.test(k))});return new EventEmitter();}};
   await launchOwn(process.cwd(),home,{ports});const a=ownAuthorization(join(home,'state')),before=readFileSync(join(a.run,'agent-ledger.json'));
+  assert.deepEqual(a.context.config,observedMainnetConfig);
+  const gate={manifest:a.manifest,hash:runHash(a.manifest),directory:a.run,admit(){},request(){},stop(){},state:()=>({requests:1})};
+  const accepted=await agentWalrusFetch(gate,async()=>Response.json(observedMainnetConfig))(WALRUS_RELAY+'/config');assert.equal(accepted.status,200);
+  for(const mutation of [{network:'testnet'},{packageId:'0x'+'f'.repeat(64)},{suiTransport:'json-rpc'},{suiGrpcUrl:'https://wrong.invalid'},{suiRpcUrl:'https://wrong.invalid'},{suiRpcUrl:undefined}])
+   await assert.rejects(agentWalrusFetch({...gate},async()=>Response.json({...observedMainnetConfig,...mutation}))(WALRUS_RELAY+'/config'),/AGENT_CONFIG_SCOPE/);
   await launchOwn(process.cwd(),home,{ports});assert.deepEqual(readFileSync(join(a.run,'agent-ledger.json')),before);assert.equal(answers.length,0);
   assert.equal(events.filter(x=>Array.isArray(x)&&x.some(y=>String(y).includes('memwal-mcp.js'))).length,1);
   assert(events.filter(x=>x.args).every(x=>x.providerKeyEnvPresent===false));

@@ -35,7 +35,7 @@ export async function launchOwn(root,home,{ports={}}={}){
   if(!existsSync(join(home,'profile','credentials.json'))){const c=loginCommand(process.execPath,root,home);const result=exec(c.command,c.args,{stdio:'inherit',env:c.env,timeout:180000});assert(result.status===0,'WALRUS_LOGIN_REQUIRED');}
   const p=(ports.profile??profile)(home);let identity;
   try{identity={...profileIdentity(p),workspace:'agent-'+randomUUID()};}finally{p.delegatePrivateKey='';}
-  const config={network:'mainnet',packageId:identity.packageId,suiTransport:'grpc',suiGrpcUrl:'https://mysten-rpc.mainnet.sui.io'};
+  const config={network:'mainnet',packageId:identity.packageId,suiTransport:'grpc',suiGrpcUrl:'https://mysten-rpc.mainnet.sui.io',suiRpcUrl:'https://rpc-mainnet.suiscan.xyz'};
   const ask=ports.ask??interactiveQuestions();
   try{
    console.log('Activation limits: Tatum8 attempts /16 included credits, Walrus7 sponsored writes /10 content recalls /192 service requests, 240 seconds. No paid fallback.');
