@@ -1,0 +1,1826 @@
+{
+  "schema": 1,
+  "date": "2026-11-07T19:31:49.954Z",
+  "status": "ACTUAL_COMPLETION_HARNESS_STOPPED_SECOND_NATIVE_DEADLINE",
+  "sourceCommit": "e72bdeef88d583edeccfb6c3f59b73cfaeac57af",
+  "sourceHashes": {
+    "app/activity-codex.mjs": "1c717b3aaa118205814a973e443ccd3bac076e3b8b2c7f0a18f91af83f61b122",
+    "app/activity-diagnostic.mjs": "fa193cc83cb88baf7f1377325cfe87ae95841dd4c00cc292fc457e09ef93f48b",
+    "app/activity-fixture-store.ts": "23e31359678d7ad57d8feaf134e5dbfdbe3b339be271de7b787d66fb77bc483f",
+    "app/activity-fixtures.ts": "475eeca68f24e6b0a61f4fdcdfada7618114ed1befe041edd80e96aa9489f004",
+    "app/activity-input.ts": "7df01f5096511644b57728f12fdfca77100533c92d1b4742f480eccad488c21c",
+    "app/activity-key.ts": "2d2fbbb0c6e59b5e6f4ac56f0902cea7c12963fd410a25091d09b19e6b0123ff",
+    "app/activity-live.ts": "7d3418714a6f0a61d7fdef708dc9375e387d10125133631928c6f08d4db98f4a",
+    "app/activity-mcp.mjs": "9569e10394f033ee359c5f2babbfcb080b9fa8ae1da350f3f9566026bb4d8f00",
+    "app/activity-memory.ts": "c9efe04694900cf47bd8f35872e44fdf46e8da5b1c6b40ca1bdb43c4d0612e68",
+    "app/activity-pilot-fixture.ts": "9869f6e6e3bd5d250fbdc687b009625af61c1d6fe3bee6dbd242ab277aac0343",
+    "app/activity-pilot.ts": "ad52024d03c9463f9cfc43ac4f86ce6989393d5725aff59b04d36a8376e85954",
+    "app/activity-resume.ts": "d8221cba1b65e8df2b398cbbe86931db464082e33e18a2c191c74620efb1fd78",
+    "app/activity-session.ts": "b3e54551ef685e9700372bded306b0e4a6c08d64e97481ec12f7938859e048db",
+    "app/activity-setup.ts": "0a480d4bf584ec413ac873a450e8b664d9c2ef0fb17bfd27e440ec1b36501aba",
+    "app/activity.ts": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+    "app/agent-activity-index.ts": "60faf0e9b1f2f97801295e584b8503aaf8b37f4e2c39e613c827d2e95eb0a05e",
+    "app/agent-comparison-assess.mjs": "8d349d01fb97d3b01adba38f654fa5ce694958f1926ec0d256a7a99589d1441a",
+    "app/agent-comparison-prepare.mjs": "af9dea6cb545d2147e0e8a58241b82af92f3f8a9c03d18e2e285a9db6bf68487",
+    "app/agent-continuation-contract.mjs": "17bf66b690bf4f22c29211da87d439129279af866d1c97ace8a4b8dee05b0df4",
+    "app/agent-continuation-fixture.mjs": "8a7974fed5681257eabedcbad1ab93ef1984a29bdeeef44ff79366f1f52b235c",
+    "app/agent-continuation-prepare.mjs": "0d28262e5758a5354c8f75f03aadf118c5b868f70f680f142a4291b50a0aeb4d",
+    "app/agent-diagnostic.mjs": "53dc9be41f74834f744f3b035aab0b5471457ab799a7e8bf920e6cbf2659ed36",
+    "app/agent-evaluation-fixture.mjs": "dbe64622438bbffe03de12c4da50089897503fc117cc476be9ba4f0ad9e42c30",
+    "app/agent-experience.ts": "3f4ade02d0745a0901fd25fdef72620536055cf4ee41ac1285ebd4853a0b34b0",
+    "app/agent-export.mjs": "e738db140ef8e63db3b12fb0684110e46372e87be07f75616c05fb1e8cca3990",
+    "app/agent-facts.ts": "bd65e63aab3944b5e0aa3b97b7fdd9203e333e163059fc01aaa83e069cafe1f8",
+    "app/agent-launch.mjs": "1b93084f36ff2d1d56ceba185d88db18266957e012493001bc31c6e1b4ed9b06",
+    "app/agent-live.mjs": "4696b673075f4fc5ad79bb8ea0f65dec2a6cd1065534cfad5872522d9d4eae91",
+    "app/agent-managed-entry.mjs": "3ccf3442c6d6579e8c33a2e21e1246d9f285b39bd46b61b51b4f587df70078d0",
+    "app/agent-managed-fixture.mjs": "8ab970fe475b7fba4d82bdf2d14c19f13f62d9c462dd51883d2cc29eff757f6d",
+    "app/agent-managed-prepare.mjs": "dcc373430ba55e058f96b027cfdcdcf6b4c37b17caf6032ed5f902b9b67221b7",
+    "app/agent-managed.mjs": "68c0efbadfda4d71f0434c257852ce27cd584d17939d7b1d674d8b85d33cce61",
+    "app/agent-mcp.mjs": "82065ddb40ff698a5ed79c2c596f42e2f91c87823984e664a3df0842dcb20430",
+    "app/agent-metadata-diagnostic.mjs": "c17395b25b4388c727d9a2e2225e6a1c8447376faa939273cdf9925883f3673e",
+    "app/agent-metadata-fixture.mjs": "f7552e15551002323dd896189fee9d5a36b8339a5c5c818853759fc482dbd8a0",
+    "app/agent-metadata-prepare.mjs": "c557f4cef3c2e68bd745fdf9d27b93a6dc85dbccf94274643ef3b7feff2443e0",
+    "app/agent-model-probe.mjs": "66ca8ba5e519cb092fa437e1c2c8a0c7d8d2fbb97f08c246323347e04d4b26a2",
+    "app/agent-ordinary-fixture.mjs": "275870a18500904e9b6de9d625fb61717d8fa9cfd68d94bc9265563929067706",
+    "app/agent-ordinary.mjs": "c0c6b5cbae9eae34a112ebb22c86b6522f31659116d611b4f4994766cc6ceff5",
+    "app/agent-own-contract.mjs": "d5732ec9640a7cc2a018d35b9484baa1394f0406bc8ba1505098fb8d759cc8f6",
+    "app/agent-own-entry.mjs": "1b900b7683ead9f638c1d392e264dcc74bb91409c316526e2e73f826cfda27bc",
+    "app/agent-own-exec.mjs": "b21d525526c6a8ebfb663c38fe8bcee70e3c69ade36da104860164d1402a59f0",
+    "app/agent-own-fixture.mjs": "8725666aa87f83b104fe9a1968cc2ede973e279249d7da047935572de9df06c1",
+    "app/agent-own-launch.mjs": "3f9006526b036efb26013414ed1993bc78d500fbf21cce7a9579cc1d62009119",
+    "app/agent-own-lineage.mjs": "67ae8957477a4e5c6813aaefede9f759c73ca48e61c6b114eec98e002791e693",
+    "app/agent-own-native-fixture.mjs": "68f17fa6569f27f754bd6541228f0f2ee4c1814a59755fdaad6b7bd9b575999f",
+    "app/agent-own-native.mjs": "0fb9777639412782b0dc0b20f375aabd1d6c2fa2cb61adf88a77cc940c3f9c2b",
+    "app/agent-own-rehearsal.mjs": "ca5ed7440fb9cb9390a692846012fff833f210118449f2350a0c6e9c7c4762f5",
+    "app/agent-own.mjs": "a3f4f7bc7d51b85a89a84215ab4f53f2e1edc38cd5b886db3cdc18c6e2dab9a9",
+    "app/agent-probe-approval.mjs": "ac582a556bf54b1ae483e2b29f29080e773c647376cf86d4040da998bfc9f3ac",
+    "app/agent-probe-model.mjs": "379307321b1b264764084718c0a9ac756831a5123863e862d3831d56e49a80bb",
+    "app/agent-probe-results.mjs": "7b41faf7e8c1fc7ae198ae16e54098b913a94067b264fb0e1c11e398b6bf6f22",
+    "app/agent-probe-workspace.mjs": "24737f695d37539c1fc1adc8121b5ee5844826e071be9903b319c37069f778ed",
+    "app/agent-provider-fixture.mjs": "2b83cff66845f8380185f48b1c4f7d964a8518713cb2bbc0aae7d91500b9a7ba",
+    "app/agent-provider-live.mjs": "12d94c3d1b6c948736ffd5e1d35ea54b1f209c718df626455951cc559793d1c8",
+    "app/agent-provider.mjs": "8dab183d9fbe7343dd615e3bd162bab58087819b386413ad492c011099b1adf7",
+    "app/agent-run.mjs": "36f2c87c5a762e6b2b6f739bd927b1e8417867fa1c18917141de930b3211f144",
+    "app/agent-session.ts": "ea78a9b7a195207dea2bd2c38ffc1079c6baf86d7edae27088e95ebf957988b5",
+    "app/agent-submission-proof.mjs": "941beb2040d21b10aaf8c8c88219ab728c0766518ec8e7b1313f8e22f6d2b666",
+    "app/agent-tool-observer.mjs": "4256a1a54070f8879559def78d12c4d0ee9bec1026b0b8313e0d39110f41f8a0",
+    "app/agent-walrus-guard.mjs": "e3be0097736a06cc4ae8ef6dd9a392653439ce02a0c45b87da54014ab4dc796b",
+    "app/claude-config.mjs": "4e3ffb164f066e1efc92dd3edba7db1eaeb6318d0662f7142ad42204a2324218",
+    "app/package-lock.json": "f9a472644f970382cdccdafd9b7beb6400015f61280af26de08d12724cbe95ea",
+    "app/package.json": "79d9620866c8016bf7e76514fe019e76cb94fee7f8e9c5a6f58e954f2dae4be7",
+    "app/tatum.ts": "f30ebb136c21ae4f73c7ab2d2b7ad4c3a39365ee1f3896505ce13af1e821264f",
+    "app/walrus.mjs": "5c34060518bdd621aca0214fbac190d48c4acc480f22396e1561b1d1e47fe5bf",
+    "mcp/package-lock.json": "7e5e8a24a29472766d5f7996da34a68b423b97bf76fe14b4093713cd974c69d7",
+    "mcp/package.json": "cb4492b1b5ada694f5a4525ef7ace188c89b903df1633a39edcc8cf4d4b8df52",
+    "src/domain.ts": "dc0ee666952d544e16aa56223d4db20d6cd185884ee9685e95e5e65892758e9c",
+    "src/memory.ts": "7a259dfdbd216ee102a8e6b330885dfb948ca929200569b21d742f3bad844b07",
+    "start.command": "0f013d02c5c4cd9783adcfb460441079bfa17a077f34fd3cef26df51115e075a"
+  },
+  "contextHash": "43f78d9203c2637733032705389ae76bd08fa219803468ab2a9c2c3e35d592c0",
+  "planHash": "27db3bafd882752b028a25c795accd7f859d1f44b19cc88049c10abe42b054c0",
+  "writePolicy": {
+    "digests": [
+      "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+      "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+      "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw"
+    ],
+    "kind": "exact-missing-transaction-facts",
+    "maxNewWrites": 3,
+    "schema": 1,
+    "submissionProofs": true
+  },
+  "writePolicyHash": "f715ba589dd966379d0de2c3107b9020345eea36de1cf33dea4b72a2334b8d93",
+  "limits": {
+    "maxUSD": 0,
+    "nativeTurns": 2,
+    "pollsPerJob": 8,
+    "reads": 10,
+    "requests": 192,
+    "secondsPerTurn": 120,
+    "tatumBatches": 8,
+    "toolsPerTurn": 12,
+    "totalSeconds": 240,
+    "writes": 3
+  },
+  "tasks": [
+    {
+      "id": "seven-selected-cases",
+      "text": "Review these seven Sui Mainnet transactions as research case notes. For each, report status, gas payer, net gas and exact balance changes in base units, plus any uncertainty. Check whether monitored wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23 is involved; do not assume it appears in every case. Use current chain data and distinguish any historical observation. Transactions: 2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3, 9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj, BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW, 399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj, 3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7, CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL, 6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw."
+    },
+    {
+      "id": "fresh-session-comparison",
+      "text": "Revisit Sui Mainnet transaction 2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3 for monitored wallet 0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23. Retrieve its historical observation, show the memory blob ID and provenance, then compare it with fresh chain data. Explain whether the facts agree, keeping historical and current evidence separate. Export this selected-case report as the original CSV artifact and give its path and SHA-256. Do not invent a complete wallet history."
+    }
+  ],
+  "manifest": {
+    "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+    "admission": {
+      "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+      "checkedAt": "2026-11-07T19:27:49.884Z",
+      "contextHash": "6d3da44a1526f2fec27b3548a322f7533cf161b947085c8cb598340d9f896313",
+      "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+      "deploymentHash": "9e3b1f8e689c6bfd0c8f68ce12a634a1c128179a6ac5340a64c16e4bd37b8af7",
+      "kind": "own-account-explicit",
+      "maxUSD": 0,
+      "policyHash": "68d5765e9b08a1284d94d6322daf4bc61e08cf00b5e90f3a6adc385aef9b3168",
+      "profileHash": "c4e67838986e3bcb587e5554f4077cdf58f567a60513664649a0ddb2c156f8ad",
+      "workspaceHash": "37a21504aa5d025e93658a3a60affc6a74b26642369dbd173f30f6017c75e564"
+    },
+    "datasetId": "6fa18060e81dbbceea52d2b0415f38e8a1857029ba9a03adb1b3ccc42c2cc49f",
+    "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+    "expiresAt": "2026-11-07T19:31:49.884Z",
+    "maxUSD": 0,
+    "mode": "live-own-account-selected",
+    "namespaces": {
+      "experience": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+      "rules": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-rules"
+    },
+    "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+    "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+    "runId": "127ebaac-6a7b-45d5-9e19-6e8857857a41",
+    "schema": 1,
+    "source": "tatum",
+    "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+  },
+  "ledger": {
+    "intents": [
+      {
+        "key": "UElqKmTDFFU7_0vC7oPuXRyogByGiQqetIx-xKqEeC4",
+        "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+        "sha256": "50496a2a64c314553bff4bc2ee83ee5d1ca8801c86890a9eb48c7ec4aa84782e",
+        "state": "done"
+      },
+      {
+        "key": "rkTFL6l9NuGn9gGAaxSrABq-DXc9KdTXcslKjsbs3QU",
+        "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+        "sha256": "ae44c52fa97d36e1a7f601806b14ab001abe0d773d29d4d772c94a8ec6ecdd05",
+        "state": "done"
+      },
+      {
+        "key": "U6kV0lDyt4BiWzx2gPkfRlcr3J67p2TLDygHttxrDk0",
+        "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+        "sha256": "53a915d250f2b780625b3c7680f91f46572bdc9ebba764cb0f2807b6dc6b0e4d",
+        "state": "done"
+      }
+    ],
+    "jobs": {
+      "a776500d-e380-4b13-b752-1a74e8aa65b7": {
+        "key": "rkTFL6l9NuGn9gGAaxSrABq-DXc9KdTXcslKjsbs3QU",
+        "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+        "polls": 3
+      },
+      "d82ea83e-936a-4b15-9015-4616535c1efc": {
+        "key": "U6kV0lDyt4BiWzx2gPkfRlcr3J67p2TLDygHttxrDk0",
+        "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+        "polls": 3
+      },
+      "f0b54bcc-345c-4ef8-b1d8-b40d02585b3a": {
+        "key": "UElqKmTDFFU7_0vC7oPuXRyogByGiQqetIx-xKqEeC4",
+        "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+        "polls": 4
+      }
+    },
+    "manifestHash": "83034e6aeea6edb614225f0a3e157379cebeeacdc29174a8a0be5c4ec7077ef8",
+    "reads": 6,
+    "requests": 85,
+    "schema": 1,
+    "stopped": "REHEARSAL_NATIVE_STOPPED",
+    "tatumBatches": 3,
+    "writes": 3
+  },
+  "nativeBudget": {
+    "contextHash": "43f78d9203c2637733032705389ae76bd08fa219803468ab2a9c2c3e35d592c0",
+    "schema": 1,
+    "stopped": "NATIVE_STOPPED",
+    "turns": [
+      {
+        "index": 0,
+        "reservedAt": "2026-11-07T19:29:53.710Z",
+        "status": "completed",
+        "taskHash": "da679c8965e2e6e4d0f34c13e454c786b9c8029760f9ba45f930c52deccd3f74"
+      },
+      {
+        "index": 1,
+        "reservedAt": "2026-11-07T19:31:11.481Z",
+        "status": "stopped",
+        "taskHash": "ddd3afd707fb14ae592617b04e27632e66af38ed0129a539e2f881f76c59a0c5"
+      }
+    ]
+  },
+  "nativeSummary": [
+    {
+      "acceptance": {
+        "selectedCases": 7
+      },
+      "approvals": 2,
+      "initialized": true,
+      "quota": {
+        "accountType": "chatgpt",
+        "balance": "0",
+        "hasCredits": false,
+        "usedPercent": 30
+      },
+      "schema": 1,
+      "status": "COMPLETED",
+      "task": "seven-selected-cases",
+      "thread": "01a1b77d-26a1-7c30-89ff-1550e010f882",
+      "tools": 2,
+      "turnStarted": true
+    },
+    {
+      "approvals": 2,
+      "initialized": true,
+      "quota": {
+        "accountType": "chatgpt",
+        "balance": "0",
+        "hasCredits": false,
+        "usedPercent": 30
+      },
+      "reason": "NATIVE_DEADLINE",
+      "schema": 1,
+      "status": "STOPPED",
+      "task": "fresh-session-comparison",
+      "thread": "01a1b77e-554e-73a3-945f-d635625bfe7e",
+      "tools": 2,
+      "turnStarted": true
+    }
+  ],
+  "parent": {
+    "additionalSpendUSD": 0,
+    "childExitCode": 1,
+    "cleanup": {
+      "absent": true,
+      "deleted": false
+    },
+    "contextHash": "43f78d9203c2637733032705389ae76bd08fa219803468ab2a9c2c3e35d592c0",
+    "finishedAt": "2026-11-07T19:31:49.954Z",
+    "keyAbsent": true,
+    "retries": 0,
+    "schema": 1,
+    "signal": null,
+    "status": "CHILD_STOPPED"
+  },
+  "childCleanup": {
+    "absent": true,
+    "deleted": true
+  },
+  "preparation": {
+    "candidateContentRecords": 10,
+    "counters": {
+      "reads": 4,
+      "requests": 39,
+      "tatumBatches": 1,
+      "writes": 3
+    },
+    "deadline": "2026-11-07T19:31:49.884Z",
+    "explicitOperatorAction": true,
+    "finishedAt": "2026-11-07T19:29:53.683Z",
+    "freshProviderRead": true,
+    "kind": "explicit-operator-action-through-public-mcp",
+    "modelCalls": 0,
+    "modelInitiatedSaving": false,
+    "newWrites": 3,
+    "observations": [
+      {
+        "blobId": "Id0e03ptPWHC_LT9glyQc0MnjY_wkRCYjbwxU_nvxXw",
+        "comparison": "same",
+        "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+        "id": "UElqKmTDFFU7_0vC7oPuXRyogByGiQqetIx-xKqEeC4",
+        "sha256": "50496a2a64c314553bff4bc2ee83ee5d1ca8801c86890a9eb48c7ec4aa84782e"
+      },
+      {
+        "blobId": "622eK-d8hcfdYTk6rtjFClRmYjF5zdk7juNNcV_X1lM",
+        "comparison": "same",
+        "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+        "id": "U6kV0lDyt4BiWzx2gPkfRlcr3J67p2TLDygHttxrDk0",
+        "sha256": "53a915d250f2b780625b3c7680f91f46572bdc9ebba764cb0f2807b6dc6b0e4d"
+      },
+      {
+        "blobId": "qNvF31QX1tU3e_Llfs7Vsbb7pUFK6TAbabbyOLOssuU",
+        "comparison": "same",
+        "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+        "id": "FgJey_NG37AyXlLz7jt--zuwmccCAS_SN1lHdCf4RhU",
+        "sha256": "16025ecbf346dfb0325e52f3ee3b7efb3bb099c702012fd23759477427f84615"
+      },
+      {
+        "blobId": "QZ5x7cCekw1Kbmd67I3G3VzrJIz9sQJUfQ9ikozbWX8",
+        "comparison": "same",
+        "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+        "id": "nNHme2A9dorkoBjQQv1w3cysD2npVOYiUGK8keSGOG4",
+        "sha256": "9cd1e67b603d768ae4a018d042fd70ddccac0f69e954e6225062bc91e486386e"
+      },
+      {
+        "blobId": "kJ0LDNAJhwCrnSpUbE-qXq2CClDplvH1FfR8OL6cDk0",
+        "comparison": "same",
+        "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+        "id": "YOu3RtmiwtYtSVug9KLsA114cduJ4flWcqhrnDrZ3Ec",
+        "sha256": "60ebb746d9a2c2d62d495ba0f4a2ec035d7871db89e1f95672a86b9c3ad9dc47"
+      },
+      {
+        "blobId": "Ypipl3awrZGGaSKpVNYdCLmYJw063wHWYS6divNLd7o",
+        "comparison": "same",
+        "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+        "id": "rkTFL6l9NuGn9gGAaxSrABq-DXc9KdTXcslKjsbs3QU",
+        "sha256": "ae44c52fa97d36e1a7f601806b14ab001abe0d773d29d4d772c94a8ec6ecdd05"
+      },
+      {
+        "blobId": "-hI4vLuqlLZvvSiAhgCOTwigSWJUypnYZTZy6shRVmk",
+        "comparison": "same",
+        "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+        "id": "h8UIRr6qw6cSCFCa4D5WW4bohHHELt4zvM3j0OmtRmg",
+        "sha256": "87c50846beaac3a71208509ae03e565b86e88471c42ede33bccde3d0e9ad4668"
+      }
+    ],
+    "processPid": 75487,
+    "schema": 1,
+    "selectedCases": 7
+  },
+  "preparationStarted": {
+    "contextHash": "43f78d9203c2637733032705389ae76bd08fa219803468ab2a9c2c3e35d592c0",
+    "deadline": "2026-11-07T19:31:49.884Z",
+    "kind": "explicit-operator-action-through-public-mcp",
+    "modelCalls": 0,
+    "schema": 1,
+    "startedAt": "2026-11-07T19:28:30.521Z"
+  },
+  "retainedRecords": [
+    {
+      "blobId": "vdJstaNxXqFSlPh7QI7h_CCuNyoEsCdJ_sv4Rq-deDM",
+      "id": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+      "record": {
+        "attempted": 100,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "sdk-input-validation",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": null,
+        "tool": "find_wallet_activity",
+        "verdict": "fail",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "fMAmwaLGrX2V84Uy9l3rgew5SUxSsUxHsgr-jdk_IFw",
+      "id": "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA",
+      "record": {
+        "attempted": 10,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "successful-tool-call",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+        "tool": "find_wallet_activity",
+        "verdict": "resolved",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "YJ1F4vBD8iCTpPO7x1BukyKeFv0TlYfsXb7at2coK94",
+      "id": "u_sZWbg61sd8xJc0KYtrIRnGCQYJ_8Z14T2oKboK5IM",
+      "record": {
+        "claimed": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "network": "mainnet",
+        "observed": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+        "operation": "gas-payer",
+        "schema": "recall-experience/1",
+        "source": "tatum",
+        "sponsored": true,
+        "supersedes": null,
+        "verdict": "fail",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "kJ0LDNAJhwCrnSpUbE-qXq2CClDplvH1FfR8OL6cDk0",
+      "id": "YOu3RtmiwtYtSVug9KLsA114cduJ4flWcqhrnDrZ3Ec",
+      "record": {
+        "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T18:45:50.357Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "8c7db73dc890f0de5c302a6a10401b1b5fa436ee01b61c7b8975b4e6bede8aa0"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "341884811",
+          "commands": [
+            "makeMoveVector",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall"
+          ],
+          "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "104194",
+            "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "rebate": "41932606",
+            "storage": "41936800"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+              "amount": "-104194",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-11-05T10:34:12.732Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "QZ5x7cCekw1Kbmd67I3G3VzrJIz9sQJUfQ9ikozbWX8",
+      "id": "nNHme2A9dorkoBjQQv1w3cysD2npVOYiUGK8keSGOG4",
+      "record": {
+        "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T18:45:50.358Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "9a8cfefff881088c13cb9eca995b89107f77cd3aa09868ec6244a7815fe601ca"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "341884811",
+          "commands": [
+            "makeMoveVector",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall"
+          ],
+          "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+          "gas": {
+            "computation": "101000",
+            "netCharge": "102970",
+            "payer": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+            "rebate": "19697230",
+            "storage": "19699200"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+              "amount": "-102970",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-11-05T10:34:12.732Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "-hI4vLuqlLZvvSiAhgCOTwigSWJUypnYZTZy6shRVmk",
+      "id": "h8UIRr6qw6cSCFCa4D5WW4bohHHELt4zvM3j0OmtRmg",
+      "record": {
+        "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T18:45:50.358Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "ecc7a044c617714c904822bf557ed42b546200a97a93baaf29a475f6190710eb"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "281795481",
+          "commands": [
+            "moveCall",
+            "moveCall",
+            "transferObjects"
+          ],
+          "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "6122620",
+            "payer": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+            "rebate": "2595780",
+            "storage": "8618400"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+              "amount": "-6122620",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-06-01T07:10:34.541Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "qNvF31QX1tU3e_Llfs7Vsbb7pUFK6TAbabbyOLOssuU",
+      "id": "FgJey_NG37AyXlLz7jt--zuwmccCAS_SN1lHdCf4RhU",
+      "record": {
+        "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T18:45:50.358Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "f0af6566b4ca47d6fdc5e50b6b4b76932f530b48650f9139680f4a73e44635d6"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "327964518",
+          "commands": [
+            "moveCall"
+          ],
+          "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "7201288",
+            "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "rebate": "7809912",
+            "storage": "14911200"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+              "amount": "-7201288",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-09-28T17:01:01.716Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    }
+  ],
+  "retainedReceipts": {
+    "FgJey_NG37AyXlLz7jt--zuwmccCAS_SN1lHdCf4RhU": {
+      "blobId": "qNvF31QX1tU3e_Llfs7Vsbb7pUFK6TAbabbyOLOssuU",
+      "jobId": "e55ba820-3411-48fe-8ef6-ede32b34a893",
+      "sha256": "16025ecbf346dfb0325e52f3ee3b7efb3bb099c702012fd23759477427f84615",
+      "state": "done"
+    },
+    "YOu3RtmiwtYtSVug9KLsA114cduJ4flWcqhrnDrZ3Ec": {
+      "blobId": "kJ0LDNAJhwCrnSpUbE-qXq2CClDplvH1FfR8OL6cDk0",
+      "jobId": "c8090bbc-42fe-4a25-8257-fa71a3cb6e13",
+      "sha256": "60ebb746d9a2c2d62d495ba0f4a2ec035d7871db89e1f95672a86b9c3ad9dc47",
+      "state": "done"
+    },
+    "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8": {
+      "blobId": "vdJstaNxXqFSlPh7QI7h_CCuNyoEsCdJ_sv4Rq-deDM",
+      "jobId": "ac4597c3-701f-4eb1-910c-2c9c5fdc974d",
+      "sha256": "76437451578fd43bed1edae540befb4039ec1c34eacccd064fdf9a6a34de812f",
+      "state": "done"
+    },
+    "h8UIRr6qw6cSCFCa4D5WW4bohHHELt4zvM3j0OmtRmg": {
+      "blobId": "-hI4vLuqlLZvvSiAhgCOTwigSWJUypnYZTZy6shRVmk",
+      "jobId": "2686be79-97a4-4644-9187-8a1d1396daeb",
+      "sha256": "87c50846beaac3a71208509ae03e565b86e88471c42ede33bccde3d0e9ad4668",
+      "state": "done"
+    },
+    "nNHme2A9dorkoBjQQv1w3cysD2npVOYiUGK8keSGOG4": {
+      "blobId": "QZ5x7cCekw1Kbmd67I3G3VzrJIz9sQJUfQ9ikozbWX8",
+      "jobId": "2880e93a-5380-4515-9b6c-bf5cadcf48d8",
+      "sha256": "9cd1e67b603d768ae4a018d042fd70ddccac0f69e954e6225062bc91e486386e",
+      "state": "done"
+    },
+    "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA": {
+      "blobId": "fMAmwaLGrX2V84Uy9l3rgew5SUxSsUxHsgr-jdk_IFw",
+      "jobId": "f7cf962c-1443-4404-ab02-57513d5ad796",
+      "sha256": "a9afe7f5bae5dd4ea69299a698a2f6967ec704be1ccd221d70a661347b5a4b00",
+      "state": "done"
+    },
+    "u_sZWbg61sd8xJc0KYtrIRnGCQYJ_8Z14T2oKboK5IM": {
+      "blobId": "YJ1F4vBD8iCTpPO7x1BukyKeFv0TlYfsXb7at2coK94",
+      "jobId": "0b19a64c-66b4-40a8-9c33-afeeebbc8615",
+      "sha256": "bbfb1959b83ad6c77cc49734298b6b2119c6090609ffc675e13da829ba0ae483",
+      "state": "done"
+    }
+  },
+  "newRecords": [
+    {
+      "id": "UElqKmTDFFU7_0vC7oPuXRyogByGiQqetIx-xKqEeC4",
+      "record": {
+        "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T19:28:38.518Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "8599b47fff42362fae30d3f746f220bd2f3a8696145ffe6044b5982c781a5d65"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "330414435",
+          "commands": [
+            "moveCall"
+          ],
+          "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "7014784",
+            "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "rebate": "5146416",
+            "storage": "12061200"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+              "amount": "-7014784",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-10-05T03:52:07.997Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "blobId": "Id0e03ptPWHC_LT9glyQc0MnjY_wkRCYjbwxU_nvxXw"
+    },
+    {
+      "id": "rkTFL6l9NuGn9gGAaxSrABq-DXc9KdTXcslKjsbs3QU",
+      "record": {
+        "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T19:28:38.518Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "30cb5af416df68c06635e96e94f4b8fd04620be6d2676ef85ec9334abad95c11"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "330417625",
+          "commands": [
+            "moveCall"
+          ],
+          "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "7014784",
+            "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "rebate": "5146416",
+            "storage": "12061200"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+              "amount": "-7014784",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-10-05T04:04:18.498Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "blobId": "Ypipl3awrZGGaSKpVNYdCLmYJw063wHWYS6divNLd7o"
+    },
+    {
+      "id": "U6kV0lDyt4BiWzx2gPkfRlcr3J67p2TLDygHttxrDk0",
+      "record": {
+        "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T19:28:38.518Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "2c4ca04ca408b9fff61ecdec68832a6eef9886a14048a345cc5e033ca35bbba8"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "330378809",
+          "commands": [
+            "moveCall"
+          ],
+          "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "-1507780",
+            "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "rebate": "2595780",
+            "storage": "988000"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+              "amount": "1507780",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-10-05T01:33:44.760Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "blobId": "622eK-d8hcfdYTk6rtjFClRmYjF5zdk7juNNcV_X1lM"
+    }
+  ],
+  "newReceipts": {
+    "UElqKmTDFFU7_0vC7oPuXRyogByGiQqetIx-xKqEeC4": {
+      "blobId": "Id0e03ptPWHC_LT9glyQc0MnjY_wkRCYjbwxU_nvxXw",
+      "jobId": "f0b54bcc-345c-4ef8-b1d8-b40d02585b3a",
+      "sha256": "50496a2a64c314553bff4bc2ee83ee5d1ca8801c86890a9eb48c7ec4aa84782e",
+      "state": "done"
+    },
+    "rkTFL6l9NuGn9gGAaxSrABq-DXc9KdTXcslKjsbs3QU": {
+      "blobId": "Ypipl3awrZGGaSKpVNYdCLmYJw063wHWYS6divNLd7o",
+      "jobId": "a776500d-e380-4b13-b752-1a74e8aa65b7",
+      "sha256": "ae44c52fa97d36e1a7f601806b14ab001abe0d773d29d4d772c94a8ec6ecdd05",
+      "state": "done"
+    },
+    "U6kV0lDyt4BiWzx2gPkfRlcr3J67p2TLDygHttxrDk0": {
+      "blobId": "622eK-d8hcfdYTk6rtjFClRmYjF5zdk7juNNcV_X1lM",
+      "jobId": "d82ea83e-936a-4b15-9015-4616535c1efc",
+      "sha256": "53a915d250f2b780625b3c7680f91f46572bdc9ebba764cb0f2807b6dc6b0e4d",
+      "state": "done"
+    }
+  },
+  "allRecords": [
+    {
+      "blobId": "vdJstaNxXqFSlPh7QI7h_CCuNyoEsCdJ_sv4Rq-deDM",
+      "id": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+      "record": {
+        "attempted": 100,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "sdk-input-validation",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": null,
+        "tool": "find_wallet_activity",
+        "verdict": "fail",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "fMAmwaLGrX2V84Uy9l3rgew5SUxSsUxHsgr-jdk_IFw",
+      "id": "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA",
+      "record": {
+        "attempted": 10,
+        "bound": 10,
+        "constraint": "maximum",
+        "evidence": "successful-tool-call",
+        "field": "limit",
+        "schema": "recall-tool-experience/1",
+        "schemaHash": "864eaa09e103c17e843852fe0a0fa475b861d60b7cf66e0cc5c12a2edade0f33",
+        "source": "replay",
+        "supersedes": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+        "tool": "find_wallet_activity",
+        "verdict": "resolved",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "YJ1F4vBD8iCTpPO7x1BukyKeFv0TlYfsXb7at2coK94",
+      "id": "u_sZWbg61sd8xJc0KYtrIRnGCQYJ_8Z14T2oKboK5IM",
+      "record": {
+        "claimed": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "digest": "2GrJYm3r55QKF36pSMBhuZiYTtqXzRaNPbgS7XGsMAKQ",
+        "network": "mainnet",
+        "observed": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+        "operation": "gas-payer",
+        "schema": "recall-experience/1",
+        "source": "tatum",
+        "sponsored": true,
+        "supersedes": null,
+        "verdict": "fail",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "kJ0LDNAJhwCrnSpUbE-qXq2CClDplvH1FfR8OL6cDk0",
+      "id": "YOu3RtmiwtYtSVug9KLsA114cduJ4flWcqhrnDrZ3Ec",
+      "record": {
+        "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T18:45:50.357Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "8c7db73dc890f0de5c302a6a10401b1b5fa436ee01b61c7b8975b4e6bede8aa0"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "341884811",
+          "commands": [
+            "makeMoveVector",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall"
+          ],
+          "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "104194",
+            "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "rebate": "41932606",
+            "storage": "41936800"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+              "amount": "-104194",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-11-05T10:34:12.732Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "QZ5x7cCekw1Kbmd67I3G3VzrJIz9sQJUfQ9ikozbWX8",
+      "id": "nNHme2A9dorkoBjQQv1w3cysD2npVOYiUGK8keSGOG4",
+      "record": {
+        "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T18:45:50.358Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "9a8cfefff881088c13cb9eca995b89107f77cd3aa09868ec6244a7815fe601ca"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "341884811",
+          "commands": [
+            "makeMoveVector",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall",
+            "moveCall"
+          ],
+          "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+          "gas": {
+            "computation": "101000",
+            "netCharge": "102970",
+            "payer": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+            "rebate": "19697230",
+            "storage": "19699200"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+              "amount": "-102970",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0x6be20abe12a8e930fd8da5120fcb392753ef7b57b43401417aedaadeb1106ec4",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-11-05T10:34:12.732Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "-hI4vLuqlLZvvSiAhgCOTwigSWJUypnYZTZy6shRVmk",
+      "id": "h8UIRr6qw6cSCFCa4D5WW4bohHHELt4zvM3j0OmtRmg",
+      "record": {
+        "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T18:45:50.358Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "ecc7a044c617714c904822bf557ed42b546200a97a93baaf29a475f6190710eb"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "281795481",
+          "commands": [
+            "moveCall",
+            "moveCall",
+            "transferObjects"
+          ],
+          "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "6122620",
+            "payer": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+            "rebate": "2595780",
+            "storage": "8618400"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+              "amount": "-6122620",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0x5dc5f85e4ca400f971f0166cba041bb33a37dadb1d2511b9a87b9150c8b2e1ac",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-06-01T07:10:34.541Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "blobId": "qNvF31QX1tU3e_Llfs7Vsbb7pUFK6TAbabbyOLOssuU",
+      "id": "FgJey_NG37AyXlLz7jt--zuwmccCAS_SN1lHdCf4RhU",
+      "record": {
+        "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T18:45:50.358Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "f0af6566b4ca47d6fdc5e50b6b4b76932f530b48650f9139680f4a73e44635d6"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "327964518",
+          "commands": [
+            "moveCall"
+          ],
+          "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "7201288",
+            "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "rebate": "7809912",
+            "storage": "14911200"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+              "amount": "-7201288",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-09-28T17:01:01.716Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      }
+    },
+    {
+      "id": "UElqKmTDFFU7_0vC7oPuXRyogByGiQqetIx-xKqEeC4",
+      "record": {
+        "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T19:28:38.518Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "8599b47fff42362fae30d3f746f220bd2f3a8696145ffe6044b5982c781a5d65"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "330414435",
+          "commands": [
+            "moveCall"
+          ],
+          "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "7014784",
+            "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "rebate": "5146416",
+            "storage": "12061200"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+              "amount": "-7014784",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-10-05T03:52:07.997Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "blobId": "Id0e03ptPWHC_LT9glyQc0MnjY_wkRCYjbwxU_nvxXw"
+    },
+    {
+      "id": "rkTFL6l9NuGn9gGAaxSrABq-DXc9KdTXcslKjsbs3QU",
+      "record": {
+        "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T19:28:38.518Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "30cb5af416df68c06635e96e94f4b8fd04620be6d2676ef85ec9334abad95c11"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "330417625",
+          "commands": [
+            "moveCall"
+          ],
+          "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "7014784",
+            "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "rebate": "5146416",
+            "storage": "12061200"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+              "amount": "-7014784",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-10-05T04:04:18.498Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "blobId": "Ypipl3awrZGGaSKpVNYdCLmYJw063wHWYS6divNLd7o"
+    },
+    {
+      "id": "U6kV0lDyt4BiWzx2gPkfRlcr3J67p2TLDygHttxrDk0",
+      "record": {
+        "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+        "network": "mainnet",
+        "observedAt": "2026-11-07T19:28:38.518Z",
+        "provenance": {
+          "hashScope": "protobuf-json-selected-transaction",
+          "kind": "tatum",
+          "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+          "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+          "rawTransactionSha256": "2c4ca04ca408b9fff61ecdec68832a6eef9886a14048a345cc5e033ca35bbba8"
+        },
+        "schema": "recall-transaction-fact/1",
+        "source": "tatum",
+        "transaction": {
+          "checkpoint": "330378809",
+          "commands": [
+            "moveCall"
+          ],
+          "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+          "gas": {
+            "computation": "100000",
+            "netCharge": "-1507780",
+            "payer": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+            "rebate": "2595780",
+            "storage": "988000"
+          },
+          "interpretation": "unparsed-ptb",
+          "movements": [
+            {
+              "address": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+              "amount": "1507780",
+              "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+            }
+          ],
+          "network": "mainnet",
+          "sender": "0xe8e0bfd3739232a9200d5ec4a52bf8fe871d0dfaaf47049663256e016d85763a",
+          "source": "tatum",
+          "status": "success",
+          "timestamp": "2026-10-05T01:33:44.760Z"
+        },
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "blobId": "622eK-d8hcfdYTk6rtjFClRmYjF5zdk7juNNcV_X1lM"
+    }
+  ],
+  "allReceipts": {
+    "FgJey_NG37AyXlLz7jt--zuwmccCAS_SN1lHdCf4RhU": {
+      "blobId": "qNvF31QX1tU3e_Llfs7Vsbb7pUFK6TAbabbyOLOssuU",
+      "jobId": "e55ba820-3411-48fe-8ef6-ede32b34a893",
+      "sha256": "16025ecbf346dfb0325e52f3ee3b7efb3bb099c702012fd23759477427f84615",
+      "state": "done"
+    },
+    "YOu3RtmiwtYtSVug9KLsA114cduJ4flWcqhrnDrZ3Ec": {
+      "blobId": "kJ0LDNAJhwCrnSpUbE-qXq2CClDplvH1FfR8OL6cDk0",
+      "jobId": "c8090bbc-42fe-4a25-8257-fa71a3cb6e13",
+      "sha256": "60ebb746d9a2c2d62d495ba0f4a2ec035d7871db89e1f95672a86b9c3ad9dc47",
+      "state": "done"
+    },
+    "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8": {
+      "blobId": "vdJstaNxXqFSlPh7QI7h_CCuNyoEsCdJ_sv4Rq-deDM",
+      "jobId": "ac4597c3-701f-4eb1-910c-2c9c5fdc974d",
+      "sha256": "76437451578fd43bed1edae540befb4039ec1c34eacccd064fdf9a6a34de812f",
+      "state": "done"
+    },
+    "h8UIRr6qw6cSCFCa4D5WW4bohHHELt4zvM3j0OmtRmg": {
+      "blobId": "-hI4vLuqlLZvvSiAhgCOTwigSWJUypnYZTZy6shRVmk",
+      "jobId": "2686be79-97a4-4644-9187-8a1d1396daeb",
+      "sha256": "87c50846beaac3a71208509ae03e565b86e88471c42ede33bccde3d0e9ad4668",
+      "state": "done"
+    },
+    "nNHme2A9dorkoBjQQv1w3cysD2npVOYiUGK8keSGOG4": {
+      "blobId": "QZ5x7cCekw1Kbmd67I3G3VzrJIz9sQJUfQ9ikozbWX8",
+      "jobId": "2880e93a-5380-4515-9b6c-bf5cadcf48d8",
+      "sha256": "9cd1e67b603d768ae4a018d042fd70ddccac0f69e954e6225062bc91e486386e",
+      "state": "done"
+    },
+    "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA": {
+      "blobId": "fMAmwaLGrX2V84Uy9l3rgew5SUxSsUxHsgr-jdk_IFw",
+      "jobId": "f7cf962c-1443-4404-ab02-57513d5ad796",
+      "sha256": "a9afe7f5bae5dd4ea69299a698a2f6967ec704be1ccd221d70a661347b5a4b00",
+      "state": "done"
+    },
+    "u_sZWbg61sd8xJc0KYtrIRnGCQYJ_8Z14T2oKboK5IM": {
+      "blobId": "YJ1F4vBD8iCTpPO7x1BukyKeFv0TlYfsXb7at2coK94",
+      "jobId": "0b19a64c-66b4-40a8-9c33-afeeebbc8615",
+      "sha256": "bbfb1959b83ad6c77cc49734298b6b2119c6090609ffc675e13da829ba0ae483",
+      "state": "done"
+    },
+    "UElqKmTDFFU7_0vC7oPuXRyogByGiQqetIx-xKqEeC4": {
+      "blobId": "Id0e03ptPWHC_LT9glyQc0MnjY_wkRCYjbwxU_nvxXw",
+      "jobId": "f0b54bcc-345c-4ef8-b1d8-b40d02585b3a",
+      "sha256": "50496a2a64c314553bff4bc2ee83ee5d1ca8801c86890a9eb48c7ec4aa84782e",
+      "state": "done"
+    },
+    "rkTFL6l9NuGn9gGAaxSrABq-DXc9KdTXcslKjsbs3QU": {
+      "blobId": "Ypipl3awrZGGaSKpVNYdCLmYJw063wHWYS6divNLd7o",
+      "jobId": "a776500d-e380-4b13-b752-1a74e8aa65b7",
+      "sha256": "ae44c52fa97d36e1a7f601806b14ab001abe0d773d29d4d772c94a8ec6ecdd05",
+      "state": "done"
+    },
+    "U6kV0lDyt4BiWzx2gPkfRlcr3J67p2TLDygHttxrDk0": {
+      "blobId": "622eK-d8hcfdYTk6rtjFClRmYjF5zdk7juNNcV_X1lM",
+      "jobId": "d82ea83e-936a-4b15-9015-4616535c1efc",
+      "sha256": "53a915d250f2b780625b3c7680f91f46572bdc9ebba764cb0f2807b6dc6b0e4d",
+      "state": "done"
+    }
+  },
+  "candidateCompletedReceiptCount": 10,
+  "completeContentReadback": {
+    "operatorPreparationCompleted": true,
+    "frozenCompleteSignedReaderEnforced": true,
+    "newIndependentRawRecallDumpArchived": false,
+    "basis": "Successful operator result, signed before/after inventory and canonical receipt hashes enforced by frozen complete-reader; actual native MCP startups also require exact retained corpus before exposing tools."
+  },
+  "closedOriginSnapshots": [
+    {
+      "manifest": {
+        "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+        "admission": {
+          "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+          "checkedAt": "2026-11-06T20:01:30.397Z",
+          "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+          "deploymentHash": "9e3b1f8e689c6bfd0c8f68ce12a634a1c128179a6ac5340a64c16e4bd37b8af7",
+          "failureId": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+          "kind": "managed-production-approved",
+          "maxUSD": 0,
+          "payloadHash": "c1b47341a99cac2c0b57c46ed6803e2393c559c89dc882aa25e076fef8923772",
+          "planHash": "fe498c7b24412bb76d170b099060a5a3b8e469f6445ee80656b8e81f60203033",
+          "profileHash": "c4e67838986e3bcb587e5554f4077cdf58f567a60513664649a0ddb2c156f8ad"
+        },
+        "datasetId": "9d3126ce6084fe4167587b8431face5468dbb4b8d4ec286c60bdc2c0aeadbc7c",
+        "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+        "expiresAt": "2026-11-06T21:01:30.397Z",
+        "maxUSD": 0,
+        "mode": "live-walrus-replay",
+        "namespaces": {
+          "experience": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+          "rules": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-rules"
+        },
+        "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+        "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+        "runId": "1bc3c541-8bc6-48ef-8275-954f9847951b",
+        "schema": 1,
+        "source": "replay",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "ledger": {
+        "intents": [
+          {
+            "key": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "sha256": "76437451578fd43bed1edae540befb4039ec1c34eacccd064fdf9a6a34de812f",
+            "state": "done"
+          },
+          {
+            "key": "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "sha256": "a9afe7f5bae5dd4ea69299a698a2f6967ec704be1ccd221d70a661347b5a4b00",
+            "state": "done"
+          }
+        ],
+        "jobs": {
+          "ac4597c3-701f-4eb1-910c-2c9c5fdc974d": {
+            "key": "dkN0UVeP1DvtHtrlQL77QDnsHDTqzM0GT9-aajTegS8",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "polls": 4
+          },
+          "f7cf962c-1443-4404-ab02-57513d5ad796": {
+            "key": "qa_n9brl3U6mkpmmmKL2ln7HBL4czSIdcKZhNHtaSwA",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "polls": 5
+          }
+        },
+        "manifestHash": "1793a4522e54951a8617cafb8b4c55228f7d9116b2d4c66ada166f434356f6a4",
+        "reads": 2,
+        "requests": 41,
+        "schema": 1,
+        "stopped": null,
+        "tatumBatches": 0,
+        "writes": 2
+      },
+      "native": {
+        "manifestHash": "1793a4522e54951a8617cafb8b4c55228f7d9116b2d4c66ada166f434356f6a4",
+        "maximumUserTurns": 1,
+        "model": "gpt-5.6-luna",
+        "reservedAt": "2026-11-06T20:03:14.603Z",
+        "schema": 1,
+        "taskHash": "b4b1b6e90cd165e00a5fbc412e8571d50d6f73da1faeae1fcae0a330ead4b79e"
+      },
+      "files": {
+        "ledger": {
+          "path": "/private/tmp/recall-agent-live-noCzcP/agent-ledger.json",
+          "sha256": "028edba2583ad82e0a3ddab2cc5d9f31af94fea30fe18424c7a6a32df42b747d"
+        },
+        "manifest": {
+          "path": "/private/tmp/recall-agent-live-noCzcP/agent-run.json",
+          "sha256": "1793a4522e54951a8617cafb8b4c55228f7d9116b2d4c66ada166f434356f6a4"
+        },
+        "native": {
+          "path": "/private/tmp/recall-agent-live-noCzcP/agent-native-turn.json",
+          "sha256": "6a0c1e22f60a4ae213ee52ee4fb2da1b994c9077ac9dd996a3e643142ba7bd77"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+        "admission": {
+          "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+          "checkedAt": "2026-11-07T07:53:23Z",
+          "contextHash": "040e3d26d3fffdcca6aacad9645a8e9142d2c51ff44a7d252a02b51b0be595f9",
+          "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+          "deploymentHash": "9e3b1f8e689c6bfd0c8f68ce12a634a1c128179a6ac5340a64c16e4bd37b8af7",
+          "kind": "managed-production-approved",
+          "maxUSD": 0,
+          "policyHash": "45e03aae0d91fb4e2d29e39d9fde9b287f17d4d7207b7fc1599e715db9d75205",
+          "profileHash": "c4e67838986e3bcb587e5554f4077cdf58f567a60513664649a0ddb2c156f8ad",
+          "workspaceHash": "37a21504aa5d025e93658a3a60affc6a74b26642369dbd173f30f6017c75e564"
+        },
+        "datasetId": "6fa18060e81dbbceea52d2b0415f38e8a1857029ba9a03adb1b3ccc42c2cc49f",
+        "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+        "expiresAt": "2026-11-07T08:55:30.515Z",
+        "maxUSD": 0,
+        "mode": "live-ordinary-selected",
+        "namespaces": {
+          "experience": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+          "rules": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-rules"
+        },
+        "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+        "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+        "runId": "bd159224-b72e-41a9-ae99-569fd2ab0b1f",
+        "schema": 1,
+        "source": "tatum",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "ledger": {
+        "intents": [
+          {
+            "key": "u_sZWbg61sd8xJc0KYtrIRnGCQYJ_8Z14T2oKboK5IM",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "sha256": "bbfb1959b83ad6c77cc49734298b6b2119c6090609ffc675e13da829ba0ae483",
+            "state": "done"
+          }
+        ],
+        "jobs": {
+          "0b19a64c-66b4-40a8-9c33-afeeebbc8615": {
+            "key": "u_sZWbg61sd8xJc0KYtrIRnGCQYJ_8Z14T2oKboK5IM",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "polls": 4
+          }
+        },
+        "manifestHash": "daba214eb5cb4ad82b5b5c000729912e65cfa022527a9b947a569c1ad771e77d",
+        "reads": 1,
+        "requests": 29,
+        "schema": 1,
+        "stopped": "AGENT_PROVIDER_OR_POLICY_ERROR",
+        "tatumBatches": 1,
+        "writes": 1
+      },
+      "native": {
+        "contextHash": "040e3d26d3fffdcca6aacad9645a8e9142d2c51ff44a7d252a02b51b0be595f9",
+        "model": "gpt-5.6-luna",
+        "schema": 1,
+        "stopped": "NATIVE_STOPPED",
+        "turns": [
+          {
+            "index": 0,
+            "reservedAt": "2026-11-07T07:55:34.166Z",
+            "status": "completed",
+            "taskHash": "37979b363243c10ca30b6050f8696deebc809514416f4b43cff4c9f7a8cf2c41"
+          },
+          {
+            "index": 1,
+            "reservedAt": "2026-11-07T07:56:46.458Z",
+            "status": "stopped",
+            "taskHash": "340973662dd42cdac03fa279839c728f2c6911b3c15fee7e20ed76e29e50b0bd"
+          }
+        ]
+      },
+      "files": {
+        "ledger": {
+          "path": "/private/tmp/recall-agent-ordinary-ready-VRtCF3/workspace/runs/bd159224-b72e-41a9-ae99-569fd2ab0b1f/agent-ledger.json",
+          "sha256": "a105293403671157b856bcc6bfeb2b92ad794b4332abd6d2744a1257dbd3b320"
+        },
+        "manifest": {
+          "path": "/private/tmp/recall-agent-ordinary-ready-VRtCF3/workspace/runs/bd159224-b72e-41a9-ae99-569fd2ab0b1f/agent-run.json",
+          "sha256": "daba214eb5cb4ad82b5b5c000729912e65cfa022527a9b947a569c1ad771e77d"
+        },
+        "native": {
+          "path": "/private/tmp/recall-agent-ordinary-ready-VRtCF3/workspace/native-budget.json",
+          "sha256": "5127a1ef73bbc3aee677b112246b69ded022a5d726ebe5559476cebc054deb74"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+        "admission": {
+          "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+          "checkedAt": "2026-11-07T09:35:56Z",
+          "contextHash": "97ccdfc410182257a31809de51211fc024e85b3045931743ea636863216e66e1",
+          "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+          "deploymentHash": "9e3b1f8e689c6bfd0c8f68ce12a634a1c128179a6ac5340a64c16e4bd37b8af7",
+          "kind": "managed-production-approved",
+          "maxUSD": 0,
+          "policyHash": "5222822c1f943690fc07f6a99dec7717731248f9f22a5552bbf9f969bc549967",
+          "profileHash": "c4e67838986e3bcb587e5554f4077cdf58f567a60513664649a0ddb2c156f8ad",
+          "workspaceHash": "37a21504aa5d025e93658a3a60affc6a74b26642369dbd173f30f6017c75e564"
+        },
+        "datasetId": "6fa18060e81dbbceea52d2b0415f38e8a1857029ba9a03adb1b3ccc42c2cc49f",
+        "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+        "expiresAt": "2026-11-07T10:39:20.840Z",
+        "maxUSD": 0,
+        "mode": "live-ordinary-selected",
+        "namespaces": {
+          "experience": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+          "rules": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-rules"
+        },
+        "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+        "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+        "runId": "83769791-279f-4f77-a342-06b2adc9f660",
+        "schema": 1,
+        "source": "tatum",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "ledger": {
+        "intents": [],
+        "jobs": {},
+        "manifestHash": "214efc3c2969e29a58a06ad44bebc9634d6c1a0be7200855dff6bbadb446855c",
+        "reads": 1,
+        "requests": 23,
+        "schema": 1,
+        "stopped": "AGENT_WRITE_STOPPED",
+        "tatumBatches": 1,
+        "writes": 0
+      },
+      "native": {
+        "contextHash": "97ccdfc410182257a31809de51211fc024e85b3045931743ea636863216e66e1",
+        "model": "gpt-5.6-luna",
+        "schema": 1,
+        "stopped": "NATIVE_STOPPED",
+        "turns": [
+          {
+            "index": 0,
+            "reservedAt": "2026-11-07T09:39:24.425Z",
+            "status": "stopped",
+            "taskHash": "340973662dd42cdac03fa279839c728f2c6911b3c15fee7e20ed76e29e50b0bd"
+          }
+        ]
+      },
+      "files": {
+        "ledger": {
+          "path": "/private/tmp/recall-agent-continuation-ready-mGqXhs/workspace/runs/83769791-279f-4f77-a342-06b2adc9f660/agent-ledger.json",
+          "sha256": "90e2f0de37d1616b0a598b9be717d67ed1928d1bc233780a1800e0ec4315bed8"
+        },
+        "manifest": {
+          "path": "/private/tmp/recall-agent-continuation-ready-mGqXhs/workspace/runs/83769791-279f-4f77-a342-06b2adc9f660/agent-run.json",
+          "sha256": "214efc3c2969e29a58a06ad44bebc9634d6c1a0be7200855dff6bbadb446855c"
+        },
+        "native": {
+          "path": "/private/tmp/recall-agent-continuation-ready-mGqXhs/workspace/native-budget.json",
+          "sha256": "f03ae8c585d38cbf83eac1c051030f485bf3f6f21f7288c2b55ea9e9d9630bf8"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+        "admission": {
+          "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+          "checkedAt": "2026-11-07T18:17:13.974Z",
+          "contextHash": "48fc64d13a0a537b086fe7abc63a63bd75903889e939a6d3c9602c2c06c4ef94",
+          "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+          "deploymentHash": "9e3b1f8e689c6bfd0c8f68ce12a634a1c128179a6ac5340a64c16e4bd37b8af7",
+          "kind": "own-account-explicit",
+          "maxUSD": 0,
+          "policyHash": "c54a9655931634461a75ade5f28f8bd43fd5895374e478e44158c6947d94cedb",
+          "profileHash": "c4e67838986e3bcb587e5554f4077cdf58f567a60513664649a0ddb2c156f8ad",
+          "workspaceHash": "37a21504aa5d025e93658a3a60affc6a74b26642369dbd173f30f6017c75e564"
+        },
+        "datasetId": "6fa18060e81dbbceea52d2b0415f38e8a1857029ba9a03adb1b3ccc42c2cc49f",
+        "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+        "expiresAt": "2026-11-07T18:21:13.974Z",
+        "maxUSD": 0,
+        "mode": "live-own-account-selected",
+        "namespaces": {
+          "experience": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+          "rules": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-rules"
+        },
+        "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+        "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+        "runId": "f8889a7f-71e4-48e1-8540-e9f20a1e52a1",
+        "schema": 1,
+        "source": "tatum",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "ledger": {
+        "intents": [],
+        "jobs": {},
+        "manifestHash": "afeab9591c564a3cd7c198e1f2edaf5558aac29710e23248ad5cdc8b19a9288d",
+        "reads": 1,
+        "requests": 13,
+        "schema": 1,
+        "stopped": "ORDINARY_TATUM_STOPPED",
+        "tatumBatches": 1,
+        "writes": 0
+      },
+      "native": {
+        "contextHash": "94c884f2d0da5358a54a131068f6b3c970025260eb36c89b56384a41f94e7f6f",
+        "schema": 1,
+        "stopped": "NATIVE_STOPPED",
+        "turns": [
+          {
+            "index": 0,
+            "reservedAt": "2026-11-07T18:17:56.291Z",
+            "status": "stopped",
+            "taskHash": "670670c13ea24d9c4e2b7701ab88b9941845a7bdf48c0a3f1ca12570233da58d"
+          }
+        ]
+      },
+      "files": {
+        "ledger": {
+          "path": "/private/tmp/recall-own-rehearsal-ready-pRaby9/packet/state/runs/f8889a7f-71e4-48e1-8540-e9f20a1e52a1/agent-ledger.json",
+          "sha256": "d420246352946b49993bd3ca5620cfc81bfa0fa40467fbb671a7712eb96af7b7"
+        },
+        "manifest": {
+          "path": "/private/tmp/recall-own-rehearsal-ready-pRaby9/packet/state/runs/f8889a7f-71e4-48e1-8540-e9f20a1e52a1/agent-run.json",
+          "sha256": "afeab9591c564a3cd7c198e1f2edaf5558aac29710e23248ad5cdc8b19a9288d"
+        },
+        "native": {
+          "path": "/private/tmp/recall-own-rehearsal-ready-pRaby9/packet/native-budget.json",
+          "sha256": "b4ed6ec3f919c87e253be7e171bb949b6bd5cfadd88a612055d649e84d1640da"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+        "admission": {
+          "accountId": "0x91095bbbd2f71cec695bcc53e1e4bb0b2b6426667e2c4ad63c0f84943d48fe85",
+          "checkedAt": "2026-11-07T18:44:43.543Z",
+          "contextHash": "753556da459cb175cab2676570a1f215a92243f7875a2a66612e095297d63a70",
+          "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+          "deploymentHash": "9e3b1f8e689c6bfd0c8f68ce12a634a1c128179a6ac5340a64c16e4bd37b8af7",
+          "kind": "own-account-explicit",
+          "maxUSD": 0,
+          "policyHash": "c54a9655931634461a75ade5f28f8bd43fd5895374e478e44158c6947d94cedb",
+          "profileHash": "c4e67838986e3bcb587e5554f4077cdf58f567a60513664649a0ddb2c156f8ad",
+          "workspaceHash": "37a21504aa5d025e93658a3a60affc6a74b26642369dbd173f30f6017c75e564"
+        },
+        "datasetId": "6fa18060e81dbbceea52d2b0415f38e8a1857029ba9a03adb1b3ccc42c2cc49f",
+        "delegatePublicKeyHex": "c4070b96246bd6ff35b0edec449df8d7a4ab57a3a0b36ab4331b106a38088ce9",
+        "expiresAt": "2026-11-07T18:48:43.543Z",
+        "maxUSD": 0,
+        "mode": "live-own-account-selected",
+        "namespaces": {
+          "experience": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+          "rules": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-rules"
+        },
+        "owner": "0xa23b7e42bec15a020a09e0854c5b095ec028c5ec790d2a2d512ad07d8b943100",
+        "packageId": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5",
+        "runId": "8383e63f-e5b8-41b9-9906-b4eae71276e3",
+        "schema": 1,
+        "source": "tatum",
+        "workspace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b"
+      },
+      "ledger": {
+        "intents": [
+          {
+            "key": "YOu3RtmiwtYtSVug9KLsA114cduJ4flWcqhrnDrZ3Ec",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "sha256": "60ebb746d9a2c2d62d495ba0f4a2ec035d7871db89e1f95672a86b9c3ad9dc47",
+            "state": "done"
+          },
+          {
+            "key": "nNHme2A9dorkoBjQQv1w3cysD2npVOYiUGK8keSGOG4",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "sha256": "9cd1e67b603d768ae4a018d042fd70ddccac0f69e954e6225062bc91e486386e",
+            "state": "done"
+          },
+          {
+            "key": "h8UIRr6qw6cSCFCa4D5WW4bohHHELt4zvM3j0OmtRmg",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "sha256": "87c50846beaac3a71208509ae03e565b86e88471c42ede33bccde3d0e9ad4668",
+            "state": "done"
+          },
+          {
+            "key": "FgJey_NG37AyXlLz7jt--zuwmccCAS_SN1lHdCf4RhU",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "sha256": "16025ecbf346dfb0325e52f3ee3b7efb3bb099c702012fd23759477427f84615",
+            "state": "done"
+          }
+        ],
+        "jobs": {
+          "2686be79-97a4-4644-9187-8a1d1396daeb": {
+            "key": "h8UIRr6qw6cSCFCa4D5WW4bohHHELt4zvM3j0OmtRmg",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "polls": 3
+          },
+          "2880e93a-5380-4515-9b6c-bf5cadcf48d8": {
+            "key": "nNHme2A9dorkoBjQQv1w3cysD2npVOYiUGK8keSGOG4",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "polls": 3
+          },
+          "c8090bbc-42fe-4a25-8257-fa71a3cb6e13": {
+            "key": "YOu3RtmiwtYtSVug9KLsA114cduJ4flWcqhrnDrZ3Ec",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "polls": 3
+          },
+          "e55ba820-3411-48fe-8ef6-ede32b34a893": {
+            "key": "FgJey_NG37AyXlLz7jt--zuwmccCAS_SN1lHdCf4RhU",
+            "namespace": "agent-3d4a96a8-f0af-4c77-b02f-d5801836490b-experience",
+            "polls": 4
+          }
+        },
+        "manifestHash": "0f3a2d84bbbe8a627aef9025ec5aa3508bf8c093e5f5db94c98c69cd9593378a",
+        "reads": 5,
+        "requests": 45,
+        "schema": 1,
+        "stopped": "REHEARSAL_NATIVE_STOPPED",
+        "tatumBatches": 1,
+        "writes": 4
+      },
+      "native": {
+        "contextHash": "01f0b54e47ab3e641911424a569a9daa8a21e0ec88944bc9a3b541c2c5b20a89",
+        "schema": 1,
+        "stopped": "NATIVE_STOPPED",
+        "turns": [
+          {
+            "index": 0,
+            "reservedAt": "2026-11-07T18:45:23.427Z",
+            "status": "stopped",
+            "taskHash": "da679c8965e2e6e4d0f34c13e454c786b9c8029760f9ba45f930c52deccd3f74"
+          }
+        ]
+      },
+      "files": {
+        "ledger": {
+          "path": "/private/tmp/recall-own-rehearsal-verified-pHQ6kI/packet/state/runs/8383e63f-e5b8-41b9-9906-b4eae71276e3/agent-ledger.json",
+          "sha256": "b4a34b876b3b738d8cf2904810c9783acea7dedb6b40e34af5b01ef5dec687af"
+        },
+        "manifest": {
+          "path": "/private/tmp/recall-own-rehearsal-verified-pHQ6kI/packet/state/runs/8383e63f-e5b8-41b9-9906-b4eae71276e3/agent-run.json",
+          "sha256": "0f3a2d84bbbe8a627aef9025ec5aa3508bf8c093e5f5db94c98c69cd9593378a"
+        },
+        "native": {
+          "path": "/private/tmp/recall-own-rehearsal-verified-pHQ6kI/packet/native-budget.json",
+          "sha256": "6b675b1f66bbf783600b3f8fbe52621b9859fa7a55cdff55e05a8038e2bbbf13"
+        }
+      }
+    }
+  ],
+  "closedOriginsUnchanged": true,
+  "temporaryKeyAbsent": true,
+  "finalDedicatedReaderRan": false,
+  "firstNativeCompleted": true,
+  "secondNativeCompleted": false,
+  "secondNativeToolsCompleted": true,
+  "wholeHarnessPassed": false,
+  "toolTraces": [
+    {
+      "index": 0,
+      "summary": {
+        "acceptance": {
+          "selectedCases": 7
+        },
+        "approvals": 2,
+        "initialized": true,
+        "quota": {
+          "accountType": "chatgpt",
+          "balance": "0",
+          "hasCredits": false,
+          "usedPercent": 30
+        },
+        "schema": 1,
+        "status": "COMPLETED",
+        "task": "seven-selected-cases",
+        "thread": "01a1b77d-26a1-7c30-89ff-1550e010f882",
+        "tools": 2,
+        "turnStarted": true
+      },
+      "eventsSha256": "76e263a23b1a49edec110179b1b07d3d3d37317e66efe293daf5f720064147bb",
+      "completedTools": [
+        {
+          "tool": "prepare_report",
+          "status": "completed",
+          "time": 1794079820591
+        },
+        {
+          "tool": "export_report",
+          "status": "completed",
+          "time": 1794079827333
+        }
+      ],
+      "hasFinalAnswer": true
+    },
+    {
+      "index": 1,
+      "summary": {
+        "approvals": 2,
+        "initialized": true,
+        "quota": {
+          "accountType": "chatgpt",
+          "balance": "0",
+          "hasCredits": false,
+          "usedPercent": 30
+        },
+        "reason": "NATIVE_DEADLINE",
+        "schema": 1,
+        "status": "STOPPED",
+        "task": "fresh-session-comparison",
+        "thread": "01a1b77e-554e-73a3-945f-d635625bfe7e",
+        "tools": 2,
+        "turnStarted": true
+      },
+      "eventsSha256": "d4c3de4b3fd6c9cd5210060574d70f19dfc398dc1d3b2136ca40284d21a863b2",
+      "completedTools": [
+        {
+          "tool": "prepare_report",
+          "status": "completed",
+          "time": 1794079893106
+        },
+        {
+          "tool": "export_report",
+          "status": "completed",
+          "time": 1794079897622
+        }
+      ],
+      "hasFinalAnswer": false
+    }
+  ],
+  "proofs": [
+    {
+      "digest": "6zSQhBMT8ro6eAs4UvWKqfcxSd9Rgjz5nR9m85bBSsEw",
+      "sha256": "2c4ca04ca408b9fff61ecdec68832a6eef9886a14048a345cc5e033ca35bbba8"
+    },
+    {
+      "digest": "CvJ6jx8Knu6jeGdZZb2F3XyfBRazqKJJmKchywckBMAL",
+      "sha256": "30cb5af416df68c06635e96e94f4b8fd04620be6d2676ef85ec9334abad95c11"
+    },
+    {
+      "digest": "3o43bsVXvFpRthgSgkJzugZiR9UGPYWJsFKACXfkMho7",
+      "sha256": "8599b47fff42362fae30d3f746f220bd2f3a8696145ffe6044b5982c781a5d65"
+    },
+    {
+      "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+      "sha256": "8c7db73dc890f0de5c302a6a10401b1b5fa436ee01b61c7b8975b4e6bede8aa0"
+    },
+    {
+      "digest": "9id3PUdCt16v7hQZA5BKpSNw5uG9cxPCqinJw7Dc8Ksj",
+      "sha256": "9a8cfefff881088c13cb9eca995b89107f77cd3aa09868ec6244a7815fe601ca"
+    },
+    {
+      "digest": "BjV2Q8mCarkmtENT1T3SPncKAFP3qNHQKVJ2DgptUnkW",
+      "sha256": "ecc7a044c617714c904822bf557ed42b546200a97a93baaf29a475f6190710eb"
+    },
+    {
+      "digest": "399audbJp2xHpY7R2M7T2jFASw8AvPVGauZ4pBRLgJdj",
+      "sha256": "f0af6566b4ca47d6fdc5e50b6b4b76932f530b48650f9139680f4a73e44635d6"
+    }
+  ],
+  "additionalSpendUSD": 0,
+  "retries": 0,
+  "paidFallback": false,
+  "publication": false,
+  "deployment": false,
+  "limitations": [
+    "Whole frozen harness remains STOPPED; its original acceptance criteria are not rewritten.",
+    "Second native completed prepare_report and export_report but did not deliver a final answer before the shared deadline.",
+    "Dedicated final SDK reader never ran. Existing separate MCP startup/readback is assessed from captured traces and frozen enforcement, not relabelled as that reader.",
+    "Three new writes were initiated by explicit operator preparation; not model-initiated learning.",
+    "Current task demonstrates stored factual observations plus fresh selected-transaction reporting, not complete wallet history or general model improvement."
+  ]
+}

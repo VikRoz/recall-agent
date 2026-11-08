@@ -1,0 +1,173 @@
+{
+  "mode": "live-own-account-selected",
+  "reportId": "report:4de9208c-ebef-4ff0-b95a-1fd95d92feca",
+  "report": {
+    "wallet": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+    "asOf": "2026-11-08T18:18:50.222Z",
+    "digests": [
+      "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3"
+    ],
+    "rows": [
+      {
+        "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+        "network": "mainnet",
+        "timestamp": "2026-11-05T10:34:12.732Z",
+        "status": "success",
+        "source": "tatum",
+        "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+        "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+        "netAmountBaseUnits": "-104194",
+        "relation": "unclassified",
+        "label": "",
+        "ruleId": null,
+        "memoryBlobId": null
+      }
+    ],
+    "totals": [],
+    "declaredWalletTotals": [],
+    "gas": [
+      {
+        "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+        "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+        "computation": "100000",
+        "storage": "41936800",
+        "rebate": "41932606",
+        "netCharge": "104194"
+      }
+    ],
+    "notes": [
+      "Totals cover the supplied digests only.",
+      "Net balance changes include their onchain effects.",
+      "Gas information is displayed separately and is not subtracted again.",
+      "Declared wallet totals use the address relations confirmed by the user.",
+      "Address relations are user-confirmed context. They do not identify a direct transfer counterparty."
+    ],
+    "transactionEvidence": [
+      {
+        "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+        "network": "mainnet",
+        "checkpoint": "341884811",
+        "timestamp": "2026-11-05T10:34:12.732Z",
+        "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+        "commands": [
+          "makeMoveVector",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall",
+          "moveCall"
+        ],
+        "interpretation": "unparsed-ptb",
+        "status": "success",
+        "source": "tatum",
+        "gas": {
+          "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+          "computation": "100000",
+          "storage": "41936800",
+          "rebate": "41932606",
+          "netCharge": "104194"
+        },
+        "movements": [
+          {
+            "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+            "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+            "amount": "-104194"
+          }
+        ]
+      }
+    ],
+    "memory": [],
+    "experience": [],
+    "historicalObservations": [
+      {
+        "id": "4TaVGRIGsUQS2-W9QAMhcoOSTRlN1Q7umsHKkJ3H7_w",
+        "record": {
+          "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+          "network": "mainnet",
+          "observedAt": "2026-11-08T17:23:33.645Z",
+          "provenance": {
+            "hashScope": "protobuf-json-selected-transaction",
+            "kind": "tatum",
+            "method": "sui.rpc.v2.LedgerService/BatchGetTransactions",
+            "normalizerSha256": "1688e4a01dd3dcb9bbd14376cbb65ca030d8562c725bc046ec988b90f7f762f4",
+            "rawTransactionSha256": "8c7db73dc890f0de5c302a6a10401b1b5fa436ee01b61c7b8975b4e6bede8aa0"
+          },
+          "schema": "recall-transaction-fact/1",
+          "source": "tatum",
+          "transaction": {
+            "checkpoint": "341884811",
+            "commands": [
+              "makeMoveVector",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall",
+              "moveCall"
+            ],
+            "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+            "gas": {
+              "computation": "100000",
+              "netCharge": "104194",
+              "payer": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+              "rebate": "41932606",
+              "storage": "41936800"
+            },
+            "interpretation": "unparsed-ptb",
+            "movements": [
+              {
+                "address": "0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69",
+                "amount": "-104194",
+                "coinType": "0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI"
+              }
+            ],
+            "network": "mainnet",
+            "sender": "0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23",
+            "source": "tatum",
+            "status": "success",
+            "timestamp": "2026-11-05T10:34:12.732Z"
+          },
+          "workspace": "agent-3eab5ebd-e8ff-4160-8cda-1d2e57cbfc0e"
+        },
+        "blobId": "q71H-BD57yPAE15l7j0X7r2JcRBF4K5w1WgUw-SQdAQ",
+        "role": "historical-observation",
+        "comparison": "same",
+        "replacesFreshData": false
+      }
+    ],
+    "experienceStorage": "walrus",
+    "selectedTransactionCoverage": {
+      "walletHistoryComplete": false,
+      "transactions": [
+        {
+          "digest": "2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3",
+          "walletIsSender": true,
+          "walletIsGasPayer": false,
+          "walletHasBalanceChange": false
+        }
+      ]
+    },
+    "dataProvenance": {
+      "sourceMode": "live-tatum-selected",
+      "freshProviderRead": true,
+      "walletHistoryComplete": false,
+      "scope": "selected-transactions"
+    }
+  },
+  "mediaType": "text/csv",
+  "csv": "digest,network,timestamp,status,source,address,coinType,netAmountBaseUnits,relation,label,ruleId,memoryBlobId\r\n\"2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3\",\"mainnet\",\"2026-11-05T10:34:12.732Z\",\"success\",\"tatum\",\"0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69\",\"0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI\",\"-104194\",\"unclassified\",\"\",\"\",\"\"\r\n",
+  "artifact": {
+    "schema": "recall-export/1",
+    "storage": "local",
+    "path": "exports/5d4d51522ed8fbb5669da85d8f132fdb1732445f58c71ee16f5f17c8a57b6c49.csv",
+    "uri": "exports/5d4d51522ed8fbb5669da85d8f132fdb1732445f58c71ee16f5f17c8a57b6c49.csv",
+    "sha256": "5d4d51522ed8fbb5669da85d8f132fdb1732445f58c71ee16f5f17c8a57b6c49",
+    "bytes": 396,
+    "mediaType": "text/csv"
+  }
+}

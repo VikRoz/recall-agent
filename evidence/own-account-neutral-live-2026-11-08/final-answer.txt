@@ -1,0 +1,16 @@
+The gas payer was:
+
+`0x000037de3368098ebbb5bc6808283004f4746a34e16d32e171f9400cd58cdd69`
+
+For the specified wallet:
+
+- It was the transaction sender.
+- It was not the gas payer.
+- Its recorded balance change was 0 SUI.
+- The gas payer incurred a net charge of 104,194 MIST (`0.000104194 SUI`).
+
+The transaction proves that the other address paid gas for this transaction. It does not prove ownership, control, affiliation, or a direct transfer relationship between the wallet and gas payer. The PTB was unparsed, so no stronger relationship or purpose can be inferred.
+
+CSV: [report CSV](exports/5d4d51522ed8fbb5669da85d8f132fdb1732445f58c71ee16f5f17c8a57b6c49.csv)
+
+SHA-256: `5d4d51522ed8fbb5669da85d8f132fdb1732445f58c71ee16f5f17c8a57b6c49`
