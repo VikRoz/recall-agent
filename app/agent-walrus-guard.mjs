@@ -5,6 +5,7 @@ import {BatchGetObjectsRequest} from './node_modules/@mysten/sui/dist/grpc/proto
 import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {runHash} from './agent-run.mjs';
 import {ownMode} from './agent-own-contract.mjs';
+import {requestBudgetOwn} from './agent-own-policy.mjs';
 
 export const WALRUS_RELAY='https://relayer.memory.walrus.xyz';
 export const SUI_SEAL_ORIGIN='https://mysten-rpc.mainnet.sui.io';
@@ -81,7 +82,7 @@ export function agentWalrusFetch(gate,transport,{phase=()=>'action'}={}){
    gate.request(kind,job);
    if(remember)gate.sent(remember.namespace,remember.key,remember.record);
    const timeout=AbortSignal.timeout(Math.max(1,Math.min(kind==='reads'?45000:15000,
-    gate.ownAccount?Date.parse(m.expiresAt)-Date.now():Infinity)));
+    gate.ownAccount&&!requestBudgetOwn(m)?Date.parse(m.expiresAt)-Date.now():Infinity)));
    category='transport';
    const response=await transport(input,{...options,redirect:'error',signal:options.signal?AbortSignal.any([options.signal,timeout]):timeout});
    httpStatus=response.status;category='http';

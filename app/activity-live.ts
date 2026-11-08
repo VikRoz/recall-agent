@@ -8,6 +8,7 @@ import { profile, connect } from './walrus.mjs';
 import { connectTatum } from './tatum.ts';
 import { WalrusRuleStore, FileWriteJournal } from './activity-memory.ts';
 import { ActivitySession } from './activity-session.ts';
+import { requestBudgetOwn } from './agent-own-policy.mjs';
 
 export const PILOT_LIMITS = Object.freeze({ tatumBatches: 2, writes: 2, reads: 2, requests: 64, pollsPerJob: 8 });
 const relay = 'https://relayer.memory.walrus.xyz';
@@ -39,7 +40,7 @@ export function validateApproval(plan: ActivityPlan, approval: Approval) {
   assert(Number.isSafeInteger(approval.tatum.remainingCredits) && approval.tatum.remainingCredits >= 4
     && approval.tatum.creditsPerCall === 2, 'TATUM_FREE_ALLOWANCE');
   const age = Date.now() - time(approval.checkedAt);
-  assert(age >= 0 && age <= 300000, 'BILLING_CHECK_EXPIRED');
+  assert(age >= 0 && (requestBudgetOwn(plan) || age <= 300000), 'BILLING_CHECK_EXPIRED');
 }
 export function validateTatumBinding(approval: Approval, key: string | undefined) {
   assert(typeof key === 'string' && key.length > 0, 'TATUM_CREDENTIALS_MISSING');

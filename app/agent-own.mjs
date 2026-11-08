@@ -12,18 +12,21 @@ import {deploymentHash} from './agent-walrus-guard.mjs';
 import {openInjectedAgent} from './agent-provider.mjs';
 import {validateRetained,ownPath} from './agent-own-lineage.mjs';
 import {FileWriteJournal} from './activity-memory.ts';
+import {requestBudgetOwn} from './agent-own-policy.mjs';
 
 export function createOwnActivation(directory,{identity,config,profileHash,tatum,captureConsent,captureScope='transaction-facts-only',checkedAt,
- credentialRoot=dirname(directory),keyFile=join(dirname(directory),'tatum.key'),retained=null,captureSet=null,writePolicy=null}, {fixture=false}={}){
+ requestBudgetOnly=false,clientModel,credentialRoot=dirname(directory),keyFile=join(dirname(directory),'tatum.key'),retained=null,captureSet=null,writePolicy=null}, {fixture=false}={}){
  privateDirectory(directory);
  // Exactly one activation per directory. Expiry/exhaustion never creates a fresh allowance.
  assert(!existsSync(join(directory,'active-run.json'))&&!existsSync(join(directory,'own-account-context.json')),'OWN_ACTIVATION_ALREADY_EXISTS');
  if(!fixture){ownPath(credentialRoot);privateDirectory(credentialRoot);ownPath(keyFile);}
  retained=retained?validateRetained(structuredClone(retained),identity,{fixture,freeze:true}):null;
+ assert(typeof requestBudgetOnly==='boolean','OWN_TIME_POLICY');
+ const schema=requestBudgetOnly?2:1,expiresAt=requestBudgetOnly?null:new Date(Date.parse(checkedAt)+240000).toISOString();
  const live=!fixture,binding=createOrdinaryWorkspace(directory,identity,{live});
- const context=validateOwnContext({schema:1,kind:fixture?'offline-own-account-test':'own-account-explicit',identity,config,
-  captureConsent,captureScope,limits:OWN_LIMITS,profileHash,credentialRoot,keyFile,retained,captureSet,...(writePolicy?{writePolicy}:{}),expiresAt:new Date(Date.parse(checkedAt)+240000).toISOString()});
- const m={schema:1,mode:fixture?'offline-own-account-test':'live-own-account-selected',runId:randomUUID(),...identity,
+ const context=validateOwnContext({schema,kind:fixture?'offline-own-account-test':'own-account-explicit',identity,config,
+  captureConsent,captureScope,limits:OWN_LIMITS,profileHash,credentialRoot,keyFile,retained,captureSet,...(writePolicy?{writePolicy}:{}),expiresAt,...(requestBudgetOnly?{clientModel}:{})});
+ const m={schema,mode:fixture?'offline-own-account-test':'live-own-account-selected',runId:randomUUID(),...identity,
   datasetId:runHash({scope:'selected-transactions',network:'mainnet',provider:'tatum'}),source:fixture?'fixture':'tatum',
   namespaces:{rules:identity.workspace+'-rules',experience:identity.workspace+'-experience'},maxUSD:0,expiresAt:context.expiresAt,
   admission:{kind:context.kind,accountId:identity.accountId,delegatePublicKeyHex:identity.delegatePublicKeyHex,checkedAt,maxUSD:0,
@@ -49,10 +52,10 @@ export function ownAuthorization(directory,{fixture=false}={}){
  validateRetained(context.retained,context.identity,{fixture});
  assert(runHash(m)===active.manifestHash&&runHash(binding)===m.admission.workspaceHash&&runHash(context)===m.admission.contextHash
   &&canonical(context.identity)===canonical(binding.identity)&&context.kind===m.admission.kind&&context.expiresAt===m.expiresAt
-  &&context.profileHash===m.admission.profileHash&&deploymentHash(context.config)===m.admission.deploymentHash
+  &&context.schema===m.schema&&context.profileHash===m.admission.profileHash&&deploymentHash(context.config)===m.admission.deploymentHash
   &&m.admission.policyHash===runHash({captureConsent:context.captureConsent,captureScope:context.captureScope,limits:OWN_LIMITS,...(context.writePolicy?{writePolicy:context.writePolicy}:{})})
   &&proof.schema===1&&proof.execution===context.kind&&proof.manifestHash===runHash(m)&&proof.captureConsent===context.captureConsent,'OWN_BINDING');
- validateApproval(m,proof.providerApproval);assert(time(m.expiresAt)>Date.now(),'OWN_EXPIRED');
+ validateApproval(m,proof.providerApproval);if(!requestBudgetOwn(m))assert(time(m.expiresAt)>Date.now(),'OWN_EXPIRED');
  const ledger=privateRead(join(run,'agent-ledger.json'));
  assert(ledger.manifestHash===runHash(m)&&ledger.stopped===null&&Array.isArray(ledger.intents)
   &&ledger.intents.length===ledger.writes&&ledger.intents.every(i=>i.state==='done')

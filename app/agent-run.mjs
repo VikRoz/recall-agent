@@ -11,6 +11,7 @@ import {CONTINUATION_KIND,CONTINUATION_LIMITS,continuationResolution} from './ag
 import {ownMode,validateOwnManifest,validateOwnContext,OWN_LIMITS} from './agent-own-contract.mjs';
 import {validateRetained} from './agent-own-lineage.mjs';
 import {saveSubmissionProof} from './agent-submission-proof.mjs';
+import {requestBudgetOwn} from './agent-own-policy.mjs';
 
 export const runHash=value=>createHash('sha256').update(canonical(value)).digest('hex');
 export const operationKey=value=>createHash('sha256').update(canonical(value)).digest('base64url');
@@ -121,8 +122,8 @@ export class AgentRunGate {
    if(this.ownAccount)this.context();
   }
   const m=this.manifest,now=Date.now(),age=now-time(m.admission.checkedAt);
-  assert(time(m.expiresAt)>now&&time(m.expiresAt)<=now+86400000,'AGENT_RUN_EXPIRED');
-  assert(age>=0&&age<=300000,'AGENT_ADMISSION_EXPIRED');
+  if(!requestBudgetOwn(m))assert(time(m.expiresAt)>now&&time(m.expiresAt)<=now+86400000,'AGENT_RUN_EXPIRED');
+  assert(age>=0&&(requestBudgetOwn(m)||age<=300000),'AGENT_ADMISSION_EXPIRED');
   assert(this.state().stopped===null,'AGENT_RUN_STOPPED');
   }catch(error){recordFirstFailure(this,{phase:'admission',category:'admission',error});throw error;}
  }
@@ -179,7 +180,7 @@ export class AgentRunGate {
    this.checkWriteScope(namespace,record);
    const p=privateRead(join(this.ordinary.directory,'ordinary-preflight.json'));
    assert(p.contextHash===this.manifest.admission.contextHash&&p.manifestHash===this.hash&&p.accountAuthorized===true
-    &&Date.now()-time(p.checkedAt)>=0&&Date.now()-time(p.checkedAt)<=300000,'OWN_PREFLIGHT_REQUIRED');
+    &&Date.now()-time(p.checkedAt)>=0&&(requestBudgetOwn(this.manifest)||Date.now()-time(p.checkedAt)<=300000),'OWN_PREFLIGHT_REQUIRED');
    this.submissionProof(namespace,record,key);
   }
   if(this.manifest.mode==='live-walrus-replay'){

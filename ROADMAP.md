@@ -30,3 +30,7 @@ Official deadline: **10 November 2026, 17:00 UTC / 20:00 Moscow**, point-checked
 ## Remaining decisions
 
 Choose the exact publication bundle after clean-package acceptance. Public source, release, article and site must match that revision. The required new walkthrough and final reviewed application remain open; old videos and release archives are not substitutes. A later recording uses a separate short bounded plan, not a reopening of the stopped run.
+
+## 8 November interactive launch repair
+
+Finish request-budget-only schema2, bound model metadata preflight and an exact data-preserving migration for the existing user run. Preserve all spent requests, receipts and namespaces. Verify offline, then let the user continue the same run. Rebuild publication artifacts only after this ordinary user path works. Historical timed rehearsals and their STOPPED results stay unchanged.

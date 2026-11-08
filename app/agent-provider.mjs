@@ -13,6 +13,7 @@ import {recordFirstFailure} from './agent-diagnostic.mjs';
 import {assert} from '../src/domain.ts';
 import {isContinuation,continuationResolution} from './agent-continuation-contract.mjs';
 import {setTimeout as delay} from 'node:timers/promises';
+import {requestBudgetOwn} from './agent-own-policy.mjs';
 let active=false;
 
 export async function openInjectedAgent(directory,{createSdk,transport,capture=false,wait,live=false,ordinary,dataFactory}){
@@ -47,7 +48,7 @@ export async function openInjectedAgent(directory,{createSdk,transport,capture=f
   if(live||ordinary?.ownAccount)await guarded(WALRUS_RELAY+'/config');
   const binding={owner:m.owner,project:m.workspace},ports={};
   const boundedWait=ordinary?.ownAccount?async ms=>{
-   gate.admit();const remaining=Date.parse(m.expiresAt)-Date.now();
+   gate.admit();const remaining=requestBudgetOwn(m)?Infinity:Date.parse(m.expiresAt)-Date.now();
    await (wait??delay)(Math.min(ms,Math.max(0,remaining)));gate.admit();
   }:wait;
   for(const kind of ['rules','experience']){

@@ -1,8 +1,10 @@
 # Recall Agent development state
 
-Date: 7 November 2026. Candidate repository: VikRoz/recall-agent, currently private.
+Date: 8 November 2026. Candidate repository: VikRoz/recall-agent, currently private.
 
 ## Current result and next gate
+
+Current increment: user requested an ordinary interactive session without a time limit and repair of model selection. New own-account schema2 uses a null expiry and persistent request budgets; legacy timed author rehearsals remain unchanged. Metadata-only preflight binds an available ChatGPT model before provider activation and passes it explicitly to every conversation. Actual coordinator metadata check on 8 November confirmed gpt-5.6-luna in this account/client catalog, with zero inference/provider calls. Targeted offline checks passed25/25; integrated check.command passed218/218 plus all protocol/evidence checks and the299-file source snapshot. Exact external migration passed4/4 offline groups, without credential-content reads or network. The existing user run7874b2f5 has Tatum1/write1/read1/service26, one DONE job; its memory and counters are not reset. Review of the exact migration and user-led launch is the next gate. No new ZIP or publication until that path stabilizes. See [policy and review](docs/REQUEST_BUDGET_AND_MODEL_2026-11-08.md).
 
 8 November actual ordinary user setup stopped before tools: source52436d2, Tatum0/write0/read0/service3, HTTP200/config AGENT_CONFIG_SCOPE. Root cause was the ordinary launcher omitting the fifth deployment field suiRpcUrl; a separate public coordinator check confirmed the full official shape. Minimal field-population fix leaves the hash/guard unchanged; an independent regression failed before the fix, then43 targeted tests passed after it. The old context is stopped/expired and untouched. Publication is held; one-shot zero-work recovery preparation and a new clean package are separate gates. See [deployment fix](docs/ORDINARY_DEPLOYMENT_FIX_2026-11-08.md).
 

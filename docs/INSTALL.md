@@ -7,7 +7,7 @@
 - Your Walrus Memory Mainnet account/delegate access and official sponsored storage.
 - Your Tatum Free account, its24-character Account ID, a Mainnet key from that account and at least16 included credits at2 credits/request. Do not enable an upgrade to run this demo.
 
-The project contains no author's credentials. Your provider keys stay in a private local folder outside the extracted source. The demo window is240 seconds, so finish account access first and keep the first task small.
+The project contains no author's credentials. Your provider keys stay in a private local folder outside the extracted source. There is no session time limit in new own-account activations. Pauses and fresh chats keep the same spent request counters; each network operation still has a bounded timeout.
 
 ## Start from the correct folder
 
@@ -31,7 +31,7 @@ Wait for the Codex composer. Chat prompts belong there, not at a shell prompt en
 
 ## Choose a model and ask a question
 
-Use `/model` in Codex to select an available model. The author verified gpt-5.6-luna; your account list can differ. A model-not-supported error is not permission to switch to a paid API fallback.
+Before any Walrus login or Tatum key entry, the launcher checks your ChatGPT account, included quota and available model names without generating a response. It binds gpt-5.6-luna if offered; otherwise choose from the displayed list. Each fresh launch verifies and explicitly selects the bound model, even if another application changes the global default. You may request an available model for a new workspace with `--model MODEL` after the private-folder argument. Existing workspaces keep their bound model. If it becomes unavailable, the launcher stops before provider startup. A model-not-supported error never permits a paid API fallback.
 
 Give a Sui Mainnet wallet and selected transaction IDs or supported explorer links. Ask for status, gas payer, exact base-unit changes or CSV. The model chooses tools; there is no forced failure/save/correction sequence.
 
@@ -39,9 +39,9 @@ Give a Sui Mainnet wallet and selected transaction IDs or supported explorer lin
 
 ## Check a new conversation
 
-Within the same active window, exit the client and run the **same command and private folder** again. This opens a new conversation with the same workspace; it does not reset the allowance. Ask for the historical observation, its blob ID, fresh-data comparison and original CSV/path/hash.
+Exit the client and run the **same command and private folder** again. This opens a new conversation with the same workspace; it does not reset the allowance. Ask for the historical observation, its blob ID, fresh-data comparison and original CSV/path/hash.
 
-After expiry, quota, access failure or uncertainty, stop. The prototype has no silent renewal. Keep the private folder private and manage/revoke delegate access through your own Walrus account when finished.
+After quota, access failure or uncertainty, stop. The prototype has no silent renewal. A legacy timed workspace reports `OWN_POLICY_MIGRATION_REQUIRED` without changing its memory or counts; use only its separately reviewed migration, not a new folder to bypass limits. Keep the private folder private and manage/revoke delegate access through your own Walrus account when finished.
 
 ## Check without accounts or providers
 

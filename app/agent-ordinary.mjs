@@ -1,3 +1,4 @@
+import {requestBudgetOwn} from './agent-own-policy.mjs';
 // Ordinary assembly contract; credential loading stays in the separately admitted managed entry.
 import {randomUUID} from 'node:crypto';
 import {existsSync,readdirSync,mkdirSync,openSync,writeFileSync,fsyncSync,closeSync,renameSync,rmSync,realpathSync} from 'node:fs';
@@ -122,7 +123,7 @@ export function boundedOrdinaryTatum(gate,approval,key,createData){
    gate.reserve('tatumBatches');
    if(!data){
     const connected=await createData({network:'mainnet',method:'sui.rpc.v2.LedgerService/BatchGetTransactions',key,
-     ...(gate.ownAccount?{deadline:Date.parse(gate.manifest.expiresAt)}:{})});
+     ...(gate.ownAccount&&!requestBudgetOwn(gate.manifest)?{deadline:Date.parse(gate.manifest.expiresAt)}:{})});
     if(closed){connected.close();assert(false,'AGENT_RUNTIME_CLOSED');}data=connected;
    }
    gate.admit();managedPreflight(gate);validateApproval(gate.manifest,approval);validateTatumBinding(approval,key);

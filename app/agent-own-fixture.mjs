@@ -18,7 +18,7 @@ export async function createOwnFixture(directory,options={}){
  const config={network:'mainnet',packageId:identity.packageId,suiTransport:'grpc',suiGrpcUrl:'https://mysten-rpc.mainnet.sui.io'};
  const retained=options.retainedFactory?.(identity)??null;
  const m=createOwnActivation(directory,{identity,config,profileHash:runHash(identity),...ordinaryFixtureConsent(options.captureConsent??true),
-  captureScope:options.captureScope??'transaction-facts-only',retained,captureSet:options.captureSet??null,writePolicy:options.writePolicy??null},{fixture:true});
+  captureScope:options.captureScope??'transaction-facts-only',requestBudgetOnly:options.requestBudgetOnly??false,clientModel:options.clientModel??'gpt-5.6-luna',retained,captureSet:options.captureSet??null,writePolicy:options.writePolicy??null},{fixture:true});
  const records=(retained?.records??[]).map(r=>({namespace:m.namespaces.experience,text:canonical(r.record),blob_id:r.blobId,key:r.id}));
  writeFileSync(join(directory,'synthetic-relayer.json'),canonical({revision:records.length,records,jobs:{},requests:[]}),{flag:'wx',mode:0o600});
  writeFileSync(join(directory,'synthetic-tatum.json'),canonical({requests:[],closedClients:0}),{flag:'wx',mode:0o600});

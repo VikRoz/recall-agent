@@ -12,7 +12,7 @@ The 7 November live run completed one full native report and delivered its origi
 
 ## Install and run
 
-Verified primary client: **Codex CLI on macOS**. Tested with Node 22.23.1 and Codex 0.153.0. Use a model offered by your own account; `/model` changes the client selection. The author used gpt-5.6-luna. Other MCP clients need their own configuration and live validation; this revision does not advertise a passed Claude run.
+Verified primary client: **Codex CLI on macOS**. Tested with Node 22.23.1 and Codex 0.153.0. Before provider activation, a metadata-only check verifies ChatGPT included quota and lists available models. The launcher binds gpt-5.6-luna when available, or asks you to choose an available model, and passes it explicitly on every fresh launch. It does not change your global Codex settings. Other MCP clients need their own configuration and live validation; this revision does not advertise a passed Claude run.
 
 1. Install Node 22.23.1 or newer and [Codex CLI](https://developers.openai.com/codex/cli). Sign in with your own ChatGPT account using `codex login`.
 2. Extract the judge ZIP. Open Terminal **inside the extracted Recall-Agent folder**. The ZIP includes pinned project dependencies.
@@ -24,7 +24,7 @@ bash start.command --live "$HOME/.local/share/recall-agent"
 
 The launcher opens official Walrus browser sign-in, then asks for your Tatum Account ID, included credits and the same account's Mainnet key using hidden input. Confirm Free pricing/sponsorship before activation. Choose `FACTS` for checked transaction notes, or `ALL` to include supported verified technical failures/corrections. The conversation starts empty.
 
-This is a bounded demo activation: Tatum≤8 requests/16 included credits, Walrus≤7 writes/10 content reads/192 service requests,≤8 polls/job and240 seconds from the Free observation. No paid fallback or automatic reset. Stop if your account cannot meet these bounds. Your model usage is your own.
+This activation has request limits, with no session expiry: Tatum≤8 attempts/16 included credits, Walrus≤7 sponsored writes/10 content reads/192 service requests and≤8 polls/job. Individual request timeouts remain. Counts persist across pauses and new chats. Only the confirmed Free account and official sponsored storage are allowed; access, quota, uncertain outcomes and billing errors stop the run. There is no paid fallback, upgrade or automatic allowance reset. Your model usage is your own included ChatGPT quota.
 
 [Detailed setup and troubleshooting](docs/INSTALL.md)
 
@@ -39,7 +39,7 @@ Reply in English. Explain this selected Sui Mainnet transaction for wallet
 Show who paid gas, exact balance changes and what remains unknown.
 ```
 
-Then ask for the original CSV and hash. For memory reuse, exit Codex and repeat the same launch command with the same private folder **within the active window**. Ask the new chat to retrieve the historical observation, show its blob ID and compare it with fresh data. Do not resume the old transcript. Expired/stopped activations remain closed.
+Then ask for the original CSV and hash. For memory reuse, exit Codex and repeat the same launch command with the same private folder. Ask the new chat to retrieve the historical observation, show its blob ID and compare it with fresh data. Do not resume the old transcript. Stopped activations remain closed. Existing legacy timed activations require an explicitly reviewed migration; the launcher never silently renews them.
 
 These are optional examples, not a programmed route. Live mode supports selected transactions; unrestricted wallet-history discovery and complex contract interpretation are not implemented. Only supported structured claims are verified. Stored observations do not prove ownership or general model learning.
 
@@ -49,7 +49,7 @@ These are optional examples, not a programmed route. Live mode supports selected
 bash start.command --check
 ```
 
-Checks use synthetic/intercepted providers and fake native clients; they do not sign in, call a model or write Mainnet. The frozen runtime passed 209 tests plus independent protocols and saved-evidence checks. The release's source manifest pins the packaged files.
+Checks use synthetic/intercepted providers and fake native clients; they do not sign in, call a model or write Mainnet. The earlier frozen runtime passed 209 tests plus independent protocols and saved-evidence checks. Request-budget and model-binding changes have their own checks. The release's source manifest pins the packaged files.
 
 For a source checkout, install the pinned dependencies first:
 
