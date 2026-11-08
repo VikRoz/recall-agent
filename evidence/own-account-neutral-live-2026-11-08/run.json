@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "status": "USER_NEUTRAL_FRESH_CHAT_AUTOMATIC_MEMORY_DELIVERY_CONFIRMED",
+  "date": "2026-11-08",
+  "runtimeSourceCommit": "eb1558682a781f431eae7e26949645048eff9eac",
+  "runtimeSourceHashes": {
+    "app/agent-session.ts": "ea78a9b7a195207dea2bd2c38ffc1079c6baf86d7edae27088e95ebf957988b5",
+    "app/agent-experience.ts": "3f4ade02d0745a0901fd25fdef72620536055cf4ee41ac1285ebd4853a0b34b0",
+    "app/activity-memory.ts": "c9efe04694900cf47bd8f35872e44fdf46e8da5b1c6b40ca1bdb43c4d0612e68",
+    "app/agent-tool-observer.mjs": "4256a1a54070f8879559def78d12c4d0ee9bec1026b0b8313e0d39110f41f8a0",
+    "app/agent-provider.mjs": "ad907be9c1833a731a797ce7da563ca196a1999e88f15b426679594cb47a287d",
+    "app/agent-own.mjs": "804142a18fd37725fc915a2dd78279587d3608d18623c1c3a0b29557d5d58f02",
+    "app/agent-own-contract.mjs": "45af6f3ffa3839b28617415f2071771f1cc948af0330cac862813d6583f46a92",
+    "app/agent-own-policy.mjs": "86675ff0d7a56340735137c98f3580b7d1d8f3c4e46f307b5b086502cc091b18",
+    "app/agent-own-launch.mjs": "16c48dfaf7f4fd36474b2b98aeee93e65dd92e91047a74e1d6a0e1c71308065f",
+    "app/agent-model-preflight.mjs": "466d3ba0f4de5ec9a80602e369659733f1ab59e1eec60231ac875b8c00cde87e",
+    "app/agent-own-entry.mjs": "1b900b7683ead9f638c1d392e264dcc74bb91409c316526e2e73f826cfda27bc",
+    "app/agent-run.mjs": "4297937c4bd26552995d1a44af30b26d317b20603213e5f93464f75fbf2499a2",
+    "app/agent-walrus-guard.mjs": "5aa268dc1c6c72c0c43cad2af1494f5151bf0323d3d6d69ca2763f108a9ce94f",
+    "app/tatum.ts": "f30ebb136c21ae4f73c7ab2d2b7ad4c3a39365ee1f3896505ce13af1e821264f",
+    "start.command": "2acb3a2491717824d9799a0ef48b54ce5345781e97f94ad8ee705b8e89f8e546"
+  },
+  "sessionId": "01a1bc61-f364-7450-9a40-18b125ca54f0",
+  "turn": {
+    "turn_id": "01a1bc62-1b3a-76d1-8d79-8d3da6d739c1",
+    "model": "gpt-5.6-luna",
+    "effort": "medium"
+  },
+  "freshChat": true,
+  "resumedOrForkedFrom": null,
+  "promptMentionsMemory": false,
+  "reportId": "report:4de9208c-ebef-4ff0-b95a-1fd95d92feca",
+  "auditLines": {
+    "userPrompt": 7,
+    "prepareReportOutput": 22,
+    "exportReportOutput": 31,
+    "finalAnswer": 36,
+    "taskCompleted": 39
+  },
+  "auditedLogPrefixSha256": "8b30848cf7412493c88c4bfb58f16032cf436136ae3f4cb6f1791c8d5cedde4c",
+  "nativeToolCalls": [
+    "prepare_report",
+    "export_report"
+  ],
+  "retrieved": {
+    "id": "4TaVGRIGsUQS2-W9QAMhcoOSTRlN1Q7umsHKkJ3H7_w",
+    "blobId": "q71H-BD57yPAE15l7j0X7r2JcRBF4K5w1WgUw-SQdAQ",
+    "schema": "recall-transaction-fact/1",
+    "observedAt": "2026-11-08T17:23:33.645Z",
+    "comparison": "same",
+    "replacesFreshData": false
+  },
+  "verdict": {
+    "automaticMemoryRetrieval": "CONFIRMED",
+    "memoryDeliveredToModel": "CONFIRMED",
+    "explicitMemoryAttributionInFinal": "ABSENT",
+    "causalAnswerImprovement": "NOT_ESTABLISHED",
+    "mistakeOrCorrectionRecall": "NOT_TESTED",
+    "freshDataAndMemoryAgree": true
+  },
+  "csv": {
+    "sha256": "5d4d51522ed8fbb5669da85d8f132fdb1732445f58c71ee16f5f17c8a57b6c49",
+    "bytes": 396,
+    "matchesPhysicalFile": true
+  },
+  "ledgerAfter": {
+    "tatumBatches": 3,
+    "writes": 1,
+    "reads": 3,
+    "requests": 68,
+    "stopped": null
+  },
+  "ledgerBefore": {
+    "tatumBatches": 2,
+    "writes": 1,
+    "reads": 2,
+    "requests": 47
+  },
+  "observedDelta": {
+    "tatumBatches": 1,
+    "writes": 0,
+    "reads": 1,
+    "requests": 21
+  },
+  "separateUserWorkspace": true,
+  "candidateTenRecordInventoryUnchanged": true,
+  "countedAsEleventhCandidateMemory": false,
+  "sameDelegateAsCandidateInventoryAttested": false,
+  "screenshotReference": "codex-clipboard-88b2ee3e-468e-4111-8cae-9dd92312460f.png",
+  "additionalSpendUSD": 0,
+  "auditActivity": {
+    "modelCalls": 0,
+    "providerCalls": 0,
+    "privateCredentialContentsRead": 0,
+    "stateMutations": 0,
+    "additionalSpendUSD": 0
+  },
+  "artifactsSha256": {
+    "REDACTIONS.json": "dfc35347a78404ae6bd60f04d8e2236518ed4ba55995385c4b0133db3faa5bf0",
+    "export-report.json": "9050495bb3d43c16e089e8f56349831251e5652f02832e24985e32e4f13d4c5a",
+    "final-answer.txt": "2048a9e5ad1ca4f45028566c8ffcf4610c4b2a86a99777a39456b1279ec4b98f",
+    "prepare-report.json": "2f428688d43a279f2ce6d57e0c766b2c89e3499f118543ef2a940696b3afbaff",
+    "prompt.txt": "92281c60079d40239c24df28dc9df2c3d48e25c2a67f24ef7ea35ead9d8761b8"
+  }
+}

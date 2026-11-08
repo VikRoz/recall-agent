@@ -34,3 +34,7 @@ Choose the exact publication bundle after clean-package acceptance. Public sourc
 ## 8 November interactive launch repair
 
 Finish request-budget-only schema2, bound model metadata preflight and an exact data-preserving migration for the existing user run. Preserve all spent requests, receipts and namespaces. Verify offline, then let the user continue the same run. Rebuild publication artifacts only after this ordinary user path works. Historical timed rehearsals and their STOPPED results stay unchanged.
+
+## 8 November actual acceptance
+
+The user migrated the same private workspace and completed ordinary fresh report/memory/CSV plus a neutral fresh-chat question. Automatic retrieval and delivery are confirmed; causal benefit/error recall remain unproved in that case. Runtime is frozen at eb15586. Remaining: one final clean package and source/article/site review, exact publication approval, author-recorded walkthrough, final application. No new live framework or feature is required.

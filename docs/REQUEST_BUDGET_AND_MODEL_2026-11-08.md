@@ -31,7 +31,7 @@ A fake far-future expiry was rejected because it hides a policy change. A five-m
 
 ## Checks
 
-Targeted own-account, long-pause/restart, legacy-policy isolation, strict-budget, uncertainty, model metadata and launcher tests passed25/25 offline. They use synthetic accounts/providers and a fake local metadata process. No new inference or provider request was made by these tests. Integrated check.command then passed218/218 tests, all independent MCP checks, historical evidence verifiers and the299-file source manifest. The first integrated attempt exposed a test scheduling race: immediate child termination could precede the child logging a denial; the corrected test observes the actual parent denial write and verifies no inference. No runtime retry or delay was added. The exact external migration passed4/4 offline test groups, including crash points, refusal on uncertainty/active leases and credential-read/network interception. No actual user-state migration has run yet.
+Targeted own-account, long-pause/restart, legacy-policy isolation, strict-budget, uncertainty, model metadata and launcher tests passed25/25 offline. They use synthetic accounts/providers and a fake local metadata process. No new inference or provider request was made by these tests. Integrated check.command then passed218/218 tests, all independent MCP checks, historical evidence verifiers and the299-file source manifest. The first integrated attempt exposed a test scheduling race: immediate child termination could precede the child logging a denial; the corrected test observes the actual parent denial write and verifies no inference. No runtime retry or delay was added. The exact external migration passed4/4 offline test groups, including crash points, refusal on uncertainty/active leases and credential-read/network interception. The user subsequently completed the reviewed migration and ordinary live path; the separate neutral-run audit records the actual result.
 
 ## Sources
 
@@ -46,4 +46,4 @@ Targeted own-account, long-pause/restart, legacy-policy isolation, strict-budget
 
 ## Open questions
 
-The user still needs to complete the migrated ordinary interactive launch and final answer/CSV path. Catalog metadata cannot establish every model-generation permission or future account billing state. Unrestricted wallet history and arbitrary prose verification remain outside this prototype.
+The migrated ordinary launch and answer/CSV path completed in the user-run8 November checks. Catalog metadata cannot establish every model-generation permission or future account billing state. Unrestricted wallet history and arbitrary prose verification remain outside this prototype.

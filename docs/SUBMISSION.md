@@ -1,34 +1,40 @@
 # Submission handoff
 
-Updated 6 November 2026. Application not submitted.
+Updated 8 November 2026. Application not submitted. Current candidate publication is prepared and awaits approval; the links below are publication targets, not attestations that they are live.
 
 | Field | Value |
 | --- | --- |
-| Project | Recall Lab |
+| Project | Recall Agent |
 | Track | Smart Agents for Real Life |
-| Public site | https://vikroz.github.io/recall-lab/ |
-| Repository | https://github.com/VikRoz/recall-lab |
-| Judge package | https://github.com/VikRoz/recall-lab/releases/tag/v1.0.0 |
-| Published article | https://vikroz.github.io/recall-lab/blog.html |
-| Video | Author will record the new activity walkthrough; link pending |
-| Mainnet memory requirement | Four activity records verified; six more required to reach ten for this scenario |
+| Planned public site | https://vikroz.github.io/recall-agent/ |
+| Candidate repository | https://github.com/VikRoz/recall-agent |
+| Planned judge release | https://github.com/VikRoz/recall-agent/releases/tag/agent-demo-v1.0.0 |
+| Planned article | https://vikroz.github.io/recall-agent/blog.html |
+| Current video | Author records the current terminal flow; link pending |
+| Mainnet memory requirement | Ten distinct candidate-workspace receipts verified; separate personal-workspace record is excluded from this count |
 
 ## Short description
 
-A local Sui activity agent that retrieves real transaction facts through Tatum, stores user-confirmed address context in Walrus, recalls it in a fresh conversation and applies linked corrections before code-generated CSV export. Judges use their own model client and accounts.
+A local Sui transaction agent that combines fresh Tatum evidence with scoped Walrus memory across model conversations. It automatically supplies relevant saved observations and supported technical experience to the model; code validates structured facts, exact amounts, receipts and original CSV exports. Users supply their own accounts and choose an available model. The conversation starts empty, without a prescribed first task.
 
-## Real integration
+## Actual result
 
-Tatum Sui gRPC supplies selected transaction facts. Official Walrus Memory SDK operations persist scoped address rules and corrections on Mainnet. The model drives a five-tool MCP conversation; arithmetic, active revision selection, hash checks and CSV remain deterministic code.
+The 7 November candidate corpus contains two technical error/recovery records, one verified gas-payer observation and seven transaction facts. One fresh model conversation completed a seven-transaction report and delivered the original 2,110-byte CSV. The longer two-answer harness stopped at its historical time limit; that negative result is retained.
 
-The verified live dialogue used Codex. Claude Desktop configuration and protocol were tested offline. The model run required an approved continuation after a second-chat startup failure; counters and the original receipt were preserved. No paid fallback or account upgrade was used.
+On 8 November the owner completed the corrected ordinary launch and a separate neutral fresh-chat question. The task did not mention memory. The report tool automatically delivered the prior observation beside fresh Tatum data, and the model completed the answer and original 396-byte CSV. This confirms automatic memory delivery; causal answer improvement and error/correction recall were not established by this case.
 
-## Building experience
+Current ordinary activations use persistent finite request budgets without a session expiry, with individual request timeouts and no paid fallback. A metadata-only check selects an available ChatGPT model before provider activation. The current candidate's live client path is Codex CLI on macOS; other MCP clients require their own live validation. This does not inherit a passed Claude run from an older project.
 
-Walrus made context available beyond a single model conversation. Complete inventory/readback checks and receipt hashes were necessary to apply corrections confidently. Handling the difference between an accepted job and a completed record, and preserving the journal across restarts, were central implementation tasks.
+## Integration and building experience
 
-Tatum RPC was used directly for actual Sui transaction data. Tatum AI Builder was not used. Exact amounts, separate gas payer handling and complex transaction uncertainty remain explicit.
+Tatum Sui gRPC supplies selected real Mainnet transactions. The official Walrus Memory SDK persists scoped records through sponsored storage and retrieves their content with inventory/hash checks. Model conversation, deterministic verification and storage have separate jobs. Accepted jobs are not called completed records until a matching receipt exists; journals preserve uncertain outcomes and prevent blind resubmission.
+
+Tatum RPC is used directly. Tatum AI Builder is not used. Exact base units, separate sender/gas-payer roles and unparsed PTB uncertainty remain explicit. Mainnet observations, receipts, code-generated CSVs and unsuccessful historical attempts are included as evidence. General reasoning improvement is not claimed.
+
+## Judge verification
+
+Download the exact release asset, extract it, open Terminal in Recall-Agent and follow README/docs/INSTALL.md. Judges use their own ChatGPT, Walrus sponsored Mainnet access and Tatum Free account. They may ask their own supported selected-transaction question, exit and reopen the same private folder in a new conversation, then inspect remembered context and the original CSV. Offline checks require no accounts or provider/model calls. The website presents saved evidence and links to source, article and the downloadable local client.
 
 ## Applicant-owned fields
 
-The applicant will supply their contact details, public account identifiers, discovery source, first-Web3-project answer and required declarations. Never enter a delegate private key or API key in the application. Do not submit this checklist or missing video/memory work as completed.
+The applicant supplies contact details, public account identifiers, discovery source, first-Web3-project answer and required declarations. No delegate private key, API key or private auth file belongs in the application. The applicant reviews the current video and public links and submits the final form.

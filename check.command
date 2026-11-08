@@ -37,4 +37,5 @@ if [[ ! -x "$node" ]]; then node=$(command -v node); fi
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-own-account-live.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-own-account-partial-live.mjs"
 "$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-own-account-completion-live.mjs"
+"$node" --disable-warning=ExperimentalWarning "$root/evidence/verify-own-account-neutral-live.mjs"
 "$node" "$root/verify-source.mjs"

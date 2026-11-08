@@ -14,5 +14,7 @@ mkdirSync(resolve(out,'evidence',evidence),{recursive:true});
 // remain unchanged in source evidence; do not relabel a translation as observed output.
 for(const name of ['run.json','exports','submission-proofs','tatum-proofs'])
   cpSync(resolve(root,'evidence',evidence,name),resolve(out,'evidence',evidence,name),{recursive:true});
+const neutral='own-account-neutral-live-2026-11-08';
+cpSync(resolve(root,'evidence',neutral),resolve(out,'evidence',neutral),{recursive:true});
 writeFileSync(resolve(out,'.nojekyll'),'');
 console.log(out);

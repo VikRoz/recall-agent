@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "policy": "Only public selected-transaction prompt, report outputs, final answer, receipt identifiers and evidence metadata are included. No full rollout, project context, account profile, key, token or unrelated conversation is copied.",
+  "changes": [
+    {
+      "field": "export.artifact.path / uri",
+      "action": "Replace private absolute filesystem path and file URI with the same relative exported CSV path.",
+      "replacement": "exports/5d4d51522ed8fbb5669da85d8f132fdb1732445f58c71ee16f5f17c8a57b6c49.csv"
+    },
+    {
+      "field": "final-answer CSV link",
+      "action": "Replace private absolute CSV path with the identical relative exported CSV path."
+    },
+    {
+      "field": "original rollout",
+      "action": "Not distributed; retain audited prefix SHA-256 and selected line references only."
+    },
+    {
+      "field": "screenshot",
+      "action": "Not distributed; an existing screenshot basename is retained as a local audit reference."
+    }
+  ],
+  "originalSelectedExcerptsSha256": {
+    "export-report.json": "24ffdc1654bb55d05d2e962e206464729a449a7bb6c98720eaa2b3551e5fce9e",
+    "final-answer.json": "c7cb1baa0b7fa195952302469c651e0f01d0daedbaaf7128be0624e037f6ec11",
+    "neutral-prompt.json": "0a6b8b593f6036b8b2afc3f270dc8003c9ce93bea55b2c9f370eb28754857a10",
+    "prepare-report.json": "54fc7e20f392a27ff0755addf718de4c739c27382acac1eb133e2234788263df"
+  },
+  "originalFinalTextSha256": "cfb4f7d9fbd46bf7bb0779b19acac6b0ec0506fbef5c033900a77b8cb263e963",
+  "sanitizedFinalTextSha256": "3591c96d6d541a16410df09bf85f583455cdb72d97bdc4acf2e3517ad612c251",
+  "originalRolloutAuditedPrefixSha256": "8b30848cf7412493c88c4bfb58f16032cf436136ae3f4cb6f1791c8d5cedde4c",
+  "publicCsvContentChanged": false
+}

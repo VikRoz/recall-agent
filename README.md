@@ -6,6 +6,8 @@ The local MCP server handles validation, memory receipts and CSV. Codex handles 
 
 ## Verified result
 
+On 8 November, a new user conversation asked a normal transaction question without mentioning memory. The tool automatically supplied the stored Walrus observation beside fresh Tatum data, and the model completed the answer and delivered the original 396-byte CSV. Automatic delivery is confirmed; causal improvement and error/correction recall are not established by that case. The user workspace is separate from the ten-record inventory below. [Neutral-run audit](docs/AUTOMATIC_RECALL_ACTUAL_2026-11-08.md).
+
 The 7 November live run completed one full native report and delivered its original CSV. Ten distinct Mainnet memories were stored and read through the signed SDK path. A second fresh client retrieved the same context and exported another CSV, but its final answer hit the shared deadline. The extended two-answer/final-reader harness remains **STOPPED**; the primary report/memory/export flow is complete. Additional spend: **$0**.
 
 [Ten-memory inventory](docs/MAINNET_MEMORY_INVENTORY.md) · [Actual result and limits](docs/ACTUAL_COMPLETION_REQUIREMENTS_AUDIT_2026-11-07.md) · [Original CSV](evidence/own-account-completion-live-2026-11-07/exports/8a4b5e98973650724d46863dc8d7b2b2e8f71986189f57e9a3dfe9ef8ee4a04a.csv)
@@ -49,7 +51,7 @@ These are optional examples, not a programmed route. Live mode supports selected
 bash start.command --check
 ```
 
-Checks use synthetic/intercepted providers and fake native clients; they do not sign in, call a model or write Mainnet. The earlier frozen runtime passed 209 tests plus independent protocols and saved-evidence checks. Request-budget and model-binding changes have their own checks. The release's source manifest pins the packaged files.
+Checks use synthetic/intercepted providers and fake native clients; they do not sign in, call a model or write Mainnet. The request-budget/model-binding runtime passed 218 tests plus independent protocols and saved-evidence checks. The new neutral-run verifier checks saved evidence without another provider/model request. The release's source manifest pins the packaged files.
 
 For a source checkout, install the pinned dependencies first:
 
@@ -58,4 +60,4 @@ npm ci --prefix app --ignore-scripts --no-audit --no-fund
 npm ci --prefix mcp --ignore-scripts --no-audit --no-fund
 ```
 
-Core transaction/memory implementation is the live-tested `e72bdeef88d583edeccfb6c3f59b73cfaeac57af`. The launcher confirmation and terminal-width repair was checked offline on 8 November; it does not claim another live trial. Publication and a new walkthrough are prepared separately; older Recall Lab releases are not this candidate. MIT licensed; AI assistance was used for implementation, testing and documentation.
+The earlier ten-record core run used `e72bdeef88d583edeccfb6c3f59b73cfaeac57af`; the current ordinary launch and neutral fresh-chat run used `eb1558682a781f431eae7e26949645048eff9eac`. Publication and a new walkthrough are prepared separately; older Recall Lab releases are not this candidate. MIT licensed; AI assistance was used for implementation, testing and documentation.

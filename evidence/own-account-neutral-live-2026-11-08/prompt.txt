@@ -1,0 +1,11 @@
+Reply in English.
+
+Analyze Sui Mainnet transaction:
+2it6GExEsJgfjvrh9wZ7EUK4Pboe4dm6gN3ZrBX6bgE3
+
+For this wallet:
+0x77776760c06997206b13fa76f127aa016d24a645f04fce516be153ece0bddf23
+
+Who paid the gas fee? How did this wallet's balance change? What can and cannot be concluded about the relationship between the wallet and the gas payer?
+
+Provide the report as an original CSV file with its path and SHA-256.

@@ -1,6 +1,6 @@
 # What a Sui agent can carry into its next chat
 
-7 November 2026 · Recall Agent
+8 November 2026 · Recall Agent
 
 A transaction can tell you that one address sent a request and another paid gas. It cannot tell you which explanation you already checked yesterday. A new model conversation should be able to retrieve that work without treating an old note as fresh chain data.
 
@@ -14,7 +14,17 @@ Walrus stores scoped, checked observations and supported technical experience. R
 
 The model runs in the user's own client. Our local MCP server supplies the tools; it does not host a model or use the author's subscription for visitors. The current verified client is Codex CLI with the user's ChatGPT account.
 
-## What happened in the real run
+## A new chat, without a memory command
+
+On 8 November, the project owner opened a new Codex conversation and asked who paid gas in a selected Sui transaction, how the wallet balance changed, what relationship could be inferred and where to download the CSV. The request did not mention Walrus, memory or any previous conversation.
+
+The model chose the report tool. Its response automatically included an earlier Walrus observation, with blob ID `q71H-BD57yPAE15l7j0X7r2JcRBF4K5w1WgUw-SQdAQ` and comparison `same`, alongside fresh Tatum facts. The model completed the explanation and delivered the original 396-byte CSV with its matching SHA-256. The existing observation was reused; no duplicate was written.
+
+This confirms automatic retrieval and delivery into a new model conversation. It does not establish that memory improved the answer: the final response did not cite the old observation, and fresh data independently supported the same facts. It was a stored transaction observation, not an error/correction recall test. This personal workspace is separate from the ten-record candidate inventory; its record is not counted as an eleventh candidate memory.
+
+The ordinary launch now has persistent request limits with no session expiry. Users can pause and open another conversation using the same private folder without resetting their allowance. Individual request timeouts, explicit Free/sponsored conditions and critical-error stops remain. Before provider activation, a metadata-only check verifies included ChatGPT quota and binds an available model; every fresh launch passes that model explicitly instead of inheriting an unrelated global default.
+
+## The ten-record Mainnet run on 7 November
 
 We now have ten distinct completed Mainnet memory receipts in one candidate workspace: two technical error/recovery records, one gas-payer hypothesis observation and seven whole-transaction fact notes.
 
@@ -48,7 +58,7 @@ For a team, the same pattern could carry approved address explanations and corre
 
 ## From this prototype to everyday use
 
-The next steps are smoother account setup, a visible memory review/revoke workflow and explicit permission renewal for longer sessions. Asynchronous capture could keep storage polling out of the conversational response while preserving durable receipts and uncertain-job recovery.
+The next steps are smoother account setup, a visible memory review workflow and explicit management of each finite request allowance. Saved immutable records cannot simply be erased through a UI. Asynchronous capture could keep storage polling out of the conversational response while preserving durable receipts and uncertain-job recovery.
 
 A browser experience would also need a supported model connection for each user. A website cannot simply borrow a visitor's paid model subscription. The local client is the working starting point: users connect their own ChatGPT, Walrus and Tatum accounts; no author keys are shipped.
 
@@ -58,4 +68,4 @@ The tool boundary is MCP and the memory schema does not depend on a particular m
 
 The README provides installation, account setup, a small optional transaction example and offline checks. The source includes the ten-memory inventory, actual receipts, raw public transaction proofs, original CSVs and the stopped extended-run evidence. Public pages present saved results; live questions run in the local model client.
 
-Core transaction and memory implementation was live-tested at e72bdeef88d583edeccfb6c3f59b73cfaeac57af. AI assistance was used for implementation, testing and documentation. Source is MIT licensed. The final judge archive, article and site publication are prepared together; the new walkthrough is recorded by the project author.
+The earlier ten-record core run used `e72bdeef88d583edeccfb6c3f59b73cfaeac57af`. The 8 November ordinary launch and neutral fresh-chat run used `eb1558682a781f431eae7e26949645048eff9eac`. AI assistance was used for implementation, testing and documentation. Source is MIT licensed. The final judge archive, article and site publication are prepared together; the project author records the new walkthrough.
