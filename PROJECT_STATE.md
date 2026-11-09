@@ -1,12 +1,12 @@
 # Recall Agent development state
 
-Date: 8 November 2026. Candidate repository: VikRoz/recall-agent, currently private.
+The [site](https://vikroz.github.io/recall-agent/), [article](https://vikroz.github.io/recall-agent/blog.html), [judge package](https://github.com/VikRoz/recall-agent/releases/tag/agent-demo-v1.0.0) and [live demo](https://www.youtube.com/watch?v=7Ufi92qOGnU) are public. See the [submission handoff](docs/SUBMISSION.md) for the current links and verification flow.
 
-## Current result and next gate
+The video confirms that a fresh Codex chat automatically receives the earlier verified Walrus observation alongside fresh Tatum data. The [ten-memory inventory](docs/MAINNET_MEMORY_INVENTORY.md) tracks a separate workspace and its test limits.
 
-The user completed the approved data-preserving schema2 migration, then the ordinary report/memory/CSV flow at runtime eb1558682a781f431eae7e26949645048eff9eac. A separate neutral new conversation01a1bc61 automatically received the earlier fact observation with comparison=same, completed its answer and delivered the original396-byte CSV. Local actual ledger3/1/3/68, writes remain1 and stopped=null. Automatic retrieval/model delivery is confirmed; causal answer benefit and error/correction recall are not established by that case. The one personal-workspace record is separate from the candidate ten-record inventory. Full runtime218 tests, migration4 offline groups and saved neutral evidence verification passed. Current stage6 ordinary user launch works; prepare one final clean package/article/site review, keeping old bundles on HOLD. No publication approval transfers to new bytes. See docs/AUTOMATIC_RECALL_ACTUAL_2026-11-08.md.
+## Historical development snapshots
 
-The dated paragraphs below are historical snapshots; the current status above supersedes their pending-action language.
+The entries below record earlier implementation and validation work. Status and counters refer to the snapshot in which they were recorded.
 
 8 November actual ordinary user setup stopped before tools: source52436d2, Tatum0/write0/read0/service3, HTTP200/config AGENT_CONFIG_SCOPE. Root cause was the ordinary launcher omitting the fifth deployment field suiRpcUrl; a separate public coordinator check confirmed the full official shape. Minimal field-population fix leaves the hash/guard unchanged; an independent regression failed before the fix, then43 targeted tests passed after it. The old context is stopped/expired and untouched. Publication is held; one-shot zero-work recovery preparation and a new clean package are separate gates. See [deployment fix](docs/ORDINARY_DEPLOYMENT_FIX_2026-11-08.md).
 
@@ -17,12 +17,6 @@ The actual e72bdee/is5Kld run completed one primary native report with fresh Tat
 The frozen extended harness remains **STOPPED**: native0 completed; native1 completed report/export tools but no final answer before the shared240-second deadline; the dedicated final reader did not run. No counters, deadline or acceptance flags were reset. General learning and unseen-error recovery remain unproved. [Actual audit](docs/ACTUAL_COMPLETION_REQUIREMENTS_AUDIT_2026-11-07.md) · [Ten-record inventory](docs/MAINNET_MEMORY_INVENTORY.md).
 
 The coordinator independently ran the saved-evidence verifier, checked the full primary answer and both CSV hashes, and accepted stages4B/5 for this primary working flow. Current work is stage6: a clean judge package from unchanged runtime `e72bdeef88d583edeccfb6c3f59b73cfaeac57af`, then stage7 source freeze and stage8 publication materials. The runtime already passed209 integrated tests and45 targeted checks. Packaging checks use intercepted providers/stub clients only; no new account, model or provider action is authorized by packaging.
-
-README, installation, English article, video outline, receipt inventory and a static evidence-site preview are prepared together. Candidate visibility, push, release and Pages settings remain unchanged pending a concrete publication approval. Existing fallback VikRoz/recall-lab v1.0.0 is untouched. Older local ZIPs are historical and must not be called the current release.
-
-## Historical development snapshots
-
-The dated snapshots below preserve earlier decisions and failed attempts. Their phrases such as “current”, “pending” and old counts describe that snapshot only; the current status above supersedes them. Negative results are not overwritten.
 
 Current offline completion increment: coordinator approved operator preparation through the same public MCP before two native sessions, preserving the shared240-second deadline. Seven exact retained rows and both spent own-account origins are required. The exact-three policy is enforced before writer cache/reservation/transport, and new public payload artifacts are durable before submission.209/209 full integrated tests and45 targeted checks passed, all protocol/evidence/source264 checks green; completion synthetic7→10 used Tatum3/write3/read7/SDK87 with original CSV and independent reader. The old general protocol remains2/7/10/92. See [offline result and boundaries](docs/OWN_ACCOUNT_COMPLETION_OFFLINE_2026-11-07.md). No new actual grant, capture, provider or model operation has run; actual receipts remain7/10.
 
